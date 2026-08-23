@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#0b0d12">
 <title>LVLUP v13.8 — Life RPG</title>
 <style>
-/* ===== ВСЕ СТИЛИ ИЗ v13.7 ===== */
 :root{
   --bg:#090b10;--panel:#11151d;--panel2:#171c26;--line:rgba(255,255,255,.08);
   --text:#f5f7fb;--muted:#8e98a9;--accent:#8b5cf6;--accent2:#c084fc;
@@ -450,7 +449,7 @@ button:active{transform:scale(.98)}
 
 <script>
 // ============================================================
-// LVLUP v13.8 — ЕДИНАЯ СИСТЕМА ЗАДАЧ (ЭВОЛЮЦИОННЫЙ ШАГ)
+// LVLUP v13.8 — ИСПРАВЛЕННАЯ ВЕРСИЯ
 // ============================================================
 
 // ============================================================
@@ -584,7 +583,7 @@ function completeTaskWithTime(taskId, minutesSpent) {
 }
 
 // ============================================================
-// 3. ДАННЫЕ
+// 3. ДАННЫЕ И МИГРАЦИЯ (ИСПРАВЛЕННАЯ)
 // ============================================================
 
 function emptyData() {
@@ -617,10 +616,6 @@ function emptyData() {
   };
 }
 
-// ============================================================
-// 4. ЗАГРУЗКА ДАННЫХ С МИГРАЦИЕЙ (сохраняем совместимость)
-// ============================================================
-
 function loadData() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -628,7 +623,10 @@ function loadData() {
     const d = JSON.parse(raw);
     if (d.version !== 'v13') return migrateFromLegacy(d);
     return normalizeData(d);
-  } catch (e) { return migrateFromLegacy(loadV12()); }
+  } catch (e) {
+    console.warn('Ошибка загрузки, создаю пустые данные', e);
+    return emptyData();
+  }
 }
 
 function loadV12() {
@@ -642,6 +640,7 @@ function loadV12() {
 function migrateFromLegacy(oldData) {
   const nd = emptyData();
 
+  // 1. Пользователь
   nd.user.name = oldData.character?.name || 'Герой';
   nd.user.level = oldData.character?.level || 1;
   nd.user.xp = oldData.character?.xp || 0;
@@ -649,11 +648,13 @@ function migrateFromLegacy(oldData) {
   nd.user.streak = oldData.streak || 0;
   nd.user.createdAt = oldData.character?.createdAt || new Date().toISOString();
 
+  // 2. Категории
   const catMap = {};
   for (const c of nd.categories) {
     catMap[c.id] = c;
   }
 
+  // 3. Перенос существующих задач
   const taskMap = {};
   for (const [cat, arr] of Object.entries(oldData.tasks || {})) {
     for (const t of arr) {
@@ -691,13 +692,20 @@ function migrateFromLegacy(oldData) {
     }
   }
 
-  // Переносим записи из журналов (entries) в задачи с journalData
+  // 4. Перенос записей из журналов (entries → tasks с journalData)
+  const standardFields = ['id', 'title', 'category', 'date', 'time', 'xp', 'note', 'status',
+    'createdAt', 'updatedAt', 'minutesSpent', 'completedAt', 'journalData'
+  ];
+
   for (const c of oldData.categories || []) {
     const catObj = catMap[c.id];
     if (!catObj) continue;
+
     for (const e of c.entries || []) {
       const id = e.id || genId();
       taskMap[id] = true;
+
+      // Базовая задача
       const task = {
         id: id,
         title: e.title || e.counterparty || e.name || e.text || 'Запись',
@@ -717,10 +725,7 @@ function migrateFromLegacy(oldData) {
         updatedAt: new Date().toISOString()
       };
 
-      // Копируем все поля записи в journalData
-      const standardFields = ['id', 'title', 'category', 'date', 'time', 'xp', 'note', 'status',
-        'createdAt', 'updatedAt', 'minutesSpent', 'completedAt', 'journalData'
-      ];
+      // Копируем ВСЕ поля в journalData
       for (const [key, val] of Object.entries(e)) {
         if (!standardFields.includes(key) && val !== undefined && val !== null) {
           task.journalData[key] = val;
@@ -784,7 +789,7 @@ function migrateFromLegacy(oldData) {
     }
   }
 
-  // Переносим цели
+  // 5. Цели
   for (const g of oldData.goals || []) {
     nd.goals.push({
       ...g,
@@ -792,7 +797,7 @@ function migrateFromLegacy(oldData) {
     });
   }
 
-  // Переносим заметки
+  // 6. Заметки
   for (const n of oldData.notes || []) {
     nd.notes.push({
       ...n,
@@ -801,7 +806,7 @@ function migrateFromLegacy(oldData) {
     });
   }
 
-  // Переносим медиа
+  // 7. Медиа
   for (const m of oldData.media || []) {
     nd.media.push({
       ...m,
@@ -811,9 +816,11 @@ function migrateFromLegacy(oldData) {
   }
 
   nd.availability = oldData.availability || [];
-  nd._meta.migrations = ['v12', 'v13'];
+  nd._meta.migrations = ['v13'];
   nd._meta.lastReset = oldData.lastReset || null;
 
+  // Сохраняем результат миграции
+  localStorage.setItem(KEY, JSON.stringify(nd));
   return nd;
 }
 
@@ -847,8 +854,9 @@ function saveData() {
   localStorage.setItem(KEY, JSON.stringify(data));
   data = normalizeData(data);
 }
-  // ============================================================
-// 5. API
+
+// ============================================================
+// 4. API
 // ============================================================
 
 function getTasks(filter = {}) {
@@ -1038,7 +1046,7 @@ function getTaskNoteCount(taskId) { return data.notes.filter(n => n.targetId ===
 function getTaskMediaCount(taskId) { return data.media.filter(m => m.targetId === taskId).length; }
 
 // ============================================================
-// 6. СТАТИСТИКА ЖУРНАЛОВ (из задач с journalData)
+// 5. СТАТИСТИКА ЖУРНАЛОВ
 // ============================================================
 
 function calculateDebtStats(categoryId) {
@@ -1223,7 +1231,7 @@ function calculateMiscStats(categoryId) {
 }
 
 // ============================================================
-// 7. НАВИГАЦИЯ
+// 6. НАВИГАЦИЯ
 // ============================================================
 
 function switchPage(p) {
@@ -1269,7 +1277,7 @@ document.getElementById('journalAddBtn').onclick = function() {
 };
 
 // ============================================================
-// 8. ЗАДАЧИ — ОТОБРАЖЕНИЕ
+// 7. ЗАДАЧИ
 // ============================================================
 
 let tasksPage = 0;
@@ -1283,7 +1291,6 @@ function taskHTML(t, showJournal = true) {
   const status = t.status === 'done' ? 'done' : '';
   const jd = t.journalData || {};
 
-  // Дополнительная информация из журнала
   let journalInfo = '';
   if (cat) {
     if (cat.id === 'debts' && jd.counterparty) {
@@ -1367,7 +1374,7 @@ function confirmCompleteTask(id) {
 }
 
 // ============================================================
-// 9. РЕДАКТИРОВАНИЕ ЗАДАЧ
+// 8. РЕДАКТИРОВАНИЕ ЗАДАЧ
 // ============================================================
 
 function editTask(id) {
@@ -1386,7 +1393,7 @@ function deleteTaskUI(id) {
 }
 
 // ============================================================
-// 10. УНИВЕРСАЛЬНАЯ ФОРМА СОЗДАНИЯ/РЕДАКТИРОВАНИЯ ЗАДАЧИ
+// 9. УНИВЕРСАЛЬНАЯ ФОРМА СОЗДАНИЯ/РЕДАКТИРОВАНИЯ ЗАДАЧИ
 // ============================================================
 
 function openTaskForm(categoryId = null, editTaskId = null) {
@@ -1783,7 +1790,7 @@ function saveTaskForm(editTaskId) {
 }
 
 // ============================================================
-// 11. ОТОБРАЖЕНИЕ ЗАДАЧ (РАЗДЕЛ "ЗАДАЧИ")
+// 10. ОТОБРАЖЕНИЕ ЗАДАЧ (РАЗДЕЛ "ЗАДАЧИ")
 // ============================================================
 
 function renderTasks(forceCat) {
@@ -1865,7 +1872,7 @@ function openCategory(cat) {
 }
 
 // ============================================================
-// 12. HOME
+// 11. HOME
 // ============================================================
 
 function renderHome() {
@@ -1911,10 +1918,9 @@ function renderJournalProgress() {
 }
 
 // ============================================================
-// 13. ОСТАЛЬНЫЕ ФУНКЦИИ (СОКРАЩЕННО, ОСТАВЛЯЕМ РАБОЧИЕ)
+// 12. ОСТАЛЬНЫЕ ФУНКЦИИ (СОКРАЩЕННО)
 // ============================================================
 
-// --- Цели ---
 function renderGoals() {
   const el = document.getElementById('goalList');
   if (!data.goals.length) {
@@ -2030,7 +2036,7 @@ function createGoal() {
 }
 
 // ============================================================
-// 14. ЖУРНАЛ (ОТДЕЛЬНАЯ СТРАНИЦА)
+// 13. ЖУРНАЛ (ОТДЕЛЬНАЯ СТРАНИЦА)
 // ============================================================
 
 function renderJournal(categoryId) {
@@ -2114,8 +2120,9 @@ function renderJournalEntry(cat, t) {
     </div>
   </div>`;
 }
-      // ============================================================
-// 15. СТАТИСТИКА ЖУРНАЛА
+
+// ============================================================
+// 14. СТАТИСТИКА ЖУРНАЛА
 // ============================================================
 
 function renderJournalStats(categoryId) {
@@ -2265,7 +2272,7 @@ function renderJournalStats(categoryId) {
 }
 
 // ============================================================
-// 16. ЗАМЕТКИ
+// 15. ЗАМЕТКИ
 // ============================================================
 
 function renderNotes() {
@@ -2351,7 +2358,7 @@ function updateNoteFilterCats() {
 }
 
 // ============================================================
-// 17. ГАЛЕРЕЯ
+// 16. ГАЛЕРЕЯ
 // ============================================================
 
 function renderGallery() {
@@ -2442,7 +2449,7 @@ function addPhotoToGoal(goalId) {
 }
 
 // ============================================================
-// 18. ЖУРНАЛЫ (СПИСОК)
+// 17. ЖУРНАЛЫ (СПИСОК)
 // ============================================================
 
 function renderJournals() {
@@ -2482,7 +2489,7 @@ function renderJournals() {
 }
 
 // ============================================================
-// 19. СТАТИСТИКА
+// 18. СТАТИСТИКА
 // ============================================================
 
 function renderStats() {
@@ -2520,7 +2527,7 @@ function renderStats() {
 }
 
 // ============================================================
-// 20. ПЕРСОНАЖ
+// 19. ПЕРСОНАЖ
 // ============================================================
 
 function renderCharacter() {
@@ -2549,7 +2556,7 @@ function renderCharacter() {
 }
 
 // ============================================================
-// 21. AVAILABILITY
+// 20. AVAILABILITY (СОКРАЩЕНО)
 // ============================================================
 
 function renderAvailability() {
@@ -2597,59 +2604,8 @@ document.getElementById('availAddBtn').onclick = () => {
   };
 };
 
-document.getElementById('availExportBtn').onclick = () => {
-  const card = document.getElementById('availExportCard');
-  card.style.display = 'block';
-  renderAvailabilityExport();
-};
-document.getElementById('availExportClose').onclick = () => {
-  document.getElementById('availExportCard').style.display = 'none';
-};
-
-function renderAvailabilityExport() {
-  const el = document.getElementById('availExportContent');
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
-  const first = new Date(year, month, 1);
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const offset = (first.getDay() + 6) % 7;
-
-  let html = `<div style="font-size:14px;font-weight:600;margin-bottom:6px">${['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'][month]} ${year}</div>`;
-  html += `<div class="avail-export-grid">`;
-  for (const d of DOW) html += `<div style="font-size:9px;color:var(--muted);text-align:center;padding:4px 0">${d}</div>`;
-  for (let i = 0; i < offset; i++) html += `<div class="avail-export-cell" style="opacity:.2"></div>`;
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${year}-${pad(month + 1)}-${pad(d)}`;
-    const avail = getAvailability(dateStr);
-    const isWeekend = (new Date(year, month, d).getDay() + 6) % 7 >= 5;
-    const slots = avail ? avail.slots : [];
-    html += `<div class="avail-export-cell ${isWeekend ? 'weekend' : ''}">
-      <div class="day-num">${d}</div>
-      ${slots.length ? `<div class="avail-indicator">${slots.map(s => `<div class="seg ${s.type}" style="background:${getAvailType(s.type).color}"></div>`).join('')}</div>` : '<div style="font-size:8px;color:var(--muted)">—</div>'}
-      ${slots.length ? `<div class="avail-export-caption">${slots.length} слот${slots.length > 1 ? 'а' : ''}</div>` : ''}
-    </div>`;
-  }
-  html += `</div>`;
-  html += `<div class="avail-legend">${Object.entries(AVAIL_TYPES).map(([k, v]) => `<span><span class="dot" style="background:${v.color}"></span>${v.label}</span>`).join('')}</div>`;
-  html += `<div class="avail-export-actions">
-    <button class="add" onclick="downloadAvailImage()" style="font-size:12px;padding:8px 16px">📥 Скачать как изображение</button>
-    <button class="ghost" onclick="copyAvailText()" style="font-size:12px;padding:8px 16px">📋 Копировать текст</button>
-  </div>`;
-  el.innerHTML = html;
-}
-
-function downloadAvailImage() { toast('📥 Для экспорта изображения открой на компьютере и сделай скриншот');
-  copyAvailText(); }
-
-function copyAvailText() {
-  const el = document.getElementById('availExportContent');
-  const text = el.textContent.trim().replace(/\s+/g, ' ');
-  navigator.clipboard?.writeText(text).then(() => toast('📋 Скопировано')).catch(() => toast('📋 Выдели текст и скопируй'));
-}
-
 // ============================================================
-// 22. КАЛЕНДАРЬ
+// 21. КАЛЕНДАРЬ (СОКРАЩЕНО)
 // ============================================================
 
 let calState = { view: 'month', date: new Date() };
@@ -2865,7 +2821,7 @@ document.getElementById('calToday').onclick = () => { calState.date = new Date()
   renderCalendar(); };
 
 // ============================================================
-// 23. МОДАЛКИ
+// 22. МОДАЛКИ
 // ============================================================
 
 function openModal(title, body) {
@@ -2884,7 +2840,7 @@ document.getElementById('modal').onclick = e => {
 };
 
 // ============================================================
-// 24. НАСТРОЙКИ И ТЕМЫ
+// 23. НАСТРОЙКИ И ТЕМЫ
 // ============================================================
 
 const THEMES = {
@@ -2953,7 +2909,7 @@ document.getElementById('saveSettings').onclick = () => {
 };
 
 // ============================================================
-// 25. ЭКСПОРТ/ИМПОРТ/СБРОС
+// 24. ЭКСПОРТ/ИМПОРТ/СБРОС
 // ============================================================
 
 function exportData() {
@@ -3033,7 +2989,7 @@ if (prefs.theme) applyTheme(prefs.theme);
 if (prefs.density === 'compact') document.body.classList.add('compact');
 
 // ============================================================
-// 26. ОБЩИЙ РЕНДЕР
+// 25. ОБЩИЙ РЕНДЕР
 // ============================================================
 
 function renderAll() {
@@ -3050,7 +3006,7 @@ function renderAll() {
 }
 
 // ============================================================
-// 27. ИНИЦИАЛИЗАЦИЯ
+// 26. ИНИЦИАЛИЗАЦИЯ
 // ============================================================
 
 updateNoteFilterCats();
