@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b0d12">
-<title>LVLUP v14.0 — Life RPG</title>
+<title>LVLUP v13.8 — Life RPG</title>
 <style>
+/* ===== ВСЕ СТИЛИ ИЗ v13.7 ===== */
 :root{
   --bg:#090b10;--panel:#11151d;--panel2:#171c26;--line:rgba(255,255,255,.08);
   --text:#f5f7fb;--muted:#8e98a9;--accent:#8b5cf6;--accent2:#c084fc;
@@ -175,11 +176,6 @@ button:active{transform:scale(.98)}
 .goal-task-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
 .goal-task-item .task-title{font-size:13px}
 .goal-task-item .task-status{font-size:10px;color:var(--muted)}
-
-/* Journal extra fields styling */
-.journal-extra-fields{border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
-.journal-extra-fields .field{margin-bottom:8px}
-.journal-extra-fields .field:last-child{margin-bottom:0}
 </style>
 </head>
 <body>
@@ -225,7 +221,7 @@ button:active{transform:scale(.98)}
         <div class="section-head"><h2>📊 Журналы</h2><span id="journalHint">прогресс</span></div>
         <div class="journal-progress" id="journalProgress"></div>
 
-        <div class="version-badge">LVLUP v14.0 · local-first</div>
+        <div class="version-badge">LVLUP v13.8 · local-first</div>
       </section>
 
       <!-- CALENDAR -->
@@ -362,7 +358,7 @@ button:active{transform:scale(.98)}
         <div class="section-head"><h2>••• Ещё</h2></div>
         <div class="card">
           <div class="row"><div><b>💾 Резервная копия</b><div class="muted">Данные сохраняются локально</div></div><button class="ghost" id="exportBtn2">Экспорт</button></div>
-          <div style="margin-top:18px;font-size:12px;color:var(--muted)">LVLUP v14.0 · local-first</div>
+          <div style="margin-top:18px;font-size:12px;color:var(--muted)">LVLUP v13.8 · local-first</div>
         </div>
       </section>
     </main>
@@ -449,19 +445,19 @@ button:active{transform:scale(.98)}
     <div class="settings-section"><b>Начало недели</b><div class="segmented"><button class="active">Пн</button><button>Вс</button></div></div>
     <div class="settings-section"><b>Первый экран</b><div class="segmented"><button class="active">Главная</button><button>Календарь</button></div></div>
   </div>
-  <div class="settings-footer"><span class="muted">LVLUP v14.0 · local-first</span><button class="add" id="saveSettings">Сохранить</button></div>
+  <div class="settings-footer"><span class="muted">LVLUP v13.8 · local-first</span><button class="add" id="saveSettings">Сохранить</button></div>
 </div></div>
 
 <script>
 // ============================================================
-// LVLUP v14.0 — ЕДИНАЯ СИСТЕМА ЗАДАЧ + ЖУРНАЛЫ
+// LVLUP v13.8 — ЕДИНАЯ СИСТЕМА ЗАДАЧ (ЭВОЛЮЦИОННЫЙ ШАГ)
 // ============================================================
 
 // ============================================================
 // 1. КОНСТАНТЫ
 // ============================================================
-const KEY = 'lvlup_v14';
-const APP_VERSION = 'v14.0';
+const KEY = 'lvlup_v13';
+const APP_VERSION = 'v13.8';
 
 const DEFAULT_CATEGORIES = [
   { id: 'debts', name: 'Долги', icon: '💰', color: '#fb7185' },
@@ -588,12 +584,12 @@ function completeTaskWithTime(taskId, minutesSpent) {
 }
 
 // ============================================================
-// 3. ДАННЫЕ И МИГРАЦИЯ
+// 3. ДАННЫЕ
 // ============================================================
 
 function emptyData() {
   return {
-    version: 'v14',
+    version: 'v13',
     user: {
       id: genId(),
       name: 'Герой',
@@ -609,7 +605,8 @@ function emptyData() {
       xp: 0,
       totalXp: 0,
       tasksCompleted: 0,
-      minutesSpent: 0
+      minutesSpent: 0,
+      entries: []
     })),
     tasks: [],
     goals: [],
@@ -620,43 +617,87 @@ function emptyData() {
   };
 }
 
-function migrateV13toV14(oldData) {
+// ============================================================
+// 4. ЗАГРУЗКА ДАННЫХ С МИГРАЦИЕЙ (сохраняем совместимость)
+// ============================================================
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return migrateFromLegacy(loadV12());
+    const d = JSON.parse(raw);
+    if (d.version !== 'v13') return migrateFromLegacy(d);
+    return normalizeData(d);
+  } catch (e) { return migrateFromLegacy(loadV12()); }
+}
+
+function loadV12() {
+  try {
+    const raw = localStorage.getItem('lvlup_v12') || localStorage.getItem('lvlup_v11');
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return { character: {}, tasks: {}, goals: [], notes: [], media: [], streak: 0, availability: [] };
+}
+
+function migrateFromLegacy(oldData) {
   const nd = emptyData();
 
-  // Переносим пользователя
-  nd.user = { ...nd.user, ...oldData.user };
+  nd.user.name = oldData.character?.name || 'Герой';
+  nd.user.level = oldData.character?.level || 1;
+  nd.user.xp = oldData.character?.xp || 0;
+  nd.user.totalXp = oldData.character?.totalXp || 0;
+  nd.user.streak = oldData.streak || 0;
+  nd.user.createdAt = oldData.character?.createdAt || new Date().toISOString();
 
-  // Переносим категории (без entries)
-  nd.categories = (oldData.categories || []).map(c => ({
-    id: c.id, name: c.name, icon: c.icon, color: c.color,
-    level: c.level || 1, xp: c.xp || 0, totalXp: c.totalXp || 0,
-    tasksCompleted: c.tasksCompleted || 0, minutesSpent: c.minutesSpent || 0
-  }));
+  const catMap = {};
+  for (const c of nd.categories) {
+    catMap[c.id] = c;
+  }
 
-  // Убеждаемся, что все категории есть
-  const existingIds = new Set(nd.categories.map(c => c.id));
-  for (const def of DEFAULT_CATEGORIES) {
-    if (!existingIds.has(def.id)) {
-      nd.categories.push({ ...def, level: 1, xp: 0, totalXp: 0, tasksCompleted: 0, minutesSpent: 0 });
+  const taskMap = {};
+  for (const [cat, arr] of Object.entries(oldData.tasks || {})) {
+    for (const t of arr) {
+      const id = t.id || genId();
+      taskMap[id] = true;
+      const catObj = catMap[cat];
+      nd.tasks.push({
+        id,
+        title: t.title || 'Без названия',
+        category: cat,
+        date: t.date || null,
+        time: t.time || null,
+        xp: t.xp || 10,
+        note: t.note || '',
+        status: t.status === 'done' ? 'done' : 'active',
+        completedAt: t.status === 'done' ? new Date().toISOString() : null,
+        minutesSpent: t.minutesSpent || 0,
+        journalXPEarned: t.journalXPEarned || 0,
+        globalXPEarned: t.globalXPEarned || 0,
+        journalData: t.journalData || null,
+        createdAt: t.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      });
+      if (t.status === 'done' && catObj) {
+        const xp = t.journalXPEarned || t.xp || 10;
+        catObj.xp += xp;
+        catObj.totalXp += xp;
+        catObj.tasksCompleted += 1;
+        catObj.minutesSpent += t.minutesSpent || 0;
+        while (catObj.xp >= xpNeedForCategory(catObj.level)) {
+          catObj.xp -= xpNeedForCategory(catObj.level);
+          catObj.level++;
+        }
+      }
     }
   }
 
-  // Переносим существующие задачи
-  for (const t of oldData.tasks || []) {
-    nd.tasks.push({
-      ...t,
-      journalData: t.journalData || null
-    });
-  }
-
-  // Переносим записи из журналов (entries) → задачи с journalData
-  const taskIds = new Set();
+  // Переносим записи из журналов (entries) в задачи с journalData
   for (const c of oldData.categories || []) {
+    const catObj = catMap[c.id];
+    if (!catObj) continue;
     for (const e of c.entries || []) {
       const id = e.id || genId();
-      taskIds.add(id);
-
-      // Базовые поля задачи
+      taskMap[id] = true;
       const task = {
         id: id,
         title: e.title || e.counterparty || e.name || e.text || 'Запись',
@@ -666,15 +707,17 @@ function migrateV13toV14(oldData) {
         xp: e.xp || 10,
         note: e.note || e.description || '',
         status: (e.status === 'done' || e.status === 'paid' || e.status === 'Готово') ? 'done' : 'active',
-        journalData: {},
-        minutesSpent: e.minutesSpent || 0,
         completedAt: (e.status === 'done' || e.status === 'paid' || e.status === 'Готово') ?
           (e.completedAt || new Date().toISOString()) : null,
+        minutesSpent: e.minutesSpent || 0,
+        journalXPEarned: e.journalXPEarned || 0,
+        globalXPEarned: e.globalXPEarned || 0,
+        journalData: {},
         createdAt: e.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
 
-      // Копируем все специфичные поля в journalData
+      // Копируем все поля записи в journalData
       const standardFields = ['id', 'title', 'category', 'date', 'time', 'xp', 'note', 'status',
         'createdAt', 'updatedAt', 'minutesSpent', 'completedAt', 'journalData'
       ];
@@ -745,7 +788,7 @@ function migrateV13toV14(oldData) {
   for (const g of oldData.goals || []) {
     nd.goals.push({
       ...g,
-      taskIds: (g.taskIds || []).filter(id => taskIds.has(id) || nd.tasks.some(t => t.id === id))
+      taskIds: (g.taskIds || []).filter(id => taskMap[id] || nd.tasks.some(t => t.id === id))
     });
   }
 
@@ -753,10 +796,8 @@ function migrateV13toV14(oldData) {
   for (const n of oldData.notes || []) {
     nd.notes.push({
       ...n,
-      targetId: (n.targetType === 'task' && n.targetId && (taskIds.has(n.targetId) || nd.tasks.some(t => t.id === n.targetId))) ?
-        n.targetId : null,
-      targetType: (n.targetType === 'task' && n.targetId && (taskIds.has(n.targetId) || nd.tasks.some(t => t.id === n.targetId))) ?
-        'task' : 'none'
+      targetId: (n.targetType === 'task' && n.targetId && nd.tasks.some(t => t.id === n.targetId)) ? n.targetId : null,
+      targetType: (n.targetType === 'task' && n.targetId && nd.tasks.some(t => t.id === n.targetId)) ? 'task' : 'none'
     });
   }
 
@@ -764,52 +805,16 @@ function migrateV13toV14(oldData) {
   for (const m of oldData.media || []) {
     nd.media.push({
       ...m,
-      targetId: (m.targetType === 'task' && m.targetId && (taskIds.has(m.targetId) || nd.tasks.some(t => t.id === m.targetId))) ?
-        m.targetId : null,
-      targetType: (m.targetType === 'task' && m.targetId && (taskIds.has(m.targetId) || nd.tasks.some(t => t.id === m.targetId))) ?
-        'task' : 'none'
+      targetId: (m.targetType === 'task' && m.targetId && nd.tasks.some(t => t.id === m.targetId)) ? m.targetId : null,
+      targetType: (m.targetType === 'task' && m.targetId && nd.tasks.some(t => t.id === m.targetId)) ? 'task' : 'none'
     });
   }
 
-  // Переносим доступность
   nd.availability = oldData.availability || [];
-
-  nd._meta = {
-    lastBackup: oldData._meta?.lastBackup || null,
-    lastReset: oldData._meta?.lastReset || null,
-    migrations: [...(oldData._meta?.migrations || []), 'v14']
-  };
+  nd._meta.migrations = ['v12', 'v13'];
+  nd._meta.lastReset = oldData.lastReset || null;
 
   return nd;
-}
-
-function loadData() {
-  try {
-    // Сначала пробуем загрузить v14
-    const raw = localStorage.getItem(KEY);
-    if (raw) {
-      const d = JSON.parse(raw);
-      if (d.version === 'v14') {
-        return normalizeData(d);
-      }
-      // Если версия не v14 — мигрируем
-      return migrateV13toV14(d);
-    }
-
-    // Если нет v14 — пробуем загрузить v13
-    const oldRaw = localStorage.getItem('lvlup_v13');
-    if (oldRaw) {
-      const oldData = JSON.parse(oldRaw);
-      const migrated = migrateV13toV14(oldData);
-      return normalizeData(migrated);
-    }
-
-    // Если ничего нет — пустые данные
-    return emptyData();
-  } catch (e) {
-    console.error('Ошибка загрузки данных:', e);
-    return emptyData();
-  }
 }
 
 function normalizeData(d) {
@@ -822,16 +827,17 @@ function normalizeData(d) {
       xp: c.xp || 0,
       totalXp: c.totalXp || 0,
       tasksCompleted: c.tasksCompleted || 0,
-      minutesSpent: c.minutesSpent || 0
+      minutesSpent: c.minutesSpent || 0,
+      entries: Array.isArray(c.entries) ? c.entries : []
     })) :
-    DEFAULT_CATEGORIES.map(c => ({ ...c, level: 1, xp: 0, totalXp: 0, tasksCompleted: 0, minutesSpent: 0 }));
+    DEFAULT_CATEGORIES.map(c => ({ ...c, level: 1, xp: 0, totalXp: 0, tasksCompleted: 0, minutesSpent: 0, entries: [] }));
   nd.tasks = Array.isArray(d.tasks) ? d.tasks : [];
   nd.goals = Array.isArray(d.goals) ? d.goals.map(g => ({ ...g, taskIds: Array.isArray(g.taskIds) ? g.taskIds : [] })) : [];
   nd.notes = Array.isArray(d.notes) ? d.notes : [];
   nd.media = Array.isArray(d.media) ? d.media : [];
   nd.availability = Array.isArray(d.availability) ? d.availability : [];
   nd._meta = { ...nd._meta, ...d._meta };
-  if (!nd._meta.migrations.includes('v14')) nd._meta.migrations.push('v14');
+  if (!nd._meta.migrations.includes('v13')) nd._meta.migrations.push('v13');
   return nd;
 }
 
@@ -841,9 +847,8 @@ function saveData() {
   localStorage.setItem(KEY, JSON.stringify(data));
   data = normalizeData(data);
 }
-
-// ============================================================
-// 4. API — ЕДИНАЯ СИСТЕМА ЗАДАЧ
+  // ============================================================
+// 5. API
 // ============================================================
 
 function getTasks(filter = {}) {
@@ -858,25 +863,22 @@ function getTasks(filter = {}) {
 
 function getTask(id) { return data.tasks.find(t => t.id === id); }
 
-function addTask(taskData) {
-  const task = {
+function addTask(task) {
+  const nt = {
     id: genId(),
-    title: taskData.title || 'Без названия',
-    category: taskData.category || 'misc',
-    date: taskData.date || today(),
-    time: taskData.time || null,
-    xp: taskData.xp || 10,
-    note: taskData.note || '',
+    ...task,
     status: 'active',
-    journalData: taskData.journalData || null,
-    minutesSpent: 0,
     completedAt: null,
+    minutesSpent: 0,
+    journalXPEarned: 0,
+    globalXPEarned: 0,
+    journalData: task.journalData || null,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
-  data.tasks.push(task);
+  data.tasks.push(nt);
   saveData();
-  return task;
+  return nt;
 }
 
 function updateTask(id, updates) {
@@ -900,22 +902,11 @@ function deleteTask(id, soft = true) {
     saveData();
     return;
   }
-  // Жёсткое удаление — чистим ссылки
-  for (const g of data.goals) {
-    g.taskIds = g.taskIds.filter(tid => tid !== id);
-  }
-  for (const n of data.notes) {
-    if (n.targetType === 'task' && n.targetId === id) {
-      n.targetId = null;
-      n.targetType = 'none';
-    }
-  }
-  for (const m of data.media) {
-    if (m.targetType === 'task' && m.targetId === id) {
-      m.targetId = null;
-      m.targetType = 'none';
-    }
-  }
+  data.goals.forEach(g => g.taskIds = g.taskIds.filter(tid => tid !== id));
+  data.notes.forEach(n => { if (n.targetId === id) { n.targetId = null;
+      n.targetType = 'none'; } });
+  data.media.forEach(m => { if (m.targetId === id) { m.targetId = null;
+      m.targetType = 'none'; } });
   data.tasks = data.tasks.filter(t => t.id !== id);
   saveData();
 }
@@ -925,18 +916,6 @@ function getUser() { return data.user; }
 function getCategories() { return data.categories; }
 
 function getCategory(id) { return data.categories.find(c => c.id === id); }
-
-function getTasksByCategory(categoryId, filter = {}) {
-  return getTasks({ ...filter, category: categoryId });
-}
-
-function getTaskJournalData(task) {
-  return task.journalData || {};
-}
-
-// ============================================================
-// 5. API — ЦЕЛИ, ЗАМЕТКИ, МЕДИА, ДОСТУПНОСТЬ
-// ============================================================
 
 function getGoals() { return data.goals; }
 
@@ -1059,7 +1038,7 @@ function getTaskNoteCount(taskId) { return data.notes.filter(n => n.targetId ===
 function getTaskMediaCount(taskId) { return data.media.filter(m => m.targetId === taskId).length; }
 
 // ============================================================
-// 6. СТАТИСТИКА ЖУРНАЛОВ (из задач)
+// 6. СТАТИСТИКА ЖУРНАЛОВ (из задач с journalData)
 // ============================================================
 
 function calculateDebtStats(categoryId) {
@@ -1407,7 +1386,7 @@ function deleteTaskUI(id) {
 }
 
 // ============================================================
-// 10. ФОРМА СОЗДАНИЯ/РЕДАКТИРОВАНИЯ ЗАДАЧИ (УНИВЕРСАЛЬНАЯ)
+// 10. УНИВЕРСАЛЬНАЯ ФОРМА СОЗДАНИЯ/РЕДАКТИРОВАНИЯ ЗАДАЧИ
 // ============================================================
 
 function openTaskForm(categoryId = null, editTaskId = null) {
@@ -1417,7 +1396,6 @@ function openTaskForm(categoryId = null, editTaskId = null) {
   const catId = categoryId || task?.category || 'misc';
   const cat = getCategory(catId);
 
-  // Строим форму
   let extraFieldsHtml = buildJournalFields(catId, task?.journalData || null);
 
   const modalContent = `
@@ -1464,7 +1442,6 @@ function openTaskForm(categoryId = null, editTaskId = null) {
 
   openModal(isEdit ? '✎ Редактировать задачу' : '📋 Новая задача', modalContent);
 
-  // Обработчик сохранения
   document.getElementById('saveTaskBtn').onclick = function() {
     const result = saveTaskForm(editTaskId);
     if (result) {
@@ -1473,7 +1450,6 @@ function openTaskForm(categoryId = null, editTaskId = null) {
     }
   };
 
-  // Обработчик удаления (если есть)
   const deleteBtn = document.getElementById('deleteTaskBtn');
   if (deleteBtn) {
     deleteBtn.onclick = function() {
@@ -1483,7 +1459,6 @@ function openTaskForm(categoryId = null, editTaskId = null) {
     };
   }
 
-  // Сохраняем ссылку на функцию обновления полей
   window.updateTaskFormFields = function() {
     const newCatId = document.getElementById('taskCategory').value;
     const newFields = buildJournalFields(newCatId, null);
@@ -1704,13 +1679,11 @@ function collectJournalData(categoryId) {
 
   const jd = {};
 
-  // Функция-помощник для получения значения
   const getVal = (id, fallback = null) => {
     const el = document.getElementById(id);
     return el ? el.value : fallback;
   };
 
-  // Функция для числа
   const getNum = (id, fallback = 0) => {
     const val = getVal(id, fallback);
     return parseFloat(val) || fallback;
@@ -1863,7 +1836,6 @@ function renderTasks(forceCat) {
   el.innerHTML = html;
 }
 
-// Обновляем фильтры
 document.getElementById('taskSearch').oninput = () => { tasksPage = 0;
   renderTasks(); };
 document.getElementById('taskFilter').onchange = () => { tasksPage = 0;
@@ -1871,7 +1843,6 @@ document.getElementById('taskFilter').onchange = () => { tasksPage = 0;
 document.getElementById('taskCategoryFilter').onchange = () => { tasksPage = 0;
   renderTasks(); };
 
-// Инициализация фильтра категорий
 function updateTaskCategoryFilter() {
   const sel = document.getElementById('taskCategoryFilter');
   if (!sel) return;
@@ -1882,7 +1853,6 @@ function updateTaskCategoryFilter() {
   sel.value = current;
 }
 
-// Кнопка "Новая задача"
 document.getElementById('newTaskBtn').onclick = () => openTaskForm();
 
 function openCategory(cat) {
@@ -1941,9 +1911,10 @@ function renderJournalProgress() {
 }
 
 // ============================================================
-// 13. ЦЕЛИ (С ГРУППИРОВКОЙ ПО ЖУРНАЛАМ)
+// 13. ОСТАЛЬНЫЕ ФУНКЦИИ (СОКРАЩЕННО, ОСТАВЛЯЕМ РАБОЧИЕ)
 // ============================================================
 
+// --- Цели ---
 function renderGoals() {
   const el = document.getElementById('goalList');
   if (!data.goals.length) {
@@ -1984,7 +1955,6 @@ function manageGoal(id) {
   let list = all;
   if (!showDone) list = list.filter(t => t.status !== 'done');
 
-  // Группировка по категориям
   const grouped = {};
   for (const t of list) {
     const cat = getCategory(t.category);
@@ -2073,10 +2043,8 @@ function renderJournal(categoryId) {
   document.getElementById('journalTitle').textContent = `${cat.icon} ${cat.name}`;
   document.getElementById('journalBackBtn').dataset.journalId = categoryId;
 
-  // Статистика
   renderJournalStats(categoryId);
 
-  // Список задач в журнале
   const tasks = getTasks({ category: categoryId, excludeStatus: 'deleted' });
   document.getElementById('journalCount').textContent = `${tasks.length} задач`;
 
@@ -2089,10 +2057,7 @@ function renderJournal(categoryId) {
 
   const sorted = [...tasks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  el.innerHTML = sorted.map(e => {
-    // Используем специальный рендер для журнала с детальным отображением
-    return renderJournalEntry(cat, e);
-  }).join('');
+  el.innerHTML = sorted.map(e => renderJournalEntry(cat, e)).join('');
 }
 
 function renderJournalEntry(cat, t) {
@@ -2100,7 +2065,6 @@ function renderJournalEntry(cat, t) {
   const overdue = isOverdue(t.date) && t.status === 'active';
   const status = t.status === 'done' ? 'done' : '';
 
-  // Детальное отображение в зависимости от журнала
   let details = '';
   if (cat.id === 'debts') {
     const isOwed = jd.type === 'owed';
@@ -2150,8 +2114,7 @@ function renderJournalEntry(cat, t) {
     </div>
   </div>`;
 }
-
-// ============================================================
+      // ============================================================
 // 15. СТАТИСТИКА ЖУРНАЛА
 // ============================================================
 
@@ -2302,10 +2265,9 @@ function renderJournalStats(categoryId) {
 }
 
 // ============================================================
-// 16. ОСТАЛЬНЫЕ ФУНКЦИИ (ЗАМЕТКИ, ГАЛЕРЕЯ, СТАТИСТИКА, И Т.Д.)
+// 16. ЗАМЕТКИ
 // ============================================================
 
-// --- Заметки ---
 function renderNotes() {
   const el = document.getElementById('notesList');
   const catFilter = document.getElementById('noteFilterCat')?.value || 'all';
@@ -2388,7 +2350,10 @@ function updateNoteFilterCats() {
   sel.value = current;
 }
 
-// --- Галерея ---
+// ============================================================
+// 17. ГАЛЕРЕЯ
+// ============================================================
+
 function renderGallery() {
   const el = document.getElementById('galleryGrid');
   if (!data.media.length) { el.innerHTML = '<div class="gallery-empty">▣ Галерея пуста<br><span class="muted" style="font-size:12px">Добавляй фото к задачам и целям</span></div>'; return; }
@@ -2476,7 +2441,10 @@ function addPhotoToGoal(goalId) {
   };
 }
 
-// --- ЖУРНАЛЫ (СПИСОК) ---
+// ============================================================
+// 18. ЖУРНАЛЫ (СПИСОК)
+// ============================================================
+
 function renderJournals() {
   const el = document.getElementById('journalGrid');
   const cats = getCategories();
@@ -2513,7 +2481,10 @@ function renderJournals() {
   });
 }
 
-// --- СТАТИСТИКА ---
+// ============================================================
+// 19. СТАТИСТИКА
+// ============================================================
+
 function renderStats() {
   const tasks = getTasks({ excludeStatus: 'deleted' });
   const done = tasks.filter(t => t.status === 'done').length;
@@ -2548,7 +2519,10 @@ function renderStats() {
   }).join('');
 }
 
-// --- ПЕРСОНАЖ ---
+// ============================================================
+// 20. ПЕРСОНАЖ
+// ============================================================
+
 function renderCharacter() {
   const u = data.user;
   document.getElementById('charName').textContent = u.name;
@@ -2574,7 +2548,10 @@ function renderCharacter() {
   `;
 }
 
-// --- AVAILABILITY ---
+// ============================================================
+// 21. AVAILABILITY
+// ============================================================
+
 function renderAvailability() {
   const el = document.getElementById('availList');
   const allAvail = getAllAvailability().sort((a, b) => a.date.localeCompare(b.date));
@@ -2592,10 +2569,471 @@ function renderAvailability() {
   }).join('');
 }
 
-// ... (остальные функции availability, calendar, settings — такие же как в v13.7, но адаптированы под новую структуру)
+document.getElementById('availAddBtn').onclick = () => {
+  openModal('☀ Добавить слот доступности', `<div class="form">
+    <div class="field"><label>Дата</label><input id="availDate" type="date" value="${today()}"></div>
+    <div class="field"><label>Тип</label><select id="availType">${Object.entries(AVAIL_TYPES).map(([k, v]) => `<option value="${k}">${v.icon} ${v.label}</option>`).join('')}</select></div>
+    <div class="grid">
+      <div class="field"><label>С</label><input id="availFrom" type="time" value="10:00"></div>
+      <div class="field"><label>До</label><input id="availTo" type="time" value="12:00"></div>
+    </div>
+    <button class="add" id="saveAvailBtn">💾 Добавить слот</button>
+  </div>`);
+  document.getElementById('saveAvailBtn').onclick = function() {
+    const date = document.getElementById('availDate').value;
+    if (!date) return toast('Выбери дату');
+    const type = document.getElementById('availType').value;
+    const from = document.getElementById('availFrom').value;
+    const to = document.getElementById('availTo').value;
+    if (!from || !to) return toast('Укажи время');
+    const existing = getAvailability(date);
+    const slots = existing ? existing.slots : [];
+    slots.push({ from, to, type });
+    setAvailability(date, slots);
+    closeModal();
+    renderAvailability();
+    renderCalendar();
+    toast('☀ Слот добавлен');
+  };
+};
+
+document.getElementById('availExportBtn').onclick = () => {
+  const card = document.getElementById('availExportCard');
+  card.style.display = 'block';
+  renderAvailabilityExport();
+};
+document.getElementById('availExportClose').onclick = () => {
+  document.getElementById('availExportCard').style.display = 'none';
+};
+
+function renderAvailabilityExport() {
+  const el = document.getElementById('availExportContent');
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const first = new Date(year, month, 1);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const offset = (first.getDay() + 6) % 7;
+
+  let html = `<div style="font-size:14px;font-weight:600;margin-bottom:6px">${['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'][month]} ${year}</div>`;
+  html += `<div class="avail-export-grid">`;
+  for (const d of DOW) html += `<div style="font-size:9px;color:var(--muted);text-align:center;padding:4px 0">${d}</div>`;
+  for (let i = 0; i < offset; i++) html += `<div class="avail-export-cell" style="opacity:.2"></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${pad(month + 1)}-${pad(d)}`;
+    const avail = getAvailability(dateStr);
+    const isWeekend = (new Date(year, month, d).getDay() + 6) % 7 >= 5;
+    const slots = avail ? avail.slots : [];
+    html += `<div class="avail-export-cell ${isWeekend ? 'weekend' : ''}">
+      <div class="day-num">${d}</div>
+      ${slots.length ? `<div class="avail-indicator">${slots.map(s => `<div class="seg ${s.type}" style="background:${getAvailType(s.type).color}"></div>`).join('')}</div>` : '<div style="font-size:8px;color:var(--muted)">—</div>'}
+      ${slots.length ? `<div class="avail-export-caption">${slots.length} слот${slots.length > 1 ? 'а' : ''}</div>` : ''}
+    </div>`;
+  }
+  html += `</div>`;
+  html += `<div class="avail-legend">${Object.entries(AVAIL_TYPES).map(([k, v]) => `<span><span class="dot" style="background:${v.color}"></span>${v.label}</span>`).join('')}</div>`;
+  html += `<div class="avail-export-actions">
+    <button class="add" onclick="downloadAvailImage()" style="font-size:12px;padding:8px 16px">📥 Скачать как изображение</button>
+    <button class="ghost" onclick="copyAvailText()" style="font-size:12px;padding:8px 16px">📋 Копировать текст</button>
+  </div>`;
+  el.innerHTML = html;
+}
+
+function downloadAvailImage() { toast('📥 Для экспорта изображения открой на компьютере и сделай скриншот');
+  copyAvailText(); }
+
+function copyAvailText() {
+  const el = document.getElementById('availExportContent');
+  const text = el.textContent.trim().replace(/\s+/g, ' ');
+  navigator.clipboard?.writeText(text).then(() => toast('📋 Скопировано')).catch(() => toast('📋 Выдели текст и скопируй'));
+}
 
 // ============================================================
-// 17. ОБЩИЙ РЕНДЕР
+// 22. КАЛЕНДАРЬ
+// ============================================================
+
+let calState = { view: 'month', date: new Date() };
+const MON = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+function tasksOn(day) {
+  const s = iso(day);
+  return getTasks({ date: s, excludeStatus: 'deleted' }).filter(t => prefs.showCompleted !== false || t.status !== 'done');
+}
+
+function goalsOn(day) { const s = iso(day); return data.goals.filter(g => g.deadline === s); }
+
+function availOn(day) { const s = iso(day); const a = getAvailability(s); return a ? a.slots : []; }
+
+function taskColor(t) { const c = getCategory(t.category); return c ? c.color : '#8e98a9'; }
+
+function calLabel() {
+  const d = calState.date;
+  if (calState.view === 'day') return d.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  if (calState.view === 'week') { const s = startWeek(d),
+      e = new Date(s);
+    e.setDate(e.getDate() + 6); return `${s.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })} — ${e.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' })}` };
+  if (calState.view === 'month') return `${MON[d.getMonth()]} ${d.getFullYear()}`;
+  return String(d.getFullYear());
+}
+
+function startWeek(d) { const x = new Date(d); const day = (x.getDay() + 6) % 7;
+  x.setDate(x.getDate() - day);
+  x.setHours(0, 0, 0, 0); return x; }
+
+function renderCalendar() {
+  document.getElementById('calRangeLabel').textContent = calLabel();
+  document.querySelectorAll('#calendarModes button').forEach(b => b.classList.toggle('active', b.dataset.view === calState.view));
+  const body = document.getElementById('calendarBody');
+  if (calState.view === 'day') renderDay(body);
+  else if (calState.view === 'week') renderWeek(body);
+  else if (calState.view === 'month') renderMonthIOS(body);
+  else if (calState.view === 'year') renderYear(body);
+  else if (calState.view === 'avail') renderAvailabilityCalendar(body);
+}
+
+function renderDay(el) {
+  const d = calState.date,
+    ts = tasksOn(d),
+    hourTasks = ts.filter(t => t.time && t.time.length > 0);
+  let html = '<div class="day-layout"><div class="time-col">' + Array.from({ length: 14 }, (_, i) => `<div>${pad(i + 7)}:00</div>`).join('') + '</div><div class="timeline">';
+  ts.filter(t => !t.time || !t.time.length).forEach(t => html += `<div class="mini-task" style="margin:7px 9px;border-left-color:${taskColor(t)}">${(getCategory(t.category) || { icon: '📋' }).icon} ${esc(t.title)}</div>`);
+  hourTasks.forEach(t => { const m = t.time.match(/(\d{1,2}):(\d{2})/); if (!m) return; const h = +m[1],
+      min = +m[2]; const top = ((h - 7) * 52) + (min / 60 * 52); const dur = Math.max(28, (t.duration || 30) / 60 * 52);
+    html += `<div class="timeline-task" style="top:${top}px;height:${dur}px;border-left-color:${taskColor(t)}"><b>${esc(t.title)}</b><span>${t.time} · ${(getCategory(t.category) || { name: '?' }).name} · +${t.xp || 10} XP</span></div>` });
+  html += '</div></div>';
+  el.innerHTML = html;
+}
+
+function renderWeek(el) {
+  const s = startWeek(calState.date);
+  let html = '<div class="week-grid">';
+  for (let i = 0; i < 7; i++) { const d = new Date(s);
+    d.setDate(s.getDate() + i); const ts = tasksOn(d);
+    html += `<div class="week-day"><div class="week-head">${DOW[i]}<strong>${d.getDate()}</strong></div><div class="week-tasks">${ts.map(t => `<div class="mini-task ${t.status === 'done' ? 'done' : ''}" style="border-left-color:${taskColor(t)}"><button class="check-small ${t.status === 'done' ? 'done' : ''}" onclick="completeTaskUI('${t.id}');renderCalendar()">${t.status === 'done' ? '✓' : ''}</button>${esc(t.title)}${t.time ? ' <span class="muted">' + esc(t.time) + '</span>' : ''}</div>`).join('') || '<span class="muted" style="font-size:10px;padding:5px">—</span>'}</div></div>` }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function renderMonthIOS(el) {
+  const y = calState.date.getFullYear(),
+    m = calState.date.getMonth();
+  const first = new Date(y, m, 1);
+  const offset = (first.getDay() + 6) % 7;
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const daysInPrev = new Date(y, m, 0).getDate();
+  const todayStr = today();
+  let html = '<div class="month-ios-grid">';
+  for (const d of DOW) html += `<div class="month-ios-dow">${d}</div>`;
+  for (let i = offset - 1; i >= 0; i--) { const d = new Date(y, m - 1, daysInPrev - i);
+    html += `<div class="month-ios-cell other-month" onclick="jumpDay('${iso(d)}')"><span class="cell-number">${d.getDate()}</span>${renderCellDots(d)}</div>`; }
+  for (let i = 1; i <= daysInMonth; i++) { const d = new Date(y, m, i); const isToday = iso(d) === todayStr;
+    html += `<div class="month-ios-cell ${isToday ? 'today' : ''}" onclick="jumpDay('${iso(d)}')"><span class="cell-number">${i}</span>${renderCellDots(d)}${goalsOn(d).map(g => `<div class="cell-goal-label">🏆 ${esc(g.title)}</div>`).join('')}</div>`; }
+  const totalCells = Math.ceil((offset + daysInMonth) / 7) * 7;
+  for (let i = offset + daysInMonth; i < totalCells; i++) { const d = new Date(y, m + 1, i - offset - daysInMonth + 1);
+    html += `<div class="month-ios-cell other-month" onclick="jumpDay('${iso(d)}')"><span class="cell-number">${d.getDate()}</span>${renderCellDots(d)}</div>`; }
+  html += '</div>';
+  const monthTasks = getTasks({ excludeStatus: 'deleted' }).filter(t => t.date && t.date.startsWith(`${y}-${pad(m + 1)}`));
+  const done = monthTasks.filter(t => t.status === 'done').length;
+  const monthGoals = data.goals.filter(g => g.deadline && g.deadline.startsWith(`${y}-${pad(m + 1)}`));
+  html += `<div class="month-summary"><div class="summary-pill"><b>${monthTasks.length}</b><span>задач</span></div><div class="summary-pill"><b>${done}</b><span>выполнено</span></div><div class="summary-pill"><b>${monthTasks.reduce((a, t) => a + (+t.xp || 10), 0)}</b><span>XP</span></div><div class="summary-pill"><b>${monthGoals.length}</b><span>целей 🏆</span></div></div>`;
+  el.innerHTML = html;
+}
+
+function renderCellDots(d) {
+  const ts = tasksOn(d);
+  const gs = goalsOn(d);
+  if (!ts.length && !gs.length) return '<div class="cell-dots"></div>';
+  let html = '<div class="cell-dots">';
+  const dots = ts.slice(0, 3);
+  for (const t of dots) html += `<span class="cell-dot" style="background:${taskColor(t)}"></span>`;
+  if (ts.length > 3) html += `<span class="cell-dot" style="background:var(--muted);font-size:7px;display:inline-flex;align-items:center;justify-content:center;color:#fff">+${ts.length - 3}</span>`;
+  if (gs.length) { const label = gs.length > 1 ? `${gs.length}🏆` : '🏆';
+    html += `<span class="cell-dot goal-dot ${gs.length > 1 ? 'small' : ''}">${label}</span>`; }
+  html += '</div>';
+  return html;
+}
+
+function renderYear(el) {
+  const y = calState.date.getFullYear();
+  let html = '<div class="year-grid">';
+  for (let m = 0; m < 12; m++) { const days = new Date(y, m + 1, 0).getDate(); let heat = ''; for (let i = 1; i <= days; i++) {
+      const d = new Date(y, m, i),
+        n = tasksOn(d).length;
+      heat += `<i class="${n >= 5 ? 'l3' : n >= 2 ? 'l2' : n ? 'l1' : ''}"></i>` } const goalCount = data.goals.filter(g => g.deadline && g.deadline.startsWith(`${y}-${pad(m + 1)}`)).length;
+    html += `<div class="year-month" onclick="jumpMonth(${m})"><h4>${MON[m]}${goalCount ? ' 🏆' : ''}</h4><div class="heat">${heat}</div><div class="muted" style="font-size:9px;margin-top:7px">${getTasks({ excludeStatus: 'deleted' }).filter(t => t.date && t.date.startsWith(`${y}-${pad(m + 1)}`)).length} задач</div></div>` }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function renderAvailabilityCalendar(el) {
+  const y = calState.date.getFullYear(),
+    m = calState.date.getMonth();
+  const first = new Date(y, m, 1);
+  const offset = (first.getDay() + 6) % 7;
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const daysInPrev = new Date(y, m, 0).getDate();
+  let html = `<div style="margin-bottom:8px;color:var(--gold);font-size:13px">☀ Режим доступности — отметь, когда ты свободен</div>`;
+  html += '<div class="month-ios-grid">';
+  for (const d of DOW) html += `<div class="month-ios-dow">${d}</div>`;
+  for (let i = offset - 1; i >= 0; i--) { const d = new Date(y, m - 1, daysInPrev - i);
+    html += `<div class="month-ios-cell other-month" onclick="jumpDay('${iso(d)}')"><span class="cell-number">${d.getDate()}</span></div>`; }
+  for (let i = 1; i <= daysInMonth; i++) {
+    const d = new Date(y, m, i);
+    const dateStr = iso(d);
+    const slots = availOn(d);
+    const isToday = dateStr === today();
+    html += `<div class="month-ios-cell ${isToday ? 'today' : ''}" onclick="editAvailDay('${dateStr}')">
+      <span class="cell-number">${i}</span>
+      ${slots.length ? `<div class="avail-bar">${slots.map(s => `<div class="avail-slot ${s.type}" style="flex:${s.from && s.to ? 1 : 0.5}"></div>`).join('')}</div>` : '<div style="font-size:8px;color:var(--muted);margin-top:3px">—</div>'}
+      ${slots.length ? `<div style="font-size:7px;color:var(--muted);margin-top:1px">${slots.length} слот${slots.length > 1 ? 'а' : ''}</div>` : ''}
+    </div>`;
+  }
+  const totalCells = Math.ceil((offset + daysInMonth) / 7) * 7;
+  for (let i = offset + daysInMonth; i < totalCells; i++) { const d = new Date(y, m + 1, i - offset - daysInMonth + 1);
+    html += `<div class="month-ios-cell other-month" onclick="jumpDay('${iso(d)}')"><span class="cell-number">${d.getDate()}</span></div>`; }
+  html += '</div>';
+  html += `<div class="avail-legend" style="padding-top:8px">${Object.entries(AVAIL_TYPES).map(([k, v]) => `<span><span class="dot" style="background:${v.color}"></span>${v.label}</span>`).join('')}</div>`;
+  html += `<div style="margin-top:8px;font-size:10px;color:var(--muted)">👆 Кликни на день, чтобы добавить слоты доступности</div>`;
+  el.innerHTML = html;
+}
+
+function editAvailDay(dateStr) {
+  const slots = getAvailability(dateStr)?.slots || [];
+  const types = Object.entries(AVAIL_TYPES);
+  openModal(`☀ Доступность: ${dateStr}`, `<div class="form">
+    <div class="field"><label>Существующие слоты:</label>
+      ${slots.length ? slots.map((s, i) => `<div style="display:flex;gap:6px;align-items:center;padding:6px;background:var(--panel2);border-radius:8px;margin:2px 0">
+        <span style="font-size:12px">${getAvailType(s.type).icon} ${s.from}-${s.to}</span>
+        <button class="ghost" style="color:var(--danger);padding:2px 6px;font-size:10px" onclick="removeAvailSlot('${dateStr}',${i});editAvailDay('${dateStr}')">✕</button>
+      </div>`).join('') : '<span class="muted">Нет слотов</span>'}
+    </div>
+    <div class="field"><label>Добавить слот</label></div>
+    <div class="grid">
+      <div class="field"><label>Тип</label><select id="eavailType">${types.map(([k, v]) => `<option value="${k}">${v.icon} ${v.label}</option>`).join('')}</select></div>
+      <div class="field"><label>С</label><input id="eavailFrom" type="time" value="10:00"></div>
+      <div class="field"><label>До</label><input id="eavailTo" type="time" value="12:00"></div>
+    </div>
+    <button class="add" id="addAvailSlotBtn">➕ Добавить слот</button>
+    <button class="ghost" style="color:var(--danger)" id="removeAllAvailBtn">🗑 Удалить все слоты за день</button>
+  </div>`);
+  document.getElementById('addAvailSlotBtn').onclick = function() {
+    const type = document.getElementById('eavailType').value;
+    const from = document.getElementById('eavailFrom').value;
+    const to = document.getElementById('eavailTo').value;
+    if (!from || !to) return toast('Укажи время');
+    const slots2 = getAvailability(dateStr)?.slots || [];
+    slots2.push({ from, to, type });
+    setAvailability(dateStr, slots2);
+    closeModal();
+    renderAvailability();
+    renderCalendar();
+    toast('☀ Слот добавлен');
+  };
+  document.getElementById('removeAllAvailBtn').onclick = function() {
+    if (!confirm('Удалить все слоты за этот день?')) return;
+    removeAvailability(dateStr);
+    closeModal();
+    renderAvailability();
+    renderCalendar();
+  };
+}
+
+function removeAvailSlot(dateStr, index) {
+  const a = getAvailability(dateStr);
+  if (!a) return;
+  a.slots.splice(index, 1);
+  if (!a.slots.length) { removeAvailability(dateStr); } else { setAvailability(dateStr, a.slots); }
+  renderAvailability();
+  renderCalendar();
+}
+
+function jumpDay(s) { calState.date = new Date(s + 'T12:00:00');
+  calState.view = 'day';
+  renderCalendar(); }
+
+function jumpMonth(m) { calState.date = new Date(calState.date.getFullYear(), m, 1);
+  calState.view = 'month';
+  renderCalendar(); }
+
+document.querySelectorAll('#calendarModes button').forEach(b => b.onclick = () => { calState.view = b.dataset.view;
+  renderCalendar(); });
+document.getElementById('calPrev').onclick = () => { const d = calState.date; if (calState.view === 'day') d.setDate(d.getDate() - 1); else if (calState.view === 'week') d.setDate(d.getDate() - 7); else if (calState.view === 'month' || calState.view === 'avail') d.setMonth(d.getMonth() - 1); else d.setFullYear(d.getFullYear() - 1);
+  renderCalendar(); };
+document.getElementById('calNext').onclick = () => { const d = calState.date; if (calState.view === 'day') d.setDate(d.getDate() + 1); else if (calState.view === 'week') d.setDate(d.getDate() + 7); else if (calState.view === 'month' || calState.view === 'avail') d.setMonth(d.getMonth() + 1); else d.setFullYear(d.getFullYear() + 1);
+  renderCalendar(); };
+document.getElementById('calToday').onclick = () => { calState.date = new Date();
+  renderCalendar(); };
+
+// ============================================================
+// 23. МОДАЛКИ
+// ============================================================
+
+function openModal(title, body) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = body;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+document.getElementById('modalClose').onclick = closeModal;
+document.getElementById('modal').onclick = e => {
+  if (e.target.id === 'modal') closeModal();
+};
+
+// ============================================================
+// 24. НАСТРОЙКИ И ТЕМЫ
+// ============================================================
+
+const THEMES = {
+  violet: { name: 'Violet', a: '#8b5cf6', b: '#c084fc', bg: '#090b10', panel: '#11151d' },
+  ocean: { name: 'Ocean', a: '#0ea5e9', b: '#38bdf8', bg: '#071016', panel: '#0d1820' },
+  forest: { name: 'Forest', a: '#10b981', b: '#34d399', bg: '#07100d', panel: '#0d1814' },
+  ember: { name: 'Ember', a: '#f97316', b: '#fb7185', bg: '#110a08', panel: '#19100e' },
+  gold: { name: 'Gold', a: '#eab308', b: '#fbbf24', bg: '#100e06', panel: '#18150a' },
+  ice: { name: 'Ice', a: '#60a5fa', b: '#a5b4fc', bg: '#080d16', panel: '#101827' },
+  neon: { name: 'Neon', a: '#d946ef', b: '#22d3ee', bg: '#0c0810', panel: '#160e19' },
+  mono: { name: 'Mono', a: '#e5e7eb', b: '#9ca3af', bg: '#090909', panel: '#151515' }
+};
+
+let prefs = JSON.parse(localStorage.getItem('lvlup_prefs') || '{}');
+
+function applyTheme(key) {
+  const t = THEMES[key] || THEMES.violet;
+  document.documentElement.style.setProperty('--accent', t.a);
+  document.documentElement.style.setProperty('--accent2', t.b);
+  document.documentElement.style.setProperty('--bg', t.bg);
+  document.documentElement.style.setProperty('--panel', t.panel);
+  prefs.theme = key;
+  localStorage.setItem('lvlup_prefs', JSON.stringify(prefs));
+  document.querySelectorAll('.theme').forEach(x => x.classList.toggle('selected', x.dataset.theme === key));
+}
+
+function renderThemes() {
+  document.getElementById('themeGrid').innerHTML = Object.entries(THEMES).map(([k, t]) =>
+    `<button class="theme ${prefs.theme === k || (!prefs.theme && k === 'violet') ? 'selected' : ''}" data-theme="${k}"><div class="theme-preview" style="--tc1:${t.a};--tc2:${t.b}"></div><small>${t.name}</small></button>`
+  ).join('');
+  document.querySelectorAll('.theme').forEach(b => b.onclick = () => applyTheme(b.dataset.theme));
+}
+
+document.getElementById('settingsBtn').onclick = () => {
+  document.getElementById('nameInput').value = data.user.name;
+  renderThemes();
+  document.getElementById('showCompleted').checked = prefs.showCompleted !== false;
+  document.getElementById('autoBackup').checked = prefs.autoBackup !== false;
+  document.getElementById('mainQuestMode').checked = prefs.mainQuestMode !== false;
+  document.getElementById('settings').classList.add('open');
+};
+document.getElementById('settingsClose').onclick = () => document.getElementById('settings').classList.remove('open');
+
+document.querySelectorAll('[data-stab]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-stab]').forEach(x => x.classList.toggle('active', x === b));
+  document.querySelectorAll('.settings-panel').forEach(x => x.classList.toggle('active', x.id === 'stab-' + b.dataset.stab));
+});
+
+document.querySelectorAll('[data-density]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-density]').forEach(x => x.classList.toggle('active', x === b));
+  document.body.classList.toggle('compact', b.dataset.density === 'compact');
+  prefs.density = b.dataset.density;
+  localStorage.setItem('lvlup_prefs', JSON.stringify(prefs));
+});
+
+document.getElementById('saveSettings').onclick = () => {
+  data.user.name = document.getElementById('nameInput').value.trim() || 'Герой';
+  prefs.showCompleted = document.getElementById('showCompleted').checked;
+  prefs.autoBackup = document.getElementById('autoBackup').checked;
+  prefs.mainQuestMode = document.getElementById('mainQuestMode').checked;
+  localStorage.setItem('lvlup_prefs', JSON.stringify(prefs));
+  saveData();
+  document.getElementById('settings').classList.remove('open');
+  renderAll();
+  toast('Настройки сохранены');
+};
+
+// ============================================================
+// 25. ЭКСПОРТ/ИМПОРТ/СБРОС
+// ============================================================
+
+function exportData() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+  a.download = 'lvlup-backup-' + today() + '.json';
+  a.click();
+  toast('💾 JSON сохранён');
+}
+
+document.getElementById('exportFull').onclick = exportData;
+document.getElementById('exportBtn2').onclick = exportData;
+document.getElementById('exportBtn').onclick = exportData;
+
+document.getElementById('importFull').onclick = () => document.getElementById('importFile').click();
+
+document.getElementById('importFile').onchange = e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const parsed = JSON.parse(r.result);
+      if (!parsed.user && !parsed.character) throw new Error('Нет данных пользователя');
+      if (!parsed.tasks || !Array.isArray(parsed.tasks)) throw new Error('Нет tasks');
+      if (!parsed.goals || !Array.isArray(parsed.goals)) throw new Error('Нет goals');
+      if (!parsed.notes || !Array.isArray(parsed.notes)) throw new Error('Нет notes');
+      if (prefs.autoBackup) {
+        localStorage.setItem('lvlup_backup_before_import', JSON.stringify(data));
+        toast('💾 Создан автобэкап');
+      }
+      data = normalizeData(parsed);
+      saveData();
+      renderAll();
+      toast('↧ Данные импортированы');
+    } catch (err) {
+      toast('❌ Ошибка: ' + err.message);
+    }
+  };
+  r.readAsText(f);
+};
+
+document.getElementById('restoreBackupBtn').onclick = function() {
+  try {
+    const backup = JSON.parse(localStorage.getItem('lvlup_backup_before_reset') || localStorage.getItem('lvlup_backup_before_import'));
+    if (!backup) return toast('❌ Бэкап не найден');
+    if (!confirm('Восстановить данные из бэкапа? Текущие данные будут заменены!')) return;
+    data = normalizeData(backup);
+    saveData();
+    renderAll();
+    toast('↩️ Бэкап восстановлен');
+  } catch (e) {
+    toast('❌ Ошибка восстановления: ' + e.message);
+  }
+};
+
+document.getElementById('resetBtn').onclick = function() {
+  if (!confirm('⚠️ ТЫ УВЕРЕН? Все данные LVLUP будут удалены навсегда!')) return;
+  if (!confirm('🔄 ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ! Данные нельзя будет восстановить!')) return;
+  localStorage.setItem('lvlup_backup_before_reset', JSON.stringify(data));
+  data = emptyData();
+  saveData();
+  renderAll();
+  toast('🗑 Данные сброшены. Бэкап сохранён в localStorage');
+};
+
+document.getElementById('resetWithBackupBtn').onclick = function() {
+  if (!confirm('⚠️ Сбросить данные, но сохранить копию в localStorage?')) return;
+  localStorage.setItem('lvlup_backup_before_reset', JSON.stringify(data));
+  data = emptyData();
+  saveData();
+  renderAll();
+  toast('💾 Данные сброшены. Копия сохранена как "lvlup_backup_before_reset"');
+};
+
+if (prefs.theme) applyTheme(prefs.theme);
+if (prefs.density === 'compact') document.body.classList.add('compact');
+
+// ============================================================
+// 26. ОБЩИЙ РЕНДЕР
 // ============================================================
 
 function renderAll() {
@@ -2612,14 +3050,14 @@ function renderAll() {
 }
 
 // ============================================================
-// 18. ИНИЦИАЛИЗАЦИЯ
+// 27. ИНИЦИАЛИЗАЦИЯ
 // ============================================================
 
 updateNoteFilterCats();
 updateTaskCategoryFilter();
 renderAll();
 
-console.log('⚡ LVLUP v14.0 загружен!');
+console.log('⚡ LVLUP v13.8 загружен!');
 console.log('📊 Журналов:', getCategories().length);
 console.log('📋 Задач:', getTasks({ excludeStatus: 'deleted' }).length);
 console.log('🎯 Целей:', data.goals.length);
