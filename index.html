@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b0d12">
-<title>LVLUP v13.6 — Life RPG</title>
+<title>LVLUP v13.7 — Life RPG</title>
 <style>
 :root{
   --bg:#090b10;--panel:#11151d;--panel2:#171c26;--line:rgba(255,255,255,.08);
@@ -166,6 +166,15 @@ button:active{transform:scale(.98)}
 .journal-progress-item .jp-xp{font-size:10px;color:var(--muted);text-align:right}
 .journal-progress-item .jp-xp strong{color:var(--text)}
 .version-badge{text-align:center;font-size:10px;color:var(--muted);margin-top:12px;padding:4px 0;border-top:1px solid var(--line);opacity:.6}
+
+.goal-task-group{margin-top:8px;font-size:12px;color:var(--muted);font-weight:600;padding:4px 0;border-bottom:1px solid var(--line)}
+.goal-task-group:first-child{margin-top:0}
+.goal-task-list{max-height:400px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;padding:4px;background:var(--panel)}
+.goal-task-item{display:grid;grid-template-columns:32px 1fr auto;gap:8px;align-items:center;padding:6px 10px;border-radius:10px;cursor:pointer;transition:background .15s}
+.goal-task-item:hover{background:rgba(255,255,255,.04)}
+.goal-task-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.goal-task-item .task-title{font-size:13px}
+.goal-task-item .task-status{font-size:10px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -211,7 +220,7 @@ button:active{transform:scale(.98)}
         <div class="section-head"><h2>📊 Журналы</h2><span id="journalHint">прогресс</span></div>
         <div class="journal-progress" id="journalProgress"></div>
 
-        <div class="version-badge">LVLUP v13.6 · local-first</div>
+        <div class="version-badge">LVLUP v13.7 · local-first</div>
       </section>
 
       <!-- CALENDAR -->
@@ -345,7 +354,7 @@ button:active{transform:scale(.98)}
         <div class="section-head"><h2>••• Ещё</h2></div>
         <div class="card">
           <div class="row"><div><b>💾 Резервная копия</b><div class="muted">Данные сохраняются локально</div></div><button class="ghost" id="exportBtn2">Экспорт</button></div>
-          <div style="margin-top:18px;font-size:12px;color:var(--muted)">LVLUP v13.6 · local-first</div>
+          <div style="margin-top:18px;font-size:12px;color:var(--muted)">LVLUP v13.7 · local-first</div>
         </div>
       </section>
     </main>
@@ -388,13 +397,36 @@ button:active{transform:scale(.98)}
     </div>
   </div>
   <div class="settings-panel" id="stab-data">
-    <div class="settings-section"><b>Резервная копия</b>
-      <div class="settings-actions"><button class="add" id="exportFull">↥ Экспорт JSON</button><button class="ghost" id="importFull">↧ Импорт JSON</button><input type="file" id="importFile" accept=".json" hidden></div>
+    <div class="settings-section">
+      <b>📤 Резервная копия</b>
+      <div class="muted">Экспортируй данные перед крупными изменениями</div>
+      <div class="settings-actions">
+        <button class="add" id="exportFull">↥ Экспорт JSON</button>
+        <button class="ghost" id="importFull">↧ Импорт JSON</button>
+        <input type="file" id="importFile" accept=".json" hidden>
+      </div>
     </div>
-    <div class="settings-section"><b>Автобэкап</b>
-      <label class="switchline"><span>Создавать резервную копию автоматически</span><input id="autoBackup" type="checkbox" checked></label>
+    <div class="settings-section">
+      <b>💾 Автобэкап</b>
+      <div class="muted">Создаёт копию данных перед каждым импортом</div>
+      <label class="switchline">
+        <span>Создавать резервную копию автоматически</span>
+        <input id="autoBackup" type="checkbox" checked>
+      </label>
     </div>
-    <div class="settings-section danger-card"><b>Сброс данных</b><button class="ghost danger" id="resetBtn">Сбросить всё</button></div>
+    <div class="settings-section">
+      <b>🔄 Восстановление из бэкапа</b>
+      <div class="muted">Восстановить данные из последнего сохранённого бэкапа</div>
+      <button class="ghost" id="restoreBackupBtn" style="margin-top:6px">↩️ Восстановить из бэкапа</button>
+    </div>
+    <div class="settings-section danger-card">
+      <b style="color:var(--danger)">🗑 Сброс данных</b>
+      <div class="muted">Удалит все локальные данные LVLUP на этом устройстве. Это действие НЕОБРАТИМО!</div>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="ghost danger" id="resetBtn" style="padding:10px 20px;border-color:var(--danger);color:var(--danger)">🗑 Сбросить всё</button>
+        <button class="ghost" id="resetWithBackupBtn" style="padding:10px 20px">💾 Сбросить с бэкапом</button>
+      </div>
+    </div>
   </div>
   <div class="settings-panel" id="stab-devices">
     <div class="device-card"><div class="device-icon">⌚</div><div><b>Умные часы</b><div class="muted">Заглушка: быстрый чек-ин</div></div><span class="soon">СКОРО</span></div>
@@ -409,19 +441,19 @@ button:active{transform:scale(.98)}
     <div class="settings-section"><b>Начало недели</b><div class="segmented"><button class="active">Пн</button><button>Вс</button></div></div>
     <div class="settings-section"><b>Первый экран</b><div class="segmented"><button class="active">Главная</button><button>Календарь</button></div></div>
   </div>
-  <div class="settings-footer"><span class="muted">LVLUP v13.6 · local-first</span><button class="add" id="saveSettings">Сохранить</button></div>
+  <div class="settings-footer"><span class="muted">LVLUP v13.7 · local-first</span><button class="add" id="saveSettings">Сохранить</button></div>
 </div></div>
 
 <script>
 // ============================================================
-// LVLUP v13.6 — ВСЕ 8 ЖУРНАЛОВ
+// LVLUP v13.7 — ВСЕ 8 ЖУРНАЛОВ + УЛУЧШЕННЫЙ МЕНЕДЖЕР ЦЕЛЕЙ
 // ============================================================
 
 // ============================================================
 // 1. КОНСТАНТЫ
 // ============================================================
 const KEY = 'lvlup_v13';
-const APP_VERSION = 'v13.6';
+const APP_VERSION = 'v13.7';
 
 const DEFAULT_CATEGORIES = [
   { id: 'debts', name: 'Долги', icon: '💰', color: '#fb7185' },
@@ -1155,7 +1187,7 @@ function calculateBusinessStats(categoryId) {
 
 function calculateHobbyStats(categoryId) {
   const entries = getCategoryEntries(categoryId);
-  
+
   const totalMinutes = entries.reduce((sum, e) => sum + (e.minutes || 0), 0);
   const activeHobbies = new Set(entries.map(e => e.type)).size;
   const avgMinutes = entries.length ? Math.round(totalMinutes / entries.length) : 0;
@@ -1170,7 +1202,7 @@ function calculateHobbyStats(categoryId) {
 
 function calculateTravelStats(categoryId) {
   const entries = getCategoryEntries(categoryId);
-  
+
   const countries = entries.filter(e => e.type === 'Страна');
   const cities = entries.filter(e => e.type === 'Город');
   const totalDays = entries.reduce((sum, e) => sum + (e.duration || 0), 0);
@@ -1185,7 +1217,7 @@ function calculateTravelStats(categoryId) {
 
 function calculateMiscStats(categoryId) {
   const entries = getCategoryEntries(categoryId);
-  
+
   const highPriority = entries.filter(e => e.priority === 'Высокий');
   const mediumPriority = entries.filter(e => e.priority === 'Средний');
   const lowPriority = entries.filter(e => e.priority === 'Низкий');
@@ -1228,7 +1260,6 @@ function switchPage(p) {
 
 document.querySelectorAll('[data-page]').forEach(b => b.onclick = () => switchPage(b.dataset.page));
 
-// Открытие журнала
 function openJournal(categoryId) {
   switchPage('journal');
   document.getElementById('journalBackBtn').dataset.journalId = categoryId;
@@ -1518,7 +1549,7 @@ function createQuest() {
 }
 
 // ============================================================
-// 11. ЦЕЛИ
+// 11. ЦЕЛИ (С УЛУЧШЕННЫМ МЕНЕДЖЕРОМ)
 // ============================================================
 
 function renderGoals() {
@@ -1527,7 +1558,7 @@ function renderGoals() {
     el.innerHTML = '<div class="card empty" style="grid-column:1/-1">Создай большую цель и преврати её в приключение.</div>';
     return;
   }
-  el.innerHTML = data.goals.map((g, i) => {
+  el.innerHTML = data.goals.map((g) => {
     const tasks = g.taskIds.map(id => getTask(id)).filter(Boolean);
     const done = tasks.filter(t => t.status === 'done').length;
     const pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
@@ -1555,17 +1586,70 @@ function deleteGoalUI(id) { if (!confirm('Удалить цель?')) return;
 function manageGoal(id) {
   const g = getGoal(id);
   if (!g) return;
+
   const all = getTasks({ excludeStatus: 'deleted' });
   const showDone = document.getElementById('goalShowDone')?.checked || false;
   let list = all;
   if (!showDone) list = list.filter(t => t.status !== 'done');
-  openModal('Управление целью', `<div class="form">
-  <div class="field"><label>Название</label><input id="gname" value="${esc(g.title)}"></div>
-  <div class="field"><label>Дедлайн</label><input id="gdeadline" type="date" value="${g.deadline || ''}"></div>
-  <div class="field"><label><input type="checkbox" id="goalShowDone" ${showDone ? 'checked' : ''} onchange="manageGoal('${id}')"> Показывать выполненные</label></div>
-  <div class="field"><label>Задачи</label><div class="quest-list">${list.map(t => `<label class="quest" style="cursor:pointer"><input type="checkbox" data-gid="${t.id}" ${g.taskIds.includes(t.id) ? 'checked' : ''}><span>${esc(t.title)}</span><span class="muted">${(getCategory(t.category) || { name: '?' }).name}${t.status === 'done' ? ' ✓' : ''}</span></label>`).join('')}</div></div>
-  <button class="add" onclick="saveGoal('${id}')">Сохранить</button>
- </div>`);
+
+  // Группировка по категориям
+  const grouped = {};
+  for (const t of list) {
+    const cat = getCategory(t.category);
+    const catName = cat ? `${cat.icon} ${cat.name}` : '📋 Без категории';
+    if (!grouped[catName]) grouped[catName] = [];
+    grouped[catName].push(t);
+  }
+
+  // Сортируем категории по имени
+  const sortedCatNames = Object.keys(grouped).sort();
+
+  // Строим HTML с группировкой
+  let tasksHtml = '';
+  for (const catName of sortedCatNames) {
+    const tasks = grouped[catName];
+    tasksHtml += `<div class="goal-task-group">${catName}</div>`;
+    for (const t of tasks) {
+      const isChecked = g.taskIds.includes(t.id);
+      tasksHtml += `
+        <label class="goal-task-item">
+          <input type="checkbox" data-gid="${t.id}" ${isChecked ? 'checked' : ''}>
+          <span class="task-title">${esc(t.title)}</span>
+          <span class="task-status">${t.status === 'done' ? '✅' : '🔄'}</span>
+        </label>
+      `;
+    }
+  }
+
+  if (!sortedCatNames.length) {
+    tasksHtml = '<div class="empty" style="padding:16px">Нет доступных задач. Создай их в разделе "Задачи"</div>';
+  }
+
+  openModal('Управление целью', `
+    <div class="form">
+      <div class="field">
+        <label>Название</label>
+        <input id="gname" value="${esc(g.title)}">
+      </div>
+      <div class="field">
+        <label>Дедлайн</label>
+        <input id="gdeadline" type="date" value="${g.deadline || ''}">
+      </div>
+      <div class="field">
+        <label>
+          <input type="checkbox" id="goalShowDone" ${showDone ? 'checked' : ''} onchange="manageGoal('${id}')">
+          Показывать выполненные
+        </label>
+      </div>
+      <div class="field">
+        <label>Задачи (выбери из любого журнала)</label>
+        <div class="goal-task-list">
+          ${tasksHtml}
+        </div>
+      </div>
+      <button class="add" onclick="saveGoal('${id}')">💾 Сохранить</button>
+    </div>
+  `);
 }
 
 function saveGoal(id) {
@@ -1578,7 +1662,7 @@ function saveGoal(id) {
   saveData();
   closeModal();
   renderGoals();
-  toast('Цель обновлена');
+  toast('◈ Цель обновлена');
 }
 
 document.getElementById('newGoalBtn').onclick = () => openModal('◈ Новая цель', `<div class="form">
@@ -2723,7 +2807,7 @@ function renderCharacter() {
 }
 
 // ============================================================
-// 21. AVAILABILITY (СОКРАЩЕНО)
+// 21. AVAILABILITY
 // ============================================================
 
 function renderAvailability() {
@@ -2826,7 +2910,7 @@ function copyAvailText() {
 }
 
 // ============================================================
-// 22. КАЛЕНДАРЬ (СОКРАЩЕНО)
+// 22. КАЛЕНДАРЬ
 // ============================================================
 
 let calState = { view: 'month', date: new Date() };
@@ -3129,7 +3213,22 @@ document.getElementById('saveSettings').onclick = () => {
   toast('Настройки сохранены');
 };
 
+// ============================================================
+// 25. ЭКСПОРТ/ИМПОРТ/СБРОС
+// ============================================================
+
+function exportData() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+  a.download = 'lvlup-backup-' + today() + '.json';
+  a.click();
+  toast('💾 JSON сохранён');
+}
+
 document.getElementById('exportFull').onclick = exportData;
+document.getElementById('exportBtn2').onclick = exportData;
+document.getElementById('exportBtn').onclick = exportData;
+
 document.getElementById('importFull').onclick = () => document.getElementById('importFile').click();
 
 document.getElementById('importFile').onchange = e => {
@@ -3143,41 +3242,59 @@ document.getElementById('importFile').onchange = e => {
       if (!parsed.tasks || !Array.isArray(parsed.tasks)) throw new Error('Нет tasks');
       if (!parsed.goals || !Array.isArray(parsed.goals)) throw new Error('Нет goals');
       if (!parsed.notes || !Array.isArray(parsed.notes)) throw new Error('Нет notes');
-      if (prefs.autoBackup) localStorage.setItem('lvlup_backup_before_import', JSON.stringify(data));
+      if (prefs.autoBackup) {
+        localStorage.setItem('lvlup_backup_before_import', JSON.stringify(data));
+        toast('💾 Создан автобэкап');
+      }
       data = normalizeData(parsed);
       saveData();
       renderAll();
       toast('↧ Данные импортированы');
-    } catch (err) { toast('❌ Ошибка: ' + err.message) }
+    } catch (err) {
+      toast('❌ Ошибка: ' + err.message);
+    }
   };
   r.readAsText(f);
 };
 
-document.getElementById('resetBtn').onclick = () => {
-  if (confirm('Сбросить все данные LVLUP?')) {
-    data = emptyData();
+document.getElementById('restoreBackupBtn').onclick = function() {
+  try {
+    const backup = JSON.parse(localStorage.getItem('lvlup_backup_before_reset') || localStorage.getItem('lvlup_backup_before_import'));
+    if (!backup) return toast('❌ Бэкап не найден');
+    if (!confirm('Восстановить данные из бэкапа? Текущие данные будут заменены!')) return;
+    data = normalizeData(backup);
     saveData();
     renderAll();
-    toast('Данные сброшены');
+    toast('↩️ Бэкап восстановлен');
+  } catch (e) {
+    toast('❌ Ошибка восстановления: ' + e.message);
   }
 };
 
-document.getElementById('exportBtn2').onclick = exportData;
-document.getElementById('exportBtn').onclick = exportData;
+document.getElementById('resetBtn').onclick = function() {
+  if (!confirm('⚠️ ТЫ УВЕРЕН? Все данные LVLUP будут удалены навсегда!')) return;
+  if (!confirm('🔄 ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ! Данные нельзя будет восстановить!')) return;
+  localStorage.setItem('lvlup_backup_before_reset', JSON.stringify(data));
+  data = emptyData();
+  saveData();
+  renderAll();
+  toast('🗑 Данные сброшены. Бэкап сохранён в localStorage');
+};
 
-function exportData() {
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-  a.download = 'lvlup-backup-' + today() + '.json';
-  a.click();
-  toast('💾 JSON сохранён');
-}
+document.getElementById('resetWithBackupBtn').onclick = function() {
+  if (!confirm('⚠️ Сбросить данные, но сохранить копию в localStorage?')) return;
+  localStorage.setItem('lvlup_backup_before_reset', JSON.stringify(data));
+  data = emptyData();
+  saveData();
+  renderAll();
+  toast('💾 Данные сброшены. Копия сохранена как "lvlup_backup_before_reset"');
+};
 
 if (prefs.theme) applyTheme(prefs.theme);
 if (prefs.density === 'compact') document.body.classList.add('compact');
 
 // ============================================================
-// 25. ОБЩИЙ РЕНДЕР
+// 26. ОБЩИЙ РЕНДЕР
 // ============================================================
 
 function renderAll() {
@@ -3194,13 +3311,13 @@ function renderAll() {
 }
 
 // ============================================================
-// 26. ИНИЦИАЛИЗАЦИЯ
+// 27. ИНИЦИАЛИЗАЦИЯ
 // ============================================================
 
 updateNoteFilterCats();
 renderAll();
 
-console.log('⚡ LVLUP v13.6 загружен!');
+console.log('⚡ LVLUP v13.7 загружен!');
 console.log('📊 Журналов:', getCategories().length);
 console.log('📋 Задач:', getTasks({ excludeStatus: 'deleted' }).length);
 console.log('🎯 Целей:', data.goals.length);
