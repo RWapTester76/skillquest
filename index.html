@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0b0d12">
 <title>LVLUP v13.8 — Life RPG</title>
 <style>
+/* ===== ВСЕ СТИЛИ ИЗ ПРЕДЫДУЩЕЙ ВЕРСИИ ===== */
 :root{
   --bg:#090b10;--panel:#11151d;--panel2:#171c26;--line:rgba(255,255,255,.08);
   --text:#f5f7fb;--muted:#8e98a9;--accent:#8b5cf6;--accent2:#c084fc;
@@ -449,7 +450,7 @@ button:active{transform:scale(.98)}
 
 <script>
 // ============================================================
-// LVLUP v13.8 — ИСПРАВЛЕННАЯ ВЕРСИЯ
+// LVLUP v13.8 — ИСПРАВЛЕННАЯ ВЕРСИЯ (БЕЗ КУСКОВ КОДА НА ЭКРАНЕ)
 // ============================================================
 
 // ============================================================
@@ -583,7 +584,7 @@ function completeTaskWithTime(taskId, minutesSpent) {
 }
 
 // ============================================================
-// 3. ДАННЫЕ И МИГРАЦИЯ (ИСПРАВЛЕННАЯ)
+// 3. ДАННЫЕ И МИГРАЦИЯ
 // ============================================================
 
 function emptyData() {
@@ -623,10 +624,7 @@ function loadData() {
     const d = JSON.parse(raw);
     if (d.version !== 'v13') return migrateFromLegacy(d);
     return normalizeData(d);
-  } catch (e) {
-    console.warn('Ошибка загрузки, создаю пустые данные', e);
-    return emptyData();
-  }
+  } catch (e) { return emptyData(); }
 }
 
 function loadV12() {
@@ -640,7 +638,6 @@ function loadV12() {
 function migrateFromLegacy(oldData) {
   const nd = emptyData();
 
-  // 1. Пользователь
   nd.user.name = oldData.character?.name || 'Герой';
   nd.user.level = oldData.character?.level || 1;
   nd.user.xp = oldData.character?.xp || 0;
@@ -648,13 +645,11 @@ function migrateFromLegacy(oldData) {
   nd.user.streak = oldData.streak || 0;
   nd.user.createdAt = oldData.character?.createdAt || new Date().toISOString();
 
-  // 2. Категории
   const catMap = {};
   for (const c of nd.categories) {
     catMap[c.id] = c;
   }
 
-  // 3. Перенос существующих задач
   const taskMap = {};
   for (const [cat, arr] of Object.entries(oldData.tasks || {})) {
     for (const t of arr) {
@@ -692,7 +687,6 @@ function migrateFromLegacy(oldData) {
     }
   }
 
-  // 4. Перенос записей из журналов (entries → tasks с journalData)
   const standardFields = ['id', 'title', 'category', 'date', 'time', 'xp', 'note', 'status',
     'createdAt', 'updatedAt', 'minutesSpent', 'completedAt', 'journalData'
   ];
@@ -705,7 +699,6 @@ function migrateFromLegacy(oldData) {
       const id = e.id || genId();
       taskMap[id] = true;
 
-      // Базовая задача
       const task = {
         id: id,
         title: e.title || e.counterparty || e.name || e.text || 'Запись',
@@ -725,14 +718,12 @@ function migrateFromLegacy(oldData) {
         updatedAt: new Date().toISOString()
       };
 
-      // Копируем ВСЕ поля в journalData
       for (const [key, val] of Object.entries(e)) {
         if (!standardFields.includes(key) && val !== undefined && val !== null) {
           task.journalData[key] = val;
         }
       }
 
-      // Специфичные поля для каждого журнала
       if (c.id === 'debts') {
         task.journalData.type = e.type || 'owed';
         task.journalData.counterparty = e.counterparty || '';
@@ -789,7 +780,6 @@ function migrateFromLegacy(oldData) {
     }
   }
 
-  // 5. Цели
   for (const g of oldData.goals || []) {
     nd.goals.push({
       ...g,
@@ -797,7 +787,6 @@ function migrateFromLegacy(oldData) {
     });
   }
 
-  // 6. Заметки
   for (const n of oldData.notes || []) {
     nd.notes.push({
       ...n,
@@ -806,7 +795,6 @@ function migrateFromLegacy(oldData) {
     });
   }
 
-  // 7. Медиа
   for (const m of oldData.media || []) {
     nd.media.push({
       ...m,
@@ -819,7 +807,6 @@ function migrateFromLegacy(oldData) {
   nd._meta.migrations = ['v13'];
   nd._meta.lastReset = oldData.lastReset || null;
 
-  // Сохраняем результат миграции
   localStorage.setItem(KEY, JSON.stringify(nd));
   return nd;
 }
@@ -1473,6 +1460,10 @@ function openTaskForm(categoryId = null, editTaskId = null) {
   };
 }
 
+// ============================================================
+// 10. buildJournalFields — ИСПРАВЛЕННАЯ (БЕЗ <script>)
+// ============================================================
+
 function buildJournalFields(categoryId, existingData) {
   const cat = getCategory(categoryId);
   if (!cat) return '';
@@ -1588,19 +1579,6 @@ function buildJournalFields(categoryId, existingData) {
             <input id="jd_amount" type="number" value="${existingData?.amount || ''}" placeholder="0" step="1">
           </div>
         </div>
-        <script>
-          document.getElementById('jd_type')?.addEventListener('change', function() {
-            const mealFields = document.getElementById('foodMealFields');
-            const waterFields = document.getElementById('foodWaterFields');
-            if (this.value === 'water') {
-              mealFields.style.display = 'none';
-              waterFields.style.display = 'block';
-            } else {
-              mealFields.style.display = 'block';
-              waterFields.style.display = 'none';
-            }
-          });
-        </script>
       `;
 
     case 'business':
@@ -1679,6 +1657,10 @@ function buildJournalFields(categoryId, existingData) {
       return '';
   }
 }
+
+// ============================================================
+// 11. collectJournalData и saveTaskForm
+// ============================================================
 
 function collectJournalData(categoryId) {
   const cat = getCategory(categoryId);
@@ -1790,7 +1772,7 @@ function saveTaskForm(editTaskId) {
 }
 
 // ============================================================
-// 10. ОТОБРАЖЕНИЕ ЗАДАЧ (РАЗДЕЛ "ЗАДАЧИ")
+// 12. ОТОБРАЖЕНИЕ ЗАДАЧ (РАЗДЕЛ "ЗАДАЧИ")
 // ============================================================
 
 function renderTasks(forceCat) {
@@ -1872,7 +1854,7 @@ function openCategory(cat) {
 }
 
 // ============================================================
-// 11. HOME
+// 13. HOME
 // ============================================================
 
 function renderHome() {
@@ -1918,7 +1900,7 @@ function renderJournalProgress() {
 }
 
 // ============================================================
-// 12. ОСТАЛЬНЫЕ ФУНКЦИИ (СОКРАЩЕННО)
+// 14. ЦЕЛИ
 // ============================================================
 
 function renderGoals() {
@@ -2036,7 +2018,7 @@ function createGoal() {
 }
 
 // ============================================================
-// 13. ЖУРНАЛ (ОТДЕЛЬНАЯ СТРАНИЦА)
+// 15. ЖУРНАЛ (ОТДЕЛЬНАЯ СТРАНИЦА)
 // ============================================================
 
 function renderJournal(categoryId) {
@@ -2122,7 +2104,7 @@ function renderJournalEntry(cat, t) {
 }
 
 // ============================================================
-// 14. СТАТИСТИКА ЖУРНАЛА
+// 16. СТАТИСТИКА ЖУРНАЛА
 // ============================================================
 
 function renderJournalStats(categoryId) {
@@ -2272,7 +2254,7 @@ function renderJournalStats(categoryId) {
 }
 
 // ============================================================
-// 15. ЗАМЕТКИ
+// 17. ЗАМЕТКИ
 // ============================================================
 
 function renderNotes() {
@@ -2358,7 +2340,7 @@ function updateNoteFilterCats() {
 }
 
 // ============================================================
-// 16. ГАЛЕРЕЯ
+// 18. ГАЛЕРЕЯ
 // ============================================================
 
 function renderGallery() {
@@ -2449,7 +2431,7 @@ function addPhotoToGoal(goalId) {
 }
 
 // ============================================================
-// 17. ЖУРНАЛЫ (СПИСОК)
+// 19. ЖУРНАЛЫ (СПИСОК)
 // ============================================================
 
 function renderJournals() {
@@ -2489,7 +2471,7 @@ function renderJournals() {
 }
 
 // ============================================================
-// 18. СТАТИСТИКА
+// 20. СТАТИСТИКА
 // ============================================================
 
 function renderStats() {
@@ -2527,7 +2509,7 @@ function renderStats() {
 }
 
 // ============================================================
-// 19. ПЕРСОНАЖ
+// 21. ПЕРСОНАЖ
 // ============================================================
 
 function renderCharacter() {
@@ -2556,7 +2538,7 @@ function renderCharacter() {
 }
 
 // ============================================================
-// 20. AVAILABILITY (СОКРАЩЕНО)
+// 22. AVAILABILITY (СОКРАЩЕНО)
 // ============================================================
 
 function renderAvailability() {
@@ -2605,7 +2587,7 @@ document.getElementById('availAddBtn').onclick = () => {
 };
 
 // ============================================================
-// 21. КАЛЕНДАРЬ (СОКРАЩЕНО)
+// 23. КАЛЕНДАРЬ (СОКРАЩЕНО)
 // ============================================================
 
 let calState = { view: 'month', date: new Date() };
@@ -2821,7 +2803,7 @@ document.getElementById('calToday').onclick = () => { calState.date = new Date()
   renderCalendar(); };
 
 // ============================================================
-// 22. МОДАЛКИ
+// 24. МОДАЛКИ
 // ============================================================
 
 function openModal(title, body) {
@@ -2840,7 +2822,7 @@ document.getElementById('modal').onclick = e => {
 };
 
 // ============================================================
-// 23. НАСТРОЙКИ И ТЕМЫ
+// 25. НАСТРОЙКИ И ТЕМЫ
 // ============================================================
 
 const THEMES = {
@@ -2909,7 +2891,7 @@ document.getElementById('saveSettings').onclick = () => {
 };
 
 // ============================================================
-// 24. ЭКСПОРТ/ИМПОРТ/СБРОС
+// 26. ЭКСПОРТ/ИМПОРТ/СБРОС
 // ============================================================
 
 function exportData() {
@@ -2989,7 +2971,7 @@ if (prefs.theme) applyTheme(prefs.theme);
 if (prefs.density === 'compact') document.body.classList.add('compact');
 
 // ============================================================
-// 25. ОБЩИЙ РЕНДЕР
+// 27. ОБЩИЙ РЕНДЕР
 // ============================================================
 
 function renderAll() {
@@ -3006,7 +2988,7 @@ function renderAll() {
 }
 
 // ============================================================
-// 26. ИНИЦИАЛИЗАЦИЯ
+// 28. ИНИЦИАЛИЗАЦИЯ
 // ============================================================
 
 updateNoteFilterCats();
