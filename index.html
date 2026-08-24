@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b0d12">
-<title>LVLUP v13.8 — Life RPG</title>
+<title>LVLUP v13.9 — Life RPG</title>
 <style>
 /* ===== ВСЕ СТИЛИ ИЗ ПРЕДЫДУЩЕЙ ВЕРСИИ ===== */
 :root{
@@ -182,7 +182,7 @@ button:active{transform:scale(.98)}
 <div class="app">
   <header class="header">
     <div class="brand"><div class="brand-mark">⚡</div>LVLUP</div>
-    <div class="header-actions"><button class="icon-btn" id="exportBtn">↥</button><button class="icon-btn" id="settingsBtn">⚙</button></div>
+    <div class="header-actions"><button class="icon-btn" id="voiceQuestBtn" title="Голосовая задача">🎙️</button><button class="icon-btn" id="exportBtn">↥</button><button class="icon-btn" id="settingsBtn">⚙</button></div>
   </header>
 
   <div class="layout">
@@ -221,7 +221,7 @@ button:active{transform:scale(.98)}
         <div class="section-head"><h2>📊 Журналы</h2><span id="journalHint">прогресс</span></div>
         <div class="journal-progress" id="journalProgress"></div>
 
-        <div class="version-badge">LVLUP v13.8 · local-first</div>
+        <div class="version-badge">LVLUP v13.9 · local-first</div>
       </section>
 
       <!-- CALENDAR -->
@@ -274,15 +274,25 @@ button:active{transform:scale(.98)}
       <section class="page" id="page-notes">
         <div class="section-head"><h2>✎ Заметки</h2><button class="add" id="newNoteBtn">+ Заметка</button></div>
         <div class="toolbar">
+          <input id="noteSearch" placeholder="Поиск по заметкам…">
           <select id="noteFilterCat"><option value="all">Все журналы</option></select>
-          <select id="noteFilterSort"><option value="date">По дате ↓</option><option value="date_asc">По дате ↑</option></select>
+          <select id="noteFilterLink">
+            <option value="all">Все заметки</option>
+            <option value="task">Только из задач</option>
+            <option value="none">Только свободные</option>
+          </select>
+          <select id="noteFilterSort">
+            <option value="date">По дате ↓</option>
+            <option value="date_asc">По дате ↑</option>
+            <option value="task">По задаче</option>
+          </select>
         </div>
         <div class="card" style="margin-top:12px"><div class="quest-list" id="notesList"></div></div>
       </section>
 
       <!-- GALLERY -->
       <section class="page" id="page-gallery">
-        <div class="section-head"><h2>▣ Галерея</h2></div>
+        <div class="section-head"><h2>▣ Галерея</h2><button class="add" id="addPhotoBtn">+ Добавить фото</button></div>
         <div class="gallery-grid" id="galleryGrid"></div>
       </section>
 
@@ -358,7 +368,7 @@ button:active{transform:scale(.98)}
         <div class="section-head"><h2>••• Ещё</h2></div>
         <div class="card">
           <div class="row"><div><b>💾 Резервная копия</b><div class="muted">Данные сохраняются локально</div></div><button class="ghost" id="exportBtn2">Экспорт</button></div>
-          <div style="margin-top:18px;font-size:12px;color:var(--muted)">LVLUP v13.8 · local-first</div>
+          <div style="margin-top:18px;font-size:12px;color:var(--muted)">LVLUP v13.9 · local-first</div>
         </div>
       </section>
     </main>
@@ -445,19 +455,19 @@ button:active{transform:scale(.98)}
     <div class="settings-section"><b>Начало недели</b><div class="segmented"><button class="active">Пн</button><button>Вс</button></div></div>
     <div class="settings-section"><b>Первый экран</b><div class="segmented"><button class="active">Главная</button><button>Календарь</button></div></div>
   </div>
-  <div class="settings-footer"><span class="muted">LVLUP v13.8 · local-first</span><button class="add" id="saveSettings">Сохранить</button></div>
+  <div class="settings-footer"><span class="muted">LVLUP v13.9 · local-first</span><button class="add" id="saveSettings">Сохранить</button></div>
 </div></div>
 
 <script>
 // ============================================================
-// LVLUP v13.8 — ИСПРАВЛЕННАЯ ВЕРСИЯ (БЕЗ КУСКОВ КОДА НА ЭКРАНЕ)
+// LVLUP v13.9 — ИСПРАВЛЕННАЯ ВЕРСИЯ (БЕЗ КУСКОВ КОДА НА ЭКРАНЕ)
 // ============================================================
 
 // ============================================================
 // 1. КОНСТАНТЫ
 // ============================================================
 const KEY = 'lvlup_v13';
-const APP_VERSION = 'v13.8';
+const APP_VERSION = 'v13.9';
 
 const DEFAULT_CATEGORIES = [
   { id: 'debts', name: 'Долги', icon: '💰', color: '#fb7185' },
@@ -488,6 +498,7 @@ function genId() {
 function today() { return new Date().toISOString().slice(0, 10); }
 function iso(d) { return d.toISOString().slice(0, 10); }
 function pad(n) { return String(n).padStart(2, '0'); }
+function daysBetween(dateStrA, dateStrB) { return Math.round((new Date(dateStrB) - new Date(dateStrA)) / 86400000); } // разница в днях между ISO-датами
 
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, m => ({
@@ -531,6 +542,8 @@ function completeTaskWithTime(taskId, minutesSpent) {
   const task = getTask(taskId);
   if (!task) return;
   if (task.status === 'done') return toast('⚠️ Задача уже выполнена');
+  // Защитная проверка на случай прямого вызова в обход completeTaskUI
+  if (task.date && task.date > today()) return toast('⏳ Нельзя завершить задачу из будущего (' + task.date + ')');
 
   const cat = getCategory(task.category);
   if (!cat) return;
@@ -570,7 +583,15 @@ function completeTaskWithTime(taskId, minutesSpent) {
   task.completedAt = new Date().toISOString();
   task.minutesSpent = minutesSpent;
 
-  data.user.streak = (data.user.streak || 0) + 1;
+  // Серия считается по дням, а не по количеству выполненных задач:
+  // несколько задач в один день не увеличивают счётчик повторно,
+  // а разрыв в сутки и больше сбрасывает серию на 1.
+  const todayStr = today();
+  if (data.user.lastActiveDate !== todayStr) {
+    const gap = data.user.lastActiveDate ? daysBetween(data.user.lastActiveDate, todayStr) : null;
+    data.user.streak = gap === 1 ? (data.user.streak || 0) + 1 : 1;
+    data.user.lastActiveDate = todayStr;
+  }
   saveData();
 
   let msg = `✅ "${task.title}" выполнена!`;
@@ -597,6 +618,7 @@ function emptyData() {
       xp: 0,
       totalXp: 0,
       streak: 0,
+      lastActiveDate: null, // ISO-дата последнего выполнения задачи — для корректного подсчёта серии по дням
       createdAt: new Date().toISOString()
     },
     categories: DEFAULT_CATEGORIES.map(c => ({
@@ -1330,6 +1352,10 @@ function completeTaskUI(id) {
   if (!t) return;
   if (t.status === 'done') {
     toast('⚠️ Задача уже выполнена');
+    return;
+  }
+  if (t.date && t.date > today()) {
+    toast('⏳ Нельзя завершить задачу из будущего (' + t.date + ')');
     return;
   }
 
@@ -2260,12 +2286,27 @@ function renderJournalStats(categoryId) {
 function renderNotes() {
   const el = document.getElementById('notesList');
   const catFilter = document.getElementById('noteFilterCat')?.value || 'all';
+  const linkFilter = document.getElementById('noteFilterLink')?.value || 'all';
   const sort = document.getElementById('noteFilterSort')?.value || 'date';
+  const search = (document.getElementById('noteSearch')?.value || '').toLowerCase().trim();
+
   let notes = [...data.notes];
   if (catFilter !== 'all') notes = notes.filter(n => n.category === catFilter);
+  if (linkFilter === 'task') notes = notes.filter(n => n.targetType === 'task' && n.targetId);
+  else if (linkFilter === 'none') notes = notes.filter(n => n.targetType !== 'task' || !n.targetId);
+  if (search) notes = notes.filter(n => n.text.toLowerCase().includes(search));
+
   if (sort === 'date') notes.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-  else notes.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
-  if (!notes.length) { el.innerHTML = '<div class="empty">Заметок пока нет. Создай первую ✎</div>'; return; }
+  else if (sort === 'date_asc') notes.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+  else if (sort === 'task') notes.sort((a, b) => {
+    const ta = a.targetType === 'task' ? (getTask(a.targetId)?.title || '') : '';
+    const tb = b.targetType === 'task' ? (getTask(b.targetId)?.title || '') : '';
+    if (!ta && tb) return 1;
+    if (ta && !tb) return -1;
+    return ta.localeCompare(tb) || new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+  });
+
+  if (!notes.length) { el.innerHTML = '<div class="empty">Заметок не найдено.</div>'; return; }
   el.innerHTML = notes.map(n => {
     const task = n.targetId && n.targetType === 'task' ? getTask(n.targetId) : null;
     const cat = getCategory(n.category);
@@ -2274,12 +2315,26 @@ function renderNotes() {
       <div><div class="quest-title">${esc(n.text)}</div>
       <div class="quest-meta">${n.date || ''}${cat ? ' · ' + cat.icon + ' ' + cat.name : ''}${task ? ' · задача: ' + esc(task.title) : ''}</div></div>
       <div style="display:flex;gap:4px;align-items:center">
-        ${task ? `<button class="ghost" style="padding:4px 6px;font-size:11px" onclick="switchPage('quests')">🔗</button>` : ''}
+        ${task ? `<button class="ghost" style="padding:4px 6px;font-size:11px" onclick="jumpToTask('${task.id}')">🔗</button>` : ''}
         <button class="ghost" style="padding:4px 6px;font-size:12px;color:var(--danger)" onclick="deleteNoteUI('${n.id}')">✕</button>
       </div>
     </div>`;
   }).join('');
 }
+
+function jumpToTask(taskId) {
+  const t = getTask(taskId);
+  if (!t) return toast('❌ Задача не найдена (возможно, удалена)');
+  switchPage('quests');
+  document.getElementById('taskSearch').value = t.title;
+  document.getElementById('taskFilter').value = 'all';
+  document.getElementById('taskCategoryFilter').value = 'all';
+  tasksPage = 0;
+  renderTasks();
+}
+
+document.getElementById('noteSearch')?.addEventListener('input', renderNotes);
+document.getElementById('noteFilterLink')?.addEventListener('change', renderNotes);
 
 function deleteNoteUI(id) { deleteNote(id);
   renderNotes();
@@ -2384,6 +2439,40 @@ function deletePhotoUI(id) { if (!confirm('Удалить фото?')) return;
   renderGallery();
   toast('▣ Фото удалено'); }
 
+document.getElementById('addPhotoBtn').onclick = () => addPhotoStandalone();
+
+function addPhotoStandalone() {
+  const tasks = getTasks({ excludeStatus: 'deleted' });
+  openModal('▣ Добавить фото', `<div class="form">
+    <div class="field"><label>Подпись</label><input id="photoCaptionFree" placeholder="Что на фото?"></div>
+    <div class="field"><label>Привязать (необязательно)</label>
+      <select id="photoLinkFree">
+        <option value="">— без привязки —</option>
+        ${tasks.map(t => `<option value="${t.id}">📋 ${esc(t.title)}</option>`).join('')}
+        ${data.goals.map(g => `<option value="goal:${g.id}">◈ ${esc(g.title)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field"><label>Фото</label><input id="photoFileFree" type="file" accept="image/*"></div>
+    <button class="add" id="savePhotoFreeBtn">💾 Добавить фото</button>
+  </div>`);
+  document.getElementById('savePhotoFreeBtn').onclick = function() {
+    const file = document.getElementById('photoFileFree').files[0];
+    if (!file) return toast('Выбери фото');
+    const linkVal = document.getElementById('photoLinkFree').value;
+    let targetType = 'none', targetId = null;
+    if (linkVal.startsWith('goal:')) { targetType = 'goal'; targetId = linkVal.slice(5); }
+    else if (linkVal) { targetType = 'task'; targetId = linkVal; }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      addMedia({ dataUrl: e.target.result, caption: document.getElementById('photoCaptionFree').value.trim(), targetType, targetId });
+      closeModal();
+      renderGallery();
+      toast('▣ Фото добавлено');
+    };
+    reader.readAsDataURL(file);
+  };
+}
+
 function addPhotoToTask(taskId) {
   const task = getTask(taskId);
   if (!task) return;
@@ -2429,6 +2518,169 @@ function addPhotoToGoal(goalId) {
     reader.readAsDataURL(file);
   };
 }
+
+// ============================================================
+// 18b. ГОЛОСОВЫЕ ЗАДАЧИ (Web Speech API + разбор по правилам)
+// ============================================================
+
+const WEEKDAYS_RU = {
+  'воскресенье': 0, 'воскресенья': 0, 'воскресенью': 0,
+  'понедельник': 1, 'понедельника': 1, 'понедельнику': 1,
+  'вторник': 2, 'вторника': 2, 'вторнику': 2,
+  'среда': 3, 'среду': 3, 'среды': 3,
+  'четверг': 4, 'четверга': 4, 'четвергу': 4,
+  'пятница': 5, 'пятницу': 5, 'пятницы': 5,
+  'суббота': 6, 'субботу': 6, 'субботы': 6
+};
+
+const JOURNAL_KEYWORDS = {
+  debts: ['долг', 'должен', 'должна', 'займ', 'кредит', 'одолжил', 'одолжила', 'вернуть деньги'],
+  finance: ['заплатить', 'оплатить', 'счёт', 'счет', 'зарплата', 'потратил', 'потратила', 'купить', 'покупка', 'бюджет'],
+  body: ['тренировка', 'спортзал', 'зарядка', 'пробежка', 'бег', 'взвеситься', 'вес', 'сон', 'выспаться'],
+  food: ['поесть', 'ужин', 'обед', 'завтрак', 'перекус', 'вода', 'рецепт', 'приготовить'],
+  business: ['встреча', 'клиент', 'проект', 'созвон', 'дедлайн', 'презентация', 'отчёт', 'отчет', 'работа'],
+  hobby: ['рисовать', 'читать', 'книга', 'гитара', 'музыка', 'фото', 'хобби', 'рукоделие'],
+  travel: ['поездка', 'полёт', 'полет', 'отель', 'билеты', 'путешествие', 'аэропорт', 'виза']
+};
+
+// Возвращает { date: 'YYYY-MM-DD'|null, time: 'HH:MM'|null, cleanedText: string }
+function parseVoiceText(rawText) {
+  let text = ' ' + rawText.toLowerCase().trim() + ' ';
+  const now = new Date();
+  let date = null;
+  let time = null;
+
+  const setDateFromOffset = (days) => {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    date = iso(d);
+  };
+
+  if (/\bсегодня\b/.test(text)) { setDateFromOffset(0); text = text.replace(/\bсегодня\b/, ' '); }
+  else if (/\bпослезавтра\b/.test(text)) { setDateFromOffset(2); text = text.replace(/\bпослезавтра\b/, ' '); }
+  else if (/\bзавтра\b/.test(text)) { setDateFromOffset(1); text = text.replace(/\bзавтра\b/, ' '); }
+  else {
+    const throughDays = text.match(/через\s+(\d+)\s+д(ень|ня|ней)/);
+    const throughWeek = /через\s+недел/.test(text);
+    if (throughDays) { setDateFromOffset(parseInt(throughDays[1])); text = text.replace(throughDays[0], ' '); }
+    else if (throughWeek) { setDateFromOffset(7); text = text.replace(/через\s+недел\w*/, ' '); }
+    else {
+      for (const [word, wd] of Object.entries(WEEKDAYS_RU)) {
+        const re = new RegExp('\\bв\\s+' + word + '\\b|\\bна\\s+' + word + '\\b|\\b' + word + '\\b');
+        if (re.test(text)) {
+          let diff = (wd - now.getDay() + 7) % 7;
+          if (diff === 0) diff = 7; // ближайший в будущем, не сегодня
+          setDateFromOffset(diff);
+          text = text.replace(re, ' ');
+          break;
+        }
+      }
+    }
+  }
+
+  const hm = text.match(/\bв\s+(\d{1,2})[:.\s](\d{2})\b/);
+  const hOnly = text.match(/\bв\s+(\d{1,2})\s*час/);
+  if (hm) {
+    time = pad(parseInt(hm[1])) + ':' + hm[2];
+    text = text.replace(hm[0], ' ');
+  } else if (hOnly) {
+    time = pad(parseInt(hOnly[1])) + ':00';
+    text = text.replace(hOnly[0], ' ');
+  } else if (/\bутром\b/.test(text)) { time = '09:00'; text = text.replace(/\bутром\b/, ' '); }
+  else if (/\bднём\b|\bднем\b/.test(text)) { time = '13:00'; text = text.replace(/\bднём\b|\bднем\b/, ' '); }
+  else if (/\bвечером\b/.test(text)) { time = '18:00'; text = text.replace(/\bвечером\b/, ' '); }
+  else if (/\bночью\b/.test(text)) { time = '22:00'; text = text.replace(/\bночью\b/, ' '); }
+  else if (/\bполдень\b/.test(text)) { time = '12:00'; text = text.replace(/\bполдень\b/, ' '); }
+  else if (/\bполночь\b/.test(text)) { time = '00:00'; text = text.replace(/\bполночь\b/, ' '); }
+
+  let cleaned = text.replace(/^\s*(напомни(ть)?|поставь(те)?|добавь(те)?|запиши(те)?|мне)\s+/i, ' ')
+    .replace(/\s+/g, ' ').trim();
+  cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+
+  return { date, time, cleanedText: cleaned };
+}
+
+function guessJournal(text) {
+  const low = text.toLowerCase();
+  for (const [catId, words] of Object.entries(JOURNAL_KEYWORDS)) {
+    if (words.some(w => low.includes(w))) return catId;
+  }
+  return 'misc';
+}
+
+let voiceRecognition = null;
+
+function openVoiceQuestModal() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    toast('❌ Голосовой ввод не поддерживается этим браузером');
+    return;
+  }
+  openModal('🎙️ Голосовая задача', `<div class="form">
+    <div class="field" style="text-align:center">
+      <button class="add" id="voiceRecBtn" style="font-size:16px;padding:16px">🎙️ Начать запись</button>
+      <div class="muted" style="margin-top:8px;font-size:12px" id="voiceStatus">Скажи, например: «Напомни завтра в 18:00 позвонить в банк»</div>
+    </div>
+    <div class="field" id="voiceRawWrap" style="display:none">
+      <label>Распознано</label>
+      <div class="muted" id="voiceRawText" style="font-size:13px"></div>
+    </div>
+  </div>`);
+
+  document.getElementById('voiceRecBtn').onclick = () => {
+    const status = document.getElementById('voiceStatus');
+    voiceRecognition = new SR();
+    voiceRecognition.lang = 'ru-RU';
+    voiceRecognition.interimResults = false;
+    voiceRecognition.maxAlternatives = 1;
+
+    voiceRecognition.onstart = () => { status.textContent = '🔴 Слушаю…'; };
+    voiceRecognition.onerror = (e) => { status.textContent = '❌ Ошибка распознавания: ' + e.error; };
+    voiceRecognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      document.getElementById('voiceRawWrap').style.display = 'block';
+      document.getElementById('voiceRawText').textContent = '«' + transcript + '»';
+      status.textContent = '✅ Распознано, открываю подтверждение…';
+      setTimeout(() => openVoiceConfirm(transcript), 400);
+    };
+    voiceRecognition.start();
+  };
+}
+
+function openVoiceConfirm(rawText) {
+  const parsed = parseVoiceText(rawText);
+  const catId = guessJournal(parsed.cleanedText);
+  const cats = getCategories();
+
+  openModal('✅ Подтверди задачу', `<div class="form">
+    <div class="field"><label>Название</label><input id="vqTitle" value="${esc(parsed.cleanedText)}"></div>
+    <div class="grid">
+      <div class="field"><label>Дата</label><input id="vqDate" type="date" value="${parsed.date || today()}"></div>
+      <div class="field"><label>Время (необязательно)</label><input id="vqTime" type="time" value="${parsed.time || ''}"></div>
+    </div>
+    <div class="field"><label>Журнал</label>
+      <select id="vqCat">${cats.map(c => `<option value="${c.id}" ${c.id === catId ? 'selected' : ''}>${c.icon} ${c.name}</option>`).join('')}</select>
+    </div>
+    <div class="muted" style="font-size:11px">Исходная фраза: «${esc(rawText)}»</div>
+    <button class="add" onclick="saveVoiceQuest()">✅ Создать задачу</button>
+    <button class="ghost" onclick="openVoiceQuestModal()">🎙️ Записать заново</button>
+  </div>`);
+}
+
+function saveVoiceQuest() {
+  const title = document.getElementById('vqTitle').value.trim();
+  if (!title) return toast('Название не может быть пустым');
+  const date = document.getElementById('vqDate').value || today();
+  const time = document.getElementById('vqTime').value || null;
+  const category = document.getElementById('vqCat').value;
+
+  addTask({ title, category, date, time, note: '', journalData: {} });
+  closeModal();
+  renderAll();
+  toast('🎙️ Задача создана и добавлена в календарь');
+}
+
+document.getElementById('voiceQuestBtn').onclick = openVoiceQuestModal;
 
 // ============================================================
 // 19. ЖУРНАЛЫ (СПИСОК)
@@ -2592,6 +2844,7 @@ document.getElementById('availAddBtn').onclick = () => {
 
 let calState = { view: 'month', date: new Date() };
 const MON = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+const DOW = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']; // порядок недели с понедельника — совпадает с offset = (getDay()+6)%7 ниже
 
 function tasksOn(day) {
   const s = iso(day);
@@ -2995,7 +3248,7 @@ updateNoteFilterCats();
 updateTaskCategoryFilter();
 renderAll();
 
-console.log('⚡ LVLUP v13.8 загружен!');
+console.log('⚡ LVLUP v13.9 загружен!');
 console.log('📊 Журналов:', getCategories().length);
 console.log('📋 Задач:', getTasks({ excludeStatus: 'deleted' }).length);
 console.log('🎯 Целей:', data.goals.length);
