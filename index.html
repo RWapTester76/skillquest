@@ -3,74 +3,81 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0d12">
+<meta name="theme-color" content="#0c1016">
 <title>LVLUP v13.9 — Life RPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ===== ВСЕ СТИЛИ ИЗ ПРЕДЫДУЩЕЙ ВЕРСИИ ===== */
 :root{
-  --bg:#090b10;--panel:#11151d;--panel2:#171c26;--line:rgba(255,255,255,.08);
-  --text:#f5f7fb;--muted:#8e98a9;--accent:#8b5cf6;--accent2:#c084fc;
-  --good:#34d399;--warn:#fbbf24;--danger:#fb7185;--cyan:#38bdf8;--gold:#fbbf24;
-  --radius:22px;--shadow:0 20px 70px rgba(0,0,0,.35);
+  --bg:#0b0f15;--panel:#141a23;--panel2:#1a212b;--line:rgba(255,255,255,.075);
+  --text:#eef1f6;--muted:#8b93a6;--accent:#dd9c52;--accent2:#2dd4bf;
+  --good:#4ade80;--warn:#f0b94f;--danger:#f2617a;--cyan:#38bdf8;--gold:#dd9c52;
+  --radius:18px;--shadow:0 20px 60px rgba(0,0,0,.4);
+  --font-display:'Fraunces',Georgia,serif;--font-body:'Inter',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:radial-gradient(900px 500px at 20% -10%,rgba(139,92,246,.18),transparent 60%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+html,body{margin:0;min-height:100%;background:radial-gradient(1000px 560px at 15% -8%,rgba(221,156,82,.13),transparent 60%),radial-gradient(700px 500px at 100% 30%,rgba(45,212,191,.055),transparent 55%),var(--bg);color:var(--text);font-family:var(--font-body)}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 button:active{transform:scale(.98)}
 .app{width:min(1180px,100%);margin:auto;padding:18px 18px 110px}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.04em;font-size:24px}
-.brand-mark{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;box-shadow:0 8px 30px rgba(139,92,246,.35)}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;font-size:25px}
+.brand-mark{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--accent),#f0b96e);display:grid;place-items:center;box-shadow:0 8px 26px rgba(221,156,82,.3)}
 .header-actions{display:flex;gap:8px}
 .icon-btn,.ghost{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);border-radius:13px;padding:10px 12px}
 .layout{display:grid;grid-template-columns:240px 1fr;gap:18px}
 .sidebar{position:sticky;top:18px;height:fit-content;background:rgba(17,21,29,.82);border:1px solid var(--line);border-radius:24px;padding:10px;backdrop-filter:blur(18px)}
 .nav{display:flex;flex-direction:column;gap:5px}
 .nav button{border:0;background:transparent;color:var(--muted);text-align:left;padding:12px 13px;border-radius:14px;display:flex;gap:11px;align-items:center}
-.nav button.active{background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(192,132,252,.08));color:#fff}
+.nav button.active{background:linear-gradient(135deg,rgba(221,156,82,.2),rgba(45,212,191,.07));color:#fff}
 .nav .ico{width:22px;text-align:center}
 .main{min-width:0}
 .page{display:none;animation:up .22s ease}.page.active{display:block}
 @keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.hero{background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(56,189,248,.06) 55%,rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.09);border-radius:28px;padding:24px;box-shadow:var(--shadow);overflow:hidden;position:relative}
-.hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-100px;top:-130px;background:rgba(192,132,252,.12);filter:blur(2px)}
+.hero{background:linear-gradient(135deg,rgba(221,156,82,.16),rgba(45,212,191,.05) 55%,rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.09);border-radius:28px;padding:24px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-100px;top:-130px;background:rgba(45,212,191,.1);filter:blur(2px)}
 .hero-top{display:flex;justify-content:space-between;gap:20px;align-items:center}
 .eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;color:var(--muted);font-weight:800}
-.hero h1{font-size:clamp(28px,5vw,44px);line-height:1;margin:7px 0}
+.hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,5vw,44px);line-height:1;margin:7px 0}
 .hero p{margin:0;color:var(--muted)}
-.level-badge{background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:16px;padding:10px 14px;text-align:center;min-width:86px}
-.level-badge b{display:block;font-size:22px}.level-badge span{font-size:10px;color:var(--muted);text-transform:uppercase}
+.level-medallion{position:relative;width:92px;height:92px;flex-shrink:0}
+.level-medallion-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--pct,0)*1%),rgba(255,255,255,.09) 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 6px));mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 6px));transition:background .4s}
+.level-medallion-inner{position:absolute;inset:9px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 2px 10px rgba(0,0,0,.35)}
+.level-medallion-inner b{font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1;color:var(--accent)}
+.level-medallion-inner span{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 .xp{margin-top:22px}.xp-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px}
 .track{height:10px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s}
 .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
 .q{background:rgba(0,0,0,.17);border:1px solid var(--line);border-radius:17px;padding:13px}.q small{display:block;color:var(--muted);font-size:11px}.q strong{font-size:20px}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:24px 2px 11px}.section-head h2{font-size:18px;margin:0}.section-head span{font-size:12px;color:var(--muted)}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:24px 2px 11px}.section-head h2{font-family:var(--font-display);font-weight:600;font-size:19px;margin:0}.section-head span{font-size:12px;color:var(--muted)}
 .card{background:rgba(17,21,29,.82);border:1px solid var(--line);border-radius:20px;padding:16px}
 .quest-list{display:flex;flex-direction:column;gap:9px}
 .quest{display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:12px;cursor:pointer;transition:border-color .15s}
 .quest:hover{border-color:rgba(255,255,255,.15)}
 .quest.done{opacity:.55}.quest.done .check{background:rgba(52,211,153,.15);color:var(--good);border-color:rgba(52,211,153,.3)}
 .quest.overdue{border-color:rgba(251,113,133,.4);background:rgba(251,113,133,.08)}.quest.overdue .check{border-color:rgba(251,113,133,.3)}
-.quest-title{font-weight:750}.quest-meta{font-size:11px;color:var(--muted);margin-top:4px}.reward{font-weight:800;color:#d8b4fe;white-space:nowrap}
+.quest-title{font-weight:750}.quest-meta{font-size:11px;color:var(--muted);margin-top:4px}.reward{font-weight:800;color:var(--accent);white-space:nowrap}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .category{position:relative;overflow:hidden;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:border-color .2s}
 .category:hover{border-color:rgba(255,255,255,.15)}
-.category .big{font-size:28px}.category h3{margin:6px 0 2px}.category p{margin:0;color:var(--muted);font-size:12px}
+.category .big{font-size:28px}.category h3{margin:6px 0 2px;font-family:var(--font-display);font-weight:600}.category p{margin:0;color:var(--muted);font-size:12px}
 .category .count{font-size:12px;color:var(--muted)}
-.add{border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:11px 15px;border-radius:14px;font-weight:800;box-shadow:0 10px 25px rgba(139,92,246,.2)}
+.add{border:0;background:linear-gradient(135deg,var(--accent),#f0b96e);color:#20140a;padding:11px 15px;border-radius:14px;font-weight:800;box-shadow:0 10px 25px rgba(221,156,82,.22)}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar input,.toolbar select,.input{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:11px 13px;outline:0}.toolbar input{flex:1;min-width:180px}
-.goal{display:grid;gap:10px}.goal-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.goal-title{font-weight:800}.goal-pct{color:var(--muted);font-size:12px}.goal-deadline{font-size:11px;color:var(--gold)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}.stat b{font-size:26px}.stat span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.goal{display:grid;gap:10px}.goal-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.goal-title{font-family:var(--font-display);font-weight:600;font-size:15px}.goal-pct{color:var(--muted);font-size:12px}.goal-deadline{font-size:11px;color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}.stat b{font-family:var(--font-display);font-weight:700;font-size:27px}.stat span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
 .form{display:grid;gap:12px}.field{display:grid;gap:6px}.field label{font-size:12px;color:var(--muted)}.field input,.field textarea,.field select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:13px;padding:11px 12px;outline:0}.field textarea{min-height:90px;resize:vertical}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}.modal.open{display:flex}.modal-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#11151d;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modal-head h3{margin:0}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}.modal.open{display:flex}.modal-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#141a23;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modal-head h3{margin:0;font-family:var(--font-display);font-weight:600}
 .empty{padding:28px;text-align:center;color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#f5f7fb;color:#0b0d12;border-radius:14px;padding:11px 16px;font-weight:750;box-shadow:var(--shadow);z-index:50;animation:toast .25s ease}
 @keyframes toast{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 .bottom{display:none}
 .muted{color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.danger{color:var(--danger)}.good{color:var(--good)}
 @media(max-width:760px){
- .app{padding:12px 12px 92px}.layout{display:block}.sidebar{display:none}.bottom{position:fixed;display:grid;grid-template-columns:repeat(6,1fr);bottom:0;left:0;right:0;z-index:15;padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));background:rgba(9,11,16,.92);backdrop-filter:blur(20px);border-top:1px solid var(--line)}.bottom button{border:0;background:transparent;color:var(--muted);font-size:9px;padding:5px 2px;border-radius:12px}.bottom button.active{color:#fff;background:rgba(139,92,246,.16)}.bottom i{display:block;font-style:normal;font-size:17px;margin-bottom:2px}.header{margin-bottom:12px}.hero{padding:18px}.hero-top{align-items:flex-start}.quick{grid-template-columns:1fr 1fr 1fr}.grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.quest{grid-template-columns:38px 1fr auto}.check{width:38px;height:38px}
+ .app{padding:12px 12px 92px}.layout{display:block}.sidebar{display:none}.bottom{position:fixed;display:grid;grid-template-columns:repeat(6,1fr);bottom:0;left:0;right:0;z-index:15;padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));background:rgba(9,11,16,.92);backdrop-filter:blur(20px);border-top:1px solid var(--line)}.bottom button{border:0;background:transparent;color:var(--muted);font-size:9px;padding:5px 2px;border-radius:12px}.bottom button.active{color:#fff;background:rgba(221,156,82,.18)}.bottom i{display:block;font-style:normal;font-size:17px;margin-bottom:2px}.header{margin-bottom:12px}.hero{padding:18px}.hero-top{align-items:flex-start}.quick{grid-template-columns:1fr 1fr 1fr}.grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.quest{grid-template-columns:38px 1fr auto}.check{width:38px;height:38px}
 }
 @media(max-width:420px){.grid{gap:8px}.category{min-height:118px;padding:13px}.hero h1{font-size:29px}.quick .q{padding:10px}.q strong{font-size:17px}}
 
@@ -97,7 +104,7 @@ button:active{transform:scale(.98)}
 .avail-bar{height:4px;border-radius:99px;margin-top:3px;width:100%;display:flex;gap:1px;overflow:hidden}
 .avail-slot{height:100%;border-radius:2px;flex:1;min-width:2px}
 .avail-slot.work{background:#3b82f6}
-.avail-slot.rest{background:#8b5cf6}
+.avail-slot.rest{background:#7c93d6}
 .avail-slot.walk{background:#22d3ee}
 .avail-slot.meeting{background:#f59e0b}
 .avail-slot.sport{background:#10b981}
@@ -114,7 +121,7 @@ button:active{transform:scale(.98)}
 .week-grid{display:grid;grid-template-columns:repeat(7,1fr);min-height:520px}
 .week-day{border-right:1px solid var(--line);min-width:0}.week-day:last-child{border-right:0}
 .week-head{padding:10px 7px;border-bottom:1px solid var(--line);text-align:center;font-size:11px;color:var(--muted)}
-.week-head strong{display:block;color:var(--text);font-size:18px;margin-top:2px}
+.week-head strong{display:block;color:var(--text);font-family:var(--font-display);font-weight:600;font-size:19px;margin-top:2px}
 .week-tasks{padding:7px;display:flex;flex-direction:column;gap:5px}
 .mini-task{font-size:10px;padding:6px 7px;border-radius:8px;background:var(--panel2);border-left:3px solid var(--accent);line-height:1.2;display:flex;align-items:center;gap:6px}
 .mini-task .check-small{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;font-size:10px;color:var(--muted);padding:0;flex-shrink:0}
@@ -122,10 +129,10 @@ button:active{transform:scale(.98)}
 .mini-task.done{opacity:.45;text-decoration:line-through}
 .year-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px}
 .year-month{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:10px;cursor:pointer}.year-month:hover{border-color:rgba(255,255,255,.18)}
-.year-month h4{margin:0 0 8px;font-size:12px}.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.heat i{height:8px;border-radius:2px;background:rgba(255,255,255,.06)}.heat i.l1{background:rgba(139,92,246,.28)}.heat i.l2{background:rgba(139,92,246,.55)}.heat i.l3{background:rgba(192,132,252,.85)}
+.year-month h4{margin:0 0 8px;font-size:12px}.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.heat i{height:8px;border-radius:2px;background:rgba(255,255,255,.06)}.heat i.l1{background:rgba(221,156,82,.32)}.heat i.l2{background:rgba(221,156,82,.6)}.heat i.l3{background:rgba(45,212,191,.75)}
 .month-summary{padding:12px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .summary-pill{background:var(--panel2);border-radius:12px;padding:10px}.summary-pill b{display:block;font-size:18px}.summary-pill span{font-size:10px;color:var(--muted)}
-.settings-tabs{display:flex;gap:5px;overflow:auto;margin-bottom:15px;padding-bottom:2px}.settings-tabs button{border:0;background:transparent;color:var(--muted);padding:9px 11px;border-radius:12px;white-space:nowrap}.settings-tabs button.active{background:rgba(139,92,246,.16);color:#fff}
+.settings-tabs{display:flex;gap:5px;overflow:auto;margin-bottom:15px;padding-bottom:2px}.settings-tabs button{border:0;background:transparent;color:var(--muted);padding:9px 11px;border-radius:12px;white-space:nowrap}.settings-tabs button.active{background:rgba(221,156,82,.18);color:#fff}
 .settings-panel{display:none}.settings-panel.active{display:block}.settings-section{padding:14px 0;border-bottom:1px solid var(--line)}.settings-section:first-child{padding-top:0}
 .themes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:11px}.theme{border:1px solid var(--line);border-radius:14px;padding:8px;background:var(--panel2);text-align:left;color:#fff}.theme.selected{outline:2px solid var(--accent)}.theme-preview{height:34px;border-radius:9px;margin-bottom:7px;background:linear-gradient(135deg,var(--tc1),var(--tc2));position:relative}.theme-preview:after{content:"";position:absolute;right:7px;bottom:7px;width:18px;height:6px;border-radius:9px;background:rgba(255,255,255,.65)}.theme small{font-size:10px}
 .segmented{display:flex;background:var(--panel2);padding:3px;border-radius:12px;margin-top:9px}.segmented button{flex:1;border:0;background:transparent;color:var(--muted);padding:8px;border-radius:9px}.segmented button.active{background:rgba(255,255,255,.08);color:#fff}
@@ -134,7 +141,7 @@ button:active{transform:scale(.98)}
 .danger-card{border-bottom:0}.settings-footer{display:flex;justify-content:space-between;align-items:center;padding-top:14px}.settings-footer .muted{font-size:10px}
 .compact .quest{padding:8px}.compact .card{padding:12px}.compact .section-head{margin-top:16px}
 @media(max-width:760px){.calendar-head{align-items:flex-start}.calendar-head .toolbar{flex-shrink:0}.view-switch{overflow:auto}.view-switch button{padding:8px 11px}.day-layout{grid-template-columns:48px 1fr}.week-grid{min-width:720px}.calendar-card{overflow-x:auto}.month-ios-cell{min-height:60px;padding:4px 1px}.cell-number{font-size:13px}.month-ios-dow{padding:8px 2px 4px;font-size:9px}.year-grid{grid-template-columns:repeat(2,1fr);min-width:0}.month-summary{grid-template-columns:repeat(2,1fr)}.themes{grid-template-columns:repeat(2,1fr)}.settings-actions{flex-direction:column}}
-.period-day:checked + span{background:rgba(139,92,246,.25);color:#fff}.calendar-head h1{font-size:30px}@media(max-width:760px){.calendar-head h1{font-size:25px}}
+.period-day:checked + span{background:rgba(221,156,82,.28);color:#fff}.calendar-head h1{font-family:var(--font-display);font-weight:600;font-size:31px}@media(max-width:760px){.calendar-head h1{font-size:26px}}
 .note-tag{font-size:9px;background:rgba(255,255,255,.06);padding:2px 8px;border-radius:99px;color:var(--muted)}
 .note-cat{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:600}
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
@@ -206,7 +213,7 @@ button:active{transform:scale(.98)}
         <div class="hero">
           <div class="hero-top">
             <div><div class="eyebrow">Добро пожаловать в свою игру</div><h1 id="heroName">Герой</h1><p id="heroQuote">Сегодня стань на один уровень сильнее.</p></div>
-            <div class="level-badge"><b id="heroLevel">1</b><span>level</span></div>
+            <div class="level-medallion" id="levelMedallion" style="--pct:0"><div class="level-medallion-ring"></div><div class="level-medallion-inner"><b id="heroLevel">1</b><span>ур.</span></div></div>
           </div>
           <div class="xp"><div class="xp-row"><span>XP до следующего уровня</span><span id="xpText">0 / 120</span></div><div class="track"><div class="fill" id="xpFill" style="width:0%"></div></div></div>
           <div class="quick">
@@ -346,7 +353,7 @@ button:active{transform:scale(.98)}
         <div class="card" style="margin-bottom:12px">
           <div class="avail-legend">
             <span><span class="dot" style="background:#3b82f6"></span>Работа</span>
-            <span><span class="dot" style="background:#8b5cf6"></span>Отдых</span>
+            <span><span class="dot" style="background:#7c93d6"></span>Отдых</span>
             <span><span class="dot" style="background:#22d3ee"></span>Прогулка</span>
             <span><span class="dot" style="background:#f59e0b"></span>Встреча</span>
             <span><span class="dot" style="background:#10b981"></span>Спорт</span>
@@ -482,7 +489,7 @@ const DEFAULT_CATEGORIES = [
 
 const AVAIL_TYPES = {
   work: { label: 'Работа', icon: '💼', color: '#3b82f6' },
-  rest: { label: 'Отдых', icon: '🧘', color: '#8b5cf6' },
+  rest: { label: 'Отдых', icon: '🧘', color: '#7c93d6' },
   walk: { label: 'Прогулка', icon: '🚶', color: '#22d3ee' },
   meeting: { label: 'Встреча', icon: '🤝', color: '#f59e0b' },
   sport: { label: 'Спорт', icon: '🏃', color: '#10b981' },
@@ -548,7 +555,7 @@ function completeTaskWithTime(taskId, minutesSpent) {
   const cat = getCategory(task.category);
   if (!cat) return;
 
-  const journalXP = Math.round(minutesSpent);
+  const journalXP = Math.round(minutesSpent * 0.1);
   cat.xp = (cat.xp || 0) + journalXP;
   cat.totalXp = (cat.totalXp || 0) + journalXP;
   cat.minutesSpent = (cat.minutesSpent || 0) + minutesSpent;
@@ -562,7 +569,7 @@ function completeTaskWithTime(taskId, minutesSpent) {
     toast(`📈 ${cat.icon} ${cat.name} достиг ${cat.level} уровня!`);
   }
 
-  const baseGlobalXP = Math.round(minutesSpent * 0.1);
+  const baseGlobalXP = Math.round(minutesSpent * 0.05);
   const journalBonus = getJournalBonus();
   const globalLevelBonus = getGlobalLevelBonus();
   const totalBonus = journalBonus + globalLevelBonus;
@@ -635,6 +642,7 @@ function emptyData() {
     notes: [],
     media: [],
     availability: [],
+    savedMeals: [],
     _meta: { lastBackup: null, lastReset: null, migrations: [] }
   };
 }
@@ -852,6 +860,7 @@ function normalizeData(d) {
   nd.notes = Array.isArray(d.notes) ? d.notes : [];
   nd.media = Array.isArray(d.media) ? d.media : [];
   nd.availability = Array.isArray(d.availability) ? d.availability : [];
+  nd.savedMeals = Array.isArray(d.savedMeals) ? d.savedMeals : [];
   nd._meta = { ...nd._meta, ...d._meta };
   if (!nd._meta.migrations.includes('v13')) nd._meta.migrations.push('v13');
   return nd;
@@ -1068,10 +1077,11 @@ function calculateDebtStats(categoryId) {
   for (const t of tasks) {
     const jd = t.journalData || {};
     if (t.status === 'done') continue;
+    const bal = jd.balance != null ? jd.balance : (jd.amount || 0);
     if (jd.type === 'owed') {
-      owed += jd.amount || 0;
+      owed += bal;
     } else if (jd.type === 'owes') {
-      owes += jd.amount || 0;
+      owes += bal;
     }
     active++;
     if (jd.dateDue && jd.dateDue < today() && t.status !== 'done') {
@@ -1095,6 +1105,10 @@ function calculateFinanceStats(categoryId) {
     if (jd.type === 'income') { totalIncome += amount; } else if (jd.type === 'expense') {
       totalExpense += amount;
       if (jd.category) { categories[jd.category] = (categories[jd.category] || 0) + amount; }
+      if (jd.category2 && jd.amount2) {
+        totalExpense += jd.amount2;
+        categories[jd.category2] = (categories[jd.category2] || 0) + jd.amount2;
+      }
     } else if (jd.type === 'investment') { totalInvestment += amount; }
   }
 
@@ -1226,8 +1240,9 @@ function calculateTravelStats(categoryId) {
   const countries = tasks.filter(t => t.journalData?.type === 'Страна');
   const cities = tasks.filter(t => t.journalData?.type === 'Город');
   const totalDays = tasks.reduce((s, t) => s + (t.journalData?.duration || 0), 0);
+  const totalBudget = tasks.reduce((s, t) => s + (t.journalData?.budget || 0), 0);
 
-  return { total: tasks.length, countries: countries.length, cities: cities.length, totalDays };
+  return { total: tasks.length, countries: countries.length, cities: cities.length, totalDays, totalBudget };
 }
 
 function calculateMiscStats(categoryId) {
@@ -1303,20 +1318,28 @@ function taskHTML(t, showJournal = true) {
   let journalInfo = '';
   if (cat) {
     if (cat.id === 'debts' && jd.counterparty) {
-      journalInfo = ` · ${jd.counterparty} · ${jd.amount || 0}₽`;
+      const bal = jd.balance != null ? jd.balance : jd.amount || 0;
+      journalInfo = ` · ${jd.counterparty} · остаток ${bal}₽`;
     } else if (cat.id === 'finance' && jd.amount) {
-      journalInfo = ` · ${jd.amount}₽ (${jd.type === 'income' ? 'доход' : jd.type === 'expense' ? 'расход' : 'инвестиция'})`;
-    } else if (cat.id === 'body' && jd.value) {
-      const unit = jd.type === 'weight' ? 'кг' : jd.type === 'sleep' ? 'ч' : jd.type === 'water' ? 'ст' : 'мин';
-      journalInfo = ` · ${jd.value} ${unit}`;
+      journalInfo = ` · ${jd.amount}₽${jd.payee ? ' · ' + esc(jd.payee) : ''} (${jd.type === 'income' ? 'доход' : jd.type === 'expense' ? 'расход' : 'инвестиция'})`;
+    } else if (cat.id === 'body') {
+      if (jd.type === 'workout') {
+        if (jd.workoutKind === 'cardio' && jd.distance) journalInfo = ` · 🏃 ${jd.distance} км / ${jd.cardioMinutes || 0} мин`;
+        else if (jd.exercises?.length) journalInfo = ` · 🏋️ ${jd.exercises.length} упр.`;
+      } else if (jd.value) {
+        const unit = jd.type === 'weight' ? 'кг' : jd.type === 'sleep' ? 'ч' : 'ст';
+        journalInfo = ` · ${jd.value} ${unit}`;
+      }
     } else if (cat.id === 'food' && jd.calories) {
-      journalInfo = ` · ${jd.calories} ккал`;
+      journalInfo = ` · ${jd.calories} ккал${jd.servings && jd.servings !== 1 ? ` (×${jd.servings})` : ''}`;
     } else if (cat.id === 'business' && jd.status) {
-      journalInfo = ` · ${jd.status}`;
-    } else if (cat.id === 'hobby' && jd.minutes) {
-      journalInfo = ` · ${jd.minutes} мин`;
+      const clDone = jd.checklist?.filter(c => c.done).length || 0;
+      journalInfo = ` · ${jd.status}${jd.checklist?.length ? ` · ${clDone}/${jd.checklist.length} шагов` : ''}${jd.deadline ? ' · дедлайн ' + jd.deadline : ''}`;
+    } else if (cat.id === 'hobby' && jd.target) {
+      const resultIcon = jd.result === 'done' ? '✅' : jd.result === 'partial' ? '◐' : '—';
+      journalInfo = ` · ${resultIcon} ${esc(jd.target)}`;
     } else if (cat.id === 'travel' && jd.type) {
-      journalInfo = ` · ${jd.type}`;
+      journalInfo = ` · ${jd.type}${jd.budget ? ' · ' + jd.budget + '₽' : ''}`;
     } else if (cat.id === 'misc' && jd.type) {
       journalInfo = ` · ${jd.type}`;
     }
@@ -1327,7 +1350,7 @@ function taskHTML(t, showJournal = true) {
   return `<div class="quest ${status} ${overdue?'overdue':''}" onclick="editTask('${t.id}')">
     <button class="check" onclick="event.stopPropagation();completeTaskUI('${t.id}')">${t.status === 'done' ? '✓' : '○'}</button>
     <div>
-      <div class="quest-title">${journalLabel}${esc(t.title)}</div>
+      <div class="quest-title">${journalLabel}${esc(t.title)}${t.recurringId ? ' 🔁' : ''}</div>
       <div class="quest-meta">
         ${cat ? cat.name : '📋'} · ${t.date || 'без даты'}
         ${t.time ? ' · ' + esc(t.time) : ''}
@@ -1342,9 +1365,33 @@ function taskHTML(t, showJournal = true) {
       <span class="reward">+${t.xp || 10} XP</span>
       <button class="ghost" style="padding:4px 8px;font-size:12px" onclick="event.stopPropagation();addNoteToTask('${t.id}')">✎</button>
       <button class="ghost" style="padding:4px 8px;font-size:12px" onclick="event.stopPropagation();addPhotoToTask('${t.id}')">▣</button>
+      ${cat?.id === 'debts' && jd.status !== 'paid' ? `<button class="ghost" style="padding:4px 8px;font-size:12px" onclick="event.stopPropagation();addDebtPayment('${t.id}')">💰</button>` : ''}
       <button class="ghost" style="padding:4px 8px;font-size:12px;color:var(--danger)" onclick="event.stopPropagation();deleteTaskUI('${t.id}')">✕</button>
     </div>
   </div>`;
+}
+
+function addDebtPayment(taskId) {
+  const t = getTask(taskId);
+  if (!t) return;
+  const jd = t.journalData || {};
+  const raw = prompt(`Остаток: ${jd.balance ?? jd.amount ?? 0}₽\nСумма платежа:`);
+  if (!raw) return;
+  const amount = parseFloat(raw);
+  if (!amount || amount <= 0) return toast('Введи корректную сумму');
+  const newJd = { ...jd };
+  newJd.payments = [...(newJd.payments || []), { date: today(), amount }];
+  newJd.balance = Math.max(0, (newJd.balance ?? newJd.amount ?? 0) - amount);
+  if (newJd.balance <= 0) {
+    newJd.status = 'paid';
+    updateTask(taskId, { journalData: newJd, status: 'done' });
+    toast('🎉 Долг полностью погашен!');
+  } else {
+    newJd.status = 'active';
+    updateTask(taskId, { journalData: newJd });
+    toast(`💰 Платёж ${amount}₽ записан, остаток ${newJd.balance}₽`);
+  }
+  renderAll();
 }
 
 function completeTaskUI(id) {
@@ -1435,7 +1482,7 @@ function openTaskForm(categoryId = null, editTaskId = null) {
       </div>
       <div class="grid">
         <div class="field">
-          <label>Дата</label>
+          <label>Дата${isEdit && task?.recurringId ? '' : ' начала'}</label>
           <input id="taskDate" type="date" value="${task?.date || today()}">
         </div>
         <div class="field">
@@ -1443,6 +1490,29 @@ function openTaskForm(categoryId = null, editTaskId = null) {
           <input id="taskTime" type="time" value="${task?.time || ''}">
         </div>
       </div>
+      ${!isEdit ? `
+      <div class="field">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" id="taskRecurring" onchange="toggleRecurringFields()"> 🔁 Повторяющаяся задача (на несколько дней недели в диапазоне дат)
+        </label>
+      </div>
+      <div id="recurringFields" style="display:none">
+        <div class="field"><label>Повторять до (включительно)</label>
+          <input id="taskRecurEnd" type="date" value="">
+        </div>
+        <div class="field"><label>В какие дни недели</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            ${['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((d, i) => `
+              <label style="display:flex;align-items:center;gap:3px;font-size:12px;cursor:pointer">
+                <input type="checkbox" class="recur-weekday" value="${(i + 1) % 7}"> ${d}
+              </label>`).join('')}
+          </div>
+        </div>
+      </div>` : (task?.recurringId ? `
+      <div class="field">
+        <div class="muted" style="font-size:12px">🔁 Часть повторяющейся серии${task.recurringLabel ? ': ' + esc(task.recurringLabel) : ''}</div>
+        <button type="button" class="ghost" style="color:var(--danger);margin-top:6px" onclick="deleteRecurringSeries('${task.recurringId}')">🗑 Удалить всю серию</button>
+      </div>` : '')}
       <div class="field">
         <label>Награда XP</label>
         <select id="taskXp">
@@ -1486,6 +1556,23 @@ function openTaskForm(categoryId = null, editTaskId = null) {
   };
 }
 
+function toggleRecurringFields() {
+  const on = document.getElementById('taskRecurring').checked;
+  document.getElementById('recurringFields').style.display = on ? '' : 'none';
+}
+
+const WEEKDAY_SHORT_RU = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+
+function deleteRecurringSeries(recurringId) {
+  const count = data.tasks.filter(t => t.recurringId === recurringId).length;
+  if (!confirm(`Удалить всю серию (${count} задач)?`)) return;
+  data.tasks = data.tasks.filter(t => t.recurringId !== recurringId);
+  saveData();
+  closeModal();
+  renderAll();
+  toast(`🗑 Серия удалена (${count} задач)`);
+}
+
 // ============================================================
 // 10. buildJournalFields — ИСПРАВЛЕННАЯ (БЕЗ <script>)
 // ============================================================
@@ -1496,6 +1583,9 @@ function buildJournalFields(categoryId, existingData) {
 
   switch (categoryId) {
     case 'debts':
+      const originalAmt = existingData?.amount || 0;
+      const balanceVal = existingData?.balance != null ? existingData.balance : originalAmt;
+      const payments = existingData?.payments || [];
       return `
         <div class="field"><label>Тип</label>
           <select id="jd_type">
@@ -1507,8 +1597,16 @@ function buildJournalFields(categoryId, existingData) {
           <input id="jd_counterparty" value="${esc(existingData?.counterparty || '')}" placeholder="Имя или организация">
         </div>
         <div class="grid">
-          <div class="field"><label>Сумма (₽)</label>
+          <div class="field"><label>Сумма долга (₽)</label>
             <input id="jd_amount" type="number" value="${existingData?.amount || ''}" placeholder="0" step="0.01">
+          </div>
+          <div class="field"><label>Остаток (₽)</label>
+            <input id="jd_balance" type="number" value="${balanceVal || ''}" placeholder="0" step="0.01">
+          </div>
+        </div>
+        <div class="grid">
+          <div class="field"><label>Мин. платёж (₽)</label>
+            <input id="jd_minPayment" type="number" value="${existingData?.minPayment || ''}" placeholder="0" step="0.01">
           </div>
           <div class="field"><label>Процент (%)</label>
             <input id="jd_interest" type="number" value="${existingData?.interest || ''}" placeholder="0" step="0.1">
@@ -1529,6 +1627,7 @@ function buildJournalFields(categoryId, existingData) {
             <option value="overdue" ${existingData?.status === 'overdue' ? 'selected' : ''}>Просрочен</option>
           </select>
         </div>
+        ${payments.length ? `<div class="field"><label>История платежей</label><div class="muted" style="font-size:12px">${payments.map(p => `${p.date}: ${p.amount}₽`).join(' · ')}</div></div>` : ''}
       `;
 
     case 'finance':
@@ -1541,6 +1640,9 @@ function buildJournalFields(categoryId, existingData) {
             <option value="investment" ${existingData?.type === 'investment' ? 'selected' : ''}>📊 Инвестиция</option>
           </select>
         </div>
+        <div class="field"><label>Получатель / плательщик</label>
+          <input id="jd_payee" value="${esc(existingData?.payee || '')}" placeholder="Кому заплатил / от кого получил">
+        </div>
         <div class="field"><label>Категория</label>
           <select id="jd_category">
             ${financeCats.map(c => `<option value="${c}" ${existingData?.category === c ? 'selected' : ''}>${c}</option>`).join('')}
@@ -1549,58 +1651,114 @@ function buildJournalFields(categoryId, existingData) {
         <div class="field"><label>Сумма (₽)</label>
           <input id="jd_amount" type="number" value="${existingData?.amount || ''}" placeholder="0" step="0.01">
         </div>
+        <div class="field"><label>Вторая категория (необязательно, для разбивки)</label>
+          <select id="jd_category2" onchange="toggleFinanceSplit()">
+            <option value="">— не делить —</option>
+            ${financeCats.map(c => `<option value="${c}" ${existingData?.category2 === c ? 'selected' : ''}>${c}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field" id="jd_amount2Wrap" style="${existingData?.category2 ? '' : 'display:none'}">
+          <label>Сумма по второй категории (₽)</label>
+          <input id="jd_amount2" type="number" value="${existingData?.amount2 || ''}" placeholder="0" step="0.01">
+        </div>
         <div class="field"><label>Описание</label>
           <input id="jd_description" value="${esc(existingData?.description || '')}" placeholder="Что это?">
         </div>
       `;
 
     case 'body':
+      const bType = existingData?.type || 'workout';
+      const exercises = existingData?.exercises && existingData.exercises.length ? existingData.exercises : [{ name: '', sets: '', reps: '', weight: '' }];
       return `
         <div class="field"><label>Тип</label>
-          <select id="jd_type">
-            <option value="workout" ${existingData?.type === 'workout' ? 'selected' : ''}>🏋️ Тренировка</option>
-            <option value="weight" ${existingData?.type === 'weight' ? 'selected' : ''}>⚖️ Вес</option>
-            <option value="sleep" ${existingData?.type === 'sleep' ? 'selected' : ''}>😴 Сон</option>
-            <option value="water" ${existingData?.type === 'water' ? 'selected' : ''}>💧 Вода</option>
+          <select id="jd_type" onchange="toggleBodyFields()">
+            <option value="workout" ${bType === 'workout' ? 'selected' : ''}>🏋️ Тренировка</option>
+            <option value="weight" ${bType === 'weight' ? 'selected' : ''}>⚖️ Вес</option>
+            <option value="sleep" ${bType === 'sleep' ? 'selected' : ''}>😴 Сон</option>
+            <option value="water" ${bType === 'water' ? 'selected' : ''}>💧 Вода</option>
           </select>
         </div>
-        <div class="field"><label>Значение</label>
-          <input id="jd_value" type="number" value="${existingData?.value || ''}" placeholder="0" step="0.1">
-          <span class="muted" style="font-size:10px">${existingData?.type === 'weight' ? 'кг' : existingData?.type === 'sleep' ? 'часов' : existingData?.type === 'water' ? 'стаканов' : 'минут'}</span>
+        <div id="bodyWorkoutFields" style="${bType === 'workout' ? '' : 'display:none'}">
+          <div class="field"><label>Тип нагрузки</label>
+            <select id="jd_workoutKind" onchange="toggleWorkoutKind()">
+              <option value="strength" ${existingData?.workoutKind !== 'cardio' ? 'selected' : ''}>Силовая (упражнения)</option>
+              <option value="cardio" ${existingData?.workoutKind === 'cardio' ? 'selected' : ''}>Кардио (дистанция/время)</option>
+            </select>
+          </div>
+          <div id="bodyStrengthFields" style="${existingData?.workoutKind === 'cardio' ? 'display:none' : ''}">
+            <div id="exerciseRows">
+              ${exercises.map((ex, i) => `<div class="grid exercise-row" style="grid-template-columns:2fr 1fr 1fr 1fr auto;gap:6px;margin-bottom:6px">
+                <input class="ex-name" placeholder="Упражнение" value="${esc(ex.name || '')}">
+                <input class="ex-sets" type="number" placeholder="Подх." value="${ex.sets || ''}">
+                <input class="ex-reps" type="number" placeholder="Повт." value="${ex.reps || ''}">
+                <input class="ex-weight" type="number" placeholder="Вес,кг" value="${ex.weight || ''}">
+                <button type="button" class="ghost" onclick="this.closest('.exercise-row').remove()">✕</button>
+              </div>`).join('')}
+            </div>
+            <button type="button" class="ghost" onclick="addExerciseRow()">+ Упражнение</button>
+          </div>
+          <div id="bodyCardioFields" style="${existingData?.workoutKind === 'cardio' ? '' : 'display:none'}">
+            <div class="grid">
+              <div class="field"><label>Дистанция (км)</label><input id="jd_distance" type="number" value="${existingData?.distance || ''}" step="0.1"></div>
+              <div class="field"><label>Время (мин)</label><input id="jd_cardioMinutes" type="number" value="${existingData?.cardioMinutes || ''}" step="1"></div>
+            </div>
+          </div>
+        </div>
+        <div id="bodySimpleFields" style="${bType === 'workout' ? 'display:none' : ''}">
+          <div class="field"><label>Значение</label>
+            <input id="jd_value" type="number" value="${existingData?.value || ''}" placeholder="0" step="0.1">
+            <span class="muted" style="font-size:10px">${bType === 'weight' ? 'кг' : bType === 'sleep' ? 'часов' : 'стаканов'}</span>
+          </div>
+          <div class="field"><label>Цель (необязательно)</label>
+            <input id="jd_target" type="number" value="${existingData?.target || ''}" placeholder="например, 8 стаканов" step="0.1">
+          </div>
         </div>
       `;
 
     case 'food':
+      const savedMealsOpts = (data.savedMeals || []).map((m, i) => `<option value="${i}">${esc(m.name)}</option>`).join('');
       return `
         <div class="field"><label>Тип</label>
-          <select id="jd_type">
+          <select id="jd_type" onchange="toggleFoodFields()">
             <option value="meal" ${existingData?.type === 'meal' ? 'selected' : ''}>🍽️ Приём пищи</option>
             <option value="water" ${existingData?.type === 'water' ? 'selected' : ''}>💧 Вода</option>
-            <option value="recipe" ${existingData?.type === 'recipe' ? 'selected' : ''}>📖 Рецепт</option>
           </select>
         </div>
-        <div id="foodMealFields">
+        <div id="foodMealFields" style="${existingData?.type === 'water' ? 'display:none' : ''}">
+          ${savedMealsOpts ? `<div class="field"><label>Мои блюда</label>
+            <select id="jd_savedMeal" onchange="applySavedMeal(this.value)">
+              <option value="">— выбрать сохранённое блюдо —</option>
+              ${savedMealsOpts}
+            </select>
+          </div>` : ''}
           <div class="field"><label>Приём</label>
             <select id="jd_mealType">
               ${['Завтрак', 'Обед', 'Ужин', 'Перекус', 'Напиток'].map(m => `<option value="${m}" ${existingData?.mealType === m ? 'selected' : ''}>${m}</option>`).join('')}
             </select>
           </div>
-          <div class="field"><label>Калории (ккал)</label>
-            <input id="jd_calories" type="number" value="${existingData?.calories || ''}" placeholder="0" step="1">
+          <div class="grid">
+            <div class="field"><label>Калории за порцию (ккал)</label>
+              <input id="jd_caloriesPerServing" type="number" value="${existingData?.caloriesPerServing ?? existingData?.calories ?? ''}" placeholder="0" step="1" oninput="recalcFoodTotals()">
+            </div>
+            <div class="field"><label>Кол-во порций</label>
+              <input id="jd_servings" type="number" value="${existingData?.servings ?? 1}" placeholder="1" step="0.25" oninput="recalcFoodTotals()">
+            </div>
           </div>
           <div class="grid">
-            <div class="field"><label>Белки (г)</label>
-              <input id="jd_protein" type="number" value="${existingData?.protein || ''}" placeholder="0" step="0.1">
+            <div class="field"><label>Белки/порция (г)</label>
+              <input id="jd_proteinPerServing" type="number" value="${existingData?.proteinPerServing ?? existingData?.protein ?? ''}" placeholder="0" step="0.1" oninput="recalcFoodTotals()">
             </div>
-            <div class="field"><label>Жиры (г)</label>
-              <input id="jd_fat" type="number" value="${existingData?.fat || ''}" placeholder="0" step="0.1">
+            <div class="field"><label>Жиры/порция (г)</label>
+              <input id="jd_fatPerServing" type="number" value="${existingData?.fatPerServing ?? existingData?.fat ?? ''}" placeholder="0" step="0.1" oninput="recalcFoodTotals()">
             </div>
-            <div class="field"><label>Углеводы (г)</label>
-              <input id="jd_carbs" type="number" value="${existingData?.carbs || ''}" placeholder="0" step="0.1">
+            <div class="field"><label>Углеводы/порция (г)</label>
+              <input id="jd_carbsPerServing" type="number" value="${existingData?.carbsPerServing ?? existingData?.carbs ?? ''}" placeholder="0" step="0.1" oninput="recalcFoodTotals()">
             </div>
           </div>
+          <div class="muted" style="font-size:12px" id="foodTotalsPreview">Итого: ${Math.round((existingData?.caloriesPerServing ?? existingData?.calories ?? 0) * (existingData?.servings ?? 1))} ккал</div>
+          <button type="button" class="ghost" onclick="saveMealPrompt()">💾 Сохранить как блюдо</button>
         </div>
-        <div id="foodWaterFields" style="display:none">
+        <div id="foodWaterFields" style="${existingData?.type === 'water' ? '' : 'display:none'}">
           <div class="field"><label>Количество стаканов</label>
             <input id="jd_amount" type="number" value="${existingData?.amount || ''}" placeholder="0" step="1">
           </div>
@@ -1608,6 +1766,7 @@ function buildJournalFields(categoryId, existingData) {
       `;
 
     case 'business':
+      const checklist = existingData?.checklist || [];
       return `
         <div class="field"><label>Тип</label>
           <select id="jd_type">
@@ -1626,6 +1785,19 @@ function buildJournalFields(categoryId, existingData) {
             </select>
           </div>
         </div>
+        <div class="field"><label>Дедлайн (необязательно, отдельно от плановой даты)</label>
+          <input id="jd_deadline" type="date" value="${existingData?.deadline || ''}">
+        </div>
+        <div class="field"><label>Подзадачи / чек-лист</label>
+          <div id="checklistRows">
+            ${checklist.map((c, i) => `<div class="grid checklist-row" style="grid-template-columns:auto 1fr auto;gap:6px;margin-bottom:4px;align-items:center">
+              <input type="checkbox" class="cl-done" ${c.done ? 'checked' : ''}>
+              <input class="cl-text" value="${esc(c.text || '')}" placeholder="Шаг...">
+              <button type="button" class="ghost" onclick="this.closest('.checklist-row').remove()">✕</button>
+            </div>`).join('')}
+          </div>
+          <button type="button" class="ghost" onclick="addChecklistRow()">+ Шаг</button>
+        </div>
       `;
 
     case 'hobby':
@@ -1635,17 +1807,25 @@ function buildJournalFields(categoryId, existingData) {
             ${['Рисование', 'Музыка', 'Чтение', 'Спорт', 'Рукоделие', 'Фотография', 'Программирование', 'Другое'].map(t => `<option value="${t}" ${existingData?.type === t ? 'selected' : ''}>${t}</option>`).join('')}
           </select>
         </div>
+        <div class="field"><label>Цель (что считается выполнением)</label>
+          <input id="jd_target" value="${esc(existingData?.target || '')}" placeholder="например: 20 страниц / 30 минут гитары">
+        </div>
         <div class="grid">
           <div class="field"><label>Время (мин)</label>
             <input id="jd_minutes" type="number" value="${existingData?.minutes || ''}" placeholder="0" step="1">
           </div>
-          <div class="field"><label>Прогресс (%)</label>
-            <input id="jd_progress" type="number" value="${existingData?.progress || ''}" placeholder="0-100" min="0" max="100" step="1">
+          <div class="field"><label>Результат</label>
+            <select id="jd_result">
+              <option value="done" ${existingData?.result === 'done' ? 'selected' : ''}>✅ Выполнено</option>
+              <option value="partial" ${existingData?.result === 'partial' ? 'selected' : ''}>◐ Частично</option>
+              <option value="skipped" ${existingData?.result === 'skipped' ? 'selected' : ''}>— Пропущено</option>
+            </select>
           </div>
         </div>
       `;
 
     case 'travel':
+      const travelChecklist = existingData?.checklist || [];
       return `
         <div class="field"><label>Тип</label>
           <select id="jd_type">
@@ -1663,6 +1843,19 @@ function buildJournalFields(categoryId, existingData) {
             <input id="jd_dateTo" type="date" value="${existingData?.dateTo || ''}">
           </div>
         </div>
+        <div class="field"><label>Бюджет поездки (₽)</label>
+          <input id="jd_budget" type="number" value="${existingData?.budget || ''}" placeholder="0" step="0.01">
+        </div>
+        <div class="field"><label>Чек-лист / бронирования</label>
+          <div id="checklistRows">
+            ${travelChecklist.map((c, i) => `<div class="grid checklist-row" style="grid-template-columns:auto 1fr auto;gap:6px;margin-bottom:4px;align-items:center">
+              <input type="checkbox" class="cl-done" ${c.done ? 'checked' : ''}>
+              <input class="cl-text" value="${esc(c.text || '')}" placeholder="Билеты / отель / виза...">
+              <button type="button" class="ghost" onclick="this.closest('.checklist-row').remove()">✕</button>
+            </div>`).join('')}
+          </div>
+          <button type="button" class="ghost" onclick="addChecklistRow()">+ Пункт</button>
+        </div>
       `;
 
     case 'misc':
@@ -1672,7 +1865,7 @@ function buildJournalFields(categoryId, existingData) {
             ${['Идея', 'Заметка', 'Напоминание', 'Ссылка', 'Другое'].map(t => `<option value="${t}" ${existingData?.type === t ? 'selected' : ''}>${t}</option>`).join('')}
           </select>
         </div>
-        <div class="field"><label>Приоритет</label>
+        <div class="field"><label>Метка</label>
           <select id="jd_priority">
             ${['Низкий', 'Средний', 'Высокий'].map(p => `<option value="${p}" ${existingData?.priority === p ? 'selected' : ''}>${p}</option>`).join('')}
           </select>
@@ -1684,11 +1877,91 @@ function buildJournalFields(categoryId, existingData) {
   }
 }
 
+function addExerciseRow() {
+  const wrap = document.getElementById('exerciseRows');
+  const div = document.createElement('div');
+  div.className = 'grid exercise-row';
+  div.style.cssText = 'grid-template-columns:2fr 1fr 1fr 1fr auto;gap:6px;margin-bottom:6px';
+  div.innerHTML = `<input class="ex-name" placeholder="Упражнение">
+    <input class="ex-sets" type="number" placeholder="Подх.">
+    <input class="ex-reps" type="number" placeholder="Повт.">
+    <input class="ex-weight" type="number" placeholder="Вес,кг">
+    <button type="button" class="ghost" onclick="this.closest('.exercise-row').remove()">✕</button>`;
+  wrap.appendChild(div);
+}
+
+function addChecklistRow() {
+  const wrap = document.getElementById('checklistRows');
+  const div = document.createElement('div');
+  div.className = 'grid checklist-row';
+  div.style.cssText = 'grid-template-columns:auto 1fr auto;gap:6px;margin-bottom:4px;align-items:center';
+  div.innerHTML = `<input type="checkbox" class="cl-done">
+    <input class="cl-text" placeholder="Шаг...">
+    <button type="button" class="ghost" onclick="this.closest('.checklist-row').remove()">✕</button>`;
+  wrap.appendChild(div);
+}
+
+function toggleFinanceSplit() {
+  const val = document.getElementById('jd_category2').value;
+  document.getElementById('jd_amount2Wrap').style.display = val ? '' : 'none';
+}
+
+function toggleWorkoutKind() {
+  const kind = document.getElementById('jd_workoutKind').value;
+  document.getElementById('bodyStrengthFields').style.display = kind === 'cardio' ? 'none' : '';
+  document.getElementById('bodyCardioFields').style.display = kind === 'cardio' ? '' : 'none';
+}
+
+function toggleBodyFields() {
+  const type = document.getElementById('jd_type').value;
+  document.getElementById('bodyWorkoutFields').style.display = type === 'workout' ? '' : 'none';
+  document.getElementById('bodySimpleFields').style.display = type === 'workout' ? 'none' : '';
+}
+
+function toggleFoodFields() {
+  const type = document.getElementById('jd_type').value;
+  document.getElementById('foodMealFields').style.display = type === 'water' ? 'none' : '';
+  document.getElementById('foodWaterFields').style.display = type === 'water' ? '' : 'none';
+}
+
+function recalcFoodTotals() {
+  const per = parseFloat(document.getElementById('jd_caloriesPerServing')?.value) || 0;
+  const servings = parseFloat(document.getElementById('jd_servings')?.value) || 1;
+  const el = document.getElementById('foodTotalsPreview');
+  if (el) el.textContent = `Итого: ${Math.round(per * servings)} ккал`;
+}
+
+function applySavedMeal(idx) {
+  if (idx === '') return;
+  const m = data.savedMeals[idx];
+  if (!m) return;
+  document.getElementById('jd_caloriesPerServing').value = m.calories || '';
+  document.getElementById('jd_proteinPerServing').value = m.protein || '';
+  document.getElementById('jd_fatPerServing').value = m.fat || '';
+  document.getElementById('jd_carbsPerServing').value = m.carbs || '';
+  document.getElementById('jd_servings').value = 1;
+  recalcFoodTotals();
+}
+
+function saveMealPrompt() {
+  const name = prompt('Название блюда для сохранения:');
+  if (!name) return;
+  data.savedMeals.push({
+    name,
+    calories: parseFloat(document.getElementById('jd_caloriesPerServing')?.value) || 0,
+    protein: parseFloat(document.getElementById('jd_proteinPerServing')?.value) || 0,
+    fat: parseFloat(document.getElementById('jd_fatPerServing')?.value) || 0,
+    carbs: parseFloat(document.getElementById('jd_carbsPerServing')?.value) || 0
+  });
+  saveData();
+  toast('💾 Блюдо сохранено');
+}
+
 // ============================================================
 // 11. collectJournalData и saveTaskForm
 // ============================================================
 
-function collectJournalData(categoryId) {
+function collectJournalData(categoryId, existingJournalDataRef) {
   const cat = getCategory(categoryId);
   if (!cat) return null;
 
@@ -1705,64 +1978,116 @@ function collectJournalData(categoryId) {
   };
 
   switch (categoryId) {
-    case 'debts':
+    case 'debts': {
       jd.type = getVal('jd_type', 'owed');
       jd.counterparty = getVal('jd_counterparty', '');
       jd.amount = getNum('jd_amount');
+      const balRaw = document.getElementById('jd_balance')?.value;
+      jd.balance = balRaw !== '' && balRaw != null ? parseFloat(balRaw) : jd.amount;
+      jd.minPayment = getNum('jd_minPayment');
       jd.interest = getNum('jd_interest');
       jd.dateGiven = getVal('jd_dateGiven', today());
       jd.dateDue = getVal('jd_dateDue', null);
-      jd.status = getVal('jd_status', 'active');
+      jd.status = jd.balance <= 0 ? 'paid' : getVal('jd_status', 'active');
+      jd.payments = existingJournalDataRef?.payments || [];
       break;
+    }
 
-    case 'finance':
+    case 'finance': {
       jd.type = getVal('jd_type', 'expense');
+      jd.payee = getVal('jd_payee', '');
       jd.category = getVal('jd_category', 'Другое');
       jd.amount = getNum('jd_amount');
+      jd.category2 = getVal('jd_category2', '') || null;
+      jd.amount2 = jd.category2 ? getNum('jd_amount2') : 0;
       jd.description = getVal('jd_description', '');
       break;
+    }
 
-    case 'body':
+    case 'body': {
       jd.type = getVal('jd_type', 'workout');
-      jd.value = getNum('jd_value');
+      if (jd.type === 'workout') {
+        jd.workoutKind = getVal('jd_workoutKind', 'strength');
+        if (jd.workoutKind === 'cardio') {
+          jd.distance = getNum('jd_distance');
+          jd.cardioMinutes = getNum('jd_cardioMinutes');
+        } else {
+          jd.exercises = Array.from(document.querySelectorAll('#exerciseRows .exercise-row')).map(row => ({
+            name: row.querySelector('.ex-name').value.trim(),
+            sets: parseFloat(row.querySelector('.ex-sets').value) || 0,
+            reps: parseFloat(row.querySelector('.ex-reps').value) || 0,
+            weight: parseFloat(row.querySelector('.ex-weight').value) || 0
+          })).filter(e => e.name);
+        }
+      } else {
+        jd.value = getNum('jd_value');
+        jd.target = getNum('jd_target');
+      }
       break;
+    }
 
-    case 'food':
+    case 'food': {
       jd.type = getVal('jd_type', 'meal');
       if (jd.type === 'water') {
         jd.amount = getNum('jd_amount');
       } else {
         jd.mealType = getVal('jd_mealType', 'Завтрак');
-        jd.calories = getNum('jd_calories');
-        jd.protein = getNum('jd_protein');
-        jd.fat = getNum('jd_fat');
-        jd.carbs = getNum('jd_carbs');
+        const perCal = getNum('jd_caloriesPerServing');
+        const perProt = getNum('jd_proteinPerServing');
+        const perFat = getNum('jd_fatPerServing');
+        const perCarb = getNum('jd_carbsPerServing');
+        const servings = getNum('jd_servings', 1) || 1;
+        jd.caloriesPerServing = perCal;
+        jd.proteinPerServing = perProt;
+        jd.fatPerServing = perFat;
+        jd.carbsPerServing = perCarb;
+        jd.servings = servings;
+        jd.calories = Math.round(perCal * servings);
+        jd.protein = +(perProt * servings).toFixed(1);
+        jd.fat = +(perFat * servings).toFixed(1);
+        jd.carbs = +(perCarb * servings).toFixed(1);
       }
       break;
+    }
 
-    case 'business':
+    case 'business': {
       jd.type = getVal('jd_type', 'Задача');
       jd.status = getVal('jd_status', 'В работе');
       jd.priority = getVal('jd_priority', 'Средний');
+      jd.deadline = getVal('jd_deadline', null);
+      jd.checklist = Array.from(document.querySelectorAll('#checklistRows .checklist-row')).map(row => ({
+        text: row.querySelector('.cl-text').value.trim(),
+        done: row.querySelector('.cl-done').checked
+      })).filter(c => c.text);
       break;
+    }
 
-    case 'hobby':
+    case 'hobby': {
       jd.type = getVal('jd_type', 'Другое');
+      jd.target = getVal('jd_target', '');
       jd.minutes = getNum('jd_minutes');
-      jd.progress = getNum('jd_progress');
+      jd.result = getVal('jd_result', 'done');
       break;
+    }
 
-    case 'travel':
+    case 'travel': {
       jd.type = getVal('jd_type', 'Город');
       jd.name = getVal('jd_name', '');
       jd.dateFrom = getVal('jd_dateFrom', null);
       jd.dateTo = getVal('jd_dateTo', null);
+      jd.budget = getNum('jd_budget');
+      jd.checklist = Array.from(document.querySelectorAll('#checklistRows .checklist-row')).map(row => ({
+        text: row.querySelector('.cl-text').value.trim(),
+        done: row.querySelector('.cl-done').checked
+      })).filter(c => c.text);
       break;
+    }
 
-    case 'misc':
+    case 'misc': {
       jd.type = getVal('jd_type', 'Заметка');
       jd.priority = getVal('jd_priority', 'Низкий');
       break;
+    }
 
     default:
       return null;
@@ -1776,25 +2101,56 @@ function saveTaskForm(editTaskId) {
   const title = document.getElementById('taskTitle').value.trim();
   if (!title) return toast('Введи название задачи');
 
-  const data = {
+  const existingTask = editTaskId ? getTask(editTaskId) : null;
+
+  const taskData = {
     title: title,
     category: catId,
     date: document.getElementById('taskDate').value || today(),
     time: document.getElementById('taskTime').value || null,
     xp: parseInt(document.getElementById('taskXp').value) || 10,
     note: document.getElementById('taskNote').value.trim(),
-    journalData: collectJournalData(catId)
+    journalData: collectJournalData(catId, existingTask?.journalData || null)
   };
 
+  const isRecurring = !editTaskId && document.getElementById('taskRecurring')?.checked;
+
   if (editTaskId) {
-    updateTask(editTaskId, data);
+    updateTask(editTaskId, taskData);
     toast('✅ Задача обновлена');
+  } else if (isRecurring) {
+    const endDateStr = document.getElementById('taskRecurEnd').value;
+    const weekdays = Array.from(document.querySelectorAll('.recur-weekday:checked')).map(el => parseInt(el.value));
+    if (!endDateStr) return toast('Укажи дату окончания повторения');
+    if (!weekdays.length) return toast('Выбери хотя бы один день недели');
+
+    const start = new Date(taskData.date + 'T12:00:00');
+    const end = new Date(endDateStr + 'T12:00:00');
+    if (end < start) return toast('Дата окончания раньше даты начала');
+
+    const recurringId = genId();
+    const label = `${formatDateShort(start)} — ${formatDateShort(end)}, ${weekdays.slice().sort().map(w => WEEKDAY_SHORT_RU[w]).join('/')}`;
+    let created = 0;
+    const MAX_OCCURRENCES = 366;
+    const cursor = new Date(start);
+    while (cursor <= end && created < MAX_OCCURRENCES) {
+      if (weekdays.includes(cursor.getDay())) {
+        addTask({ ...taskData, date: iso(cursor), recurringId, recurringLabel: label });
+        created++;
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    toast(`🔁 Создана серия из ${created} задач`);
   } else {
-    addTask(data);
+    addTask(taskData);
     toast('📋 Задача создана');
   }
 
   return true;
+}
+
+function formatDateShort(d) {
+  return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
 }
 
 // ============================================================
@@ -1887,6 +2243,7 @@ function renderHome() {
   const u = data.user;
   document.getElementById('heroName').textContent = u.name;
   document.getElementById('heroLevel').textContent = u.level;
+  document.getElementById('levelMedallion').style.setProperty('--pct', xpPct());
   document.getElementById('xpText').textContent = `${u.xp} / ${xpNeed()}`;
   document.getElementById('xpFill').style.width = xpPct() + '%';
 
@@ -2084,31 +2441,45 @@ function renderJournalEntry(cat, t) {
     const isOwed = jd.type === 'owed';
     const isPaid = jd.status === 'paid' || t.status === 'done';
     const isOverdue = jd.status === 'overdue' || (jd.dateDue && jd.dateDue < today() && !isPaid);
+    const bal = jd.balance != null ? jd.balance : jd.amount || 0;
     let statusLabel = '✅ Погашен';
     if (isOverdue) statusLabel = '🔴 Просрочен';
     else if (!isPaid) statusLabel = '🟡 Активен';
-    details = `${isOwed ? '⬇️ Я должен' : '⬆️ Мне должны'} ${jd.counterparty || ''} · <strong>${jd.amount || 0}₽</strong> ${jd.interest ? `· ${jd.interest}%` : ''} ${jd.dateDue ? `· до ${jd.dateDue}` : ''} · ${statusLabel}`;
+    details = `${isOwed ? '⬇️ Я должен' : '⬆️ Мне должны'} ${jd.counterparty || ''} · <strong>остаток ${bal}₽</strong> из ${jd.amount || 0}₽ ${jd.minPayment ? `· мин. платёж ${jd.minPayment}₽` : ''} ${jd.interest ? `· ${jd.interest}%` : ''} ${jd.dateDue ? `· до ${jd.dateDue}` : ''} · ${statusLabel}`;
   } else if (cat.id === 'finance') {
     const typeMap = { income: '📈 Доход', expense: '📉 Расход', investment: '📊 Инвестиция' };
-    details = `${typeMap[jd.type] || '💰'} · <strong>${jd.amount || 0}₽</strong> ${jd.category ? `· ${jd.category}` : ''} ${jd.description ? `· ${esc(jd.description)}` : ''}`;
+    details = `${typeMap[jd.type] || '💰'} · <strong>${jd.amount || 0}₽</strong> ${jd.payee ? `· ${esc(jd.payee)}` : ''} ${jd.category ? `· ${jd.category}` : ''}${jd.category2 ? ` + ${jd.amount2}₽ · ${jd.category2}` : ''} ${jd.description ? `· ${esc(jd.description)}` : ''}`;
   } else if (cat.id === 'body') {
-    const typeMap = { workout: '🏋️', weight: '⚖️', sleep: '😴', water: '💧' };
-    const unit = jd.type === 'weight' ? 'кг' : jd.type === 'sleep' ? 'ч' : jd.type === 'water' ? 'ст' : 'мин';
-    details = `${typeMap[jd.type] || '📊'} ${jd.type || 'Тренировка'} · <strong>${jd.value || 0} ${unit}</strong>`;
+    if (jd.type === 'workout') {
+      if (jd.workoutKind === 'cardio') {
+        details = `🏃 Кардио · <strong>${jd.distance || 0} км</strong> · ${jd.cardioMinutes || 0} мин`;
+      } else if (jd.exercises?.length) {
+        details = `🏋️ ` + jd.exercises.map(e => `${esc(e.name)} ${e.sets}×${e.reps}${e.weight ? ` @${e.weight}кг` : ''}`).join(', ');
+      } else {
+        details = `🏋️ Тренировка`;
+      }
+    } else {
+      const typeMap = { weight: '⚖️', sleep: '😴', water: '💧' };
+      const unit = jd.type === 'weight' ? 'кг' : jd.type === 'sleep' ? 'ч' : 'ст';
+      details = `${typeMap[jd.type] || '📊'} ${jd.type} · <strong>${jd.value || 0} ${unit}</strong>${jd.target ? ` / цель ${jd.target}` : ''}`;
+    }
   } else if (cat.id === 'food') {
     if (jd.type === 'water') {
       details = `💧 Вода · <strong>${jd.amount || 0} стаканов</strong>`;
     } else {
-      details = `🍽️ ${jd.mealType || 'Приём'} · <strong>${jd.calories || 0} ккал</strong> ${jd.protein ? `· Б${jd.protein} Ж${jd.fat} У${jd.carbs}` : ''}`;
+      details = `🍽️ ${jd.mealType || 'Приём'} · <strong>${jd.calories || 0} ккал</strong> ${jd.servings && jd.servings !== 1 ? `(×${jd.servings} порц.)` : ''} ${jd.protein ? `· Б${jd.protein} Ж${jd.fat} У${jd.carbs}` : ''}`;
     }
   } else if (cat.id === 'business') {
     const statusColors = { 'В работе': '🟡', 'Готово': '✅', 'Отложено': '⏸️', 'Запланировано': '📅' };
     const priorityIcons = { 'Высокий': '🔴', 'Средний': '🟡', 'Низкий': '🟢' };
-    details = `${statusColors[jd.status] || '📋'} ${jd.status || 'В работе'} · ${priorityIcons[jd.priority] || '⚪'} ${jd.priority || 'Средний'}`;
+    const clDone = jd.checklist?.filter(c => c.done).length || 0;
+    details = `${statusColors[jd.status] || '📋'} ${jd.status || 'В работе'} · ${priorityIcons[jd.priority] || '⚪'} ${jd.priority || 'Средний'}${jd.deadline ? ` · дедлайн ${jd.deadline}` : ''}${jd.checklist?.length ? ` · ${clDone}/${jd.checklist.length} шагов` : ''}`;
   } else if (cat.id === 'hobby') {
-    details = `🎨 ${jd.type || 'Хобби'} · ⏱ ${jd.minutes || 0} мин ${jd.progress ? `· ${jd.progress}% прогресса` : ''}`;
+    const resultMap = { done: '✅ Выполнено', partial: '◐ Частично', skipped: '— Пропущено' };
+    details = `🎨 ${jd.type || 'Хобби'} · ⏱ ${jd.minutes || 0} мин ${jd.target ? `· цель: ${esc(jd.target)}` : ''} ${jd.result ? `· ${resultMap[jd.result] || jd.result}` : ''}`;
   } else if (cat.id === 'travel') {
-    details = `✈️ ${jd.type || 'Путешествие'} · ${jd.name || ''} ${jd.dateFrom ? `с ${jd.dateFrom}` : ''} ${jd.dateTo ? `по ${jd.dateTo}` : ''}`;
+    const clDone = jd.checklist?.filter(c => c.done).length || 0;
+    details = `✈️ ${jd.type || 'Путешествие'} · ${jd.name || ''} ${jd.dateFrom ? `с ${jd.dateFrom}` : ''} ${jd.dateTo ? `по ${jd.dateTo}` : ''} ${jd.budget ? `· бюджет ${jd.budget}₽` : ''}${jd.checklist?.length ? ` · ${clDone}/${jd.checklist.length} пунктов` : ''}`;
   } else if (cat.id === 'misc') {
     const priorityColors = { 'Высокий': '🔴', 'Средний': '🟡', 'Низкий': '🟢' };
     details = `📦 ${jd.type || 'Заметка'} · ${priorityColors[jd.priority] || '⚪'} ${jd.priority || 'Низкий'}`;
@@ -2258,6 +2629,7 @@ function renderJournalStats(categoryId) {
       <div class="stat" style="border-left:3px solid #60a5fa"><b>${stats.countries}</b><span>🌍 Стран</span></div>
       <div class="stat" style="border-left:3px solid #a78bfa"><b>${stats.cities}</b><span>🏙️ Городов</span></div>
       <div class="stat" style="border-left:3px solid #fbbf24"><b>${stats.totalDays}</b><span>📅 Дней в пути</span></div>
+      <div class="stat" style="border-left:3px solid #34d399;grid-column:span 2"><b>${stats.totalBudget.toLocaleString()} ₽</b><span>💰 Суммарный бюджет</span></div>
     `;
   } else if (categoryId === 'misc') {
     const stats = calculateMiscStats(categoryId);
@@ -2887,10 +3259,10 @@ function renderDay(el) {
     ts = tasksOn(d),
     hourTasks = ts.filter(t => t.time && t.time.length > 0);
   let html = '<div class="day-layout"><div class="time-col">' + Array.from({ length: 14 }, (_, i) => `<div>${pad(i + 7)}:00</div>`).join('') + '</div><div class="timeline">';
-  ts.filter(t => !t.time || !t.time.length).forEach(t => html += `<div class="mini-task" style="margin:7px 9px;border-left-color:${taskColor(t)}">${(getCategory(t.category) || { icon: '📋' }).icon} ${esc(t.title)}</div>`);
+  ts.filter(t => !t.time || !t.time.length).forEach(t => html += `<div class="mini-task" style="margin:7px 9px;border-left-color:${taskColor(t)};cursor:pointer" onclick="editTask('${t.id}')">${(getCategory(t.category) || { icon: '📋' }).icon} ${esc(t.title)}</div>`);
   hourTasks.forEach(t => { const m = t.time.match(/(\d{1,2}):(\d{2})/); if (!m) return; const h = +m[1],
       min = +m[2]; const top = ((h - 7) * 52) + (min / 60 * 52); const dur = Math.max(28, (t.duration || 30) / 60 * 52);
-    html += `<div class="timeline-task" style="top:${top}px;height:${dur}px;border-left-color:${taskColor(t)}"><b>${esc(t.title)}</b><span>${t.time} · ${(getCategory(t.category) || { name: '?' }).name} · +${t.xp || 10} XP</span></div>` });
+    html += `<div class="timeline-task" style="top:${top}px;height:${dur}px;border-left-color:${taskColor(t)};cursor:pointer" onclick="editTask('${t.id}')"><b>${esc(t.title)}</b><span>${t.time} · ${(getCategory(t.category) || { name: '?' }).name} · +${t.xp || 10} XP</span></div>` });
   html += '</div></div>';
   el.innerHTML = html;
 }
@@ -2900,7 +3272,7 @@ function renderWeek(el) {
   let html = '<div class="week-grid">';
   for (let i = 0; i < 7; i++) { const d = new Date(s);
     d.setDate(s.getDate() + i); const ts = tasksOn(d);
-    html += `<div class="week-day"><div class="week-head">${DOW[i]}<strong>${d.getDate()}</strong></div><div class="week-tasks">${ts.map(t => `<div class="mini-task ${t.status === 'done' ? 'done' : ''}" style="border-left-color:${taskColor(t)}"><button class="check-small ${t.status === 'done' ? 'done' : ''}" onclick="completeTaskUI('${t.id}');renderCalendar()">${t.status === 'done' ? '✓' : ''}</button>${esc(t.title)}${t.time ? ' <span class="muted">' + esc(t.time) + '</span>' : ''}</div>`).join('') || '<span class="muted" style="font-size:10px;padding:5px">—</span>'}</div></div>` }
+    html += `<div class="week-day"><div class="week-head">${DOW[i]}<strong>${d.getDate()}</strong></div><div class="week-tasks">${ts.map(t => `<div class="mini-task ${t.status === 'done' ? 'done' : ''}" style="border-left-color:${taskColor(t)};cursor:pointer" onclick="editTask('${t.id}')"><button class="check-small ${t.status === 'done' ? 'done' : ''}" onclick="event.stopPropagation();completeTaskUI('${t.id}');renderCalendar()">${t.status === 'done' ? '✓' : ''}</button>${esc(t.title)}${t.time ? ' <span class="muted">' + esc(t.time) + '</span>' : ''}</div>`).join('') || '<span class="muted" style="font-size:10px;padding:5px">—</span>'}</div></div>` }
   html += '</div>';
   el.innerHTML = html;
 }
@@ -3079,7 +3451,7 @@ document.getElementById('modal').onclick = e => {
 // ============================================================
 
 const THEMES = {
-  violet: { name: 'Violet', a: '#8b5cf6', b: '#c084fc', bg: '#090b10', panel: '#11151d' },
+  amber: { name: 'Amber', a: '#dd9c52', b: '#2dd4bf', bg: '#0b0f15', panel: '#141a23' },
   ocean: { name: 'Ocean', a: '#0ea5e9', b: '#38bdf8', bg: '#071016', panel: '#0d1820' },
   forest: { name: 'Forest', a: '#10b981', b: '#34d399', bg: '#07100d', panel: '#0d1814' },
   ember: { name: 'Ember', a: '#f97316', b: '#fb7185', bg: '#110a08', panel: '#19100e' },
@@ -3092,7 +3464,7 @@ const THEMES = {
 let prefs = JSON.parse(localStorage.getItem('lvlup_prefs') || '{}');
 
 function applyTheme(key) {
-  const t = THEMES[key] || THEMES.violet;
+  const t = THEMES[key] || THEMES.amber;
   document.documentElement.style.setProperty('--accent', t.a);
   document.documentElement.style.setProperty('--accent2', t.b);
   document.documentElement.style.setProperty('--bg', t.bg);
@@ -3104,7 +3476,7 @@ function applyTheme(key) {
 
 function renderThemes() {
   document.getElementById('themeGrid').innerHTML = Object.entries(THEMES).map(([k, t]) =>
-    `<button class="theme ${prefs.theme === k || (!prefs.theme && k === 'violet') ? 'selected' : ''}" data-theme="${k}"><div class="theme-preview" style="--tc1:${t.a};--tc2:${t.b}"></div><small>${t.name}</small></button>`
+    `<button class="theme ${prefs.theme === k || (!prefs.theme && k === 'amber') ? 'selected' : ''}" data-theme="${k}"><div class="theme-preview" style="--tc1:${t.a};--tc2:${t.b}"></div><small>${t.name}</small></button>`
   ).join('');
   document.querySelectorAll('.theme').forEach(b => b.onclick = () => applyTheme(b.dataset.theme));
 }
