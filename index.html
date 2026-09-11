@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark" data-accent="ember">
+<html lang="ru" data-world="urban" data-mode="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
@@ -10,41 +10,61 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
-body{
-  background:#07080a;
-  font-family:'Manrope',sans-serif;
-  -webkit-tap-highlight-color:transparent;
-  overscroll-behavior:none;
-}
+body{background:#050505;font-family:'Manrope',sans-serif;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;}
 button,input,select,textarea{font-family:inherit;}
-:root{
-  --radius-lg:22px;
-  --radius-md:14px;
-  --radius-sm:9px;
-  --radius-pill:999px;
-}
-html[data-theme="dark"]{
-  --bg:#14161A; --surface:#1C1F24; --surface-2:#23262C; --raised:#2A2E35;
-  --border:#33373E; --text:#EDEEF0; --text-dim:#9AA0AA; --text-faint:#666B73;
-  --shadow:0 24px 50px rgba(0,0,0,.5);
-  --overlay-bg:rgba(6,7,9,.72);
-}
-html[data-theme="light"]{
-  --bg:#EEF0F2; --surface:#FFFFFF; --surface-2:#F6F7F9; --raised:#FFFFFF;
-  --border:#DFE2E6; --text:#181A1D; --text-dim:#585E67; --text-faint:#93989F;
-  --shadow:0 24px 50px rgba(20,22,26,.14);
-  --overlay-bg:rgba(20,22,26,.45);
-}
-html[data-accent="ember"]{--accent-rgb:255,90,54;}
-html[data-accent="moss"]{--accent-rgb:122,178,66;}
-html[data-accent="cyan"]{--accent-rgb:32,182,178;}
-html[data-accent="violet"]{--accent-rgb:140,108,216;}
+:root{--radius-lg:22px;--radius-md:14px;--radius-sm:9px;--radius-pill:999px;}
 
-#app{
-  max-width:460px;margin:0 auto;min-height:100vh;min-height:100dvh;
-  background:var(--bg);color:var(--text);display:flex;flex-direction:column;
-  position:relative;overflow-x:hidden;
+/* ============ WORLD + MODE TOKENS ============ */
+html[data-world="urban"][data-mode="dark"]{
+  --bg:#0E0F10;--surface:#17181A;--surface-2:#1D1F21;--raised:#242628;--border:#2C2F32;
+  --text:#F2F1EE;--text-dim:#A6A9AC;--text-faint:#6E7174;
+  --accent-rgb:255,90,31;--accent2-rgb:255,90,31;
+  --shadow:0 24px 50px rgba(0,0,0,.55);--overlay-bg:rgba(6,7,8,.72);--grain-op:.09;
 }
+html[data-world="urban"][data-mode="light"]{
+  --bg:#E7E4DF;--surface:#FFFFFF;--surface-2:#F2EFEA;--raised:#FFFFFF;--border:#DBD6CD;
+  --text:#181614;--text-dim:#5C5852;--text-faint:#948E85;
+  --accent-rgb:255,90,31;--accent2-rgb:255,90,31;
+  --shadow:0 24px 50px rgba(20,18,16,.14);--overlay-bg:rgba(20,18,16,.4);--grain-op:.06;
+}
+html[data-world="zen"][data-mode="light"]{
+  --bg:#F2ECDF;--surface:#FBF8F1;--surface-2:#EAE1CE;--raised:#FFFFFF;--border:#DED2B7;
+  --text:#2A2420;--text-dim:#7A7061;--text-faint:#A89C89;
+  --accent-rgb:200,120,72;--accent2-rgb:161,150,120;
+  --shadow:0 20px 40px rgba(90,70,40,.12);--overlay-bg:rgba(40,32,20,.35);--grain-op:.04;
+}
+html[data-world="zen"][data-mode="dark"]{
+  --bg:#221D18;--surface:#2B241D;--surface-2:#332B22;--raised:#3A3025;--border:#453A2E;
+  --text:#EFE6D6;--text-dim:#B2A48D;--text-faint:#786C58;
+  --accent-rgb:214,138,88;--accent2-rgb:168,153,118;
+  --shadow:0 24px 50px rgba(0,0,0,.5);--overlay-bg:rgba(10,8,6,.6);--grain-op:.05;
+}
+html[data-world="sport"][data-mode="dark"]{
+  --bg:#0A130F;--surface:#111C17;--surface-2:#16221C;--raised:#1C2A23;--border:#22352B;
+  --text:#E9F2ED;--text-dim:#93A79D;--text-faint:#5C6E65;
+  --accent-rgb:255,90,31;--accent2-rgb:170,224,74;
+  --shadow:0 24px 50px rgba(0,0,0,.55);--overlay-bg:rgba(4,8,6,.7);--grain-op:.07;
+}
+html[data-world="sport"][data-mode="light"]{
+  --bg:#E3EAE4;--surface:#FFFFFF;--surface-2:#EEF3EE;--raised:#FFFFFF;--border:#D3DED5;
+  --text:#111A15;--text-dim:#586359;--text-faint:#8C978D;
+  --accent-rgb:255,90,31;--accent2-rgb:98,168,60;
+  --shadow:0 20px 40px rgba(10,20,14,.12);--overlay-bg:rgba(10,20,14,.35);--grain-op:.05;
+}
+
+#app{max-width:460px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--text);
+  display:flex;flex-direction:column;position:relative;overflow-x:hidden;transition:background .25s ease,color .25s ease;}
+#app::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:var(--grain-op);mix-blend-mode:overlay;}
+html[data-world="urban"] #app::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(115deg, rgba(255,255,255,.028) 0 2px, transparent 2px 64px);}
+html[data-world="zen"] #app::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 50% -10%, rgba(255,255,255,.55), transparent 60%);}
+html[data-world="sport"] #app::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 85% 105%, rgba(var(--accent2-rgb),.12), transparent 55%);}
+#app>*{position:relative;z-index:1;}
+
 @media(min-width:461px){
   body{display:flex;justify-content:center;padding:30px 12px;}
   #app{height:860px;min-height:860px;border-radius:34px;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;}
@@ -52,18 +72,31 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .scroll-area{flex:1;overflow-y:auto;padding-bottom:14px;}
 .scroll-area::-webkit-scrollbar{width:0;}
 
+/* ---------- Logomark ---------- */
+.logomark{display:inline-flex;align-items:center;justify-content:center;border-radius:9px;flex-shrink:0;
+  background:linear-gradient(135deg, rgb(var(--accent-rgb)), rgba(var(--accent-rgb),.65));}
+.logomark svg{width:58%;height:58%;}
+.logomark-sm{width:30px;height:30px;}
+
 /* ---------- Topbar ---------- */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 8px;flex-shrink:0;gap:10px;}
 .profile-chip{display:flex;align-items:center;gap:10px;background:none;border:none;padding:0;cursor:pointer;color:var(--text);text-align:left;}
-.avatar{width:40px;height:40px;border-radius:50%;background:rgba(var(--accent-rgb),.16);color:rgb(var(--accent-rgb));display:flex;align-items:center;justify-content:center;font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:17px;flex-shrink:0;}
-.profile-chip .pname{font-size:12.5px;color:var(--text-dim);line-height:1.25;}
-.profile-chip .pname b{display:block;font-size:14.5px;color:var(--text);font-weight:700;}
-.top-actions{display:flex;gap:8px;flex-shrink:0;}
+.avatar-sm{width:40px;height:40px;border-radius:50%;background:rgba(var(--accent-rgb),.16);color:rgb(var(--accent-rgb));display:flex;align-items:center;justify-content:center;font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:17px;flex-shrink:0;overflow:hidden;}
+.avatar-sm img{width:100%;height:100%;object-fit:cover;}
+.profile-chip .pname{font-size:14px;font-weight:800;line-height:1.2;}
+.profile-chip .plevel{font-size:11px;color:var(--text-faint);font-weight:700;margin-top:1px;}
+.top-actions{display:flex;gap:8px;flex-shrink:0;align-items:center;}
 .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--text-dim);cursor:pointer;flex-shrink:0;}
 .icon-btn svg{width:18px;height:18px;}
 .icon-btn:active{transform:scale(.92);}
-.wordmark{font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:21px;letter-spacing:.2px;padding:0 18px;margin:2px 0 6px;}
-.wordmark span{color:rgb(var(--accent-rgb));}
+
+/* ---------- Home hero ---------- */
+.home-hero{padding:6px 18px 4px;}
+.brand-row{display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+.brand-row .logomark{width:26px;height:26px;}
+.brand-word{font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:16px;letter-spacing:.3px;color:var(--text-dim);}
+.hero-title{font-family:'Big Shoulders Display',sans-serif;font-weight:700;text-transform:uppercase;font-size:33px;line-height:.94;letter-spacing:.4px;margin:0 0 2px;}
+.hero-title em{font-style:normal;color:rgb(var(--accent-rgb));}
 
 /* ---------- Segmented control ---------- */
 .segmented{display:flex;margin:2px 18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px;}
@@ -82,12 +115,12 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .weekday-row{display:grid;grid-template-columns:repeat(7,1fr);padding:0 14px;margin-bottom:4px;}
 .weekday-row span{text-align:center;font-size:10.5px;color:var(--text-faint);font-weight:700;}
 .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:0 12px;}
-.day-cell{aspect-ratio:1/1;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;background:transparent;border:1px solid transparent;}
+.day-cell{aspect-ratio:1/1;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;background:transparent;border:1px solid transparent;transition:transform .12s ease;}
 .day-cell .num{font-family:'Big Shoulders Display',sans-serif;font-weight:600;font-size:15.5px;color:var(--text);}
 .day-cell.other-month .num{opacity:.28;}
 .day-cell.today{border-color:rgba(var(--accent-rgb),.7);background:rgba(var(--accent-rgb),.08);}
 .day-cell.today .num{color:rgb(var(--accent-rgb));}
-.day-cell:active{background:var(--surface-2);}
+.day-cell:active{transform:scale(.92);background:var(--surface-2);}
 .day-cell .dots{display:flex;gap:2px;height:5px;}
 .dot{width:4.5px;height:4.5px;border-radius:50%;background:var(--text-faint);}
 .dot.past{background:var(--text-faint);}
@@ -108,11 +141,12 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .mini-chip.today{background:rgba(var(--accent-rgb),.15);color:rgb(var(--accent-rgb));}
 
 .day-head{padding:4px 18px 14px;}
-.day-head .big{font-family:'Big Shoulders Display',sans-serif;font-size:46px;font-weight:700;line-height:.9;}
+.day-head .big{font-family:'Big Shoulders Display',sans-serif;font-size:44px;font-weight:700;line-height:.9;text-transform:uppercase;}
 .day-head .sub{color:var(--text-dim);font-size:13.5px;margin-top:4px;font-weight:600;}
 .day-cards{padding:0 14px;display:flex;flex-direction:column;gap:10px;}
 
-.wk-card{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-md);padding:13px 14px;cursor:pointer;}
+.wk-card{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-md);padding:13px 14px;cursor:pointer;transition:transform .12s ease;}
+.wk-card:active{transform:scale(.98);}
 .wk-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
 .wk-card .time{font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:19px;color:rgb(var(--accent-rgb));}
 .wk-card .name{font-weight:800;font-size:15px;margin-top:1px;}
@@ -154,12 +188,13 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 
 /* ---------- Screens ---------- */
 .screen-head{padding:18px 18px 4px;}
-.screen-head h1{font-family:'Big Shoulders Display',sans-serif;font-size:26px;font-weight:700;margin:0;}
+.screen-head h1{font-family:'Big Shoulders Display',sans-serif;font-size:26px;font-weight:700;margin:0;text-transform:uppercase;}
 .screen-head p{color:var(--text-dim);font-size:13px;margin:3px 0 0;}
 
 /* ---------- Cards / lists generic ---------- */
 .section{padding:16px 18px 2px;}
 .section-title{font-size:12.5px;font-weight:800;color:var(--text-faint);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.section-title span{color:rgb(var(--accent-rgb));}
 .card{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-md);padding:14px;}
 .stat-row{display:flex;gap:10px;}
 .stat-box{flex:1;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-md);padding:12px;text-align:center;}
@@ -169,8 +204,7 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:12px;font-weight:800;color:var(--text-dim);margin-bottom:6px;}
 .field input[type=text],.field input[type=number],.field input[type=date],.field input[type=time],.field select,.field textarea{
-  width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 12px;color:var(--text);font-size:14.5px;font-weight:600;
-}
+  width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 12px;color:var(--text);font-size:14.5px;font-weight:600;}
 .field textarea{resize:vertical;min-height:70px;font-weight:500;line-height:1.5;}
 .field-row{display:flex;gap:10px;}
 .field-row .field{flex:1;}
@@ -178,7 +212,6 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .chip{border:1px solid var(--border);background:var(--surface-2);color:var(--text-dim);font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:var(--radius-pill);cursor:pointer;}
 .chip.active{background:rgb(var(--accent-rgb));border-color:transparent;color:#fff;}
 .tag{font-size:10.5px;font-weight:800;color:var(--text-dim);background:var(--surface-2);padding:3px 9px;border-radius:var(--radius-pill);}
-.durchips{display:flex;gap:7px;}
 
 .list-item{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--border);}
 .list-item:last-child{border-bottom:none;}
@@ -190,7 +223,6 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .list-item .body .m{font-size:11.5px;color:var(--text-faint);margin-top:2px;}
 .list-item .del{width:30px;height:30px;border-radius:50%;border:none;background:none;color:var(--text-faint);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .list-item .del svg{width:16px;height:16px;}
-.list-item .grip{color:var(--text-faint);}
 
 .exercise-card{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-md);padding:12px;display:flex;gap:12px;align-items:center;cursor:pointer;margin-bottom:9px;}
 .exercise-card .thumb{width:48px;height:48px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--text-faint);flex-shrink:0;overflow:hidden;}
@@ -200,6 +232,21 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .exercise-card .tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
 .exercise-card .chevron{color:var(--text-faint);flex-shrink:0;}
 .exercise-card .chevron svg{width:16px;height:16px;}
+
+/* ---------- Catalog cards (complexes) ---------- */
+.catalog-card{display:flex;gap:12px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-md);padding:10px;margin-bottom:10px;cursor:pointer;}
+.catalog-preview{width:64px;height:64px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.catalog-preview span{font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:13px;color:rgba(255,255,255,.94);letter-spacing:.4px;}
+.catalog-preview::after{content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;opacity:.45;}
+.catalog-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;}
+.catalog-body .n{font-weight:800;font-size:14.5px;}
+.catalog-meta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-faint);font-weight:700;}
+.mdot{width:3px;height:3px;border-radius:50%;background:var(--text-faint);flex-shrink:0;}
+.diffdots{display:flex;gap:2px;}
+.diffdots i{width:5px;height:5px;border-radius:50%;background:var(--border);display:block;}
+.diffdots i.on{background:rgb(var(--accent-rgb));}
 
 .searchbar{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 14px;margin-bottom:12px;}
 .searchbar svg{width:16px;height:16px;color:var(--text-faint);flex-shrink:0;}
@@ -242,7 +289,12 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .gallery .g-add{aspect-ratio:1/1;border-radius:10px;border:1.5px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-faint);cursor:pointer;position:relative;}
 .gallery .g-add svg{width:18px;height:18px;}
 .gallery .g-add input{position:absolute;inset:0;opacity:0;cursor:pointer;}
-.lightbox-img{width:100%;border-radius:14px;display:block;}
+
+/* ---------- Avatar upload ---------- */
+.avatar-upload{position:relative;width:88px;height:88px;border-radius:50%;background:rgba(var(--accent-rgb),.15);display:flex;align-items:center;justify-content:center;font-family:'Big Shoulders Display',sans-serif;font-size:28px;font-weight:700;color:rgb(var(--accent-rgb));cursor:pointer;overflow:hidden;margin:0 auto;}
+.avatar-upload img{width:100%;height:100%;object-fit:cover;}
+.avatar-edit-badge{position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:50%;background:rgb(var(--accent-rgb));color:#fff;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);}
+.avatar-edit-badge svg{width:12px;height:12px;}
 
 /* ---------- Settings ---------- */
 .setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);gap:14px;}
@@ -253,15 +305,24 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 .switch .knob{position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:var(--text-faint);transition:all .18s ease;}
 .switch.on{background:rgba(var(--accent-rgb),.25);border-color:rgba(var(--accent-rgb),.5);}
 .switch.on .knob{left:calc(100% - 23px);background:rgb(var(--accent-rgb));}
-.swatchrow{display:flex;gap:10px;}
-.swatch{width:34px;height:34px;border-radius:50%;cursor:pointer;border:2px solid transparent;position:relative;flex-shrink:0;}
-.swatch.active{border-color:var(--text);}
-.swatch.active::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1.4px solid var(--text);}
+.world-picker{display:flex;gap:14px;justify-content:space-between;}
+.world-item{text-align:center;flex:1;}
+.world-swatch{width:100%;aspect-ratio:1/1;max-width:64px;margin:0 auto;border-radius:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid transparent;}
+.world-swatch svg{width:38%;height:38%;}
+.world-swatch.active{border-color:rgb(var(--accent-rgb));}
+.world-item .wl{font-size:11px;font-weight:700;margin-top:7px;color:var(--text-dim);}
 
 /* ---------- Sparkline ---------- */
 .spark-wrap{background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;margin-top:10px;}
 .spark-wrap .sv{font-family:'Big Shoulders Display',sans-serif;font-size:20px;font-weight:700;}
 .spark-wrap .sl{font-size:11px;color:var(--text-faint);font-weight:700;}
+
+/* ---------- Details / history ---------- */
+.history-details{margin-top:16px;}
+.history-details summary{cursor:pointer;font-weight:800;font-size:13px;color:var(--text-dim);list-style:none;display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--border);}
+.history-details summary::-webkit-details-marker{display:none;}
+.history-details summary::after{content:'▾';color:var(--text-faint);font-size:11px;}
+.history-details[open] summary::after{content:'▴';}
 
 /* watch */
 .watch-devicerow{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;cursor:pointer;background:var(--surface-2);}
@@ -270,6 +331,27 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .pulse-dot{width:9px;height:9px;border-radius:50%;background:#3EC26A;box-shadow:0 0 0 0 rgba(62,194,106,.5);animation:pulse 1.8s infinite;}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(62,194,106,.45);}70%{box-shadow:0 0 0 7px rgba(62,194,106,0);}100%{box-shadow:0 0 0 0 rgba(62,194,106,0);}}
+.watchstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.ws-item{background:var(--surface-2);border-radius:var(--radius-sm);padding:10px 4px;text-align:center;}
+.ws-v{font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:15px;}
+.ws-l{font-size:9px;color:var(--text-faint);font-weight:700;margin-top:2px;}
+.watch-cta{border:1.5px dashed var(--border);border-radius:var(--radius-md);padding:16px;text-align:center;cursor:pointer;}
+.watch-cta .s{font-size:12.5px;color:var(--text-dim);margin-top:4px;}
+
+/* ---------- Progress block ---------- */
+.progress-card{display:flex;align-items:center;gap:16px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-md);padding:16px;}
+.progress-ring-wrap{position:relative;width:84px;height:84px;flex-shrink:0;}
+.progress-ring{width:100%;height:100%;transform:rotate(-90deg);}
+.pr-track{fill:none;stroke:var(--surface-2);stroke-width:8;}
+.pr-fill{fill:none;stroke:rgb(var(--accent-rgb));stroke-width:8;stroke-linecap:round;}
+.pr-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.pr-label b{font-family:'Big Shoulders Display',sans-serif;font-size:19px;font-weight:700;line-height:1;}
+.pr-label small{font-size:8.5px;color:var(--text-faint);font-weight:700;text-align:center;}
+.progress-deltas{flex:1;display:flex;flex-direction:column;gap:9px;}
+.delta{display:flex;align-items:center;justify-content:space-between;}
+.delta .dv{font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:16px;color:rgb(var(--accent2-rgb));display:flex;align-items:center;gap:3px;}
+.delta .dv svg{width:12px;height:12px;}
+.delta .dl{font-size:11.5px;color:var(--text-faint);font-weight:700;}
 
 .toast{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);background:var(--raised);border:1px solid var(--border);color:var(--text);padding:11px 18px;border-radius:var(--radius-pill);font-size:13px;font-weight:700;box-shadow:var(--shadow);z-index:300;opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
@@ -286,6 +368,7 @@ html[data-accent="violet"]{--accent-rgb:140,108,216;}
 <script>
 /* =================== ICONS =================== */
 const ICONS = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5L12 4l8 7.5"/><path d="M6 10v9a1 1 0 001 1h3v-6h4v6h3a1 1 0 001-1v-9"/></svg>',
   calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>',
   dumbbell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 9v6M4 10v4M17.5 9v6M20 10v4M8.5 12h7"/></svg>',
   user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4.2-6 7.5-6s6.1 2 7.5 6"/></svg>',
@@ -303,16 +386,30 @@ const ICONS = {
   search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>',
   ruler:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l5-9 11 6-5 9-11-6z"/><path d="M9 9.5l1 1.7M11.5 5.7l1 1.7M14 10.8l1 1.7"/></svg>',
   scale:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 9v3l2 1.4"/></svg>',
-  grip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h.01M9 12h.01M9 18h.01M15 6h.01M15 12h.01M15 18h.01"/></svg>',
-  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>',
+  arrowUp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-7 6 7M12 9v9"/></svg>',
 };
 function icon(name){return ICONS[name]||'';}
+function logoMark(cls){return `<span class="logomark ${cls||''}">${ICONS.arrowUp.replace('currentColor','#fff')}</span>`;}
 
 /* =================== REFERENCE DATA =================== */
-const ZONES = ['Спина','Грудь','Ноги','Руки','Плечи','Ягодицы','Пресс'];
-const EQUIPMENT = ['Турник','Брусья','Штанга','Гиря','Гантели','Кольца','Эспандер','Без снаряда'];
+const ZONES = ['Спина','Грудь','Ноги','Руки','Плечи','Ягодицы','Пресс','Растяжка','Кардио','Техника'];
+const EQUIPMENT = ['Турник','Брусья','Штанга','Гиря','Гантели','Кольца','Эспандер','Скакалка','Без снаряда'];
 const WEEKDAYS = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const WORLD_LABELS = {urban:'Urban',zen:'Zen',sport:'Sport'};
+const WORLD_DEFAULT_MODE = {urban:'dark',zen:'light',sport:'dark'};
+const CATEGORIES = [
+  {key:'strength',label:'Силовые',c1:'#FF5A1F',c2:'#B23E12',mono:'СИЛ'},
+  {key:'run',label:'Бег',c1:'#FF6B5B',c2:'#C23B2E',mono:'БЕГ'},
+  {key:'cycle',label:'Велосипед',c1:'#9FDB4E',c2:'#5FA028',mono:'ВЕЛ'},
+  {key:'swim',label:'Плавание',c1:'#3FC6E0',c2:'#1C7FA0',mono:'ПЛВ'},
+  {key:'yoga',label:'Йога',c1:'#D2A0C7',c2:'#96678F',mono:'ЙОГ'},
+  {key:'stretch',label:'Растяжка',c1:'#E7CFA0',c2:'#B99A63',mono:'РАСТ'},
+  {key:'mobility',label:'Mobility',c1:'#93A6B3',c2:'#5B6873',mono:'MOB'},
+  {key:'functional',label:'Функциональные',c1:'#7B828C',c2:'#454951',mono:'ФУНК'},
+  {key:'outdoor',label:'Outdoor',c1:'#74B36E',c2:'#437A40',mono:'OUT'},
+];
+function catMeta(key){return CATEGORIES.find(c=>c.key===key)||CATEGORIES[0];}
 
 /* =================== DATE HELPERS =================== */
 function pad(n){return n<10?'0'+n:''+n;}
@@ -331,13 +428,13 @@ function calcAge(birthISO){
   if(m<0||(m===0&&t.getDate()<b.getDate()))age--;
   return age;
 }
-function fmtDateHuman(iso){
-  const d=fromISO(iso);
-  return d.getDate()+' '+MONTHS[d.getMonth()].toLowerCase().replace(/й$|нь$|ль$|ль$/,m=>m)+' '+d.getFullYear();
-}
-function fmtDateShort(iso){
-  const d=fromISO(iso);
-  return d.getDate()+' '+MONTHS[d.getMonth()].slice(0,3).toLowerCase();
+function fmtDateHuman(iso){const d=fromISO(iso);return d.getDate()+' '+MONTHS[d.getMonth()].toLowerCase()+' '+d.getFullYear();}
+function fmtDateShort(iso){const d=fromISO(iso);return d.getDate()+' '+MONTHS[d.getMonth()].slice(0,3).toLowerCase();}
+function pluralWorkout(n){
+  const n10=n%10,n100=n%100;
+  if(n10===1&&n100!==11) return 'тренировка';
+  if([2,3,4].includes(n10)&&![12,13,14].includes(n100)) return 'тренировки';
+  return 'тренировок';
 }
 
 /* =================== ID GEN =================== */
@@ -347,20 +444,10 @@ const nextId=()=>'id'+(uidCounter++);
 /* =================== SEED STATE =================== */
 const T = todayISO();
 let state = {
-  ui:{
-    screen:'calendar',
-    calMode:'month',
-    cursor:T,
-    selectedDate:T,
-    libTab:'exercises',
-    libZoneFilter:null,
-    libEquipFilter:null,
-  },
+  ui:{screen:'home',calMode:'month',cursor:T,selectedDate:T,libTab:'complexes',libZoneFilter:null,libEquipFilter:null,libCatFilter:null},
   profile:{
-    name:'Александр Волков',
-    birthDate:'1996-04-12',
-    gender:'М',
-    height:182,
+    name:'Александр Волков',avatar:null,level:'Средний',
+    birthDate:'1996-04-12',gender:'М',height:182,
     weightLog:[
       {id:nextId(),date:addDays(T,-42),weight:82.4},
       {id:nextId(),date:addDays(T,-28),weight:81.6},
@@ -372,11 +459,7 @@ let state = {
       {id:nextId(),date:addDays(T,-14),chest:103,biceps:35.6,thigh:57.5},
     ],
   },
-  settings:{
-    theme:'dark',
-    accent:'ember',
-    watch:{connected:false,device:null,scanning:false,lastSync:null},
-  },
+  settings:{world:'urban',mode:'dark',watch:{connected:false,device:null,scanning:false,_found:null}},
   exercises:[
     {id:'ex1',name:'Подтягивания широким хватом',zone:'Спина',equipment:'Турник',description:'Хват шире плеч, подбородок над перекладиной, контролируемое опускание.',photos:[]},
     {id:'ex2',name:'Отжимания на брусьях',zone:'Грудь',equipment:'Брусья',description:'Корпус чуть наклонён вперёд, локти уходят назад, глубокая амплитуда.',photos:[]},
@@ -386,34 +469,33 @@ let state = {
     {id:'ex6',name:'Сгибания на бицепс с гантелями',zone:'Руки',equipment:'Гантели',description:'Локти прижаты к корпусу, супинация кисти в верхней точке.',photos:[]},
     {id:'ex7',name:'Подъём ног в висе',zone:'Пресс',equipment:'Турник',description:'Вис на перекладине, подъём прямых или согнутых ног без раскачки.',photos:[]},
     {id:'ex8',name:'Выход силой на кольцах',zone:'Руки',equipment:'Кольца',description:'Переход из виса в упор через фазу переворота, локти близко к корпусу.',photos:[]},
+    {id:'ex9',name:'Прыжки на скакалке',zone:'Кардио',equipment:'Скакалка',description:'Лёгкий прыжок на носках, кисти вращают скакалку, локти близко к корпусу.',photos:[]},
   ],
   complexes:[
-    {id:'cx1',name:'Утренний воркаут',exerciseIds:['ex1','ex2','ex7']},
-    {id:'cx2',name:'Силовой день: низ',exerciseIds:['ex3','ex5']},
+    {id:'cx1',name:'Утренний воркаут',exerciseIds:['ex1','ex2','ex7'],sport:'strength',duration:35,difficulty:2},
+    {id:'cx2',name:'Силовой день: низ',exerciseIds:['ex3','ex5'],sport:'strength',duration:40,difficulty:3},
+    {id:'cx3',name:'Утренняя пробежка',exerciseIds:[],sport:'run',duration:30,difficulty:1},
+    {id:'cx4',name:'Растяжка после тренировки',exerciseIds:['ex7'],sport:'stretch',duration:15,difficulty:1},
+    {id:'cx5',name:'Скакалка: интервалы',exerciseIds:['ex9'],sport:'cycle',duration:20,difficulty:2},
   ],
   workouts:[
     {id:nextId(),name:'Спина и пресс',date:addDays(T,-7),time:'08:00',duration:50,items:[{type:'complex',id:'cx1'}]},
     {id:nextId(),name:'Силовая: ноги',date:addDays(T,-3),time:'19:00',duration:70,items:[{type:'complex',id:'cx2'}]},
     {id:nextId(),name:'Верх тела',date:T,time:'18:30',duration:60,items:[{type:'exercise',id:'ex2'},{type:'exercise',id:'ex4'},{type:'exercise',id:'ex6'}]},
+    {id:nextId(),name:'Утренняя пробежка',date:T,time:'07:00',duration:30,items:[{type:'complex',id:'cx3'}]},
     {id:nextId(),name:'Турник и кольца',date:addDays(T,3),time:'08:30',duration:45,items:[{type:'exercise',id:'ex1'},{type:'exercise',id:'ex8'}]},
     {id:nextId(),name:'Ноги + кор',date:addDays(T,7),time:'19:30',duration:65,items:[{type:'complex',id:'cx2'},{type:'exercise',id:'ex7'}]},
     {id:nextId(),name:'Лёгкая разминка',date:addDays(T,14),time:'09:00',duration:30,items:[{type:'exercise',id:'ex1'}]},
   ],
 };
 
-/* draft holders for editors */
-let workoutDraft=null;
-let complexDraft=null;
-let exerciseDraft=null;
+let workoutDraft=null, complexDraft=null, exerciseDraft=null;
 
 /* =================== UTIL =================== */
 function findExercise(id){return state.exercises.find(e=>e.id===id);}
 function findComplex(id){return state.complexes.find(c=>c.id===id);}
 function workoutsOn(iso){return state.workouts.filter(w=>w.date===iso).sort((a,b)=>a.time.localeCompare(b.time));}
-function initials(name){
-  if(!name) return '?';
-  return name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase();
-}
+function initials(name){if(!name) return '?';return name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase();}
 function itemLabel(item){
   if(item.type==='exercise'){const e=findExercise(item.id);return e?e.name:'Упражнение удалено';}
   const c=findComplex(item.id);return c?c.name:'Комплекс удалён';
@@ -421,7 +503,9 @@ function itemLabel(item){
 function itemZones(item){
   if(item.type==='exercise'){const e=findExercise(item.id);return e?[e.zone]:[];}
   const c=findComplex(item.id);if(!c)return[];
-  return [...new Set(c.exerciseIds.map(id=>findExercise(id)).filter(Boolean).map(e=>e.zone))];
+  const z=[...new Set(c.exerciseIds.map(id=>findExercise(id)).filter(Boolean).map(e=>e.zone))];
+  if(!z.length) z.push(catMeta(c.sport).label);
+  return z;
 }
 function showToast(msg){
   const t=document.getElementById('toast');
@@ -430,50 +514,138 @@ function showToast(msg){
   showToast._t=setTimeout(()=>t.classList.remove('show'),1800);
 }
 function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-
-/* =================== RENDER: SHELL =================== */
-function render(){
-  document.documentElement.setAttribute('data-theme',state.settings.theme);
-  document.documentElement.setAttribute('data-accent',state.settings.accent);
-  const app=document.getElementById('app');
-  app.innerHTML = `
-    ${renderTopbar()}
-    <div class="scroll-area">${renderScreenBody()}</div>
-    ${state.ui.screen==='calendar' ? `<button class="fab" data-action="add-workout">${icon('plus')}</button>` : ''}
-    ${renderBottomNav()}
-  `;
+function pctDelta(prev,curr){
+  if(!prev&&!curr) return 0;
+  if(!prev) return 100;
+  return Math.round((curr-prev)/prev*100);
+}
+function avgDuration(list){return list.length?Math.round(list.reduce((s,w)=>s+w.duration,0)/list.length):0;}
+function bmiCategory(bmi){
+  if(bmi<18.5) return 'Недостаточная масса';
+  if(bmi<25) return 'Норма';
+  if(bmi<30) return 'Избыточная масса';
+  return 'Ожирение';
+}
+function seededRand(seedStr){
+  let h=0; for(let i=0;i<seedStr.length;i++){h=(h*31+seedStr.charCodeAt(i))>>>0;}
+  return function(){ h=(h*1664525+1013904223)>>>0; return h/4294967296; };
+}
+function watchDailyStats(iso){
+  const rnd=seededRand('fizup-'+iso+'-'+(state.settings.watch.device||'x'));
+  return {steps:Math.round(6500+rnd()*6000),sleep:(6+rnd()*2.5).toFixed(1),hr:Math.round(52+rnd()*14),active:Math.round(25+rnd()*55)};
+}
+function favoriteSportLabel(){
+  const counts={};
+  state.workouts.forEach(w=>w.items.forEach(it=>{
+    if(it.type==='complex'){const c=findComplex(it.id);if(c){const key=c.sport||'strength';counts[key]=(counts[key]||0)+1;}}
+  }));
+  const keys=Object.keys(counts);
+  if(!keys.length) return 'Силовые';
+  keys.sort((a,b)=>counts[b]-counts[a]);
+  return catMeta(keys[0]).label;
 }
 
-function renderTopbar(){
-  return `
-  <div class="topbar">
-    <button class="profile-chip" data-action="open-profile">
-      <div class="avatar">${esc(initials(state.profile.name))}</div>
-      <div class="pname">FizUp<b>${esc(state.profile.name||'Без имени')}</b></div>
-    </button>
-    <div class="top-actions">
-      <button class="icon-btn" data-action="open-settings" aria-label="Настройки">${icon('gear')}</button>
+/* =================== PROGRESS BLOCK ==================*/
+function weekRange(iso){const s=startOfWeekMon(iso);return [...Array(7)].map((_,i)=>addDays(s,i));}
+function computeProgress(){
+  const thisWeek=weekRange(T);
+  const lastWeek=weekRange(addDays(T,-7));
+  const thisWeekW=state.workouts.filter(w=>thisWeek.includes(w.date));
+  const lastWeekW=state.workouts.filter(w=>lastWeek.includes(w.date));
+  const done=thisWeekW.filter(w=>dayStatus(w.date)!=='future').length;
+  const total=thisWeekW.length;
+  const endurance=pctDelta(lastWeekW.length,thisWeekW.length);
+  const strength=pctDelta(avgDuration(lastWeekW),avgDuration(thisWeekW));
+  return {done,total,endurance,strength};
+}
+function progressRingSVG(ratio){
+  const r=34,c=2*Math.PI*r,id='pr'+Math.random().toString(36).slice(2,8);
+  setTimeout(()=>{const el=document.getElementById(id); if(el) el.style.strokeDashoffset=c*(1-ratio);},60);
+  return `<svg viewBox="0 0 84 84" class="progress-ring"><circle cx="42" cy="42" r="${r}" class="pr-track"/><circle id="${id}" cx="42" cy="42" r="${r}" class="pr-fill" style="stroke-dasharray:${c};stroke-dashoffset:${c};transition:stroke-dashoffset .9s cubic-bezier(.32,.8,0,1);"/></svg>`;
+}
+function renderProgressCard(){
+  const p=computeProgress();
+  const ratio=p.total?p.done/p.total:0;
+  const dsign=n=>n>0?'+':'';
+  return `<div class="progress-card">
+    <div class="progress-ring-wrap">${progressRingSVG(ratio)}<div class="pr-label"><b>${p.done}/${p.total}</b><small>трениров.</small></div></div>
+    <div class="progress-deltas">
+      <div class="delta"><span class="dl">Выносливость</span><span class="dv">${icon('arrowUp')}${dsign(p.endurance)}${p.endurance}%</span></div>
+      <div class="delta"><span class="dl">Сила</span><span class="dv">${icon('arrowUp')}${dsign(p.strength)}${p.strength}%</span></div>
     </div>
   </div>`;
 }
 
-function renderBottomNav(){
-  const items=[
-    ['calendar','calendar','Календарь'],
-    ['library','dumbbell','Библиотека'],
-    ['profile','user','Профиль'],
-  ];
-  return `<div class="bottomnav">${items.map(([key,ic,label])=>`
-    <button class="navitem ${state.ui.screen===key?'active':''}" data-action="nav" data-screen="${key}">
-      ${icon(ic)}<span>${label}</span>
-    </button>`).join('')}</div>`;
+/* =================== RENDER: SHELL =================== */
+function render(){
+  document.documentElement.setAttribute('data-world',state.settings.world);
+  document.documentElement.setAttribute('data-mode',state.settings.mode);
+  const app=document.getElementById('app');
+  app.innerHTML = `
+    ${renderTopbar()}
+    <div class="scroll-area">${renderScreenBody()}</div>
+    ${(state.ui.screen==='calendar'||state.ui.screen==='home') ? `<button class="fab" data-action="add-workout">${icon('plus')}</button>` : ''}
+    ${renderBottomNav()}
+  `;
 }
-
+function renderTopbar(){
+  const av = state.profile.avatar ? `<img src="${state.profile.avatar}">` : esc(initials(state.profile.name));
+  return `
+  <div class="topbar">
+    <button class="profile-chip" data-action="open-profile">
+      <div class="avatar-sm">${av}</div>
+      <div><div class="pname">${esc(state.profile.name||'Без имени')}</div><div class="plevel">${esc(state.profile.level||'')}</div></div>
+    </button>
+    <div class="top-actions">
+      ${logoMark('logomark-sm')}
+      <button class="icon-btn" data-action="open-settings" aria-label="Настройки">${icon('gear')}</button>
+    </div>
+  </div>`;
+}
+function renderBottomNav(){
+  const items=[['home','home','Главная'],['calendar','calendar','Календарь'],['library','dumbbell','Библиотека'],['profile','user','Профиль']];
+  return `<div class="bottomnav">${items.map(([key,ic,label])=>`
+    <button class="navitem ${state.ui.screen===key?'active':''}" data-action="nav" data-screen="${key}">${icon(ic)}<span>${label}</span></button>`).join('')}</div>`;
+}
 function renderScreenBody(){
+  if(state.ui.screen==='home') return renderHomeScreen();
   if(state.ui.screen==='calendar') return renderCalendarScreen();
   if(state.ui.screen==='library') return renderLibraryScreen();
   if(state.ui.screen==='profile') return renderProfileScreen();
-  return renderCalendarScreen();
+  return renderHomeScreen();
+}
+
+/* =================== HOME SCREEN =================== */
+function renderHomeScreen(){
+  const todays=workoutsOn(T);
+  const w=state.settings.watch;
+  return `
+    <div class="home-hero">
+      <div class="brand-row">${logoMark()}<span class="brand-word">FizUp</span></div>
+      <h1 class="hero-title">Календарь<br><em>тренировок</em></h1>
+    </div>
+    <div class="section">
+      <div class="section-title">Сегодня <span>${todays.length} ${pluralWorkout(todays.length)}</span></div>
+      ${todays.length?todays.map(renderWorkoutCard).join(''):`<div class="empty" style="padding:22px 10px;">${icon('calendar')}<div class="t">Ничего не запланировано</div><div class="s">Нажмите «+», чтобы добавить тренировку.</div></div>`}
+    </div>
+    <div class="section">
+      <div class="section-title">Твой прогресс</div>
+      ${renderProgressCard()}
+    </div>
+    <div class="section">
+      <div class="section-title">Сегодня с часов</div>
+      ${w.connected?renderWatchStatsBlock():`<div class="watch-cta" data-action="open-settings">${icon('watch')}<div class="s">Подключите часы в настройках — шаги, сон и пульс появятся здесь</div></div>`}
+    </div>
+  `;
+}
+function renderWatchStatsBlock(){
+  const d=watchDailyStats(T);
+  return `<div class="watchstats">
+    <div class="ws-item"><div class="ws-v">${d.steps.toLocaleString('ru-RU')}</div><div class="ws-l">Шаги</div></div>
+    <div class="ws-item"><div class="ws-v">${d.sleep} ч</div><div class="ws-l">Сон</div></div>
+    <div class="ws-item"><div class="ws-v">${d.hr}</div><div class="ws-l">Пульс покоя</div></div>
+    <div class="ws-item"><div class="ws-v">${d.active} мин</div><div class="ws-l">Актив.</div></div>
+  </div>`;
 }
 
 /* =================== CALENDAR SCREEN =================== */
@@ -484,132 +656,76 @@ function renderCalendarScreen(){
   else if(state.ui.calMode==='week') body=renderWeekView();
   else if(state.ui.calMode==='day') body=renderDayView();
   else body=renderYearView();
-
-  return `
-    <div class="segmented">${modes.map(([m,l])=>`<button class="${state.ui.calMode===m?'active':''}" data-action="set-mode" data-mode="${m}">${l}</button>`).join('')}</div>
-    ${body}
-  `;
+  return `<div class="segmented">${modes.map(([m,l])=>`<button class="${state.ui.calMode===m?'active':''}" data-action="set-mode" data-mode="${m}">${l}</button>`).join('')}</div>${body}`;
 }
-
 function calNavLabel(){
   const c=fromISO(state.ui.cursor);
   if(state.ui.calMode==='month') return MONTHS[c.getMonth()]+' '+c.getFullYear();
   if(state.ui.calMode==='year') return ''+c.getFullYear();
   if(state.ui.calMode==='week'){
-    const s=fromISO(startOfWeekMon(state.ui.cursor));
-    const e=fromISO(addDays(startOfWeekMon(state.ui.cursor),6));
+    const s=fromISO(startOfWeekMon(state.ui.cursor)); const e=fromISO(addDays(startOfWeekMon(state.ui.cursor),6));
     return s.getDate()+' — '+e.getDate()+' '+MONTHS[e.getMonth()].toLowerCase();
   }
   return fmtDateHuman(state.ui.cursor);
 }
-
 function renderCalNav(){
   return `<div class="calnav">
     <div class="navbtns"><button class="navbtn" data-action="cal-prev">${icon('chevronLeft')}</button></div>
     <div class="label">${calNavLabel()}</div>
-    <div class="navbtns">
-      <button class="todaybtn" data-action="cal-today">Сегодня</button>
-      <button class="navbtn" data-action="cal-next">${icon('chevronRight')}</button>
-    </div>
+    <div class="navbtns"><button class="todaybtn" data-action="cal-today">Сегодня</button><button class="navbtn" data-action="cal-next">${icon('chevronRight')}</button></div>
   </div>`;
 }
-
 function renderMonthView(){
-  const c=fromISO(state.ui.cursor);
-  const year=c.getFullYear(),month=c.getMonth();
-  const firstOfMonth=new Date(year,month,1);
-  const startOffset=(firstOfMonth.getDay()+6)%7;
+  const c=fromISO(state.ui.cursor); const year=c.getFullYear(),month=c.getMonth();
+  const firstOfMonth=new Date(year,month,1); const startOffset=(firstOfMonth.getDay()+6)%7;
   const gridStart=new Date(year,month,1-startOffset);
   let cells='';
   for(let i=0;i<42;i++){
-    const d=new Date(gridStart);d.setDate(gridStart.getDate()+i);
-    const iso=toISO(d);
-    const inMonth=d.getMonth()===month;
-    const wo=workoutsOn(iso);
-    const st=dayStatus(iso);
+    const d=new Date(gridStart); d.setDate(gridStart.getDate()+i);
+    const iso=toISO(d); const inMonth=d.getMonth()===month; const wo=workoutsOn(iso); const st=dayStatus(iso);
     const dotsHtml=wo.slice(0,3).map(w=>`<span class="dot ${dayStatus(w.date)}"></span>`).join('');
-    cells+=`<div class="day-cell ${inMonth?'':'other-month'} ${st==='today'?'today':''}" data-action="pick-day" data-date="${iso}">
-      <div class="num">${d.getDate()}</div>
-      <div class="dots">${dotsHtml}</div>
-    </div>`;
+    cells+=`<div class="day-cell ${inMonth?'':'other-month'} ${st==='today'?'today':''}" data-action="pick-day" data-date="${iso}"><div class="num">${d.getDate()}</div><div class="dots">${dotsHtml}</div></div>`;
   }
-  return `${renderCalNav()}
-    <div class="weekday-row">${WEEKDAYS.map(w=>`<span>${w}</span>`).join('')}</div>
-    <div class="month-grid">${cells}</div>`;
+  return `${renderCalNav()}<div class="weekday-row">${WEEKDAYS.map(w=>`<span>${w}</span>`).join('')}</div><div class="month-grid">${cells}</div>`;
 }
-
 function renderWeekView(){
-  const start=startOfWeekMon(state.ui.cursor);
-  let rows='';
+  const start=startOfWeekMon(state.ui.cursor); let rows='';
   for(let i=0;i<7;i++){
-    const iso=addDays(start,i);
-    const d=fromISO(iso);
-    const wo=workoutsOn(iso);
-    const isToday=iso===todayISO();
+    const iso=addDays(start,i); const d=fromISO(iso); const wo=workoutsOn(iso); const isToday=iso===todayISO();
     rows+=`<div class="week-row ${isToday?'is-today':''}" data-action="pick-day" data-date="${iso}">
       <div class="wd"><div class="n">${d.getDate()}</div><div class="l">${WEEKDAYS[i]}</div></div>
-      <div class="chips">${wo.length? wo.map(w=>`<span class="mini-chip ${isToday?'today':''}">${w.time} · ${esc(w.name)}</span>`).join('') : '<span class="none">Тренировок нет</span>'}</div>
+      <div class="chips">${wo.length?wo.map(w=>`<span class="mini-chip ${isToday?'today':''}">${w.time} · ${esc(w.name)}</span>`).join(''):'<span class="none">Тренировок нет</span>'}</div>
     </div>`;
   }
   return `${renderCalNav()}<div class="week-list">${rows}</div>`;
 }
-
 function renderDayView(){
-  const iso=state.ui.cursor;
-  const d=fromISO(iso);
-  const wo=workoutsOn(iso);
-  const st=dayStatus(iso);
+  const iso=state.ui.cursor; const d=fromISO(iso); const wo=workoutsOn(iso); const st=dayStatus(iso);
   const stLabel=st==='past'?'Прошедший день':(st==='today'?'Сегодня':'Предстоящий день');
-  let cards='';
-  if(wo.length===0){
-    cards=`<div class="empty">${icon('calendar')}<div class="t">На этот день ничего не запланировано</div><div class="s">Нажмите «+», чтобы добавить тренировку на ${fmtDateShort(iso)}.</div></div>`;
-  }else{
-    cards='<div class="day-cards">'+wo.map(w=>renderWorkoutCard(w)).join('')+'</div>';
-  }
-  return `${renderCalNav()}
-    <div class="day-head">
-      <div class="big">${d.getDate()} ${MONTHS[d.getMonth()].slice(0,3).toLowerCase()}</div>
-      <div class="sub">${WEEKDAYS[(d.getDay()+6)%7]==='Сб'||WEEKDAYS[(d.getDay()+6)%7]==='Вс'?'Выходной · ':''}${stLabel}</div>
-    </div>
-    ${cards}`;
+  let cards = wo.length===0
+    ? `<div class="empty">${icon('calendar')}<div class="t">На этот день ничего не запланировано</div><div class="s">Нажмите «+», чтобы добавить тренировку на ${fmtDateShort(iso)}.</div></div>`
+    : '<div class="day-cards">'+wo.map(w=>renderWorkoutCard(w)).join('')+'</div>';
+  return `${renderCalNav()}<div class="day-head"><div class="big">${d.getDate()} ${MONTHS[d.getMonth()].slice(0,3).toLowerCase()}</div><div class="sub">${stLabel}</div></div>${cards}`;
 }
-
 function renderWorkoutCard(w){
-  const st=dayStatus(w.date);
-  const stLabel=st==='past'?'Прошла':(st==='today'?'Сегодня':'Скоро');
+  const st=dayStatus(w.date); const stLabel=st==='past'?'Прошла':(st==='today'?'Сегодня':'Скоро');
   const zones=[...new Set(w.items.flatMap(itemZones))];
   return `<div class="wk-card" data-action="open-workout" data-id="${w.id}">
-    <div class="wk-card-top">
-      <div>
-        <div class="time">${w.time}</div>
-        <div class="name">${esc(w.name)}</div>
-        <div class="meta">${w.duration} мин · ${w.items.length} ${w.items.length===1?'элемент':'элемента(ов)'}</div>
-      </div>
-      <span class="status-badge ${st}">${stLabel}</span>
-    </div>
+    <div class="wk-card-top"><div><div class="time">${w.time}</div><div class="name">${esc(w.name)}</div><div class="meta">${w.duration} мин · ${w.items.length} ${w.items.length===1?'элемент':'элемента(ов)'}</div></div><span class="status-badge ${st}">${stLabel}</span></div>
     <div class="tags">${zones.map(z=>`<span class="tag">${esc(z)}</span>`).join('')}</div>
   </div>`;
 }
-
 function renderYearView(){
-  const year=fromISO(state.ui.cursor).getFullYear();
-  let months='';
+  const year=fromISO(state.ui.cursor).getFullYear(); let months='';
   for(let m=0;m<12;m++){
-    const first=new Date(year,m,1);
-    const startOffset=(first.getDay()+6)%7;
-    const daysInMonth=new Date(year,m+1,0).getDate();
-    let cells='';
-    for(let i=0;i<startOffset;i++) cells+='<div class="mm-cell blank"></div>';
+    const first=new Date(year,m,1); const startOffset=(first.getDay()+6)%7; const daysInMonth=new Date(year,m+1,0).getDate();
+    let cells=''; for(let i=0;i<startOffset;i++) cells+='<div class="mm-cell blank"></div>';
     for(let dd=1;dd<=daysInMonth;dd++){
-      const iso=year+'-'+pad(m+1)+'-'+pad(dd);
-      const cnt=workoutsOn(iso).length;
+      const iso=year+'-'+pad(m+1)+'-'+pad(dd); const cnt=workoutsOn(iso).length;
       const cls=cnt===0?'':(cnt===1?'has1':(cnt===2?'has2':'has3'));
       cells+=`<div class="mm-cell ${cls}"></div>`;
     }
-    months+=`<div class="mini-month" data-action="pick-month" data-month="${m}">
-      <div class="mm-title">${MONTHS[m]}</div>
-      <div class="mm-grid">${cells}</div>
-    </div>`;
+    months+=`<div class="mini-month" data-action="pick-month" data-month="${m}"><div class="mm-title">${MONTHS[m]}</div><div class="mm-grid">${cells}</div></div>`;
   }
   return `${renderCalNav()}<div class="year-grid">${months}</div>`;
 }
@@ -618,75 +734,82 @@ function renderYearView(){
 function renderLibraryScreen(){
   const tab=state.ui.libTab;
   return `
-    <div class="screen-head"><h1>Библиотека</h1><p>Упражнения и комплексы для тренировок</p></div>
+    <div class="screen-head"><h1>Библиотека</h1><p>Каталог тренировок и упражнений</p></div>
     <div class="segmented" style="margin-top:14px;">
-      <button class="${tab==='exercises'?'active':''}" data-action="lib-tab" data-tab="exercises">Упражнения</button>
       <button class="${tab==='complexes'?'active':''}" data-action="lib-tab" data-tab="complexes">Комплексы</button>
+      <button class="${tab==='exercises'?'active':''}" data-action="lib-tab" data-tab="exercises">Упражнения</button>
     </div>
-    <div class="section" style="padding-top:2px;">
-      ${tab==='exercises'?renderExerciseLibrary():renderComplexLibrary()}
-    </div>
+    <div class="section" style="padding-top:2px;">${tab==='exercises'?renderExerciseLibrary():renderComplexLibrary()}</div>
   `;
 }
-
+function renderComplexLibrary(){
+  const cf=state.ui.libCatFilter;
+  const list=state.complexes.filter(c=>!cf||c.sport===cf);
+  return `
+    <div class="section-title">Тип</div>
+    <div class="chiprow" style="margin-bottom:16px;">${CATEGORIES.map(c=>`<button class="chip ${cf===c.key?'active':''}" data-action="lib-filter-cat" data-cat="${c.key}">${c.label}</button>`).join('')}</div>
+    ${list.length?list.map(c=>renderComplexCard(c)).join(''):`<div class="empty">${icon('dumbbell')}<div class="t">Ничего не найдено</div><div class="s">Измените фильтр или добавьте новый комплекс.</div></div>`}
+    <button class="btn-add" data-action="new-complex" style="margin-top:6px;">${icon('plus')} Добавить комплекс</button>
+  `;
+}
+function renderComplexCard(c){
+  const cat=catMeta(c.sport||'strength'); const diff=c.difficulty||2;
+  return `<div class="catalog-card" data-action="open-complex" data-id="${c.id}">
+    <div class="catalog-preview" style="background:linear-gradient(135deg,${cat.c1},${cat.c2});"><span>${cat.mono}</span></div>
+    <div class="catalog-body">
+      <div class="n">${esc(c.name)}</div>
+      <div class="catalog-meta"><span>${c.duration||c.exerciseIds.length*8} мин</span><span class="mdot"></span><span class="diffdots">${[1,2,3].map(i=>`<i class="${i<=diff?'on':''}"></i>`).join('')}</span><span class="mdot"></span><span>${cat.label}</span></div>
+      <div class="tags">${c.exerciseIds.slice(0,2).map(id=>{const ex=findExercise(id);return ex?`<span class="tag">${esc(ex.name)}</span>`:'';}).join('')}${c.exerciseIds.length>2?`<span class="tag">+${c.exerciseIds.length-2}</span>`:''}</div>
+    </div>
+  </div>`;
+}
 function renderExerciseLibrary(){
   const zf=state.ui.libZoneFilter, ef=state.ui.libEquipFilter;
   let list=state.exercises.filter(e=>(!zf||e.zone===zf)&&(!ef||e.equipment===ef));
   return `
     <div class="section-title">Зоны</div>
-    <div class="chiprow" style="margin-bottom:14px;">
-      ${ZONES.map(z=>`<button class="chip ${zf===z?'active':''}" data-action="lib-filter-zone" data-zone="${z}">${z}</button>`).join('')}
-    </div>
+    <div class="chiprow" style="margin-bottom:14px;">${ZONES.map(z=>`<button class="chip ${zf===z?'active':''}" data-action="lib-filter-zone" data-zone="${z}">${z}</button>`).join('')}</div>
     <div class="section-title">Снаряды</div>
-    <div class="chiprow" style="margin-bottom:16px;">
-      ${EQUIPMENT.map(eq=>`<button class="chip ${ef===eq?'active':''}" data-action="lib-filter-equip" data-equip="${eq}">${eq}</button>`).join('')}
-    </div>
+    <div class="chiprow" style="margin-bottom:16px;">${EQUIPMENT.map(eq=>`<button class="chip ${ef===eq?'active':''}" data-action="lib-filter-equip" data-equip="${eq}">${eq}</button>`).join('')}</div>
     ${list.length?list.map(e=>renderExerciseCard(e)).join(''):`<div class="empty">${icon('dumbbell')}<div class="t">Ничего не найдено</div><div class="s">Измените фильтры или добавьте новое упражнение.</div></div>`}
     <button class="btn-add" data-action="new-exercise" style="margin-top:6px;">${icon('plus')} Добавить упражнение</button>
   `;
 }
-
 function renderExerciseCard(e){
   const thumb=e.photos&&e.photos[0]?`<img src="${e.photos[0]}">`:icon('dumbbell');
   return `<div class="exercise-card" data-action="open-exercise" data-id="${e.id}">
     <div class="thumb">${thumb}</div>
-    <div style="flex:1;min-width:0;">
-      <div class="n">${esc(e.name)}</div>
-      <div class="tags"><span class="tag">${esc(e.zone)}</span><span class="tag">${esc(e.equipment)}</span></div>
-    </div>
+    <div style="flex:1;min-width:0;"><div class="n">${esc(e.name)}</div><div class="tags"><span class="tag">${esc(e.zone)}</span><span class="tag">${esc(e.equipment)}</span></div></div>
     <div class="chevron">${icon('chevronRightSm')}</div>
   </div>`;
 }
 
-function renderComplexLibrary(){
-  return `
-    ${state.complexes.length?state.complexes.map(c=>`
-      <div class="exercise-card" data-action="open-complex" data-id="${c.id}">
-        <div class="thumb">${icon('dumbbell')}</div>
-        <div style="flex:1;min-width:0;">
-          <div class="n">${esc(c.name)}</div>
-          <div class="tags">${c.exerciseIds.slice(0,3).map(id=>{const ex=findExercise(id);return ex?`<span class="tag">${esc(ex.name)}</span>`:'';}).join('')}${c.exerciseIds.length>3?`<span class="tag">+${c.exerciseIds.length-3}</span>`:''}</div>
-        </div>
-        <div class="chevron">${icon('chevronRightSm')}</div>
-      </div>`).join(''):`<div class="empty">${icon('dumbbell')}<div class="t">Комплексов пока нет</div><div class="s">Соберите несколько упражнений в один комплекс.</div></div>`}
-    <button class="btn-add" data-action="new-complex" style="margin-top:6px;">${icon('plus')} Добавить комплекс</button>
-  `;
-}
-
 /* =================== PROFILE SCREEN =================== */
 function renderProfileScreen(){
-  const p=state.profile;
-  const age=calcAge(p.birthDate);
+  const p=state.profile; const age=calcAge(p.birthDate);
   const lastWeight=p.weightLog.length?p.weightLog[p.weightLog.length-1].weight:null;
   const lastM=p.measurements.length?p.measurements[p.measurements.length-1]:null;
+  const completed=state.workouts.filter(w=>dayStatus(w.date)!=='future');
+  const totalHours=(completed.reduce((s,w)=>s+w.duration,0)/60).toFixed(1);
+  const av=p.avatar?`<img src="${p.avatar}">`:esc(initials(p.name));
   return `
     <div class="screen-head"><h1>Профиль</h1><p>Личные данные и физические показатели</p></div>
+    <div class="section" style="text-align:center;">
+      <label class="avatar-upload">${av}<div class="avatar-edit-badge">${icon('camera')}</div><input type="file" accept="image/*" id="avatar-input" class="hidden"></label>
+      <div style="font-weight:800;font-size:17px;margin-top:10px;">${esc(p.name)}</div>
+      <div style="font-size:12.5px;color:var(--text-faint);font-weight:700;">${esc(p.level)} уровень</div>
+    </div>
     <div class="section">
       <div class="stat-row">
-        <div class="stat-box"><div class="v">${age!==null?age:'—'}</div><div class="l">Возраст</div></div>
-        <div class="stat-box"><div class="v">${p.height||'—'}</div><div class="l">Рост, см</div></div>
-        <div class="stat-box"><div class="v">${lastWeight!==null?lastWeight:'—'}</div><div class="l">Вес, кг</div></div>
+        <div class="stat-box"><div class="v">${completed.length}</div><div class="l">Тренировок</div></div>
+        <div class="stat-box"><div class="v">${totalHours}</div><div class="l">Часов актив.</div></div>
+        <div class="stat-box"><div class="v" style="font-size:14px;line-height:1.6;">${esc(favoriteSportLabel())}</div><div class="l">Любимый спорт</div></div>
       </div>
+      <div style="text-align:center;font-size:12.5px;color:var(--text-faint);font-style:normal;margin-top:10px;">Движение — это жизнь.</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Твой прогресс</div>
+      ${renderProgressCard()}
     </div>
     <div class="section">
       <div class="section-title">Основные данные</div>
@@ -694,32 +817,25 @@ function renderProfileScreen(){
         <div class="field"><label>Имя</label><input type="text" id="pf-name" value="${esc(p.name)}"></div>
         <div class="field-row">
           <div class="field"><label>Дата рождения</label><input type="date" id="pf-birth" value="${p.birthDate||''}"></div>
-          <div class="field"><label>Пол</label>
-            <select id="pf-gender">
-              ${['М','Ж','Другое'].map(g=>`<option value="${g}" ${p.gender===g?'selected':''}>${g}</option>`).join('')}
-            </select>
-          </div>
+          <div class="field"><label>Пол</label><select id="pf-gender">${['М','Ж','Другое'].map(g=>`<option value="${g}" ${p.gender===g?'selected':''}>${g}</option>`).join('')}</select></div>
         </div>
-        <div class="field"><label>Рост, см</label><input type="number" id="pf-height" value="${p.height||''}"></div>
+        <div class="field-row">
+          <div class="field"><label>Рост, см</label><input type="number" id="pf-height" value="${p.height||''}"></div>
+          <div class="field"><label>Уровень</label><select id="pf-level">${['Начинающий','Средний','Продвинутый'].map(l=>`<option value="${l}" ${p.level===l?'selected':''}>${l}</option>`).join('')}</select></div>
+        </div>
         <button class="btn btn-primary btn-block" data-action="save-profile">Сохранить</button>
       </div>
     </div>
     <div class="section">
-      <div class="section-title">Вес<span></span></div>
+      <div class="section-title">Вес</div>
       <div class="card" data-action="open-weight-log" style="cursor:pointer;">
-        <div class="setting-row" style="border:none;padding:0;">
-          <div><div class="t">Журнал веса</div><div class="s">${p.weightLog.length} записей ${lastWeight!==null?'· последняя: '+lastWeight+' кг':''}</div></div>
-          <div class="chevron">${icon('chevronRightSm')}</div>
-        </div>
+        <div class="setting-row" style="border:none;padding:0;"><div><div class="t">Журнал веса</div><div class="s">${p.weightLog.length} записей ${lastWeight!==null?'· последняя: '+lastWeight+' кг':''}</div></div><div class="chevron" style="color:var(--text-faint);">${icon('chevronRightSm')}</div></div>
       </div>
     </div>
     <div class="section">
       <div class="section-title">Антропометрические параметры</div>
       <div class="card" data-action="open-measurements" style="cursor:pointer;">
-        <div class="setting-row" style="border:none;padding:0;">
-          <div><div class="t">Обхват груди, бицепса, бедра</div><div class="s">${lastM?`Груд ${lastM.chest} · Бицепс ${lastM.biceps} · Бедро ${lastM.thigh} см`:'Замеров пока нет'}</div></div>
-          <div class="chevron">${icon('chevronRightSm')}</div>
-        </div>
+        <div class="setting-row" style="border:none;padding:0;"><div><div class="t">Обхват груди, бицепса, бедра</div><div class="s">${lastM?`Гр ${lastM.chest} · Бц ${lastM.biceps} · Бд ${lastM.thigh} см`:'Замеров пока нет'}</div></div><div class="chevron" style="color:var(--text-faint);">${icon('chevronRightSm')}</div></div>
       </div>
     </div>
   `;
@@ -729,8 +845,15 @@ function renderProfileScreen(){
 document.addEventListener('click', function(e){
   const t=e.target.closest('[data-action]');
   if(!t) return;
-  const action=t.dataset.action;
-  handleAction(action,t,e);
+  handleAction(t.dataset.action,t);
+});
+document.addEventListener('change', function(e){
+  if(e.target && e.target.id==='avatar-input'){
+    const file=e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{ state.profile.avatar=ev.target.result; render(); };
+    reader.readAsDataURL(file);
+  }
 });
 
 function handleAction(action,t){
@@ -740,11 +863,8 @@ function handleAction(action,t){
     case 'cal-prev': navCal(-1); break;
     case 'cal-next': navCal(1); break;
     case 'cal-today': state.ui.cursor=todayISO(); render(); break;
-    case 'pick-day':
-      state.ui.selectedDate=t.dataset.date; state.ui.cursor=t.dataset.date; state.ui.calMode='day'; render(); break;
-    case 'pick-month':
-      { const y=fromISO(state.ui.cursor).getFullYear(); state.ui.cursor=y+'-'+pad(Number(t.dataset.month)+1)+'-01'; state.ui.calMode='month'; render(); }
-      break;
+    case 'pick-day': state.ui.selectedDate=t.dataset.date; state.ui.cursor=t.dataset.date; state.ui.calMode='day'; state.ui.screen='calendar'; render(); break;
+    case 'pick-month': { const y=fromISO(state.ui.cursor).getFullYear(); state.ui.cursor=y+'-'+pad(Number(t.dataset.month)+1)+'-01'; state.ui.calMode='month'; render(); } break;
     case 'open-profile': state.ui.screen='profile'; render(); break;
     case 'open-settings': openSettingsModal(); break;
     case 'add-workout': openWorkoutEditor(null, state.ui.selectedDate); break;
@@ -752,6 +872,7 @@ function handleAction(action,t){
     case 'lib-tab': state.ui.libTab=t.dataset.tab; render(); break;
     case 'lib-filter-zone': state.ui.libZoneFilter = state.ui.libZoneFilter===t.dataset.zone?null:t.dataset.zone; render(); break;
     case 'lib-filter-equip': state.ui.libEquipFilter = state.ui.libEquipFilter===t.dataset.equip?null:t.dataset.equip; render(); break;
+    case 'lib-filter-cat': state.ui.libCatFilter = state.ui.libCatFilter===t.dataset.cat?null:t.dataset.cat; render(); break;
     case 'new-exercise': openExerciseEditor(null); break;
     case 'open-exercise': openExerciseEditor(findExercise(t.dataset.id)); break;
     case 'new-complex': openComplexEditor(null); break;
@@ -762,7 +883,6 @@ function handleAction(action,t){
     default: break;
   }
 }
-
 function navCal(dir){
   const m=state.ui.calMode;
   if(m==='month') state.ui.cursor=addMonths(state.ui.cursor,dir);
@@ -771,14 +891,13 @@ function navCal(dir){
   else if(m==='year') state.ui.cursor=addMonths(state.ui.cursor,12*dir);
   render();
 }
-
 function saveProfileBasics(){
   state.profile.name=document.getElementById('pf-name').value.trim()||'Без имени';
   state.profile.birthDate=document.getElementById('pf-birth').value||'';
   state.profile.gender=document.getElementById('pf-gender').value;
   state.profile.height=Number(document.getElementById('pf-height').value)||0;
-  render();
-  showToast('Профиль сохранён');
+  state.profile.level=document.getElementById('pf-level').value;
+  render(); showToast('Профиль сохранён');
 }
 
 /* =================== MODAL ENGINE =================== */
@@ -795,25 +914,28 @@ function closeModal(layer){
 }
 
 /* =================== SETTINGS MODAL =================== */
-function openSettingsModal(){
-  renderSettingsModal();
-}
+function openSettingsModal(){ renderSettingsModal(); }
 function renderSettingsModal(){
-  const s=state.settings;
-  const w=s.watch;
-  const accents=[['ember','#FF5A36'],['moss','#7AB242'],['cyan','#20B6B2'],['violet','#8C6CD8']];
+  const s=state.settings, w=s.watch;
   openModal(`
-    <div class="modal-sheet" style="max-height:88vh;">
+    <div class="modal-sheet" style="max-height:90vh;">
       <div class="modal-handle"></div>
       <div class="modal-header"><h2>Настройки</h2><button class="icon-btn" data-close="overlay">${icon('close')}</button></div>
       <div class="modal-body">
+        <div class="setting-row" style="display:block;">
+          <div class="t" style="margin-bottom:2px;">Визуальный мир</div>
+          <div class="s" style="margin-bottom:14px;">Меняет настроение и палитру всего приложения</div>
+          <div class="world-picker">
+            ${['urban','zen','sport'].map(key=>`
+              <div class="world-item">
+                <div class="world-swatch ${s.world===key?'active':''}" style="background:${worldSwatchBg(key)}" data-action-inline="set-world" data-world="${key}">${ICONS.arrowUp.replace('currentColor',key==='zen'?'#7a4b2a':'#FF5A1F')}</div>
+                <div class="wl">${WORLD_LABELS[key]}</div>
+              </div>`).join('')}
+          </div>
+        </div>
         <div class="setting-row">
           <div><div class="t">Тёмный режим</div><div class="s">Переключение день / ночь</div></div>
-          <div class="switch ${s.theme==='dark'?'on':''}" data-action-inline="toggle-theme"></div>
-        </div>
-        <div class="setting-row" style="display:block;">
-          <div class="t" style="margin-bottom:10px;">Цветовая схема</div>
-          <div class="swatchrow">${accents.map(([key,hex])=>`<div class="swatch ${s.accent===key?'active':''}" style="background:${hex}" data-action-inline="set-accent" data-accent="${key}"></div>`).join('')}</div>
+          <div class="switch ${s.mode==='dark'?'on':''}" data-action-inline="toggle-mode"></div>
         </div>
         <div class="setting-row" style="display:block;">
           <div class="t" style="margin-bottom:2px;">Данные приложения</div>
@@ -826,7 +948,7 @@ function renderSettingsModal(){
         </div>
         <div class="setting-row" style="display:block;border-bottom:none;">
           <div class="t" style="margin-bottom:2px;">Смарт-часы</div>
-          <div class="s" style="margin-bottom:12px;">${w.connected?`Подключено: ${esc(w.device)}`:'Синхронизируйте тренировки с носимым устройством'}</div>
+          <div class="s" style="margin-bottom:12px;">${w.connected?`Подключено: ${esc(w.device)} — шаги, сон, пульс и тренировки синхронизируются автоматически`:'Синхронизируйте шаги, сон, пульс и тренировки с носимым устройством'}</div>
           <div id="watch-panel">${renderWatchPanel()}</div>
         </div>
       </div>
@@ -836,27 +958,33 @@ function renderSettingsModal(){
   const fileInput=document.getElementById('import-file');
   if(fileInput) fileInput.addEventListener('change', handleImportFile);
 }
+function worldSwatchBg(key){
+  if(key==='urban') return 'linear-gradient(135deg,#232323,#0c0c0c)';
+  if(key==='zen') return 'linear-gradient(135deg,#e9dcbf,#c8a877)';
+  return 'linear-gradient(135deg,#173325,#0a1310)';
+}
 function renderWatchPanel(){
   const w=state.settings.watch;
   if(w.connected){
-    return `<div class="watch-devicerow"><div style="display:flex;align-items:center;gap:10px;">${icon('watch')}<div><div style="font-weight:800;font-size:13.5px;">${esc(w.device)}</div><div style="font-size:11px;color:var(--text-faint);">Последняя синхронизация: только что</div></div></div><span class="pulse-dot"></span></div>
+    const d=watchDailyStats(T);
+    return `<div class="watch-devicerow"><div style="display:flex;align-items:center;gap:10px;">${icon('watch')}<div><div style="font-weight:800;font-size:13.5px;">${esc(w.device)}</div><div style="font-size:11px;color:var(--text-faint);">Синхронизировано только что</div></div></div><span class="pulse-dot"></span></div>
+    <div class="watchstats" style="margin-bottom:10px;">
+      <div class="ws-item"><div class="ws-v">${d.steps.toLocaleString('ru-RU')}</div><div class="ws-l">Шаги</div></div>
+      <div class="ws-item"><div class="ws-v">${d.sleep} ч</div><div class="ws-l">Сон</div></div>
+      <div class="ws-item"><div class="ws-v">${d.hr}</div><div class="ws-l">Пульс</div></div>
+      <div class="ws-item"><div class="ws-v">${d.active} мин</div><div class="ws-l">Актив.</div></div>
+    </div>
     <button class="btn btn-danger btn-block" data-action-inline="watch-disconnect">Отключить</button>`;
   }
-  if(w.scanning){
-    return `<div class="watch-devicerow"><div style="display:flex;align-items:center;gap:10px;"><div class="spinner"></div><span style="font-size:13px;color:var(--text-dim);font-weight:700;">Поиск устройств рядом…</span></div></div>`;
-  }
-  if(w._found){
-    return w._found.map(d=>`<div class="watch-devicerow" data-action-inline="watch-connect" data-device="${esc(d)}"><div style="display:flex;align-items:center;gap:10px;">${icon('watch')}<span style="font-size:13.5px;font-weight:700;">${esc(d)}</span></div>${icon('chevronRightSm')}</div>`).join('')
-    +`<div class="s" style="margin-top:8px;">Демонстрационное подключение — реальная синхронизация потребует Web Bluetooth API.</div>`;
-  }
+  if(w.scanning) return `<div class="watch-devicerow"><div style="display:flex;align-items:center;gap:10px;"><div class="spinner"></div><span style="font-size:13px;color:var(--text-dim);font-weight:700;">Поиск устройств рядом…</span></div></div>`;
+  if(w._found) return w._found.map(d=>`<div class="watch-devicerow" data-action-inline="watch-connect" data-device="${esc(d)}"><div style="display:flex;align-items:center;gap:10px;">${icon('watch')}<span style="font-size:13.5px;font-weight:700;">${esc(d)}</span></div>${icon('chevronRightSm')}</div>`).join('')+`<div class="s" style="margin-top:8px;">Демонстрационное подключение — реальная синхронизация потребует Web Bluetooth API.</div>`;
   return `<button class="btn btn-ghost btn-block" data-action-inline="watch-scan">${icon('watch')} Найти устройства</button>`;
 }
 function settingsInlineHandler(e){
-  const t=e.target.closest('[data-action-inline]');
-  if(!t) return;
+  const t=e.target.closest('[data-action-inline]'); if(!t) return;
   const a=t.dataset.actionInline;
-  if(a==='toggle-theme'){ state.settings.theme = state.settings.theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',state.settings.theme); renderSettingsModal(); render(); }
-  else if(a==='set-accent'){ state.settings.accent=t.dataset.accent; document.documentElement.setAttribute('data-accent',state.settings.accent); renderSettingsModal(); render(); }
+  if(a==='toggle-mode'){ state.settings.mode = state.settings.mode==='dark'?'light':'dark'; document.documentElement.setAttribute('data-mode',state.settings.mode); renderSettingsModal(); render(); }
+  else if(a==='set-world'){ state.settings.world=t.dataset.world; state.settings.mode=WORLD_DEFAULT_MODE[t.dataset.world]; document.documentElement.setAttribute('data-world',state.settings.world); document.documentElement.setAttribute('data-mode',state.settings.mode); renderSettingsModal(); render(); }
   else if(a==='export-data'){ exportData(); }
   else if(a==='import-data'){ document.getElementById('import-file').click(); }
   else if(a==='watch-scan'){
@@ -865,8 +993,7 @@ function settingsInlineHandler(e){
   }
   else if(a==='watch-connect'){
     state.settings.watch.connected=true; state.settings.watch.device=t.dataset.device; state.settings.watch._found=null;
-    const p=document.getElementById('watch-panel'); if(p) p.innerHTML=renderWatchPanel();
-    showToast('Часы подключены');
+    const p=document.getElementById('watch-panel'); if(p) p.innerHTML=renderWatchPanel(); showToast('Часы подключены');
   }
   else if(a==='watch-disconnect'){
     state.settings.watch.connected=false; state.settings.watch.device=null;
@@ -876,10 +1003,8 @@ function settingsInlineHandler(e){
 function exportData(){
   const data={profile:state.profile,settings:state.settings,exercises:state.exercises,complexes:state.complexes,workouts:state.workouts};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='fizup-backup.json';document.body.appendChild(a);a.click();document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url;a.download='fizup-backup.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
   showToast('Резервная копия скачана');
 }
 function handleImportFile(e){
@@ -902,12 +1027,11 @@ function handleImportFile(e){
 /* =================== WORKOUT EDITOR =================== */
 function openWorkoutEditor(existing, presetDate){
   workoutDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',date:presetDate||todayISO(),time:'18:00',duration:60,items:[]};
+  if(!workoutDraft.repeat) workoutDraft.repeat={enabled:false,days:[],until:''};
   renderWorkoutEditor(!!existing);
 }
 function renderWorkoutEditor(isEdit){
-  const d=workoutDraft;
-  const st=dayStatus(d.date);
-  const stLabel=st==='past'?'Прошедшая':(st==='today'?'Сегодня':'Предстоящая');
+  const d=workoutDraft; const st=dayStatus(d.date); const stLabel=st==='past'?'Прошедшая':(st==='today'?'Сегодня':'Предстоящая');
   openModal(`
     <div class="modal-sheet" style="max-height:92vh;">
       <div class="modal-handle"></div>
@@ -918,15 +1042,14 @@ function renderWorkoutEditor(isEdit){
           <div class="field"><label>Дата</label><input type="date" id="w-date" value="${d.date}"></div>
           <div class="field"><label>Время</label><input type="time" id="w-time" value="${d.time}"></div>
         </div>
+        <div class="field"><label>Продолжительность, мин</label><input type="number" id="w-duration" value="${d.duration}"></div>
+        <div class="field"><label>Статус</label><span class="status-badge ${st}">${stLabel}</span></div>
+        ${!isEdit?`
         <div class="field">
-          <label>Продолжительность, мин</label>
-          <input type="number" id="w-duration" value="${d.duration}">
-          <div class="durchips" style="margin-top:8px;">${[30,45,60,90].map(m=>`<button class="chip ${d.duration==m?'active':''}" data-action-inline="dur" data-dur="${m}">${m}</button>`).join('')}</div>
-        </div>
-        <div class="field">
-          <label>Статус</label>
-          <span class="status-badge ${st}">${stLabel}</span>
-        </div>
+          <label>Повтор</label>
+          <div class="setting-row" style="padding:0;border:none;"><div class="s">Повторять на выбранные дни недели</div><div class="switch ${d.repeat.enabled?'on':''}" data-action-inline="toggle-repeat"></div></div>
+          <div id="repeat-options">${renderRepeatOptions()}</div>
+        </div>`:''}
         <div class="field">
           <label>Упражнения и комплексы</label>
           <div id="w-items">${renderWorkoutItems()}</div>
@@ -944,23 +1067,34 @@ function renderWorkoutEditor(isEdit){
   `);
   document.getElementById('overlay').addEventListener('click', workoutInlineHandler);
 }
+function renderRepeatOptions(){
+  const d=workoutDraft;
+  if(!d.repeat.enabled) return '';
+  return `<div class="chiprow" style="margin-top:10px;">${WEEKDAYS.map((wd,i)=>`<button class="chip ${d.repeat.days.includes(i)?'active':''}" data-action-inline="toggle-repeat-day" data-day="${i}">${wd}</button>`).join('')}</div>
+    <div class="field" style="margin-top:10px;"><label>Повторять до</label><input type="date" id="w-repeat-until" value="${d.repeat.until||addDays(d.date,28)}"></div>
+    <div class="s" style="color:var(--text-faint);font-size:12px;">Тренировка будет добавлена отдельной записью на каждый выбранный день недели в этом диапазоне.</div>`;
+}
 function renderWorkoutItems(){
   if(workoutDraft.items.length===0) return `<div class="s" style="color:var(--text-faint);font-size:12.5px;padding:6px 0;">Пока ничего не добавлено</div>`;
   return workoutDraft.items.map((it,idx)=>`
     <div class="list-item">
-      <div class="thumb">${icon(it.type==='exercise'?'dumbbell':'dumbbell')}</div>
+      <div class="thumb">${icon('dumbbell')}</div>
       <div class="body"><div class="n">${esc(itemLabel(it))}</div><div class="m">${it.type==='exercise'?'Упражнение':'Комплекс'} · ${itemZones(it).join(', ')||'—'}</div></div>
       <button class="del" data-action-inline="remove-item" data-idx="${idx}">${icon('trash')}</button>
     </div>`).join('');
 }
 function workoutInlineHandler(e){
-  const t=e.target.closest('[data-action-inline]');
-  if(!t) return;
+  const t=e.target.closest('[data-action-inline]'); if(!t) return;
   const a=t.dataset.actionInline;
-  if(a==='dur'){ workoutDraft.duration=Number(t.dataset.dur); renderWorkoutEditor(!!workoutDraft.id); }
-  else if(a==='remove-item'){ workoutDraft.items.splice(Number(t.dataset.idx),1); document.getElementById('w-items').innerHTML=renderWorkoutItems(); }
+  if(a==='remove-item'){ workoutDraft.items.splice(Number(t.dataset.idx),1); document.getElementById('w-items').innerHTML=renderWorkoutItems(); }
   else if(a==='add-exercise-item'){ openPicker('exercise'); }
   else if(a==='add-complex-item'){ openPicker('complex'); }
+  else if(a==='toggle-repeat'){ workoutDraft.repeat.enabled=!workoutDraft.repeat.enabled; renderWorkoutEditor(false); }
+  else if(a==='toggle-repeat-day'){
+    const day=Number(t.dataset.day); const idx=workoutDraft.repeat.days.indexOf(day);
+    if(idx===-1) workoutDraft.repeat.days.push(day); else workoutDraft.repeat.days.splice(idx,1);
+    document.getElementById('repeat-options').innerHTML=renderRepeatOptions();
+  }
   else if(a==='save-workout'){ saveWorkoutDraft(); }
   else if(a==='delete-workout'){ state.workouts=state.workouts.filter(w=>w.id!==workoutDraft.id); closeModal('overlay'); render(); showToast('Тренировка удалена'); }
 }
@@ -971,79 +1105,78 @@ function saveWorkoutDraft(){
   workoutDraft.date=document.getElementById('w-date').value||todayISO();
   workoutDraft.time=document.getElementById('w-time').value||'00:00';
   workoutDraft.duration=Number(document.getElementById('w-duration').value)||30;
-  if(workoutDraft.id){
-    const idx=state.workouts.findIndex(w=>w.id===workoutDraft.id);
-    state.workouts[idx]=workoutDraft;
-  }else{
-    workoutDraft.id=nextId();
-    state.workouts.push(workoutDraft);
+  const untilEl=document.getElementById('w-repeat-until');
+  if(untilEl) workoutDraft.repeat.until=untilEl.value||workoutDraft.date;
+
+  if(!workoutDraft.id && workoutDraft.repeat.enabled && workoutDraft.repeat.days.length){
+    const seriesId=nextId(); let cursor=workoutDraft.date; const until=workoutDraft.repeat.until||workoutDraft.date; let count=0;
+    while(cursor<=until){
+      const wd=(fromISO(cursor).getDay()+6)%7;
+      if(workoutDraft.repeat.days.includes(wd)){
+        state.workouts.push({id:nextId(),seriesId,name:workoutDraft.name,date:cursor,time:workoutDraft.time,duration:workoutDraft.duration,items:JSON.parse(JSON.stringify(workoutDraft.items))});
+        count++;
+      }
+      cursor=addDays(cursor,1);
+    }
+    state.ui.selectedDate=workoutDraft.date; state.ui.cursor=workoutDraft.date;
+    closeModal('overlay'); render(); showToast(`Добавлено тренировок: ${count}`); return;
   }
+  if(workoutDraft.id){ const idx=state.workouts.findIndex(w=>w.id===workoutDraft.id); state.workouts[idx]=workoutDraft; }
+  else{ workoutDraft.id=nextId(); state.workouts.push(workoutDraft); }
   state.ui.selectedDate=workoutDraft.date; state.ui.cursor=workoutDraft.date;
   closeModal('overlay'); render(); showToast('Тренировка сохранена');
 }
 
 /* =================== PICKER (nested modal) =================== */
-function openPicker(kind){
-  renderPicker(kind,'');
-}
+function openPicker(kind){ renderPicker(kind,''); }
 function renderPicker(kind,query){
-  const items = kind==='exercise'
-    ? state.exercises.filter(e=>e.name.toLowerCase().includes(query.toLowerCase()))
-    : state.complexes.filter(c=>c.name.toLowerCase().includes(query.toLowerCase()));
+  const items = kind==='exercise' ? state.exercises.filter(e=>e.name.toLowerCase().includes(query.toLowerCase())) : state.complexes.filter(c=>c.name.toLowerCase().includes(query.toLowerCase()));
   openModal(`
     <div class="modal-sheet centered" style="max-height:80vh;">
       <div class="modal-header"><h2>${kind==='exercise'?'Выбрать упражнение':'Выбрать комплекс'}</h2><button class="icon-btn" data-close="overlay2">${icon('close')}</button></div>
       <div class="modal-body">
         <div class="searchbar">${icon('search')}<input type="text" id="picker-search" placeholder="Поиск…" value="${esc(query)}"></div>
-        <div id="picker-list">${items.length?items.map(i=>`<div class="list-item" style="cursor:pointer;" data-action-inline="pick" data-id="${i.id}"><div class="thumb">${icon('dumbbell')}</div><div class="body"><div class="n">${esc(i.name)}</div>${kind==='exercise'?`<div class="m">${esc(i.zone)} · ${esc(i.equipment)}</div>`:`<div class="m">${i.exerciseIds.length} упражнений</div>`}</div></div>`).join(''):'<div class="s" style="color:var(--text-faint);padding:10px 0;">Ничего не найдено</div>'}</div>
+        <div id="picker-list">${items.length?items.map(i=>`<div class="list-item" style="cursor:pointer;" data-action-inline="pick" data-id="${i.id}"><div class="thumb">${icon('dumbbell')}</div><div class="body"><div class="n">${esc(i.name)}</div>${kind==='exercise'?`<div class="m">${esc(i.zone)} · ${esc(i.equipment)}</div>`:`<div class="m">${catMeta(i.sport).label} · ${i.duration||i.exerciseIds.length*8} мин</div>`}</div></div>`).join(''):'<div class="s" style="color:var(--text-faint);padding:10px 0;">Ничего не найдено</div>'}</div>
         <button class="btn-add" style="margin-top:10px;" data-action-inline="create-new">${icon('plus')} Создать новое</button>
       </div>
     </div>
   `,'overlay2');
   const ov2=document.getElementById('overlay2');
   ov2.addEventListener('click', function handler(e){
-    const t=e.target.closest('[data-action-inline]');
-    if(!t) return;
+    const t=e.target.closest('[data-action-inline]'); if(!t) return;
     const a=t.dataset.actionInline;
-    if(a==='pick'){
-      workoutOrComplexAddItem(kind,t.dataset.id);
-      closeModal('overlay2');
-    } else if(a==='create-new'){
-      closeModal('overlay2');
-      if(kind==='exercise') openExerciseEditor(null, true);
-      else openComplexEditor(null, true);
-    }
+    if(a==='pick'){ workoutOrComplexAddItem(kind,t.dataset.id); closeModal('overlay2'); }
+    else if(a==='create-new'){ closeModal('overlay2'); if(kind==='exercise') openExerciseEditor(null, true); else openComplexEditor(null, true); }
   });
   const search=document.getElementById('picker-search');
   search.addEventListener('input',()=>renderPicker(kind, search.value));
   search.focus();
 }
 function workoutOrComplexAddItem(kind, id){
-  if(complexDraft && complexDraft._active){
-    complexDraft.exerciseIds.push(id);
-    document.getElementById('c-items').innerHTML=renderComplexItems();
-    return;
-  }
+  if(complexDraft && complexDraft._active){ complexDraft.exerciseIds.push(id); document.getElementById('c-items').innerHTML=renderComplexItems(); return; }
   workoutDraft.items.push({type:kind,id});
-  const el=document.getElementById('w-items');
-  if(el) el.innerHTML=renderWorkoutItems();
+  const el=document.getElementById('w-items'); if(el) el.innerHTML=renderWorkoutItems();
 }
 
 /* =================== COMPLEX EDITOR =================== */
 function openComplexEditor(existing, returnToPicker){
-  complexDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',exerciseIds:[]};
-  complexDraft._active=true;
-  complexDraft._returnToPicker=!!returnToPicker;
+  complexDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',exerciseIds:[],sport:'strength',difficulty:2,duration:null};
+  complexDraft._active=true; complexDraft._returnToPicker=!!returnToPicker;
   renderComplexEditor(!!existing);
 }
 function renderComplexEditor(isEdit){
   const d=complexDraft;
   openModal(`
-    <div class="modal-sheet" style="max-height:90vh;">
+    <div class="modal-sheet" style="max-height:92vh;">
       <div class="modal-handle"></div>
       <div class="modal-header"><h2>${isEdit?'Комплекс':'Новый комплекс'}</h2><button class="icon-btn" data-close="overlay">${icon('close')}</button></div>
       <div class="modal-body">
         <div class="field"><label>Название</label><input type="text" id="c-name" placeholder="Например, «Утренний воркаут»" value="${esc(d.name)}"></div>
+        <div class="field"><label>Тип</label><div class="chiprow" id="c-cat-row">${CATEGORIES.map(cat=>`<button class="chip ${d.sport===cat.key?'active':''}" data-action-inline="c-cat" data-val="${cat.key}">${cat.label}</button>`).join('')}</div></div>
+        <div class="field-row">
+          <div class="field"><label>Длительность, мин</label><input type="number" id="c-duration" value="${d.duration||d.exerciseIds.length*8||20}"></div>
+          <div class="field"><label>Сложность</label><div class="chiprow" id="c-diff-row">${['Начальный','Средний','Продвинутый'].map((l,i)=>`<button class="chip ${((d.difficulty||2)===i+1)?'active':''}" data-action-inline="c-diff" data-val="${i+1}">${l}</button>`).join('')}</div></div>
+        </div>
         <div class="field">
           <label>Упражнения</label>
           <div id="c-items">${renderComplexItems()}</div>
@@ -1062,23 +1195,20 @@ function renderComplexItems(){
   if(complexDraft.exerciseIds.length===0) return `<div class="s" style="color:var(--text-faint);font-size:12.5px;padding:6px 0;">Пока ничего не добавлено</div>`;
   return complexDraft.exerciseIds.map((id,idx)=>{
     const ex=findExercise(id);
-    return `<div class="list-item">
-      <div class="thumb">${icon('dumbbell')}</div>
-      <div class="body"><div class="n">${esc(ex?ex.name:'Удалено')}</div><div class="m">${ex?ex.zone+' · '+ex.equipment:''}</div></div>
-      <button class="del" data-action-inline="c-remove" data-idx="${idx}">${icon('trash')}</button>
-    </div>`;
+    return `<div class="list-item"><div class="thumb">${icon('dumbbell')}</div><div class="body"><div class="n">${esc(ex?ex.name:'Удалено')}</div><div class="m">${ex?ex.zone+' · '+ex.equipment:''}</div></div><button class="del" data-action-inline="c-remove" data-idx="${idx}">${icon('trash')}</button></div>`;
   }).join('');
 }
 function complexInlineHandler(e){
-  const t=e.target.closest('[data-action-inline]');
-  if(!t) return;
+  const t=e.target.closest('[data-action-inline]'); if(!t) return;
   const a=t.dataset.actionInline;
   if(a==='c-add-ex') openPicker('exercise');
+  else if(a==='c-cat'){ complexDraft.sport=t.dataset.val; document.getElementById('c-cat-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===complexDraft.sport)); }
+  else if(a==='c-diff'){ complexDraft.difficulty=Number(t.dataset.val); document.getElementById('c-diff-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',Number(c.dataset.val)===complexDraft.difficulty)); }
   else if(a==='c-remove'){ complexDraft.exerciseIds.splice(Number(t.dataset.idx),1); document.getElementById('c-items').innerHTML=renderComplexItems(); }
   else if(a==='c-save'){
     const name=document.getElementById('c-name').value.trim();
     if(!name){ showToast('Укажите название комплекса'); return; }
-    complexDraft.name=name;
+    complexDraft.name=name; complexDraft.duration=Number(document.getElementById('c-duration').value)||20;
     delete complexDraft._active; const returnToPicker=complexDraft._returnToPicker; delete complexDraft._returnToPicker;
     if(complexDraft.id){ const idx=state.complexes.findIndex(c=>c.id===complexDraft.id); state.complexes[idx]=complexDraft; }
     else{ complexDraft.id=nextId(); state.complexes.push(complexDraft); }
@@ -1102,19 +1232,10 @@ function renderExerciseEditor(isEdit){
       <div class="modal-header"><h2>${isEdit?'Упражнение':'Новое упражнение'}</h2><button class="icon-btn" data-close="overlay">${icon('close')}</button></div>
       <div class="modal-body">
         <div class="field"><label>Название</label><input type="text" id="e-name" placeholder="Например, «Отжимания на брусьях»" value="${esc(d.name)}"></div>
-        <div class="field">
-          <label>Зона</label>
-          <div class="chiprow" id="e-zone-row">${ZONES.map(z=>`<button class="chip ${d.zone===z?'active':''}" data-action-inline="e-zone" data-val="${z}">${z}</button>`).join('')}</div>
-        </div>
-        <div class="field">
-          <label>Снаряд</label>
-          <div class="chiprow" id="e-equip-row">${EQUIPMENT.map(eq=>`<button class="chip ${d.equipment===eq?'active':''}" data-action-inline="e-equip" data-val="${eq}">${eq}</button>`).join('')}</div>
-        </div>
+        <div class="field"><label>Зона</label><div class="chiprow" id="e-zone-row">${ZONES.map(z=>`<button class="chip ${d.zone===z?'active':''}" data-action-inline="e-zone" data-val="${z}">${z}</button>`).join('')}</div></div>
+        <div class="field"><label>Снаряд</label><div class="chiprow" id="e-equip-row">${EQUIPMENT.map(eq=>`<button class="chip ${d.equipment===eq?'active':''}" data-action-inline="e-equip" data-val="${eq}">${eq}</button>`).join('')}</div></div>
         <div class="field"><label>Описание</label><textarea id="e-desc" placeholder="Техника выполнения, акценты, ошибки…">${esc(d.description)}</textarea></div>
-        <div class="field">
-          <label>Галерея фото</label>
-          <div class="gallery" id="e-gallery">${renderGallery()}</div>
-        </div>
+        <div class="field"><label>Галерея фото</label><div class="gallery" id="e-gallery">${renderGallery()}</div></div>
       </div>
       <div class="modal-footer">
         ${isEdit?`<button class="btn btn-danger" data-action-inline="e-delete">${icon('trash')}</button>`:''}
@@ -1132,8 +1253,7 @@ function renderGallery(){
   return html;
 }
 function exerciseInlineHandler(e){
-  const t=e.target.closest('[data-action-inline]');
-  if(!t) return;
+  const t=e.target.closest('[data-action-inline]'); if(!t) return;
   const a=t.dataset.actionInline;
   if(a==='e-zone'){ exerciseDraft.zone=t.dataset.val; document.getElementById('e-zone-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.zone)); }
   else if(a==='e-equip'){ exerciseDraft.equipment=t.dataset.val; document.getElementById('e-equip-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.equipment)); }
@@ -1141,8 +1261,7 @@ function exerciseInlineHandler(e){
   else if(a==='e-save'){
     const name=document.getElementById('e-name').value.trim();
     if(!name){ showToast('Укажите название упражнения'); return; }
-    exerciseDraft.name=name;
-    exerciseDraft.description=document.getElementById('e-desc').value.trim();
+    exerciseDraft.name=name; exerciseDraft.description=document.getElementById('e-desc').value.trim();
     const returnToPicker=exerciseDraft._returnToPicker; delete exerciseDraft._returnToPicker;
     if(exerciseDraft.id){ const idx=state.exercises.findIndex(x=>x.id===exerciseDraft.id); state.exercises[idx]=exerciseDraft; }
     else{ exerciseDraft.id=nextId(); state.exercises.push(exerciseDraft); }
@@ -1157,16 +1276,10 @@ function exerciseInlineHandler(e){
 }
 function exerciseFileHandler(e){
   if(e.target.id!=='e-photo-input') return;
-  const files=Array.from(e.target.files||[]);
-  let remaining=files.length;
-  if(!remaining) return;
+  const files=Array.from(e.target.files||[]); let remaining=files.length; if(!remaining) return;
   files.forEach(file=>{
     const reader=new FileReader();
-    reader.onload=ev=>{
-      exerciseDraft.photos.push(ev.target.result);
-      remaining--;
-      if(remaining===0){ const g=document.getElementById('e-gallery'); if(g) g.innerHTML=renderGallery(); }
-    };
+    reader.onload=ev=>{ exerciseDraft.photos.push(ev.target.result); remaining--; if(remaining===0){ const g=document.getElementById('e-gallery'); if(g) g.innerHTML=renderGallery(); } };
     reader.readAsDataURL(file);
   });
 }
@@ -1175,16 +1288,19 @@ function exerciseFileHandler(e){
 function openWeightLog(){ renderWeightLog(); }
 function renderWeightLog(){
   const log=[...state.profile.weightLog].sort((a,b)=>a.date.localeCompare(b.date));
-  const last=log.length?log[log.length-1].weight:0;
-  const first=log.length?log[0].weight:0;
-  const diff=(last-first).toFixed(1);
+  const last=log.length?log[log.length-1].weight:0; const first=log.length?log[0].weight:0; const diff=(last-first).toFixed(1);
+  const heightM=(state.profile.height||0)/100; const bmi=heightM>0&&last? (last/(heightM*heightM)) : null;
   openModal(`
     <div class="modal-sheet" style="max-height:90vh;">
       <div class="modal-handle"></div>
       <div class="modal-header"><h2>Журнал веса</h2><button class="icon-btn" data-close="overlay">${icon('close')}</button></div>
       <div class="modal-body">
+        <div class="stat-row" style="margin-bottom:10px;">
+          <div class="stat-box"><div class="v">${last||'—'}</div><div class="l">Вес, кг</div></div>
+          <div class="stat-box"><div class="v">${bmi?bmi.toFixed(1):'—'}</div><div class="l">ИМТ</div></div>
+        </div>
+        ${bmi?`<div class="s" style="text-align:center;color:var(--text-dim);font-weight:700;margin-bottom:8px;">${bmiCategory(bmi)}</div>`:''}
         <div class="spark-wrap">
-          <div class="sv">${last||'—'} кг</div>
           <div class="sl">${log.length>1?`Изменение за период: ${diff>0?'+':''}${diff} кг`:'Недостаточно данных для динамики'}</div>
           ${sparklineSVG(log.map(l=>l.weight))}
         </div>
@@ -1193,37 +1309,25 @@ function renderWeightLog(){
           <div class="field"><label>Вес, кг</label><input type="number" step="0.1" id="wt-val" placeholder="80.0"></div>
         </div>
         <button class="btn-add" data-action-inline="wt-add">${icon('plus')} Добавить запись</button>
-        <div style="margin-top:14px;">${log.slice().reverse().map(l=>`
-          <div class="list-item"><div class="thumb">${icon('scale')}</div><div class="body"><div class="n">${l.weight} кг</div><div class="m">${fmtDateHuman(l.date)}</div></div><button class="del" data-action-inline="wt-del" data-id="${l.id}">${icon('trash')}</button></div>
-        `).join('')||'<div class="s" style="color:var(--text-faint);padding:8px 0;">Записей пока нет</div>'}</div>
+        <details class="history-details"><summary>История (${log.length})</summary>
+          <div style="margin-top:4px;">${log.slice().reverse().map(l=>`<div class="list-item"><div class="thumb">${icon('scale')}</div><div class="body"><div class="n">${l.weight} кг</div><div class="m">${fmtDateHuman(l.date)}</div></div><button class="del" data-action-inline="wt-del" data-id="${l.id}">${icon('trash')}</button></div>`).join('')||'<div class="s" style="color:var(--text-faint);padding:8px 0;">Записей пока нет</div>'}</div>
+        </details>
       </div>
     </div>
   `);
   document.getElementById('overlay').addEventListener('click', function handler(e){
-    const t=e.target.closest('[data-action-inline]'); if(!t) return;
-    const a=t.dataset.actionInline;
+    const t=e.target.closest('[data-action-inline]'); if(!t) return; const a=t.dataset.actionInline;
     if(a==='wt-add'){
-      const date=document.getElementById('wt-date').value||todayISO();
-      const val=Number(document.getElementById('wt-val').value);
+      const date=document.getElementById('wt-date').value||todayISO(); const val=Number(document.getElementById('wt-val').value);
       if(!val){ showToast('Введите вес'); return; }
-      state.profile.weightLog.push({id:nextId(),date,weight:val});
-      renderWeightLog(); render();
-    } else if(a==='wt-del'){
-      state.profile.weightLog=state.profile.weightLog.filter(l=>l.id!==t.dataset.id);
-      renderWeightLog(); render();
-    }
+      state.profile.weightLog.push({id:nextId(),date,weight:val}); renderWeightLog(); render();
+    } else if(a==='wt-del'){ state.profile.weightLog=state.profile.weightLog.filter(l=>l.id!==t.dataset.id); renderWeightLog(); render(); }
   });
 }
 function sparklineSVG(values){
   if(values.length<2) return '';
-  const w=280,h=54,pad=4;
-  const min=Math.min(...values),max=Math.max(...values);
-  const range=(max-min)||1;
-  const pts=values.map((v,i)=>{
-    const x=pad+(i/(values.length-1))*(w-pad*2);
-    const y=h-pad-((v-min)/range)*(h-pad*2);
-    return x+','+y;
-  }).join(' ');
+  const w=280,h=54,pad=4; const min=Math.min(...values),max=Math.max(...values); const range=(max-min)||1;
+  const pts=values.map((v,i)=>{const x=pad+(i/(values.length-1))*(w-pad*2);const y=h-pad-((v-min)/range)*(h-pad*2);return x+','+y;}).join(' ');
   return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:54px;margin-top:8px;overflow:visible;"><polyline points="${pts}" fill="none" stroke="rgb(var(--accent-rgb))" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 
@@ -1249,27 +1353,20 @@ function renderMeasurements(){
           <div class="field"><label>Бедро, см</label><input type="number" step="0.1" id="m-thigh"></div>
         </div>
         <button class="btn-add" data-action-inline="m-add">${icon('plus')} Добавить замер</button>
-        <div style="margin-top:14px;">${log.slice().reverse().map(l=>`
-          <div class="list-item"><div class="thumb">${icon('ruler')}</div><div class="body"><div class="n">Гр ${l.chest} · Бц ${l.biceps} · Бд ${l.thigh}</div><div class="m">${fmtDateHuman(l.date)}</div></div><button class="del" data-action-inline="m-del" data-id="${l.id}">${icon('trash')}</button></div>
-        `).join('')||'<div class="s" style="color:var(--text-faint);padding:8px 0;">Замеров пока нет</div>'}</div>
+        <details class="history-details"><summary>История (${log.length})</summary>
+          <div style="margin-top:4px;">${log.slice().reverse().map(l=>`<div class="list-item"><div class="thumb">${icon('ruler')}</div><div class="body"><div class="n">Гр ${l.chest} · Бц ${l.biceps} · Бд ${l.thigh}</div><div class="m">${fmtDateHuman(l.date)}</div></div><button class="del" data-action-inline="m-del" data-id="${l.id}">${icon('trash')}</button></div>`).join('')||'<div class="s" style="color:var(--text-faint);padding:8px 0;">Замеров пока нет</div>'}</div>
+        </details>
       </div>
     </div>
   `);
   document.getElementById('overlay').addEventListener('click', function handler(e){
-    const t=e.target.closest('[data-action-inline]'); if(!t) return;
-    const a=t.dataset.actionInline;
+    const t=e.target.closest('[data-action-inline]'); if(!t) return; const a=t.dataset.actionInline;
     if(a==='m-add'){
       const date=document.getElementById('m-date').value||todayISO();
-      const chest=Number(document.getElementById('m-chest').value)||0;
-      const biceps=Number(document.getElementById('m-biceps').value)||0;
-      const thigh=Number(document.getElementById('m-thigh').value)||0;
+      const chest=Number(document.getElementById('m-chest').value)||0, biceps=Number(document.getElementById('m-biceps').value)||0, thigh=Number(document.getElementById('m-thigh').value)||0;
       if(!chest&&!biceps&&!thigh){ showToast('Заполните хотя бы одно поле'); return; }
-      state.profile.measurements.push({id:nextId(),date,chest,biceps,thigh});
-      renderMeasurements(); render();
-    } else if(a==='m-del'){
-      state.profile.measurements=state.profile.measurements.filter(l=>l.id!==t.dataset.id);
-      renderMeasurements(); render();
-    }
+      state.profile.measurements.push({id:nextId(),date,chest,biceps,thigh}); renderMeasurements(); render();
+    } else if(a==='m-del'){ state.profile.measurements=state.profile.measurements.filter(l=>l.id!==t.dataset.id); renderMeasurements(); render(); }
   });
 }
 
