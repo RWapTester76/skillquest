@@ -392,8 +392,9 @@ function icon(name){return ICONS[name]||'';}
 function logoMark(cls){return `<span class="logomark ${cls||''}">${ICONS.arrowUp.replace('currentColor','#fff')}</span>`;}
 
 /* =================== REFERENCE DATA =================== */
-const ZONES = ['Спина','Грудь','Ноги','Руки','Плечи','Ягодицы','Пресс','Растяжка','Кардио','Техника'];
-const EQUIPMENT = ['Турник','Брусья','Штанга','Гиря','Гантели','Кольца','Эспандер','Скакалка','Без снаряда'];
+const ZONES = ['Руки','Ноги','Шея','Корпус','Кисти','Стопы'];
+const EQUIPMENT = ['Тело','Скакалка','Гиря','Турник','Брусья','Кольца','TRX','МТБ','Fightball','МФР','Эспандер','Жгут'];
+const QUALITIES = ['Сила','Выносливость','Гибкость','Координация'];
 const WEEKDAYS = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const WORLD_LABELS = {urban:'Urban',zen:'Zen',sport:'Sport'};
@@ -444,49 +445,17 @@ const nextId=()=>'id'+(uidCounter++);
 /* =================== SEED STATE =================== */
 const T = todayISO();
 let state = {
-  ui:{screen:'home',calMode:'month',cursor:T,selectedDate:T,libTab:'complexes',libZoneFilter:null,libEquipFilter:null,libCatFilter:null},
+  ui:{screen:'home',calMode:'month',cursor:T,selectedDate:T,libTab:'complexes',libZoneFilter:null,libEquipFilter:null,libQualityFilter:null,libCatFilter:null},
   profile:{
-    name:'Александр Волков',avatar:null,level:'Средний',
-    birthDate:'1996-04-12',gender:'М',height:182,
-    weightLog:[
-      {id:nextId(),date:addDays(T,-42),weight:82.4},
-      {id:nextId(),date:addDays(T,-28),weight:81.6},
-      {id:nextId(),date:addDays(T,-14),weight:80.9},
-      {id:nextId(),date:addDays(T,-2),weight:80.1},
-    ],
-    measurements:[
-      {id:nextId(),date:addDays(T,-42),chest:102,biceps:35,thigh:57},
-      {id:nextId(),date:addDays(T,-14),chest:103,biceps:35.6,thigh:57.5},
-    ],
+    name:'',avatar:null,level:'Средний',
+    birthDate:'',gender:'М',height:'',
+    weightLog:[],
+    measurements:[],
   },
   settings:{world:'urban',mode:'dark',watch:{connected:false,device:null,scanning:false,_found:null}},
-  exercises:[
-    {id:'ex1',name:'Подтягивания широким хватом',zone:'Спина',equipment:'Турник',description:'Хват шире плеч, подбородок над перекладиной, контролируемое опускание.',photos:[]},
-    {id:'ex2',name:'Отжимания на брусьях',zone:'Грудь',equipment:'Брусья',description:'Корпус чуть наклонён вперёд, локти уходят назад, глубокая амплитуда.',photos:[]},
-    {id:'ex3',name:'Приседания со штангой',zone:'Ноги',equipment:'Штанга',description:'Гриф на трапециях, приседание до параллели, колени по направлению носков.',photos:[]},
-    {id:'ex4',name:'Жим штанги лёжа',zone:'Грудь',equipment:'Штанга',description:'Лопатки сведены, гриф опускается к нижней части груди.',photos:[]},
-    {id:'ex5',name:'Рывок гири',zone:'Ягодицы',equipment:'Гиря',description:'Взрывное разгибание бёдер, гиря уходит над головой на прямую руку.',photos:[]},
-    {id:'ex6',name:'Сгибания на бицепс с гантелями',zone:'Руки',equipment:'Гантели',description:'Локти прижаты к корпусу, супинация кисти в верхней точке.',photos:[]},
-    {id:'ex7',name:'Подъём ног в висе',zone:'Пресс',equipment:'Турник',description:'Вис на перекладине, подъём прямых или согнутых ног без раскачки.',photos:[]},
-    {id:'ex8',name:'Выход силой на кольцах',zone:'Руки',equipment:'Кольца',description:'Переход из виса в упор через фазу переворота, локти близко к корпусу.',photos:[]},
-    {id:'ex9',name:'Прыжки на скакалке',zone:'Кардио',equipment:'Скакалка',description:'Лёгкий прыжок на носках, кисти вращают скакалку, локти близко к корпусу.',photos:[]},
-  ],
-  complexes:[
-    {id:'cx1',name:'Утренний воркаут',exerciseIds:['ex1','ex2','ex7'],sport:'strength',duration:35,difficulty:2},
-    {id:'cx2',name:'Силовой день: низ',exerciseIds:['ex3','ex5'],sport:'strength',duration:40,difficulty:3},
-    {id:'cx3',name:'Утренняя пробежка',exerciseIds:[],sport:'run',duration:30,difficulty:1},
-    {id:'cx4',name:'Растяжка после тренировки',exerciseIds:['ex7'],sport:'stretch',duration:15,difficulty:1},
-    {id:'cx5',name:'Скакалка: интервалы',exerciseIds:['ex9'],sport:'cycle',duration:20,difficulty:2},
-  ],
-  workouts:[
-    {id:nextId(),name:'Спина и пресс',date:addDays(T,-7),time:'08:00',duration:50,items:[{type:'complex',id:'cx1'}]},
-    {id:nextId(),name:'Силовая: ноги',date:addDays(T,-3),time:'19:00',duration:70,items:[{type:'complex',id:'cx2'}]},
-    {id:nextId(),name:'Верх тела',date:T,time:'18:30',duration:60,items:[{type:'exercise',id:'ex2'},{type:'exercise',id:'ex4'},{type:'exercise',id:'ex6'}]},
-    {id:nextId(),name:'Утренняя пробежка',date:T,time:'07:00',duration:30,items:[{type:'complex',id:'cx3'}]},
-    {id:nextId(),name:'Турник и кольца',date:addDays(T,3),time:'08:30',duration:45,items:[{type:'exercise',id:'ex1'},{type:'exercise',id:'ex8'}]},
-    {id:nextId(),name:'Ноги + кор',date:addDays(T,7),time:'19:30',duration:65,items:[{type:'complex',id:'cx2'},{type:'exercise',id:'ex7'}]},
-    {id:nextId(),name:'Лёгкая разминка',date:addDays(T,14),time:'09:00',duration:30,items:[{type:'exercise',id:'ex1'}]},
-  ],
+  exercises:[],
+  complexes:[],
+  workouts:[],
 };
 
 let workoutDraft=null, complexDraft=null, exerciseDraft=null;
@@ -540,7 +509,7 @@ function favoriteSportLabel(){
     if(it.type==='complex'){const c=findComplex(it.id);if(c){const key=c.sport||'strength';counts[key]=(counts[key]||0)+1;}}
   }));
   const keys=Object.keys(counts);
-  if(!keys.length) return 'Силовые';
+  if(!keys.length) return '—';
   keys.sort((a,b)=>counts[b]-counts[a]);
   return catMeta(keys[0]).label;
 }
@@ -764,13 +733,15 @@ function renderComplexCard(c){
   </div>`;
 }
 function renderExerciseLibrary(){
-  const zf=state.ui.libZoneFilter, ef=state.ui.libEquipFilter;
-  let list=state.exercises.filter(e=>(!zf||e.zone===zf)&&(!ef||e.equipment===ef));
+  const zf=state.ui.libZoneFilter, ef=state.ui.libEquipFilter, qf=state.ui.libQualityFilter;
+  let list=state.exercises.filter(e=>(!zf||e.zone===zf)&&(!ef||e.equipment===ef)&&(!qf||e.quality===qf));
   return `
     <div class="section-title">Зоны</div>
     <div class="chiprow" style="margin-bottom:14px;">${ZONES.map(z=>`<button class="chip ${zf===z?'active':''}" data-action="lib-filter-zone" data-zone="${z}">${z}</button>`).join('')}</div>
     <div class="section-title">Снаряды</div>
-    <div class="chiprow" style="margin-bottom:16px;">${EQUIPMENT.map(eq=>`<button class="chip ${ef===eq?'active':''}" data-action="lib-filter-equip" data-equip="${eq}">${eq}</button>`).join('')}</div>
+    <div class="chiprow" style="margin-bottom:14px;">${EQUIPMENT.map(eq=>`<button class="chip ${ef===eq?'active':''}" data-action="lib-filter-equip" data-equip="${eq}">${eq}</button>`).join('')}</div>
+    <div class="section-title">Качества</div>
+    <div class="chiprow" style="margin-bottom:16px;">${QUALITIES.map(q=>`<button class="chip ${qf===q?'active':''}" data-action="lib-filter-quality" data-quality="${q}">${q}</button>`).join('')}</div>
     ${list.length?list.map(e=>renderExerciseCard(e)).join(''):`<div class="empty">${icon('dumbbell')}<div class="t">Ничего не найдено</div><div class="s">Измените фильтры или добавьте новое упражнение.</div></div>`}
     <button class="btn-add" data-action="new-exercise" style="margin-top:6px;">${icon('plus')} Добавить упражнение</button>
   `;
@@ -779,7 +750,7 @@ function renderExerciseCard(e){
   const thumb=e.photos&&e.photos[0]?`<img src="${e.photos[0]}">`:icon('dumbbell');
   return `<div class="exercise-card" data-action="open-exercise" data-id="${e.id}">
     <div class="thumb">${thumb}</div>
-    <div style="flex:1;min-width:0;"><div class="n">${esc(e.name)}</div><div class="tags"><span class="tag">${esc(e.zone)}</span><span class="tag">${esc(e.equipment)}</span></div></div>
+    <div style="flex:1;min-width:0;"><div class="n">${esc(e.name)}</div><div class="tags"><span class="tag">${esc(e.zone)}</span><span class="tag">${esc(e.equipment)}</span>${e.quality?`<span class="tag">${esc(e.quality)}</span>`:''}</div></div>
     <div class="chevron">${icon('chevronRightSm')}</div>
   </div>`;
 }
@@ -872,6 +843,7 @@ function handleAction(action,t){
     case 'lib-tab': state.ui.libTab=t.dataset.tab; render(); break;
     case 'lib-filter-zone': state.ui.libZoneFilter = state.ui.libZoneFilter===t.dataset.zone?null:t.dataset.zone; render(); break;
     case 'lib-filter-equip': state.ui.libEquipFilter = state.ui.libEquipFilter===t.dataset.equip?null:t.dataset.equip; render(); break;
+    case 'lib-filter-quality': state.ui.libQualityFilter = state.ui.libQualityFilter===t.dataset.quality?null:t.dataset.quality; render(); break;
     case 'lib-filter-cat': state.ui.libCatFilter = state.ui.libCatFilter===t.dataset.cat?null:t.dataset.cat; render(); break;
     case 'new-exercise': openExerciseEditor(null); break;
     case 'open-exercise': openExerciseEditor(findExercise(t.dataset.id)); break;
@@ -946,17 +918,22 @@ function renderSettingsModal(){
           </div>
           <input type="file" id="import-file" accept="application/json" class="hidden">
         </div>
-        <div class="setting-row" style="display:block;border-bottom:none;">
+        <div class="setting-row" style="display:block;">
           <div class="t" style="margin-bottom:2px;">Смарт-часы</div>
           <div class="s" style="margin-bottom:12px;">${w.connected?`Подключено: ${esc(w.device)} — шаги, сон, пульс и тренировки синхронизируются автоматически`:'Синхронизируйте шаги, сон, пульс и тренировки с носимым устройством'}</div>
           <div id="watch-panel">${renderWatchPanel()}</div>
         </div>
+        <div class="setting-row" style="display:block;border-bottom:none;">
+          <div class="t" style="margin-bottom:2px;">Сброс данных</div>
+          <div class="s" style="margin-bottom:12px;">Полностью удалить профиль, тренировки, упражнения и комплексы. Действие необратимо.</div>
+          <button class="btn btn-danger btn-block" data-action-inline="reset-data">${icon('trash')} Удалить все данные</button>
+        </div>
       </div>
     </div>
   `);
-  document.getElementById('overlay').addEventListener('click', settingsInlineHandler);
+  document.getElementById('overlay').onclick = settingsInlineHandler;
   const fileInput=document.getElementById('import-file');
-  if(fileInput) fileInput.addEventListener('change', handleImportFile);
+  if(fileInput) fileInput.onchange = handleImportFile;
 }
 function worldSwatchBg(key){
   if(key==='urban') return 'linear-gradient(135deg,#232323,#0c0c0c)';
@@ -999,6 +976,37 @@ function settingsInlineHandler(e){
     state.settings.watch.connected=false; state.settings.watch.device=null;
     const p=document.getElementById('watch-panel'); if(p) p.innerHTML=renderWatchPanel();
   }
+  else if(a==='reset-data'){
+    openConfirm({
+      title:'Удалить все данные?',
+      message:'Профиль, тренировки, упражнения и комплексы будут удалены без возможности восстановления.',
+      confirmLabel:'Удалить всё',
+      onConfirm:resetAllData
+    });
+  }
+}
+function openConfirm(opts){
+  openModal(`
+    <div class="modal-sheet centered">
+      <div class="modal-body" style="text-align:center;padding-top:24px;">
+        <div style="font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:19px;margin-bottom:8px;">${esc(opts.title)}</div>
+        <div style="font-size:13.5px;color:var(--text-dim);line-height:1.5;margin-bottom:18px;">${esc(opts.message)}</div>
+        <div class="row-2">
+          <button class="btn btn-ghost" data-close="overlay2">Отмена</button>
+          <button class="btn btn-danger" id="confirm-yes">${esc(opts.confirmLabel||'Удалить')}</button>
+        </div>
+      </div>
+    </div>
+  `,'overlay2');
+  document.getElementById('confirm-yes').onclick=()=>{ closeModal('overlay2'); opts.onConfirm(); };
+}
+function resetAllData(){
+  state.profile={name:'',avatar:null,level:'Средний',birthDate:'',gender:'М',height:'',weightLog:[],measurements:[]};
+  state.exercises=[]; state.complexes=[]; state.workouts=[];
+  state.settings.watch={connected:false,device:null,scanning:false,_found:null};
+  state.ui.screen='home'; state.ui.calMode='month'; state.ui.cursor=todayISO(); state.ui.selectedDate=todayISO();
+  state.ui.libZoneFilter=null; state.ui.libEquipFilter=null; state.ui.libQualityFilter=null; state.ui.libCatFilter=null;
+  closeModal('overlay'); render(); showToast('Все данные удалены');
 }
 function exportData(){
   const data={profile:state.profile,settings:state.settings,exercises:state.exercises,complexes:state.complexes,workouts:state.workouts};
@@ -1065,7 +1073,7 @@ function renderWorkoutEditor(isEdit){
       </div>
     </div>
   `);
-  document.getElementById('overlay').addEventListener('click', workoutInlineHandler);
+  document.getElementById('overlay').onclick = workoutInlineHandler;
 }
 function renderRepeatOptions(){
   const d=workoutDraft;
@@ -1142,12 +1150,12 @@ function renderPicker(kind,query){
     </div>
   `,'overlay2');
   const ov2=document.getElementById('overlay2');
-  ov2.addEventListener('click', function handler(e){
+  ov2.onclick = function(e){
     const t=e.target.closest('[data-action-inline]'); if(!t) return;
     const a=t.dataset.actionInline;
     if(a==='pick'){ workoutOrComplexAddItem(kind,t.dataset.id); closeModal('overlay2'); }
     else if(a==='create-new'){ closeModal('overlay2'); if(kind==='exercise') openExerciseEditor(null, true); else openComplexEditor(null, true); }
-  });
+  };
   const search=document.getElementById('picker-search');
   search.addEventListener('input',()=>renderPicker(kind, search.value));
   search.focus();
@@ -1189,7 +1197,7 @@ function renderComplexEditor(isEdit){
       </div>
     </div>
   `);
-  document.getElementById('overlay').addEventListener('click', complexInlineHandler);
+  document.getElementById('overlay').onclick = complexInlineHandler;
 }
 function renderComplexItems(){
   if(complexDraft.exerciseIds.length===0) return `<div class="s" style="color:var(--text-faint);font-size:12.5px;padding:6px 0;">Пока ничего не добавлено</div>`;
@@ -1220,7 +1228,7 @@ function complexInlineHandler(e){
 
 /* =================== EXERCISE EDITOR =================== */
 function openExerciseEditor(existing, returnToPicker){
-  exerciseDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',zone:ZONES[0],equipment:EQUIPMENT[0],description:'',photos:[]};
+  exerciseDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',zone:ZONES[0],equipment:EQUIPMENT[0],quality:QUALITIES[0],description:'',photos:[]};
   exerciseDraft._returnToPicker=!!returnToPicker;
   renderExerciseEditor(!!existing);
 }
@@ -1234,6 +1242,7 @@ function renderExerciseEditor(isEdit){
         <div class="field"><label>Название</label><input type="text" id="e-name" placeholder="Например, «Отжимания на брусьях»" value="${esc(d.name)}"></div>
         <div class="field"><label>Зона</label><div class="chiprow" id="e-zone-row">${ZONES.map(z=>`<button class="chip ${d.zone===z?'active':''}" data-action-inline="e-zone" data-val="${z}">${z}</button>`).join('')}</div></div>
         <div class="field"><label>Снаряд</label><div class="chiprow" id="e-equip-row">${EQUIPMENT.map(eq=>`<button class="chip ${d.equipment===eq?'active':''}" data-action-inline="e-equip" data-val="${eq}">${eq}</button>`).join('')}</div></div>
+        <div class="field"><label>Качество</label><div class="chiprow" id="e-quality-row">${QUALITIES.map(q=>`<button class="chip ${(d.quality||QUALITIES[0])===q?'active':''}" data-action-inline="e-quality" data-val="${q}">${q}</button>`).join('')}</div></div>
         <div class="field"><label>Описание</label><textarea id="e-desc" placeholder="Техника выполнения, акценты, ошибки…">${esc(d.description)}</textarea></div>
         <div class="field"><label>Галерея фото</label><div class="gallery" id="e-gallery">${renderGallery()}</div></div>
       </div>
@@ -1243,8 +1252,8 @@ function renderExerciseEditor(isEdit){
       </div>
     </div>
   `);
-  document.getElementById('overlay').addEventListener('click', exerciseInlineHandler);
-  document.getElementById('overlay').addEventListener('change', exerciseFileHandler);
+  document.getElementById('overlay').onclick = exerciseInlineHandler;
+  document.getElementById('overlay').onchange = exerciseFileHandler;
 }
 function renderGallery(){
   const photos=exerciseDraft.photos||[];
@@ -1257,6 +1266,7 @@ function exerciseInlineHandler(e){
   const a=t.dataset.actionInline;
   if(a==='e-zone'){ exerciseDraft.zone=t.dataset.val; document.getElementById('e-zone-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.zone)); }
   else if(a==='e-equip'){ exerciseDraft.equipment=t.dataset.val; document.getElementById('e-equip-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.equipment)); }
+  else if(a==='e-quality'){ exerciseDraft.quality=t.dataset.val; document.getElementById('e-quality-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.quality)); }
   else if(a==='e-photo-del'){ exerciseDraft.photos.splice(Number(t.dataset.idx),1); document.getElementById('e-gallery').innerHTML=renderGallery(); }
   else if(a==='e-save'){
     const name=document.getElementById('e-name').value.trim();
@@ -1315,14 +1325,14 @@ function renderWeightLog(){
       </div>
     </div>
   `);
-  document.getElementById('overlay').addEventListener('click', function handler(e){
+  document.getElementById('overlay').onclick = function(e){
     const t=e.target.closest('[data-action-inline]'); if(!t) return; const a=t.dataset.actionInline;
     if(a==='wt-add'){
       const date=document.getElementById('wt-date').value||todayISO(); const val=Number(document.getElementById('wt-val').value);
       if(!val){ showToast('Введите вес'); return; }
       state.profile.weightLog.push({id:nextId(),date,weight:val}); renderWeightLog(); render();
     } else if(a==='wt-del'){ state.profile.weightLog=state.profile.weightLog.filter(l=>l.id!==t.dataset.id); renderWeightLog(); render(); }
-  });
+  };
 }
 function sparklineSVG(values){
   if(values.length<2) return '';
@@ -1359,7 +1369,7 @@ function renderMeasurements(){
       </div>
     </div>
   `);
-  document.getElementById('overlay').addEventListener('click', function handler(e){
+  document.getElementById('overlay').onclick = function(e){
     const t=e.target.closest('[data-action-inline]'); if(!t) return; const a=t.dataset.actionInline;
     if(a==='m-add'){
       const date=document.getElementById('m-date').value||todayISO();
@@ -1367,7 +1377,7 @@ function renderMeasurements(){
       if(!chest&&!biceps&&!thigh){ showToast('Заполните хотя бы одно поле'); return; }
       state.profile.measurements.push({id:nextId(),date,chest,biceps,thigh}); renderMeasurements(); render();
     } else if(a==='m-del'){ state.profile.measurements=state.profile.measurements.filter(l=>l.id!==t.dataset.id); renderMeasurements(); render(); }
-  });
+  };
 }
 
 /* =================== INIT =================== */
