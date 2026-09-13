@@ -911,7 +911,7 @@ function renderSettingsModal(){
         </div>
         <div class="setting-row" style="display:block;">
           <div class="t" style="margin-bottom:2px;">Данные приложения</div>
-          <div class="s" style="margin-bottom:12px;">Данные автоматически сохраняются на этом устройстве. Резервную копию можно скачать для переноса на другое устройство.</div>
+          <div class="s" style="margin-bottom:12px;">Данные хранятся в текущей сессии. Скачайте резервную копию, чтобы сохранить прогресс, и загрузите её в другой раз.</div>
           <div class="row-2">
             <button class="btn btn-ghost" data-action-inline="export-data">${icon('download')} Скачать</button>
             <button class="btn btn-ghost" data-action-inline="import-data">${icon('upload')} Загрузить</button>
@@ -1117,13 +1117,11 @@ function saveWorkoutDraft(){
   if(untilEl) workoutDraft.repeat.until=untilEl.value||workoutDraft.date;
 
   if(!workoutDraft.id && workoutDraft.repeat.enabled && workoutDraft.repeat.days.length){
-    const until=workoutDraft.repeat.until||workoutDraft.date;
-    if(until < workoutDraft.date){ showToast('Дата окончания повтора не может быть раньше даты тренировки'); return; }
-    const seriesId=nextId(); let cursor=workoutDraft.date; let count=0;
+    const seriesId=nextId(); let cursor=workoutDraft.date; const until=workoutDraft.repeat.until||workoutDraft.date; let count=0;
     while(cursor<=until){
       const wd=(fromISO(cursor).getDay()+6)%7;
       if(workoutDraft.repeat.days.includes(wd)){
-        state.workouts.push({id:nextId(),seriesId,name:workoutDraft.name,date:cursor,time:workoutDraft.time,duration:workoutDraft.duration,items:JSON.parse(JSON.stringify(workoutDraft.items)),repeat:{enabled:false,days:[],until:''}});
+        state.workouts.push({id:nextId(),seriesId,name:workoutDraft.name,date:cursor,time:workoutDraft.time,duration:workoutDraft.duration,items:JSON.parse(JSON.stringify(workoutDraft.items))});
         count++;
       }
       cursor=addDays(cursor,1);
@@ -1219,18 +1217,11 @@ function complexInlineHandler(e){
     const name=document.getElementById('c-name').value.trim();
     if(!name){ showToast('Укажите название комплекса'); return; }
     complexDraft.name=name; complexDraft.duration=Number(document.getElementById('c-duration').value)||20;
-    const returnToPicker=complexDraft._returnToPicker;
-    delete complexDraft._active; delete complexDraft._returnToPicker;
+    delete complexDraft._active; const returnToPicker=complexDraft._returnToPicker; delete complexDraft._returnToPicker;
     if(complexDraft.id){ const idx=state.complexes.findIndex(c=>c.id===complexDraft.id); state.complexes[idx]=complexDraft; }
     else{ complexDraft.id=nextId(); state.complexes.push(complexDraft); }
-    closeModal('overlay');
-    if(returnToPicker && workoutDraft){
-      workoutDraft.items.push({type:'complex',id:complexDraft.id});
-      renderWorkoutEditor(!!workoutDraft.id);
-    } else {
-      render();
-    }
-    showToast('Комплекс сохранён');
+    closeModal('overlay'); render(); showToast('Комплекс сохранён');
+    if(returnToPicker && workoutDraft){ workoutDraft.items.push({type:'complex',id:complexDraft.id}); }
   }
   else if(a==='c-delete'){ state.complexes=state.complexes.filter(c=>c.id!==complexDraft.id); closeModal('overlay'); render(); showToast('Комплекс удалён'); }
 }
@@ -1285,21 +1276,11 @@ function exerciseInlineHandler(e){
     if(exerciseDraft.id){ const idx=state.exercises.findIndex(x=>x.id===exerciseDraft.id); state.exercises[idx]=exerciseDraft; }
     else{ exerciseDraft.id=nextId(); state.exercises.push(exerciseDraft); }
     const savedId=exerciseDraft.id;
-    closeModal('overlay');
+    closeModal('overlay'); render(); showToast('Упражнение сохранено');
     if(returnToPicker){
-      if(complexDraft && complexDraft._active){
-        complexDraft.exerciseIds.push(savedId);
-        renderComplexEditor(!!complexDraft.id);
-      } else if(workoutDraft){
-        workoutDraft.items.push({type:'exercise',id:savedId});
-        renderWorkoutEditor(!!workoutDraft.id);
-      } else {
-        render();
-      }
-    } else {
-      render();
+      if(complexDraft && complexDraft._active){ complexDraft.exerciseIds.push(savedId); const ci=document.getElementById('c-items'); if(ci) ci.innerHTML=renderComplexItems(); }
+      else if(workoutDraft){ workoutDraft.items.push({type:'exercise',id:savedId}); const wi=document.getElementById('w-items'); if(wi) wi.innerHTML=renderWorkoutItems(); }
     }
-    showToast('Упражнение сохранено');
   }
   else if(a==='e-delete'){ state.exercises=state.exercises.filter(x=>x.id!==exerciseDraft.id); closeModal('overlay'); render(); showToast('Упражнение удалено'); }
 }
@@ -1398,62 +1379,6 @@ function renderMeasurements(){
     } else if(a==='m-del'){ state.profile.measurements=state.profile.measurements.filter(l=>l.id!==t.dataset.id); renderMeasurements(); render(); }
   };
 }
-
-/* =================== PERSISTENCE =================== */
-const STORAGE_KEY = 'fizup-state-v1';
-
-function autoPersist(){
-  try{
-    const data = {
-      profile: state.profile,
-      settings: state.settings,
-      exercises: state.exercises,
-      complexes: state.complexes,
-      workouts: state.workouts
-    };
-    const snapshot = JSON.stringify(data);
-    if(snapshot !== autoPersist._last){
-      localStorage.setItem(STORAGE_KEY, snapshot);
-      autoPersist._last = snapshot;
-    }
-  }catch(err){ console.warn('FizUp: не удалось сохранить данные', err); }
-}
-
-function restoreState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return;
-    const data = JSON.parse(raw);
-    if(data.profile) state.profile = {
-      ...state.profile, ...data.profile,
-      weightLog: Array.isArray(data.profile.weightLog) ? data.profile.weightLog : [],
-      measurements: Array.isArray(data.profile.measurements) ? data.profile.measurements : []
-    };
-    if(data.settings) state.settings = {
-      ...state.settings, ...data.settings,
-      watch: {...state.settings.watch, ...(data.settings.watch || {})}
-    };
-    if(Array.isArray(data.exercises)) state.exercises = data.exercises;
-    if(Array.isArray(data.complexes)) state.complexes = data.complexes;
-    if(Array.isArray(data.workouts)) state.workouts = data.workouts;
-    state.settings.watch.scanning = false;
-    state.settings.watch._found = null;
-    const ids = [
-      ...state.exercises, ...state.complexes, ...state.workouts,
-      ...(state.profile.weightLog || []), ...(state.profile.measurements || [])
-    ].map(x => String(x.id || '')).map(id => {
-      const m = id.match(/^id(\d+)$/); return m ? Number(m[1]) : 0;
-    });
-    uidCounter = Math.max(1000, ...ids.map(n => n + 1));
-  }catch(err){ console.warn('FizUp: не удалось восстановить данные', err); }
-}
-
-// Автосохранение ловит изменения в модальных редакторах, настройках,
-// замерах, тренировках, упражнениях и фотографиях.
-restoreState();
-autoPersist();
-setInterval(autoPersist, 500);
-window.addEventListener('beforeunload', autoPersist);
 
 /* =================== INIT =================== */
 render();
