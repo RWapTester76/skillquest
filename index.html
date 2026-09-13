@@ -51,6 +51,42 @@ html[data-world="sport"][data-mode="light"]{
   --accent-rgb:255,90,31;--accent2-rgb:98,168,60;
   --shadow:0 20px 40px rgba(10,20,14,.12);--overlay-bg:rgba(10,20,14,.35);--grain-op:.05;
 }
+html[data-world="nocturne"][data-mode="dark"]{
+  --bg:#0B0E1A;--surface:#141833;--surface-2:#1B2040;--raised:#232948;--border:#2B3152;
+  --text:#EDEFFA;--text-dim:#9EA3C4;--text-faint:#666B93;
+  --accent-rgb:91,124,255;--accent2-rgb:53,215,224;
+  --shadow:0 24px 50px rgba(0,0,10,.55);--overlay-bg:rgba(4,5,14,.72);--grain-op:.07;
+}
+html[data-world="nocturne"][data-mode="light"]{
+  --bg:#E7E9F5;--surface:#FFFFFF;--surface-2:#EEF0FA;--raised:#FFFFFF;--border:#D7DAF0;
+  --text:#12142A;--text-dim:#565B7D;--text-faint:#8B90B0;
+  --accent-rgb:91,124,255;--accent2-rgb:53,215,224;
+  --shadow:0 20px 40px rgba(20,22,50,.14);--overlay-bg:rgba(15,17,40,.35);--grain-op:.05;
+}
+html[data-world="solar"][data-mode="light"]{
+  --bg:#F6EEDF;--surface:#FFFBF3;--surface-2:#EFE2C8;--raised:#FFFFFF;--border:#E3D1AA;
+  --text:#2E2013;--text-dim:#7A6A4E;--text-faint:#AC9974;
+  --accent-rgb:226,101,43;--accent2-rgb:217,164,65;
+  --shadow:0 20px 40px rgba(120,70,20,.14);--overlay-bg:rgba(60,36,14,.35);--grain-op:.05;
+}
+html[data-world="solar"][data-mode="dark"]{
+  --bg:#241A10;--surface:#2E2216;--surface-2:#38291A;--raised:#443221;--border:#4F3B26;
+  --text:#F3E6D2;--text-dim:#B6A488;--text-faint:#80725A;
+  --accent-rgb:226,101,43;--accent2-rgb:217,164,65;
+  --shadow:0 24px 50px rgba(0,0,0,.5);--overlay-bg:rgba(15,10,5,.6);--grain-op:.06;
+}
+html[data-world="tide"][data-mode="dark"]{
+  --bg:#071A1D;--surface:#0E262A;--surface-2:#123138;--raised:#173B42;--border:#1C4750;
+  --text:#E4F5F5;--text-dim:#8FB8BC;--text-faint:#537377;
+  --accent-rgb:34,199,214;--accent2-rgb:79,224,176;
+  --shadow:0 24px 50px rgba(0,0,0,.55);--overlay-bg:rgba(2,10,12,.7);--grain-op:.07;
+}
+html[data-world="tide"][data-mode="light"]{
+  --bg:#E1EEF0;--surface:#FFFFFF;--surface-2:#EAF4F5;--raised:#FFFFFF;--border:#CFE3E6;
+  --text:#0C2226;--text-dim:#4B686C;--text-faint:#84999C;
+  --accent-rgb:34,199,214;--accent2-rgb:79,224,176;
+  --shadow:0 20px 40px rgba(10,40,45,.12);--overlay-bg:rgba(10,35,40,.35);--grain-op:.05;
+}
 
 #app{max-width:460px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--text);
   display:flex;flex-direction:column;position:relative;overflow-x:hidden;transition:background .25s ease,color .25s ease;}
@@ -63,6 +99,12 @@ html[data-world="zen"] #app::after{content:'';position:absolute;inset:0;pointer-
   background:radial-gradient(ellipse at 50% -10%, rgba(255,255,255,.55), transparent 60%);}
 html[data-world="sport"] #app::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(ellipse at 85% 105%, rgba(var(--accent2-rgb),.12), transparent 55%);}
+html[data-world="nocturne"] #app::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 80% -10%, rgba(91,124,255,.16), transparent 55%);}
+html[data-world="solar"] #app::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 50% -10%, rgba(226,101,43,.14), transparent 60%);}
+html[data-world="tide"] #app::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 85% 105%, rgba(34,199,214,.14), transparent 55%);}
 #app>*{position:relative;z-index:1;}
 
 @media(min-width:461px){
@@ -263,6 +305,8 @@ html[data-world="sport"] #app::after{content:'';position:absolute;inset:0;pointe
 .btn-add svg{width:15px;height:15px;}
 .row-2{display:flex;gap:10px;}
 .row-2>*{flex:1;}
+.row-3{display:flex;gap:7px;}
+.row-3>*{flex:1;font-size:11.5px;padding:11px 3px;}
 
 /* ---------- Modal ---------- */
 .overlay-layer{position:fixed;inset:0;z-index:100;pointer-events:none;}
@@ -305,7 +349,7 @@ html[data-world="sport"] #app::after{content:'';position:absolute;inset:0;pointe
 .switch .knob{position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:var(--text-faint);transition:all .18s ease;}
 .switch.on{background:rgba(var(--accent-rgb),.25);border-color:rgba(var(--accent-rgb),.5);}
 .switch.on .knob{left:calc(100% - 23px);background:rgb(var(--accent-rgb));}
-.world-picker{display:flex;gap:14px;justify-content:space-between;}
+.world-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 10px;}
 .world-item{text-align:center;flex:1;}
 .world-swatch{width:100%;aspect-ratio:1/1;max-width:64px;margin:0 auto;border-radius:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid transparent;}
 .world-swatch svg{width:38%;height:38%;}
@@ -397,8 +441,8 @@ const EQUIPMENT = ['Тело','Скакалка','Гиря','Турник','Бр
 const QUALITIES = ['Сила','Выносливость','Гибкость','Координация'];
 const WEEKDAYS = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const WORLD_LABELS = {urban:'Urban',zen:'Zen',sport:'Sport'};
-const WORLD_DEFAULT_MODE = {urban:'dark',zen:'light',sport:'dark'};
+const WORLD_LABELS = {urban:'Urban',zen:'Zen',sport:'Sport',nocturne:'Nocturne',solar:'Solar',tide:'Tide'};
+const WORLD_DEFAULT_MODE = {urban:'dark',zen:'light',sport:'dark',nocturne:'dark',solar:'light',tide:'dark'};
 const CATEGORIES = [
   {key:'strength',label:'Силовые',c1:'#FF5A1F',c2:'#B23E12',mono:'СИЛ'},
   {key:'run',label:'Бег',c1:'#FF6B5B',c2:'#C23B2E',mono:'БЕГ'},
@@ -453,28 +497,74 @@ let state = {
     measurements:[],
   },
   settings:{world:'urban',mode:'dark',watch:{connected:false,device:null,scanning:false,_found:null}},
-  exercises:[],
-  complexes:[],
+  exercises:[
+    {id:'ex1',name:'Отжимания от пола',zones:['Корпус','Руки'],equipment:'Тело',qualities:['Сила'],description:'Прямая линия от плеч до стоп, локти под углом ~45° к корпусу, грудь почти касается пола.',photos:[]},
+    {id:'ex2',name:'Приседания',zones:['Ноги'],equipment:'Тело',qualities:['Сила','Выносливость'],description:'Стопы на ширине плеч, таз уходит назад и вниз, колени по направлению носков, спина прямая.',photos:[]},
+    {id:'ex3',name:'Прыжки на скакалке',zones:['Ноги','Стопы'],equipment:'Скакалка',qualities:['Выносливость','Координация'],description:'Лёгкий прыжок на носках, кисти вращают скакалку, локти близко к корпусу.',photos:[]},
+    {id:'ex4',name:'Рывок гири',zones:['Корпус','Ноги'],equipment:'Гиря',qualities:['Сила','Выносливость'],description:'Взрывное разгибание бёдер, гиря уходит над головой на прямую руку, таз доводит движение.',photos:[]},
+    {id:'ex5',name:'Подтягивания широким хватом',zones:['Руки','Корпус'],equipment:'Турник',qualities:['Сила'],description:'Хват шире плеч, подбородок над перекладиной, контролируемое опускание в нижнюю точку.',photos:[]},
+    {id:'ex6',name:'Отжимания на брусьях',zones:['Руки','Корпус'],equipment:'Брусья',qualities:['Сила'],description:'Корпус чуть наклонён вперёд, локти уходят назад, глубокая амплитуда до растяжения плеч.',photos:[]},
+    {id:'ex7',name:'Мышечный подъём на кольцах',zones:['Руки','Корпус'],equipment:'Кольца',qualities:['Сила','Координация'],description:'Переход из виса в упор через фазу переворота, локти близко к корпусу, кольца стабилизируются.',photos:[]},
+    {id:'ex8',name:'Тяга TRX к груди',zones:['Корпус','Руки'],equipment:'TRX',qualities:['Сила'],description:'Тело — прямая планка под углом к полу, лопатки сводятся в конце движения, локти вдоль корпуса.',photos:[]},
+    {id:'ex9',name:'Броски МТБ в стену',zones:['Корпус','Руки'],equipment:'МТБ',qualities:['Сила','Координация'],description:'Мяч уходит из-за головы за счёт разгибания корпуса, ловится на согнутые руки, темп высокий.',photos:[]},
+    {id:'ex10',name:'Удары по fightball',zones:['Руки','Корпус'],equipment:'Fightball',qualities:['Координация','Выносливость'],description:'Короткие акцентированные удары, мяч возвращается неравномерно — работает реакция и ритм.',photos:[]},
+    {id:'ex11',name:'МФР спины на ролле',zones:['Корпус'],equipment:'МФР',qualities:['Гибкость'],description:'Медленное прокатывание вдоль мышцы, задержка на болезненных точках 20–30 секунд.',photos:[]},
+    {id:'ex12',name:'Тяга эспандера к поясу',zones:['Корпус','Руки'],equipment:'Эспандер',qualities:['Сила'],description:'Локти идут строго назад вдоль корпуса, лопатки сводятся, лента возвращается подконтрольно.',photos:[]},
+    {id:'ex13',name:'Разгибание руки со жгутом',zones:['Руки'],equipment:'Жгут',qualities:['Сила','Гибкость'],description:'Плечо зафиксировано у корпуса, разгибание в локте до полной амплитуды, возврат медленный.',photos:[]},
+  ],
+  tricks:[
+    {id:'tr1',name:'Планш',zones:['Корпус','Руки','Кисти'],equipment:'Тело',qualities:['Сила','Координация'],description:'Тело удерживается горизонтально в упоре на прямых или согнутых руках без опоры ног.',photos:[]},
+    {id:'tr2',name:'Флаг',zones:['Корпус','Руки'],equipment:'Турник',qualities:['Сила','Координация'],description:'Тело вытянуто горизонтально сбоку от вертикальной опоры, удерживается силой хвата и корпуса.',photos:[]},
+    {id:'tr3',name:'Передний вис',zones:['Корпус','Руки'],equipment:'Турник',qualities:['Сила'],description:'Тело удерживается горизонтально под перекладиной лицом вниз на прямых руках.',photos:[]},
+    {id:'tr4',name:'Торнадо',zones:['Корпус','Руки'],equipment:'Турник',qualities:['Координация','Сила'],description:'Оборот тела вокруг перекладины с раскрытием ног, требует темпа и координации хвата.',photos:[]},
+    {id:'tr5',name:'Стойка на руках',zones:['Руки','Кисти'],equipment:'Тело',qualities:['Координация','Сила'],description:'Вертикальное удержание тела на прямых руках, баланс контролируется кистями и корпусом.',photos:[]},
+    {id:'tr6',name:'Крест на кольцах',zones:['Руки','Корпус'],equipment:'Кольца',qualities:['Сила'],description:'Руки разведены в стороны на уровне плеч, тело вертикально — один из самых силовых статических элементов.',photos:[]},
+  ],
+  complexes:[
+    {id:'cx1',name:'Синди',sport:'functional',duration:20,difficulty:2,items:[
+      {refType:'exercise',refId:'ex5',sets:1,mode:'reps',reps:5,seconds:30},
+      {refType:'exercise',refId:'ex1',sets:1,mode:'reps',reps:10,seconds:30},
+      {refType:'exercise',refId:'ex2',sets:1,mode:'reps',reps:15,seconds:30},
+    ]},
+    {id:'cx2',name:'Утренний комплекс',sport:'strength',duration:25,difficulty:2,items:[
+      {refType:'exercise',refId:'ex5',sets:3,mode:'reps',reps:8,seconds:30},
+      {refType:'exercise',refId:'ex6',sets:3,mode:'reps',reps:10,seconds:30},
+      {refType:'exercise',refId:'ex2',sets:3,mode:'reps',reps:15,seconds:30},
+    ]},
+  ],
   workouts:[],
 };
 
-let workoutDraft=null, complexDraft=null, exerciseDraft=null;
+let workoutDraft=null, complexDraft=null, moveDraft=null;
+let pickerTarget=null, dosageCtx=null;
 
 /* =================== UTIL =================== */
 function findExercise(id){return state.exercises.find(e=>e.id===id);}
+function findTrick(id){return state.tricks.find(e=>e.id===id);}
+function findMove(refType,id){return refType==='trick'?findTrick(id):findExercise(id);}
 function findComplex(id){return state.complexes.find(c=>c.id===id);}
 function workoutsOn(iso){return state.workouts.filter(w=>w.date===iso).sort((a,b)=>a.time.localeCompare(b.time));}
 function initials(name){if(!name) return '?';return name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase();}
 function itemLabel(item){
-  if(item.type==='exercise'){const e=findExercise(item.id);return e?e.name:'Упражнение удалено';}
-  const c=findComplex(item.id);return c?c.name:'Комплекс удалён';
+  if(item.type==='complex'){ const c=findComplex(item.id); return c?c.name:'Комплекс удалён'; }
+  const mv=findMove(item.type,item.id);
+  return mv?mv.name:(item.type==='trick'?'Трюк удалён':'Упражнение удалено');
 }
 function itemZones(item){
-  if(item.type==='exercise'){const e=findExercise(item.id);return e?[e.zone]:[];}
-  const c=findComplex(item.id);if(!c)return[];
-  const z=[...new Set(c.exerciseIds.map(id=>findExercise(id)).filter(Boolean).map(e=>e.zone))];
-  if(!z.length) z.push(catMeta(c.sport).label);
-  return z;
+  if(item.type==='complex'){
+    const c=findComplex(item.id); if(!c) return [];
+    const z=new Set();
+    c.items.forEach(sub=>{ const mv=findMove(sub.refType,sub.refId); if(mv) (mv.zones||[]).forEach(zz=>z.add(zz)); });
+    if(!z.size) z.add(catMeta(c.sport).label);
+    return [...z];
+  }
+  const mv=findMove(item.type,item.id);
+  return mv?(mv.zones||[]):[];
+}
+function dosageSummary(it){
+  if(!it||!it.mode) return '';
+  const sets=it.sets||1;
+  return it.mode==='time' ? `${sets} × ${it.seconds||0} сек` : `${sets} × ${it.reps||0} повт.`;
 }
 function showToast(msg){
   const t=document.getElementById('toast');
@@ -703,12 +793,13 @@ function renderYearView(){
 function renderLibraryScreen(){
   const tab=state.ui.libTab;
   return `
-    <div class="screen-head"><h1>Библиотека</h1><p>Каталог тренировок и упражнений</p></div>
+    <div class="screen-head"><h1>Библиотека</h1><p>Каталог тренировок, упражнений и трюков</p></div>
     <div class="segmented" style="margin-top:14px;">
       <button class="${tab==='complexes'?'active':''}" data-action="lib-tab" data-tab="complexes">Комплексы</button>
       <button class="${tab==='exercises'?'active':''}" data-action="lib-tab" data-tab="exercises">Упражнения</button>
+      <button class="${tab==='tricks'?'active':''}" data-action="lib-tab" data-tab="tricks">Трюки</button>
     </div>
-    <div class="section" style="padding-top:2px;">${tab==='exercises'?renderExerciseLibrary():renderComplexLibrary()}</div>
+    <div class="section" style="padding-top:2px;">${tab==='exercises'?renderMoveLibrary('exercise'):tab==='tricks'?renderMoveLibrary('trick'):renderComplexLibrary()}</div>
   `;
 }
 function renderComplexLibrary(){
@@ -727,14 +818,15 @@ function renderComplexCard(c){
     <div class="catalog-preview" style="background:linear-gradient(135deg,${cat.c1},${cat.c2});"><span>${cat.mono}</span></div>
     <div class="catalog-body">
       <div class="n">${esc(c.name)}</div>
-      <div class="catalog-meta"><span>${c.duration||c.exerciseIds.length*8} мин</span><span class="mdot"></span><span class="diffdots">${[1,2,3].map(i=>`<i class="${i<=diff?'on':''}"></i>`).join('')}</span><span class="mdot"></span><span>${cat.label}</span></div>
-      <div class="tags">${c.exerciseIds.slice(0,2).map(id=>{const ex=findExercise(id);return ex?`<span class="tag">${esc(ex.name)}</span>`:'';}).join('')}${c.exerciseIds.length>2?`<span class="tag">+${c.exerciseIds.length-2}</span>`:''}</div>
+      <div class="catalog-meta"><span>${c.duration||c.items.length*8} мин</span><span class="mdot"></span><span class="diffdots">${[1,2,3].map(i=>`<i class="${i<=diff?'on':''}"></i>`).join('')}</span><span class="mdot"></span><span>${cat.label}</span></div>
+      <div class="tags">${c.items.slice(0,2).map(it=>{const mv=findMove(it.refType,it.refId);return mv?`<span class="tag">${esc(mv.name)}</span>`:'';}).join('')}${c.items.length>2?`<span class="tag">+${c.items.length-2}</span>`:''}</div>
     </div>
   </div>`;
 }
-function renderExerciseLibrary(){
+function renderMoveLibrary(kind){
   const zf=state.ui.libZoneFilter, ef=state.ui.libEquipFilter, qf=state.ui.libQualityFilter;
-  let list=state.exercises.filter(e=>(!zf||e.zone===zf)&&(!ef||e.equipment===ef)&&(!qf||e.quality===qf));
+  const arr = kind==='trick' ? state.tricks : state.exercises;
+  let list=arr.filter(e=>(!zf||(e.zones||[]).includes(zf))&&(!ef||e.equipment===ef)&&(!qf||(e.qualities||[]).includes(qf)));
   return `
     <div class="section-title">Зоны</div>
     <div class="chiprow" style="margin-bottom:14px;">${ZONES.map(z=>`<button class="chip ${zf===z?'active':''}" data-action="lib-filter-zone" data-zone="${z}">${z}</button>`).join('')}</div>
@@ -742,15 +834,15 @@ function renderExerciseLibrary(){
     <div class="chiprow" style="margin-bottom:14px;">${EQUIPMENT.map(eq=>`<button class="chip ${ef===eq?'active':''}" data-action="lib-filter-equip" data-equip="${eq}">${eq}</button>`).join('')}</div>
     <div class="section-title">Качества</div>
     <div class="chiprow" style="margin-bottom:16px;">${QUALITIES.map(q=>`<button class="chip ${qf===q?'active':''}" data-action="lib-filter-quality" data-quality="${q}">${q}</button>`).join('')}</div>
-    ${list.length?list.map(e=>renderExerciseCard(e)).join(''):`<div class="empty">${icon('dumbbell')}<div class="t">Ничего не найдено</div><div class="s">Измените фильтры или добавьте новое упражнение.</div></div>`}
-    <button class="btn-add" data-action="new-exercise" style="margin-top:6px;">${icon('plus')} Добавить упражнение</button>
+    ${list.length?list.map(e=>renderMoveCard(e,kind)).join(''):`<div class="empty">${icon('dumbbell')}<div class="t">Ничего не найдено</div><div class="s">Измените фильтры или добавьте ${kind==='trick'?'новый трюк':'новое упражнение'}.</div></div>`}
+    <button class="btn-add" data-action="new-move" data-kind="${kind}" style="margin-top:6px;">${icon('plus')} Добавить ${kind==='trick'?'трюк':'упражнение'}</button>
   `;
 }
-function renderExerciseCard(e){
+function renderMoveCard(e,kind){
   const thumb=e.photos&&e.photos[0]?`<img src="${e.photos[0]}">`:icon('dumbbell');
-  return `<div class="exercise-card" data-action="open-exercise" data-id="${e.id}">
+  return `<div class="exercise-card" data-action="open-move" data-kind="${kind}" data-id="${e.id}">
     <div class="thumb">${thumb}</div>
-    <div style="flex:1;min-width:0;"><div class="n">${esc(e.name)}</div><div class="tags"><span class="tag">${esc(e.zone)}</span><span class="tag">${esc(e.equipment)}</span>${e.quality?`<span class="tag">${esc(e.quality)}</span>`:''}</div></div>
+    <div style="flex:1;min-width:0;"><div class="n">${esc(e.name)}</div><div class="tags">${(e.zones||[]).map(z=>`<span class="tag">${esc(z)}</span>`).join('')}<span class="tag">${esc(e.equipment)}</span>${(e.qualities||[]).map(q=>`<span class="tag">${esc(q)}</span>`).join('')}</div></div>
     <div class="chevron">${icon('chevronRightSm')}</div>
   </div>`;
 }
@@ -845,8 +937,8 @@ function handleAction(action,t){
     case 'lib-filter-equip': state.ui.libEquipFilter = state.ui.libEquipFilter===t.dataset.equip?null:t.dataset.equip; render(); break;
     case 'lib-filter-quality': state.ui.libQualityFilter = state.ui.libQualityFilter===t.dataset.quality?null:t.dataset.quality; render(); break;
     case 'lib-filter-cat': state.ui.libCatFilter = state.ui.libCatFilter===t.dataset.cat?null:t.dataset.cat; render(); break;
-    case 'new-exercise': openExerciseEditor(null); break;
-    case 'open-exercise': openExerciseEditor(findExercise(t.dataset.id)); break;
+    case 'new-move': openMoveEditor(null, false, t.dataset.kind); break;
+    case 'open-move': openMoveEditor(findMove(t.dataset.kind,t.dataset.id), false, t.dataset.kind); break;
     case 'new-complex': openComplexEditor(null); break;
     case 'open-complex': openComplexEditor(findComplex(t.dataset.id)); break;
     case 'save-profile': saveProfileBasics(); break;
@@ -875,14 +967,16 @@ function saveProfileBasics(){
 /* =================== MODAL ENGINE =================== */
 function openModal(html, layer){
   const el=document.getElementById(layer||'overlay');
+  el.dataset.gen = String(Number(el.dataset.gen||0)+1);
   el.innerHTML=`<div class="modal-backdrop" data-close="${layer||'overlay'}"></div>${html}`;
   requestAnimationFrame(()=>el.classList.add('open'));
   el.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(layer)));
 }
 function closeModal(layer){
   const el=document.getElementById(layer||'overlay');
+  const gen=el.dataset.gen;
   el.classList.remove('open');
-  setTimeout(()=>{el.innerHTML='';},260);
+  setTimeout(()=>{ if(el.dataset.gen===gen) el.innerHTML=''; },260);
 }
 
 /* =================== SETTINGS MODAL =================== */
@@ -898,9 +992,9 @@ function renderSettingsModal(){
           <div class="t" style="margin-bottom:2px;">Визуальный мир</div>
           <div class="s" style="margin-bottom:14px;">Меняет настроение и палитру всего приложения</div>
           <div class="world-picker">
-            ${['urban','zen','sport'].map(key=>`
+            ${['urban','zen','sport','nocturne','solar','tide'].map(key=>`
               <div class="world-item">
-                <div class="world-swatch ${s.world===key?'active':''}" style="background:${worldSwatchBg(key)}" data-action-inline="set-world" data-world="${key}">${ICONS.arrowUp.replace('currentColor',key==='zen'?'#7a4b2a':'#FF5A1F')}</div>
+                <div class="world-swatch ${s.world===key?'active':''}" style="background:${worldSwatchBg(key)}" data-action-inline="set-world" data-world="${key}">${ICONS.arrowUp.replace('currentColor',worldArrowColor(key))}</div>
                 <div class="wl">${WORLD_LABELS[key]}</div>
               </div>`).join('')}
           </div>
@@ -936,9 +1030,18 @@ function renderSettingsModal(){
   if(fileInput) fileInput.onchange = handleImportFile;
 }
 function worldSwatchBg(key){
-  if(key==='urban') return 'linear-gradient(135deg,#232323,#0c0c0c)';
-  if(key==='zen') return 'linear-gradient(135deg,#e9dcbf,#c8a877)';
-  return 'linear-gradient(135deg,#173325,#0a1310)';
+  const map={
+    urban:'linear-gradient(135deg,#232323,#0c0c0c)',
+    zen:'linear-gradient(135deg,#e9dcbf,#c8a877)',
+    sport:'linear-gradient(135deg,#173325,#0a1310)',
+    nocturne:'linear-gradient(135deg,#1b2140,#0a0d1c)',
+    solar:'linear-gradient(135deg,#f3dfb8,#e2652b)',
+    tide:'linear-gradient(135deg,#123138,#071a1d)',
+  };
+  return map[key]||map.urban;
+}
+function worldArrowColor(key){
+  return {urban:'#FF5A1F',zen:'#7a4b2a',sport:'#FF5A1F',nocturne:'#8fa4ff',solar:'#5a2e12',tide:'#eafcff'}[key]||'#FF5A1F';
 }
 function renderWatchPanel(){
   const w=state.settings.watch;
@@ -1059,10 +1162,11 @@ function renderWorkoutEditor(isEdit){
           <div id="repeat-options">${renderRepeatOptions()}</div>
         </div>`:''}
         <div class="field">
-          <label>Упражнения и комплексы</label>
+          <label>Упражнения, трюки и комплексы</label>
           <div id="w-items">${renderWorkoutItems()}</div>
-          <div class="row-2" style="margin-top:8px;">
+          <div class="row-3" style="margin-top:8px;">
             <button class="btn-add" data-action-inline="add-exercise-item">${icon('plus')} Упражнение</button>
+            <button class="btn-add" data-action-inline="add-trick-item">${icon('plus')} Трюк</button>
             <button class="btn-add" data-action-inline="add-complex-item">${icon('plus')} Комплекс</button>
           </div>
         </div>
@@ -1084,19 +1188,30 @@ function renderRepeatOptions(){
 }
 function renderWorkoutItems(){
   if(workoutDraft.items.length===0) return `<div class="s" style="color:var(--text-faint);font-size:12.5px;padding:6px 0;">Пока ничего не добавлено</div>`;
-  return workoutDraft.items.map((it,idx)=>`
-    <div class="list-item">
-      <div class="thumb">${icon('dumbbell')}</div>
-      <div class="body"><div class="n">${esc(itemLabel(it))}</div><div class="m">${it.type==='exercise'?'Упражнение':'Комплекс'} · ${itemZones(it).join(', ')||'—'}</div></div>
+  return workoutDraft.items.map((it,idx)=>{
+    const editable = it.type!=='complex';
+    const kindLabel = it.type==='complex'?'Комплекс':(it.type==='trick'?'Трюк':'Упражнение');
+    return `<div class="list-item">
+      <div class="thumb" ${editable?`data-action-inline="edit-w-item" data-idx="${idx}" style="cursor:pointer;"`:''}>${icon('dumbbell')}</div>
+      <div class="body" ${editable?`data-action-inline="edit-w-item" data-idx="${idx}" style="cursor:pointer;"`:''}>
+        <div class="n">${esc(itemLabel(it))}</div>
+        <div class="m">${kindLabel}${editable?' · '+dosageSummary(it):' · '+itemZones(it).join(', ')}</div>
+      </div>
       <button class="del" data-action-inline="remove-item" data-idx="${idx}">${icon('trash')}</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 function workoutInlineHandler(e){
   const t=e.target.closest('[data-action-inline]'); if(!t) return;
   const a=t.dataset.actionInline;
   if(a==='remove-item'){ workoutDraft.items.splice(Number(t.dataset.idx),1); document.getElementById('w-items').innerHTML=renderWorkoutItems(); }
-  else if(a==='add-exercise-item'){ openPicker('exercise'); }
-  else if(a==='add-complex-item'){ openPicker('complex'); }
+  else if(a==='add-exercise-item'){ openPicker('exercise','workout'); }
+  else if(a==='add-trick-item'){ openPicker('trick','workout'); }
+  else if(a==='add-complex-item'){ openPicker('complex','workout'); }
+  else if(a==='edit-w-item'){
+    const idx=Number(t.dataset.idx); const it=workoutDraft.items[idx];
+    startDosageStep(it.type, it.id, {mode:it.mode,sets:it.sets,reps:it.reps,seconds:it.seconds}, 'workout', idx);
+  }
   else if(a==='toggle-repeat'){ workoutDraft.repeat.enabled=!workoutDraft.repeat.enabled; renderWorkoutEditor(false); }
   else if(a==='toggle-repeat-day'){
     const day=Number(t.dataset.day); const idx=workoutDraft.repeat.days.indexOf(day);
@@ -1136,16 +1251,21 @@ function saveWorkoutDraft(){
 }
 
 /* =================== PICKER (nested modal) =================== */
-function openPicker(kind){ renderPicker(kind,''); }
+function openPicker(kind, target){ pickerTarget=target; renderPicker(kind,''); }
 function renderPicker(kind,query){
-  const items = kind==='exercise' ? state.exercises.filter(e=>e.name.toLowerCase().includes(query.toLowerCase())) : state.complexes.filter(c=>c.name.toLowerCase().includes(query.toLowerCase()));
+  const q=query.toLowerCase();
+  const items = kind==='exercise' ? state.exercises.filter(e=>e.name.toLowerCase().includes(q))
+    : kind==='trick' ? state.tricks.filter(e=>e.name.toLowerCase().includes(q))
+    : state.complexes.filter(c=>c.name.toLowerCase().includes(q));
+  const title = kind==='exercise'?'Выбрать упражнение':(kind==='trick'?'Выбрать трюк':'Выбрать комплекс');
+  const createLabel = kind==='exercise'?'Создать упражнение':(kind==='trick'?'Создать трюк':'Создать комплекс');
   openModal(`
     <div class="modal-sheet centered" style="max-height:80vh;">
-      <div class="modal-header"><h2>${kind==='exercise'?'Выбрать упражнение':'Выбрать комплекс'}</h2><button class="icon-btn" data-close="overlay2">${icon('close')}</button></div>
+      <div class="modal-header"><h2>${title}</h2><button class="icon-btn" data-close="overlay2">${icon('close')}</button></div>
       <div class="modal-body">
         <div class="searchbar">${icon('search')}<input type="text" id="picker-search" placeholder="Поиск…" value="${esc(query)}"></div>
-        <div id="picker-list">${items.length?items.map(i=>`<div class="list-item" style="cursor:pointer;" data-action-inline="pick" data-id="${i.id}"><div class="thumb">${icon('dumbbell')}</div><div class="body"><div class="n">${esc(i.name)}</div>${kind==='exercise'?`<div class="m">${esc(i.zone)} · ${esc(i.equipment)}</div>`:`<div class="m">${catMeta(i.sport).label} · ${i.duration||i.exerciseIds.length*8} мин</div>`}</div></div>`).join(''):'<div class="s" style="color:var(--text-faint);padding:10px 0;">Ничего не найдено</div>'}</div>
-        <button class="btn-add" style="margin-top:10px;" data-action-inline="create-new">${icon('plus')} Создать новое</button>
+        <div id="picker-list">${items.length?items.map(i=>`<div class="list-item" style="cursor:pointer;" data-action-inline="pick" data-id="${i.id}"><div class="thumb">${icon('dumbbell')}</div><div class="body"><div class="n">${esc(i.name)}</div>${kind==='complex'?`<div class="m">${catMeta(i.sport).label} · ${i.duration||i.items.length*8} мин</div>`:`<div class="m">${(i.zones||[]).join(', ')} · ${esc(i.equipment)}</div>`}</div></div>`).join(''):'<div class="s" style="color:var(--text-faint);padding:10px 0;">Ничего не найдено</div>'}</div>
+        <button class="btn-add" style="margin-top:10px;" data-action-inline="create-new">${icon('plus')} ${createLabel}</button>
       </div>
     </div>
   `,'overlay2');
@@ -1153,23 +1273,90 @@ function renderPicker(kind,query){
   ov2.onclick = function(e){
     const t=e.target.closest('[data-action-inline]'); if(!t) return;
     const a=t.dataset.actionInline;
-    if(a==='pick'){ workoutOrComplexAddItem(kind,t.dataset.id); closeModal('overlay2'); }
-    else if(a==='create-new'){ closeModal('overlay2'); if(kind==='exercise') openExerciseEditor(null, true); else openComplexEditor(null, true); }
+    if(a==='pick'){
+      if(kind==='complex'){
+        workoutDraft.items.push({type:'complex',id:t.dataset.id});
+        const el=document.getElementById('w-items'); if(el) el.innerHTML=renderWorkoutItems();
+        closeModal('overlay2');
+      } else {
+        startDosageStep(kind, t.dataset.id);
+      }
+    }
+    else if(a==='create-new'){
+      closeModal('overlay2');
+      if(kind==='complex') openComplexEditor(null, true);
+      else openMoveEditor(null, true, kind);
+    }
   };
   const search=document.getElementById('picker-search');
   search.addEventListener('input',()=>renderPicker(kind, search.value));
   search.focus();
 }
-function workoutOrComplexAddItem(kind, id){
-  if(complexDraft && complexDraft._active){ complexDraft.exerciseIds.push(id); document.getElementById('c-items').innerHTML=renderComplexItems(); return; }
-  workoutDraft.items.push({type:kind,id});
-  const el=document.getElementById('w-items'); if(el) el.innerHTML=renderWorkoutItems();
+
+/* =================== DOSAGE STEP =================== */
+function startDosageStep(kind, moveId, prefillDosage, targetOverride, editIdx){
+  dosageCtx={ kind, moveId, target:targetOverride||pickerTarget, editIdx: editIdx!==undefined?editIdx:null,
+    dosage: prefillDosage && prefillDosage.mode ? {...prefillDosage} : {mode:'reps',sets:3,reps:10,seconds:30} };
+  renderDosageStep();
+}
+function renderDosageStep(){
+  const move=findMove(dosageCtx.kind, dosageCtx.moveId); const d=dosageCtx.dosage;
+  openModal(`
+    <div class="modal-sheet centered">
+      <div class="modal-header"><h2>${esc(move?move.name:'Дозировка')}</h2><button class="icon-btn" data-close="overlay2">${icon('close')}</button></div>
+      <div class="modal-body">
+        <div class="field"><label>Подходы</label><input type="number" id="dz-sets" value="${d.sets}" min="1"></div>
+        <div class="field"><label>Как считать нагрузку</label><div class="chiprow"><button class="chip ${d.mode==='reps'?'active':''}" data-action-inline="dz-mode" data-val="reps">Повторения</button><button class="chip ${d.mode==='time'?'active':''}" data-action-inline="dz-mode" data-val="time">Время</button></div></div>
+        <div class="field" id="dz-value-field">${d.mode==='reps'?`<label>Повторений в подходе</label><input type="number" id="dz-reps" value="${d.reps}" min="1">`:`<label>Время в подходе, сек</label><input type="number" id="dz-seconds" value="${d.seconds}" min="1">`}</div>
+      </div>
+      <div class="modal-footer">
+        ${dosageCtx.editIdx!==null?`<button class="btn btn-danger" data-action-inline="dz-remove">${icon('trash')}</button>`:''}
+        <button class="btn btn-primary btn-block" data-action-inline="dz-save">${dosageCtx.editIdx!==null?'Сохранить':'Добавить'}</button>
+      </div>
+    </div>
+  `,'overlay2');
+  document.getElementById('overlay2').onclick = dosageInlineHandler;
+}
+function dosageInlineHandler(e){
+  const t=e.target.closest('[data-action-inline]'); if(!t) return;
+  const a=t.dataset.actionInline;
+  if(a==='dz-mode'){
+    const setsEl=document.getElementById('dz-sets'); if(setsEl) dosageCtx.dosage.sets=Number(setsEl.value)||dosageCtx.dosage.sets;
+    dosageCtx.dosage.mode=t.dataset.val; renderDosageStep();
+  }
+  else if(a==='dz-save'){
+    dosageCtx.dosage.sets=Number(document.getElementById('dz-sets').value)||1;
+    if(dosageCtx.dosage.mode==='reps') dosageCtx.dosage.reps=Number(document.getElementById('dz-reps').value)||1;
+    else dosageCtx.dosage.seconds=Number(document.getElementById('dz-seconds').value)||1;
+    commitDosage();
+  }
+  else if(a==='dz-remove'){ removeDosageItem(); }
+}
+function commitDosage(){
+  const {kind,moveId,target,editIdx,dosage}=dosageCtx;
+  if(target==='workout'){
+    const item={type:kind,id:moveId,sets:dosage.sets,mode:dosage.mode,reps:dosage.reps,seconds:dosage.seconds};
+    if(editIdx!==null) workoutDraft.items[editIdx]=item; else workoutDraft.items.push(item);
+    const el=document.getElementById('w-items'); if(el) el.innerHTML=renderWorkoutItems();
+  } else {
+    const item={refType:kind,refId:moveId,sets:dosage.sets,mode:dosage.mode,reps:dosage.reps,seconds:dosage.seconds};
+    if(editIdx!==null) complexDraft.items[editIdx]=item; else complexDraft.items.push(item);
+    const el=document.getElementById('c-items'); if(el) el.innerHTML=renderComplexItems();
+  }
+  closeModal('overlay2'); dosageCtx=null;
+}
+function removeDosageItem(){
+  const {target,editIdx}=dosageCtx;
+  if(editIdx===null){ closeModal('overlay2'); dosageCtx=null; return; }
+  if(target==='workout'){ workoutDraft.items.splice(editIdx,1); const el=document.getElementById('w-items'); if(el) el.innerHTML=renderWorkoutItems(); }
+  else { complexDraft.items.splice(editIdx,1); const el=document.getElementById('c-items'); if(el) el.innerHTML=renderComplexItems(); }
+  closeModal('overlay2'); dosageCtx=null;
 }
 
 /* =================== COMPLEX EDITOR =================== */
 function openComplexEditor(existing, returnToPicker){
-  complexDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',exerciseIds:[],sport:'strength',difficulty:2,duration:null};
-  complexDraft._active=true; complexDraft._returnToPicker=!!returnToPicker;
+  complexDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',items:[],sport:'strength',difficulty:2,duration:null};
+  complexDraft._returnToPicker=!!returnToPicker;
   renderComplexEditor(!!existing);
 }
 function renderComplexEditor(isEdit){
@@ -1182,13 +1369,16 @@ function renderComplexEditor(isEdit){
         <div class="field"><label>Название</label><input type="text" id="c-name" placeholder="Например, «Утренний воркаут»" value="${esc(d.name)}"></div>
         <div class="field"><label>Тип</label><div class="chiprow" id="c-cat-row">${CATEGORIES.map(cat=>`<button class="chip ${d.sport===cat.key?'active':''}" data-action-inline="c-cat" data-val="${cat.key}">${cat.label}</button>`).join('')}</div></div>
         <div class="field-row">
-          <div class="field"><label>Длительность, мин</label><input type="number" id="c-duration" value="${d.duration||d.exerciseIds.length*8||20}"></div>
+          <div class="field"><label>Длительность, мин</label><input type="number" id="c-duration" value="${d.duration||d.items.length*8||20}"></div>
           <div class="field"><label>Сложность</label><div class="chiprow" id="c-diff-row">${['Начальный','Средний','Продвинутый'].map((l,i)=>`<button class="chip ${((d.difficulty||2)===i+1)?'active':''}" data-action-inline="c-diff" data-val="${i+1}">${l}</button>`).join('')}</div></div>
         </div>
         <div class="field">
-          <label>Упражнения</label>
+          <label>Упражнения и трюки</label>
           <div id="c-items">${renderComplexItems()}</div>
-          <button class="btn-add" style="margin-top:8px;" data-action-inline="c-add-ex">${icon('plus')} Упражнение</button>
+          <div class="row-2" style="margin-top:8px;">
+            <button class="btn-add" data-action-inline="c-add-exercise">${icon('plus')} Упражнение</button>
+            <button class="btn-add" data-action-inline="c-add-trick">${icon('plus')} Трюк</button>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -1200,96 +1390,121 @@ function renderComplexEditor(isEdit){
   document.getElementById('overlay').onclick = complexInlineHandler;
 }
 function renderComplexItems(){
-  if(complexDraft.exerciseIds.length===0) return `<div class="s" style="color:var(--text-faint);font-size:12.5px;padding:6px 0;">Пока ничего не добавлено</div>`;
-  return complexDraft.exerciseIds.map((id,idx)=>{
-    const ex=findExercise(id);
-    return `<div class="list-item"><div class="thumb">${icon('dumbbell')}</div><div class="body"><div class="n">${esc(ex?ex.name:'Удалено')}</div><div class="m">${ex?ex.zone+' · '+ex.equipment:''}</div></div><button class="del" data-action-inline="c-remove" data-idx="${idx}">${icon('trash')}</button></div>`;
+  if(complexDraft.items.length===0) return `<div class="s" style="color:var(--text-faint);font-size:12.5px;padding:6px 0;">Пока ничего не добавлено</div>`;
+  return complexDraft.items.map((it,idx)=>{
+    const mv=findMove(it.refType,it.refId);
+    return `<div class="list-item">
+      <div class="thumb" data-action-inline="c-edit-item" data-idx="${idx}" style="cursor:pointer;">${icon('dumbbell')}</div>
+      <div class="body" data-action-inline="c-edit-item" data-idx="${idx}" style="cursor:pointer;">
+        <div class="n">${esc(mv?mv.name:'Удалено')}</div>
+        <div class="m">${it.refType==='trick'?'Трюк':'Упражнение'} · ${dosageSummary(it)}</div>
+      </div>
+      <button class="del" data-action-inline="c-remove" data-idx="${idx}">${icon('trash')}</button>
+    </div>`;
   }).join('');
 }
 function complexInlineHandler(e){
   const t=e.target.closest('[data-action-inline]'); if(!t) return;
   const a=t.dataset.actionInline;
-  if(a==='c-add-ex') openPicker('exercise');
+  if(a==='c-add-exercise') openPicker('exercise','complex');
+  else if(a==='c-add-trick') openPicker('trick','complex');
+  else if(a==='c-edit-item'){
+    const idx=Number(t.dataset.idx); const it=complexDraft.items[idx];
+    startDosageStep(it.refType, it.refId, {mode:it.mode,sets:it.sets,reps:it.reps,seconds:it.seconds}, 'complex', idx);
+  }
   else if(a==='c-cat'){ complexDraft.sport=t.dataset.val; document.getElementById('c-cat-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===complexDraft.sport)); }
   else if(a==='c-diff'){ complexDraft.difficulty=Number(t.dataset.val); document.getElementById('c-diff-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',Number(c.dataset.val)===complexDraft.difficulty)); }
-  else if(a==='c-remove'){ complexDraft.exerciseIds.splice(Number(t.dataset.idx),1); document.getElementById('c-items').innerHTML=renderComplexItems(); }
+  else if(a==='c-remove'){ complexDraft.items.splice(Number(t.dataset.idx),1); document.getElementById('c-items').innerHTML=renderComplexItems(); }
   else if(a==='c-save'){
     const name=document.getElementById('c-name').value.trim();
     if(!name){ showToast('Укажите название комплекса'); return; }
     complexDraft.name=name; complexDraft.duration=Number(document.getElementById('c-duration').value)||20;
-    delete complexDraft._active; const returnToPicker=complexDraft._returnToPicker; delete complexDraft._returnToPicker;
+    const returnToPicker=complexDraft._returnToPicker; delete complexDraft._returnToPicker;
     if(complexDraft.id){ const idx=state.complexes.findIndex(c=>c.id===complexDraft.id); state.complexes[idx]=complexDraft; }
     else{ complexDraft.id=nextId(); state.complexes.push(complexDraft); }
+    const savedId=complexDraft.id;
     closeModal('overlay'); render(); showToast('Комплекс сохранён');
-    if(returnToPicker && workoutDraft){ workoutDraft.items.push({type:'complex',id:complexDraft.id}); }
+    if(returnToPicker && workoutDraft){ workoutDraft.items.push({type:'complex',id:savedId}); }
   }
   else if(a==='c-delete'){ state.complexes=state.complexes.filter(c=>c.id!==complexDraft.id); closeModal('overlay'); render(); showToast('Комплекс удалён'); }
 }
 
-/* =================== EXERCISE EDITOR =================== */
-function openExerciseEditor(existing, returnToPicker){
-  exerciseDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',zone:ZONES[0],equipment:EQUIPMENT[0],quality:QUALITIES[0],description:'',photos:[]};
-  exerciseDraft._returnToPicker=!!returnToPicker;
-  renderExerciseEditor(!!existing);
+/* =================== MOVE EDITOR (упражнение / трюк) =================== */
+function openMoveEditor(existing, returnToPicker, kind){
+  moveDraft = existing ? JSON.parse(JSON.stringify(existing)) : {id:null,name:'',zones:[],equipment:EQUIPMENT[0],qualities:[],description:'',photos:[]};
+  moveDraft._kind = existing ? (state.tricks.some(x=>x.id===existing.id)?'trick':'exercise') : kind;
+  moveDraft._returnToPicker=!!returnToPicker;
+  renderMoveEditor(!!existing);
 }
-function renderExerciseEditor(isEdit){
-  const d=exerciseDraft;
+function renderMoveEditor(isEdit){
+  const d=moveDraft; const kindLabel = d._kind==='trick'?'Трюк':'Упражнение';
   openModal(`
     <div class="modal-sheet" style="max-height:94vh;">
       <div class="modal-handle"></div>
-      <div class="modal-header"><h2>${isEdit?'Упражнение':'Новое упражнение'}</h2><button class="icon-btn" data-close="overlay">${icon('close')}</button></div>
+      <div class="modal-header"><h2>${isEdit?kindLabel:'Новый: '+kindLabel.toLowerCase()}</h2><button class="icon-btn" data-close="overlay">${icon('close')}</button></div>
       <div class="modal-body">
-        <div class="field"><label>Название</label><input type="text" id="e-name" placeholder="Например, «Отжимания на брусьях»" value="${esc(d.name)}"></div>
-        <div class="field"><label>Зона</label><div class="chiprow" id="e-zone-row">${ZONES.map(z=>`<button class="chip ${d.zone===z?'active':''}" data-action-inline="e-zone" data-val="${z}">${z}</button>`).join('')}</div></div>
-        <div class="field"><label>Снаряд</label><div class="chiprow" id="e-equip-row">${EQUIPMENT.map(eq=>`<button class="chip ${d.equipment===eq?'active':''}" data-action-inline="e-equip" data-val="${eq}">${eq}</button>`).join('')}</div></div>
-        <div class="field"><label>Качество</label><div class="chiprow" id="e-quality-row">${QUALITIES.map(q=>`<button class="chip ${(d.quality||QUALITIES[0])===q?'active':''}" data-action-inline="e-quality" data-val="${q}">${q}</button>`).join('')}</div></div>
-        <div class="field"><label>Описание</label><textarea id="e-desc" placeholder="Техника выполнения, акценты, ошибки…">${esc(d.description)}</textarea></div>
-        <div class="field"><label>Галерея фото</label><div class="gallery" id="e-gallery">${renderGallery()}</div></div>
+        <div class="field"><label>Название</label><input type="text" id="mv-name" placeholder="${d._kind==='trick'?'Например, «Планш»':'Например, «Отжимания на брусьях»'}" value="${esc(d.name)}"></div>
+        <div class="field"><label>Зоны <span style="font-weight:600;color:var(--text-faint);">можно несколько</span></label><div class="chiprow" id="mv-zone-row">${ZONES.map(z=>`<button class="chip ${d.zones.includes(z)?'active':''}" data-action-inline="mv-zone" data-val="${z}">${z}</button>`).join('')}</div></div>
+        <div class="field"><label>Снаряд</label><div class="chiprow" id="mv-equip-row">${EQUIPMENT.map(eq=>`<button class="chip ${d.equipment===eq?'active':''}" data-action-inline="mv-equip" data-val="${eq}">${eq}</button>`).join('')}</div></div>
+        <div class="field"><label>Качества <span style="font-weight:600;color:var(--text-faint);">можно несколько</span></label><div class="chiprow" id="mv-quality-row">${QUALITIES.map(q=>`<button class="chip ${d.qualities.includes(q)?'active':''}" data-action-inline="mv-quality" data-val="${q}">${q}</button>`).join('')}</div></div>
+        <div class="field"><label>Описание</label><textarea id="mv-desc" placeholder="Техника выполнения, акценты, ошибки…">${esc(d.description)}</textarea></div>
+        <div class="field"><label>Галерея фото</label><div class="gallery" id="mv-gallery">${renderGallery()}</div></div>
       </div>
       <div class="modal-footer">
-        ${isEdit?`<button class="btn btn-danger" data-action-inline="e-delete">${icon('trash')}</button>`:''}
-        <button class="btn btn-primary btn-block" data-action-inline="e-save">Сохранить</button>
+        ${isEdit?`<button class="btn btn-danger" data-action-inline="mv-delete">${icon('trash')}</button>`:''}
+        <button class="btn btn-primary btn-block" data-action-inline="mv-save">Сохранить</button>
       </div>
     </div>
   `);
-  document.getElementById('overlay').onclick = exerciseInlineHandler;
-  document.getElementById('overlay').onchange = exerciseFileHandler;
+  document.getElementById('overlay').onclick = moveInlineHandler;
+  document.getElementById('overlay').onchange = moveFileHandler;
 }
 function renderGallery(){
-  const photos=exerciseDraft.photos||[];
-  let html=photos.map((src,idx)=>`<div class="g-item"><img src="${src}"><button data-action-inline="e-photo-del" data-idx="${idx}">${icon('close')}</button></div>`).join('');
-  html+=`<label class="g-add">${icon('camera')}<input type="file" accept="image/*" id="e-photo-input" multiple></label>`;
+  const photos=moveDraft.photos||[];
+  let html=photos.map((src,idx)=>`<div class="g-item"><img src="${src}"><button data-action-inline="mv-photo-del" data-idx="${idx}">${icon('close')}</button></div>`).join('');
+  html+=`<label class="g-add">${icon('camera')}<input type="file" accept="image/*" id="mv-photo-input" multiple></label>`;
   return html;
 }
-function exerciseInlineHandler(e){
+function moveInlineHandler(e){
   const t=e.target.closest('[data-action-inline]'); if(!t) return;
   const a=t.dataset.actionInline;
-  if(a==='e-zone'){ exerciseDraft.zone=t.dataset.val; document.getElementById('e-zone-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.zone)); }
-  else if(a==='e-equip'){ exerciseDraft.equipment=t.dataset.val; document.getElementById('e-equip-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.equipment)); }
-  else if(a==='e-quality'){ exerciseDraft.quality=t.dataset.val; document.getElementById('e-quality-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===exerciseDraft.quality)); }
-  else if(a==='e-photo-del'){ exerciseDraft.photos.splice(Number(t.dataset.idx),1); document.getElementById('e-gallery').innerHTML=renderGallery(); }
-  else if(a==='e-save'){
-    const name=document.getElementById('e-name').value.trim();
-    if(!name){ showToast('Укажите название упражнения'); return; }
-    exerciseDraft.name=name; exerciseDraft.description=document.getElementById('e-desc').value.trim();
-    const returnToPicker=exerciseDraft._returnToPicker; delete exerciseDraft._returnToPicker;
-    if(exerciseDraft.id){ const idx=state.exercises.findIndex(x=>x.id===exerciseDraft.id); state.exercises[idx]=exerciseDraft; }
-    else{ exerciseDraft.id=nextId(); state.exercises.push(exerciseDraft); }
-    const savedId=exerciseDraft.id;
-    closeModal('overlay'); render(); showToast('Упражнение сохранено');
-    if(returnToPicker){
-      if(complexDraft && complexDraft._active){ complexDraft.exerciseIds.push(savedId); const ci=document.getElementById('c-items'); if(ci) ci.innerHTML=renderComplexItems(); }
-      else if(workoutDraft){ workoutDraft.items.push({type:'exercise',id:savedId}); const wi=document.getElementById('w-items'); if(wi) wi.innerHTML=renderWorkoutItems(); }
-    }
+  if(a==='mv-zone'){
+    const v=t.dataset.val; const i=moveDraft.zones.indexOf(v);
+    if(i===-1) moveDraft.zones.push(v); else moveDraft.zones.splice(i,1);
+    document.getElementById('mv-zone-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',moveDraft.zones.includes(c.dataset.val)));
   }
-  else if(a==='e-delete'){ state.exercises=state.exercises.filter(x=>x.id!==exerciseDraft.id); closeModal('overlay'); render(); showToast('Упражнение удалено'); }
+  else if(a==='mv-equip'){ moveDraft.equipment=t.dataset.val; document.getElementById('mv-equip-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.val===moveDraft.equipment)); }
+  else if(a==='mv-quality'){
+    const v=t.dataset.val; const i=moveDraft.qualities.indexOf(v);
+    if(i===-1) moveDraft.qualities.push(v); else moveDraft.qualities.splice(i,1);
+    document.getElementById('mv-quality-row').querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',moveDraft.qualities.includes(c.dataset.val)));
+  }
+  else if(a==='mv-photo-del'){ moveDraft.photos.splice(Number(t.dataset.idx),1); document.getElementById('mv-gallery').innerHTML=renderGallery(); }
+  else if(a==='mv-save'){
+    const name=document.getElementById('mv-name').value.trim();
+    if(!name){ showToast('Укажите название'); return; }
+    moveDraft.name=name; moveDraft.description=document.getElementById('mv-desc').value.trim();
+    const kind=moveDraft._kind; const returnToPicker=moveDraft._returnToPicker;
+    delete moveDraft._kind; delete moveDraft._returnToPicker;
+    const arr = kind==='trick'?state.tricks:state.exercises;
+    if(moveDraft.id){ const idx=arr.findIndex(x=>x.id===moveDraft.id); arr[idx]=moveDraft; }
+    else{ moveDraft.id=nextId(); arr.push(moveDraft); }
+    const savedId=moveDraft.id;
+    closeModal('overlay'); render(); showToast(kind==='trick'?'Трюк сохранён':'Упражнение сохранено');
+    if(returnToPicker){ startDosageStep(kind, savedId); }
+  }
+  else if(a==='mv-delete'){
+    const kind=moveDraft._kind;
+    if(kind==='trick') state.tricks=state.tricks.filter(x=>x.id!==moveDraft.id); else state.exercises=state.exercises.filter(x=>x.id!==moveDraft.id);
+    closeModal('overlay'); render(); showToast('Удалено');
+  }
 }
-function exerciseFileHandler(e){
-  if(e.target.id!=='e-photo-input') return;
+function moveFileHandler(e){
+  if(e.target.id!=='mv-photo-input') return;
   const files=Array.from(e.target.files||[]); let remaining=files.length; if(!remaining) return;
   files.forEach(file=>{
     const reader=new FileReader();
-    reader.onload=ev=>{ exerciseDraft.photos.push(ev.target.result); remaining--; if(remaining===0){ const g=document.getElementById('e-gallery'); if(g) g.innerHTML=renderGallery(); } };
+    reader.onload=ev=>{ moveDraft.photos.push(ev.target.result); remaining--; if(remaining===0){ const g=document.getElementById('mv-gallery'); if(g) g.innerHTML=renderGallery(); } };
     reader.readAsDataURL(file);
   });
 }
