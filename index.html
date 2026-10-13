@@ -1,2282 +1,673 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="energy">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Планировщик тренировок</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>АС — Фитнес</title>
 <style>
-/* ============================================================
-   1. ЦВЕТОВЫЕ СХЕМЫ
-   ============================================================ */
-:root, [data-theme="energy"] {
-  --bg-primary: #FAFAFA;
-  --bg-surface: #FFFFFF;
-  --bg-elevated: #F5F5F7;
-  --bg-hover: #EEF0F5;
-
-  --accent: #6366F1;
-  --accent-soft: #EEF0FF;
-  --accent-hover: #4F46E5;
-  --success: #10B981;
-  --success-soft: #ECFDF5;
-  --warning: #F59E0B;
-  --warning-soft: #FFFBEB;
-  --danger: #EF4444;
-  --danger-soft: #FEF2F2;
-
-  --text-primary: #1F2937;
-  --text-secondary: #6B7280;
-  --text-muted: #9CA3AF;
-
-  --border: #E5E7EB;
-  --border-strong: #D1D5DB;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow: 0 4px 12px rgba(0,0,0,0.06);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
-}
-
-[data-theme="night"] {
-  --bg-primary: #0F172A;
-  --bg-surface: #1E293B;
-  --bg-elevated: #334155;
-  --bg-hover: #3B4A60;
-
-  --accent: #818CF8;
-  --accent-soft: #312E5E;
-  --accent-hover: #A5B4FC;
-  --success: #34D399;
-  --success-soft: #14342A;
-  --warning: #FBBF24;
-  --warning-soft: #3A2D0B;
-  --danger: #F87171;
-  --danger-soft: #3A1616;
-
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-
-  --border: #334155;
-  --border-strong: #475569;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow: 0 4px 12px rgba(0,0,0,0.35);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
-}
-
-/* ============================================================
-   2. БАЗОВЫЕ СТИЛИ (защита от переполнения)
-   ============================================================ */
-*, *::before, *::after { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 15px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  transition: background 0.2s ease, color 0.2s ease;
-  overflow-x: hidden;
-}
-
-button, input, select, textarea {
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-h1, h2, h3, h4, p, span, div, label {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-img { max-width: 100%; height: auto; display: block; }
-
-/* ============================================================
-   3. НАВИГАЦИЯ
-   ============================================================ */
-.nav {
-  display: flex;
-  align-items: center;
-  gap: clamp(8px, 2vw, 20px);
-  padding: 12px clamp(12px, 3vw, 24px);
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  flex-wrap: wrap;
-}
-
-.nav-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--success));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.username {
-  font-weight: 600;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.nav-tabs::-webkit-scrollbar { display: none; }
-
-.nav-tab {
-  padding: 8px 14px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  transition: all 0.15s ease;
-  flex-shrink: 0;
-}
-.nav-tab:hover { background: var(--bg-hover); color: var(--text-primary); }
-.nav-tab.active { background: var(--accent); color: #fff; }
-
-.nav-actions {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.icon-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  background: var(--bg-elevated);
-  transition: all 0.15s ease;
-}
-.icon-btn:hover { background: var(--bg-hover); transform: scale(1.05); }
-
-/* ============================================================
-   4. LAYOUT
-   ============================================================ */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: clamp(12px, 3vw, 24px);
-  min-width: 0;
-}
-
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-
-/* ============================================================
-   5. BENTO GRID
-   ============================================================ */
-.bento {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  gap: clamp(12px, 2vw, 20px);
-  align-items: start;
-}
-
-@media (max-width: 900px) {
-  .bento { grid-template-columns: minmax(0, 1fr); }
-}
-
-.card {
-  background: var(--bg-surface);
-  border-radius: 16px;
-  padding: clamp(14px, 2.5vw, 22px);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  min-width: 0;
-}
-
-.card-title {
-  margin: 0 0 14px;
-  font-size: clamp(15px, 2vw, 17px);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-/* ============================================================
-   6. КАЛЕНДАРЬ
-   ============================================================ */
-.cal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 14px;
-  flex-wrap: wrap;
-}
-
-.cal-month {
-  font-size: clamp(15px, 2.2vw, 18px);
-  font-weight: 700;
-  text-transform: capitalize;
-}
-
-.cal-nav { display: flex; gap: 6px; }
-
-.cal-nav button {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  background: var(--bg-elevated);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  transition: all 0.15s;
-}
-.cal-nav button:hover { background: var(--accent); color: #fff; }
-
-.cal-weekdays,
-.cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 4px;
-}
-
-.cal-weekdays { margin-bottom: 6px; }
-
-.cal-weekdays div {
-  text-align: center;
-  font-size: clamp(10px, 1.6vw, 12px);
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 4px 0;
-}
-
-.cal-day {
-  aspect-ratio: 1 / 1;
-  min-width: 0;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  position: relative;
-  border: 1.5px solid transparent;
-  padding: 2px;
-  user-select: none;
-}
-
-.cal-day:hover { background: var(--bg-elevated); }
-
-.cal-day.empty { cursor: default; }
-.cal-day.empty:hover { background: transparent; }
-
-.cal-day.today { border-color: var(--accent); font-weight: 700; }
-
-.cal-day.selected {
-  background: var(--accent);
-  color: #fff;
-}
-.cal-day.selected .cal-day-num { color: #fff; }
-
-.cal-day-num {
-  font-size: clamp(11px, 1.8vw, 14px);
-  font-weight: 500;
-  color: var(--text-primary);
-  line-height: 1;
-}
-
-.cal-day-dots {
-  display: flex;
-  gap: 2px;
-  height: 5px;
-  align-items: center;
-}
-
-.cal-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.cal-dot.workout { background: var(--accent); }
-.cal-dot.complex { background: var(--success); }
-.cal-dot.rest { background: var(--text-muted); }
-.cal-day.selected .cal-dot { background: #fff; }
-
-/* ============================================================
-   7. ПАНЕЛЬ ДНЯ
-   ============================================================ */
-.day-panel {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid var(--border);
-}
-
-.day-title {
-  font-weight: 700;
-  font-size: 14px;
-  margin-bottom: 10px;
-  color: var(--text-secondary);
-}
-
-.workout-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: var(--bg-elevated);
-  margin-bottom: 8px;
-  min-width: 0;
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
-
-.workout-item:hover { background: var(--bg-hover); }
-
-.workout-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-.workout-icon.force { background: var(--accent-soft); color: var(--accent); }
-.workout-icon.flex { background: var(--success-soft); color: var(--success); }
-.workout-icon.rest { background: var(--warning-soft); color: var(--warning); }
-
-.workout-info { flex: 1; min-width: 0; }
-
-.workout-name {
-  font-weight: 600;
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.workout-meta {
-  font-size: 11px;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 20px 10px;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-/* ============================================================
-   8. СТАТИСТИКА
-   ============================================================ */
-.stat-list { display: flex; flex-direction: column; gap: 12px; }
-.stat-item { min-width: 0; }
-
-.stat-head {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  margin-bottom: 5px;
-  color: var(--text-secondary);
-}
-.stat-head span:last-child { font-weight: 700; color: var(--text-primary); }
-
-.stat-bar {
-  height: 7px;
-  background: var(--bg-elevated);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.stat-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ============================================================
-   9. КНОПКИ
-   ============================================================ */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 9px 16px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  min-width: 0;
-}
-
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: var(--shadow); }
-
-.btn-secondary { background: var(--bg-elevated); color: var(--text-primary); }
-.btn-secondary:hover { background: var(--bg-hover); }
-
-.btn-success { background: var(--success); color: #fff; }
-.btn-success:hover { opacity: 0.9; }
-
-.btn-danger { background: var(--danger-soft); color: var(--danger); }
-.btn-danger:hover { background: var(--danger); color: #fff; }
-
-.btn-block { width: 100%; }
-.btn-sm { padding: 6px 10px; font-size: 12px; }
-
-/* ============================================================
-   10. КАРТОЧКИ УПРАЖНЕНИЙ / КОМПЛЕКСОВ
-   ============================================================ */
-.exercise-card, .complex-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-  margin-bottom: 12px;
-  transition: all 0.15s ease;
-  min-width: 0;
-}
-
-.exercise-card:hover, .complex-card:hover {
-  border-color: var(--accent);
-  box-shadow: var(--shadow);
-}
-
-.exercise-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.exercise-name { font-weight: 700; font-size: 15px; min-width: 0; }
-.exercise-variant { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.tag {
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.tag.direction { background: var(--accent-soft); color: var(--accent); }
-.tag.body { background: var(--success-soft); color: var(--success); }
-.tag.equip { background: var(--warning-soft); color: var(--warning); }
-
-.technique {
-  font-size: 12.5px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 10px;
-  padding: 10px;
-  background: var(--bg-elevated);
-  border-radius: 9px;
-}
-
-.photo-strip {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.photo-strip .photo {
-  aspect-ratio: 4 / 3;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--bg-elevated), var(--bg-hover));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: var(--text-muted);
-  overflow: hidden;
-}
-
-.photo-strip .photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.exercise-actions {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-/* ============================================================
-   11. ФОРМА
-   ============================================================ */
-.form-group { margin-bottom: 14px; min-width: 0; }
-
-.form-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.form-input, .form-select, .form-textarea {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1.5px solid var(--border);
-  background: var(--bg-surface);
-  font-size: 14px;
-  transition: all 0.15s ease;
-  min-width: 0;
-}
-
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
-.form-textarea {
-  resize: vertical;
-  min-height: 70px;
-  font-family: inherit;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-}
-
-.radio-group, .check-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.radio-chip, .check-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
-  border-radius: 9px;
-  background: var(--bg-elevated);
-  border: 1.5px solid transparent;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  user-select: none;
-}
-
-.radio-chip:hover, .check-chip:hover { background: var(--bg-hover); }
-
-.radio-chip input, .check-chip input {
-  margin: 0;
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-
-.radio-chip:has(input:checked),
-.check-chip:has(input:checked) {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent);
-  font-weight: 600;
-}
-
-/* ============================================================
-   12. МОДАЛЬНЫЕ ОКНА
-   ============================================================ */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 16px;
-  overflow-y: auto;
-}
-
-.modal-backdrop.open { display: flex; }
-
-.modal {
-  background: var(--bg-surface);
-  border-radius: 18px;
-  width: 100%;
-  max-width: 640px;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn 0.2s ease;
-  min-width: 0;
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.modal-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 20px;
-  border-bottom: 1px solid var(--border);
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.modal-title {
-  font-size: 17px;
-  font-weight: 700;
-  margin: 0;
-  min-width: 0;
-}
-
-.modal-close {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: var(--text-secondary);
-  flex-shrink: 0;
-  transition: all 0.15s;
-}
-.modal-close:hover { background: var(--danger-soft); color: var(--danger); }
-
-.modal-body {
-  padding: 20px;
-  overflow-y: auto;
-  flex: 1;
-  min-height: 0;
-}
-
-.modal-foot {
-  padding: 16px 20px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .modal-foot { flex-direction: column-reverse; }
-  .modal-foot .btn { width: 100%; }
-}
-
-/* ============================================================
-   13. ТАЙМЕР
-   ============================================================ */
-.timer-display {
-  font-size: clamp(48px, 14vw, 72px);
-  font-weight: 800;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -2px;
-  margin: 10px 0 20px;
-  color: var(--accent);
-  line-height: 1;
-}
-
-.timer-phases {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.timer-phase {
-  padding: 10px 6px;
-  border-radius: 10px;
-  background: var(--bg-elevated);
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  min-width: 0;
-}
-
-.timer-phase .label {
-  display: block;
-  color: var(--text-secondary);
-  margin-bottom: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  font-size: 10px;
-}
-
-.timer-phase .value {
-  display: block;
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.timer-phase.active {
-  background: var(--accent);
-  color: #fff;
-  transform: scale(1.03);
-}
-.timer-phase.active .label { color: rgba(255,255,255,0.85); }
-
-.timer-meta {
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-  min-height: 20px;
-}
-
-.timer-current {
-  text-align: center;
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: var(--text-primary);
-  min-height: 22px;
-}
-
-.timer-controls {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* ============================================================
-   14. СЕТКА ТРЕНИРОВОК
-   ============================================================ */
-.workout-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 14px;
-}
-
-/* ============================================================
-   15. УТИЛИТЫ
-   ============================================================ */
-.row-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-
-.muted { color: var(--text-secondary); font-size: 13px; }
-.mb-0 { margin-bottom: 0; }
-
-.section-title {
-  font-size: clamp(16px, 2.5vw, 20px);
-  font-weight: 800;
-  margin: 0 0 16px;
-}
-
-.hint {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.num-input {
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 9px;
-  border: 1.5px solid var(--border);
-  background: var(--bg-surface);
-  font-size: 14px;
-  text-align: center;
-  font-weight: 600;
-  min-width: 0;
-}
-.num-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
-.dose-box {
-  background: var(--bg-elevated);
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 8px;
-  min-width: 0;
-}
-
-.dose-title {
-  font-weight: 700;
-  font-size: 13px;
-  margin-bottom: 8px;
-}
-
-.picker-scroll {
-  max-height: 220px;
-  overflow-y: auto;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  padding: 8px;
-  background: var(--bg-surface);
-}
-
-.picker-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s;
-  font-size: 13px;
-  min-width: 0;
-}
-.picker-item:hover { background: var(--bg-elevated); }
-
-.picker-item input {
-  margin: 0;
-  accent-color: var(--accent);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.picker-item span {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ============================================================
-   16. АДАПТИВ
-   ============================================================ */
-@media (max-width: 768px) {
-  .username { display: none; }
-  .timer-phases { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 480px) {
-  body { font-size: 14px; }
-  .nav { padding: 10px 12px; gap: 8px; }
-  .nav-tab { padding: 7px 10px; font-size: 13px; }
-  .cal-day-dots { display: none; }
-  .cal-day { gap: 0; }
-  .btn { padding: 8px 12px; font-size: 12px; }
-  .container { padding: 10px; }
-}
+  :root{
+    --bg:#0e1116;
+    --bg2:#151a22;
+    --card:#1a2029;
+    --card2:#222a36;
+    --line:#2a3340;
+    --txt:#e8edf4;
+    --mut:#8a97a8;
+    --acc:#ff5b2e;
+    --acc2:#ffb02e;
+    --ok:#2ecc71;
+    --blue:#3aa0ff;
+    --shadow:0 8px 24px rgba(0,0,0,.35);
+    --r:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:radial-gradient(1200px 800px at 50% -10%, #1b2330 0%, var(--bg) 60%);
+    color:var(--txt);
+    padding-bottom:90px;
+    overflow-x:hidden;
+  }
+  .app{max-width:560px;margin:0 auto;padding:16px}
+
+  /* ===== HEADER ===== */
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:6px 4px 14px;
+  }
+  .logo{
+    font-weight:800;font-size:22px;letter-spacing:1px;
+    background:linear-gradient(90deg,var(--acc),var(--acc2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .logo span{color:var(--mut);font-size:11px;display:block;letter-spacing:3px;font-weight:600;-webkit-text-fill-color:var(--mut)}
+
+  /* ===== CARDS ===== */
+  .card{
+    background:linear-gradient(180deg,var(--card2),var(--card));
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    padding:16px;margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  .card h2{
+    margin:0 0 12px;font-size:14px;font-weight:700;
+    text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);
+    display:flex;align-items:center;gap:8px;
+  }
+  .card h2 .dot{width:6px;height:6px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc)}
+
+  /* ===== PROGRESS ===== */
+  .prog-row{display:flex;gap:8px;margin-bottom:14px}
+  .prog{
+    flex:1;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:10px 12px;position:relative;overflow:hidden;
+  }
+  .prog .lbl{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+  .prog .val{font-size:16px;font-weight:800;margin-top:2px}
+  .prog .bar{height:4px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}
+  .prog .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:4px}
+
+  /* ===== CALENDAR ===== */
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:6px}
+  .day{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:8px 4px;text-align:center;transition:.2s;cursor:pointer;
+  }
+  .day .wd{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+  .day .num{font-size:16px;font-weight:700;margin-top:4px}
+  .day.today{
+    border-color:var(--acc);
+    background:linear-gradient(180deg,rgba(255,91,46,.18),rgba(255,91,46,.05));
+    box-shadow:0 0 18px rgba(255,91,46,.25);
+  }
+  .day.today .num{color:var(--acc)}
+  .day.done::after{
+    content:"";display:block;width:5px;height:5px;border-radius:50%;
+    background:var(--ok);margin:4px auto 0;box-shadow:0 0 8px var(--ok);
+  }
+
+  /* ===== TRAININGS ===== */
+  .train{
+    display:flex;gap:12px;align-items:center;
+    padding:12px;border-radius:12px;background:var(--card);
+    border:1px solid var(--line);margin-bottom:8px;transition:.2s;
+  }
+  .train:active{transform:scale(.99)}
+  .train .time{
+    font-weight:800;font-size:15px;color:var(--acc2);
+    min-width:52px;font-variant-numeric:tabular-nums;
+  }
+  .train .info{flex:1;min-width:0}
+  .train .name{font-weight:600;font-size:14px}
+  .train .meta{font-size:11px;color:var(--mut);margin-top:2px}
+  .train .chk{
+    width:26px;height:26px;border-radius:8px;border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+    cursor:pointer;transition:.2s;
+  }
+  .train .chk.on{
+    background:var(--ok);border-color:var(--ok);
+    box-shadow:0 0 12px rgba(46,204,113,.5);
+  }
+  .train .chk.on::after{content:"✓";color:#0e1116;font-weight:900;font-size:15px}
+
+  /* ===== PROFILE ===== */
+  .profile{display:flex;align-items:center;gap:14px}
+  .avatar{
+    width:64px;height:64px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:24px;color:#0e1116;
+    box-shadow:0 0 22px rgba(255,91,46,.35);
+  }
+  .profile .pinfo{flex:1}
+  .profile .pname{font-size:18px;font-weight:800}
+  .profile .pmeta{font-size:12px;color:var(--mut);margin-top:4px}
+  .profile .pmeta b{color:var(--txt);font-weight:700}
+
+  /* ===== SEARCH ===== */
+  .search{
+    display:flex;align-items:center;gap:8px;
+    background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:10px 12px;margin-bottom:12px;
+  }
+  .search input{
+    flex:1;background:none;border:none;color:var(--txt);
+    font-size:14px;outline:none;
+  }
+  .search input::placeholder{color:var(--mut)}
+  .search svg{width:16px;height:16px;fill:var(--mut)}
+
+  /* ===== TABS ===== */
+  .tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    padding:8px 14px;border-radius:10px;font-size:12px;font-weight:600;
+    background:var(--card);border:1px solid var(--line);color:var(--mut);
+    cursor:pointer;white-space:nowrap;transition:.2s;
+  }
+  .tab.active{
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    color:#0e1116;border-color:transparent;
+    box-shadow:0 4px 14px rgba(255,91,46,.35);
+  }
+
+  /* ===== EXERCISES ===== */
+  .ex{
+    padding:12px;border-radius:12px;background:var(--card);
+    border:1px solid var(--line);margin-bottom:8px;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    cursor:pointer;transition:.2s;
+  }
+  .ex:active{transform:scale(.99);border-color:var(--acc)}
+  .ex .txt{font-size:13.5px;line-height:1.35;font-weight:500}
+  .ex .badge{
+    font-size:10px;color:var(--acc2);background:rgba(255,176,46,.12);
+    padding:3px 8px;border-radius:20px;font-weight:700;flex:0 0 auto;
+    border:1px solid rgba(255,176,46,.25);
+  }
+
+  /* ===== CHIPS ===== */
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{
+    padding:7px 12px;border-radius:20px;font-size:12px;font-weight:600;
+    background:var(--card);border:1px solid var(--line);color:var(--mut);
+    cursor:pointer;transition:.2s;
+  }
+  .chip:active{transform:scale(.95)}
+  .chip.on{
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    color:#0e1116;border-color:transparent;
+  }
+  .chip.add{color:var(--acc2);border-style:dashed;border-color:var(--acc2)}
+
+  /* ===== SECTION TITLE ===== */
+  .sec-title{
+    font-size:12px;font-weight:700;color:var(--mut);
+    text-transform:uppercase;letter-spacing:1.2px;
+    margin:14px 0 8px;display:flex;align-items:center;gap:8px;
+  }
+  .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  /* ===== ADD BUTTONS ===== */
+  .addbar{display:flex;gap:8px;margin-top:12px}
+  .btn{
+    flex:1;padding:12px;border-radius:12px;border:none;
+    font-size:13px;font-weight:700;cursor:pointer;transition:.2s;
+    background:var(--card);color:var(--txt);border:1px solid var(--line);
+  }
+  .btn:active{transform:scale(.97)}
+  .btn.primary{
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    color:#0e1116;border-color:transparent;
+    box-shadow:0 6px 18px rgba(255,91,46,.35);
+  }
+
+  /* ===== MODAL ===== */
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(0,0,0,.7);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    display:none;align-items:flex-end;justify-content:center;z-index:100;
+  }
+  .modal-bg.on{display:flex;animation:fade .2s}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:linear-gradient(180deg,var(--card2),var(--bg2));
+    width:100%;max-width:560px;border-radius:24px 24px 0 0;
+    padding:20px 18px 30px;border-top:1px solid var(--line);
+    max-height:88vh;overflow-y:auto;animation:up .3s cubic-bezier(.2,.9,.3,1.2);
+  }
+  @keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .modal::before{
+    content:"";display:block;width:44px;height:4px;border-radius:4px;
+    background:var(--line);margin:-8px auto 16px;
+  }
+  .modal h3{
+    margin:0 0 16px;font-size:18px;font-weight:800;
+    background:linear-gradient(90deg,var(--acc),var(--acc2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .field{margin-bottom:12px}
+  .field label{
+    display:block;font-size:11px;color:var(--mut);
+    text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600;
+  }
+  .field input,.field select,.field textarea{
+    width:100%;padding:11px 12px;border-radius:10px;
+    background:var(--card);border:1px solid var(--line);
+    color:var(--txt);font-size:14px;outline:none;font-family:inherit;
+    transition:.2s;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    border-color:var(--acc);box-shadow:0 0 0 3px rgba(255,91,46,.15);
+  }
+  .field textarea{resize:vertical;min-height:60px}
+  .row{display:flex;gap:8px}
+  .row .field{flex:1}
+  .days{display:flex;gap:5px;margin-top:4px}
+  .days .d{
+    flex:1;padding:9px 0;border-radius:10px;text-align:center;
+    font-size:11px;font-weight:700;background:var(--card);
+    border:1px solid var(--line);color:var(--mut);cursor:pointer;transition:.2s;
+  }
+  .days .d.on{
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    color:#0e1116;border-color:transparent;
+  }
+  .close{
+    width:100%;padding:14px;border-radius:12px;border:none;
+    background:var(--card);color:var(--mut);font-weight:700;
+    margin-top:8px;cursor:pointer;font-size:14px;
+  }
+
+  /* ===== TIMER ===== */
+  .timer-display{
+    text-align:center;font-size:64px;font-weight:900;
+    font-variant-numeric:tabular-nums;letter-spacing:2px;
+    background:linear-gradient(180deg,#fff,var(--acc2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin:6px 0 4px;line-height:1;
+  }
+  .timer-sub{text-align:center;font-size:12px;color:var(--mut);margin-bottom:16px;letter-spacing:1px}
+  .timer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+  .tcell{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:10px;text-align:center;
+  }
+  .tcell .lbl{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+  .tcell .v{font-size:18px;font-weight:800;margin-top:2px}
+  .timer-controls{display:flex;gap:8px}
+
+  /* ===== BOTTOM NAV ===== */
+  nav.bottom{
+    position:fixed;bottom:0;left:0;right:0;
+    background:rgba(21,26,34,.92);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-top:1px solid var(--line);
+    display:flex;justify-content:space-around;
+    padding:8px 0 12px;z-index:50;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  }
+  nav.bottom button{
+    background:none;border:none;color:var(--mut);
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;
+    transition:.2s;letter-spacing:.3px;
+  }
+  nav.bottom button svg{width:22px;height:22px;fill:currentColor;transition:.2s}
+  nav.bottom button.on{color:var(--acc)}
+  nav.bottom button.on svg{filter:drop-shadow(0 0 8px rgba(255,91,46,.6))}
+
+  /* ===== VIEWS ===== */
+  .view{display:none;animation:fade .25s}
+  .view.on{display:block}
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     НАВИГАЦИЯ
-     ============================================================ -->
-<nav class="nav">
-  <div class="nav-user">
-    <div class="avatar">АП</div>
-    <span class="username">Алексей</span>
-  </div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" data-tab="calendar">📅 Календарь</button>
-    <button class="nav-tab" data-tab="workouts">🏋️ Тренировки</button>
-    <button class="nav-tab" data-tab="exercises">📋 Упражнения</button>
-    <button class="nav-tab" data-tab="complexes">🔄 Комплексы</button>
-  </div>
-  <div class="nav-actions">
-    <button class="icon-btn" id="themeToggle" title="Сменить тему">🌙</button>
-  </div>
+<div class="app">
+  <!-- HEADER -->
+  <header class="top">
+    <div class="logo">АС <span>FIT SYSTEM</span></div>
+  </header>
+
+  <!-- ==================== MAIN / КАЛЕНДАРЬ ==================== -->
+  <section class="view on" id="v-main">
+    <div class="prog-row">
+      <div class="prog">
+        <div class="lbl">Неделя</div>
+        <div class="val">12<span style="color:var(--mut);font-size:12px">/52</span></div>
+        <div class="bar"><i style="width:23%"></i></div>
+      </div>
+      <div class="prog">
+        <div class="lbl">Месяц</div>
+        <div class="val">Март <span style="color:var(--mut);font-size:12px">4/12</span></div>
+        <div class="bar"><i style="width:33%"></i></div>
+      </div>
+      <div class="prog">
+        <div class="lbl">Год</div>
+        <div class="val">2027</div>
+        <div class="bar"><i style="width:20%"></i></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot"></span>Календарь недели</h2>
+      <div class="week" id="week"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot"></span>Тренировки на сегодня</h2>
+      <div id="trainList"></div>
+    </div>
+
+    <button class="btn primary" style="width:100%" onclick="openModal('m-train')">+ Добавить тренировку</button>
+  </section>
+
+  <!-- ==================== УПРАЖНЕНИЯ ==================== -->
+  <section class="view" id="v-ex">
+    <div class="search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input placeholder="Поиск упражнения..." id="exSearch" oninput="renderEx()">
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-f="all" onclick="setFilter(this)">Все</div>
+      <div class="tab" data-f="zone" onclick="setFilter(this)">По зонам</div>
+      <div class="tab" data-f="gear" onclick="setFilter(this)">По снарядам</div>
+    </div>
+
+    <div id="exList"></div>
+
+    <div class="sec-title">Зоны</div>
+    <div class="chips" id="zones"></div>
+
+    <div class="sec-title">Снаряды</div>
+    <div class="chips" id="gears"></div>
+
+    <div class="addbar">
+      <button class="btn" onclick="openModal('m-ex')">+ Упражнение</button>
+      <button class="btn" onclick="openModal('m-comp')">+ Комплекс</button>
+    </div>
+  </section>
+
+  <!-- ==================== СТАТИСТИКА ==================== -->
+  <section class="view" id="v-stat">
+    <div class="card">
+      <h2><span class="dot"></span>Прогресс недели</h2>
+      <div class="prog-row" style="margin-bottom:0">
+        <div class="prog"><div class="lbl">Тренировок</div><div class="val">3<span style="color:var(--mut);font-size:12px">/5</span></div><div class="bar"><i style="width:60%"></i></div></div>
+        <div class="prog"><div class="lbl">Время</div><div class="val">76<span style="color:var(--mut);font-size:12px"> мин</span></div><div class="bar"><i style="width:55%"></i></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot"></span>Streak 🔥</h2>
+      <div style="font-size:42px;font-weight:900;text-align:center;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent">14 дней</div>
+      <div style="text-align:center;color:var(--mut);font-size:12px;margin-top:6px">отличный темп!</div>
+    </div>
+    <div class="card">
+      <h2><span class="dot"></span>Последние тренировки</h2>
+      <div class="train"><div class="time">16:00</div><div class="info"><div class="name">Скакалка + гиря + растяжка</div><div class="meta">Сегодня · 76 мин</div></div><div class="chk on"></div></div>
+      <div class="train"><div class="time">17:00</div><div class="info"><div class="name">Комплекс «Сидни»</div><div class="meta">Вчера · 20 мин</div></div><div class="chk on"></div></div>
+      <div class="train"><div class="time">16:30</div><div class="info"><div class="name">Вис обратный + стретчинг</div><div class="meta">2 дня назад · 40 мин</div></div><div class="chk on"></div></div>
+    </div>
+  </section>
+
+  <!-- ==================== НАСТРОЙКИ / ПРОФИЛЬ ==================== -->
+  <section class="view" id="v-prof">
+    <div class="card">
+      <div class="profile">
+        <div class="avatar">А</div>
+        <div class="pinfo">
+          <div class="pname">Александр</div>
+          <div class="pmeta">Возраст: <b>34</b> · Вес: <b>78 кг</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot"></span>Профиль</h2>
+      <div class="field"><label>Имя</label><input value="Александр"></div>
+      <div class="row">
+        <div class="field"><label>Возраст</label><input type="number" value="34"></div>
+        <div class="field"><label>Вес, кг</label><input type="number" value="78"></div>
+      </div>
+      <button class="btn primary" style="width:100%">Сохранить</button>
+    </div>
+    <div class="card">
+      <h2><span class="dot"></span>Таймер</h2>
+      <button class="btn primary" style="width:100%" onclick="openModal('m-timer')">Открыть таймер</button>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== BOTTOM NAV ==================== -->
+<nav class="bottom">
+  <button class="on" data-v="v-main" onclick="nav(this)">
+    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>
+    Календарь
+  </button>
+  <button data-v="v-ex" onclick="nav(this)">
+    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>
+    Упр.
+  </button>
+  <button data-v="v-stat" onclick="nav(this)">
+    <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>
+    Стат.
+  </button>
+  <button data-v="v-prof" onclick="nav(this)">
+    <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>
+    Профиль
+  </button>
 </nav>
 
-<div class="container">
-
-  <!-- ============================================================
-       ВКЛАДКА: КАЛЕНДАРЬ
-       ============================================================ -->
-  <div class="tab-panel active" id="panel-calendar">
-    <div class="bento">
-      <div class="card">
-        <div class="cal-header">
-          <div class="cal-month" id="calMonth">Сентябрь 2026</div>
-          <div class="cal-nav">
-            <button id="calPrev" aria-label="Предыдущий месяц">‹</button>
-            <button id="calToday" aria-label="Сегодня">•</button>
-            <button id="calNext" aria-label="Следующий месяц">›</button>
-          </div>
-        </div>
-        <div class="cal-weekdays">
-          <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
-        </div>
-        <div class="cal-grid" id="calGrid"></div>
-
-        <div class="day-panel">
-          <div class="day-title" id="dayTitle">Выберите день</div>
-          <div id="dayList"></div>
-          <button class="btn btn-primary btn-block" id="addWorkoutBtn" style="margin-top:10px;">
-            + Добавить тренировку
-          </button>
-        </div>
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:clamp(12px,2vw,20px); min-width:0;">
-        <div class="card">
-          <h3 class="card-title">📊 Направленность</h3>
-          <div class="stat-list" id="statList"></div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">🎯 Ближайшее</h3>
-          <div id="upcomingList"></div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">⚡ Быстрые действия</h3>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <button class="btn btn-secondary btn-block" onclick="openTimer()">⏱️ Таймер</button>
-            <button class="btn btn-secondary btn-block" onclick="openProgression()">📈 Прогрессия</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================
-       ВКЛАДКА: ТРЕНИРОВКИ
-       ============================================================ -->
-  <div class="tab-panel" id="panel-workouts">
-    <div class="row-between">
-      <h2 class="section-title mb-0">Мои тренировки</h2>
-      <button class="btn btn-primary" id="newWorkoutBtn">+ Новая</button>
-    </div>
-    <div class="workout-grid" id="workoutGrid"></div>
-  </div>
-
-  <!-- ============================================================
-       ВКЛАДКА: УПРАЖНЕНИЯ
-       ============================================================ -->
-  <div class="tab-panel" id="panel-exercises">
-    <div class="row-between">
-      <h2 class="section-title mb-0">Упражнения</h2>
-      <button class="btn btn-primary" id="newExerciseBtn">+ Добавить</button>
-    </div>
-    <div id="exerciseList"></div>
-  </div>
-
-  <!-- ============================================================
-       ВКЛАДКА: КОМПЛЕКСЫ
-       ============================================================ -->
-  <div class="tab-panel" id="panel-complexes">
-    <div class="row-between">
-      <h2 class="section-title mb-0">Комплексы</h2>
-      <button class="btn btn-primary" id="newComplexBtn">+ Создать</button>
-    </div>
-    <div id="complexList"></div>
-  </div>
-
-</div>
-
-<!-- ============================================================
-     МОДАЛЬНОЕ ОКНО: УПРАЖНЕНИЕ
-     ============================================================ -->
-<div class="modal-backdrop" id="modalExercise">
+<!-- ==================== MODAL: УПРАЖНЕНИЕ ==================== -->
+<div class="modal-bg" id="m-ex" onclick="if(event.target===this)closeModal('m-ex')">
   <div class="modal">
-    <div class="modal-head">
-      <h3 class="modal-title" id="exerciseModalTitle">Упражнение</h3>
-      <button class="modal-close" onclick="closeModal('modalExercise')">✕</button>
+    <h3>Добавить упражнение</h3>
+    <div class="field"><label>Название</label><input placeholder="Например, подтягивания"></div>
+    <div class="row">
+      <div class="field"><label>Пар 1</label><input placeholder="—"></div>
+      <div class="field"><label>Пар 2</label><input placeholder="—"></div>
     </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Название</label>
-        <input type="text" class="form-input" id="exName" placeholder="Например: Жим лёжа">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Вариант</label>
-        <div class="radio-group" id="exVariant">
-          <label class="radio-chip"><input type="radio" name="variant" value="средний" checked> Средний</label>
-          <label class="radio-chip"><input type="radio" name="variant" value="широкий"> Широкий</label>
-          <label class="radio-chip"><input type="radio" name="variant" value="узкий"> Узкий</label>
-          <label class="radio-chip"><input type="radio" name="variant" value="прямой"> Прямой</label>
-          <label class="radio-chip"><input type="radio" name="variant" value="обратный"> Обратный</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Снаряд</label>
-        <div class="radio-group">
-          <label class="radio-chip"><input type="radio" name="equip" value="снаряд"> Со снарядом</label>
-          <label class="radio-chip"><input type="radio" name="equip" value="без" checked> Без снаряда</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Направление</label>
-        <div class="check-group" id="exDirection">
-          <label class="check-chip"><input type="checkbox" value="сила" checked> Сила</label>
-          <label class="check-chip"><input type="checkbox" value="ловкость"> Ловкость</label>
-          <label class="check-chip"><input type="checkbox" value="координация"> Координация</label>
-          <label class="check-chip"><input type="checkbox" value="пластика"> Пластика</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Часть тела</label>
-        <div class="check-group" id="exBody">
-          <label class="check-chip"><input type="checkbox" value="руки" checked> Руки</label>
-          <label class="check-chip"><input type="checkbox" value="ноги"> Ноги</label>
-          <label class="check-chip"><input type="checkbox" value="корпус"> Корпус</label>
-          <label class="check-chip"><input type="checkbox" value="шея"> Шея</label>
-          <label class="check-chip"><input type="checkbox" value="кисти"> Кисти</label>
-          <label class="check-chip"><input type="checkbox" value="стопы"> Стопы</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Техника выполнения</label>
-        <textarea class="form-textarea" id="exTechnique" placeholder="Опишите ключевые моменты техники..."></textarea>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Фотогалерея (ссылки через запятую)</label>
-        <input type="text" class="form-input" id="exPhotos" placeholder="url1, url2, url3">
-        <div class="hint">Если ссылок нет — оставьте пустым, покажем плейсхолдеры.</div>
-      </div>
+    <div class="field">
+      <label>Смена конечностей</label>
+      <div class="chips"><div class="chip on" onclick="this.classList.toggle('on')">✓ Да</div></div>
     </div>
-    <div class="modal-foot">
-      <button class="btn btn-secondary" onclick="closeModal('modalExercise')">Отмена</button>
-      <button class="btn btn-primary" id="saveExerciseBtn">Сохранить</button>
-    </div>
+    <div class="field"><label>Снаряд</label><select><option>Без снаряда</option><option>Турник</option><option>Гиря</option><option>Скакалка</option><option>Брусья</option><option>Кольца</option><option>TRX</option><option>Эспандер</option></select></div>
+    <div class="field"><label>Зона</label><select><option>Спина</option><option>Грудь</option><option>Плечи</option><option>Шея</option><option>Ягодицы</option><option>Бедра</option><option>Голени</option><option>Стопы</option><option>Кисти</option></select></div>
+    <div class="field"><label>Тип</label><select><option>Сила</option><option>Спец упражнение</option><option>Растяжка</option></select></div>
+    <div class="field"><label>Описание</label><textarea placeholder="Техника, нюансы..."></textarea></div>
+    <div class="field"><label>Фото / видео (URL)</label><input placeholder="https://..."></div>
+    <button class="btn primary" style="width:100%" onclick="closeModal('m-ex')">Сохранить</button>
+    <button class="close" onclick="closeModal('m-ex')">Отмена</button>
   </div>
 </div>
 
-<!-- ============================================================
-     МОДАЛЬНОЕ ОКНО: ТРЕНИРОВКА
-     ============================================================ -->
-<div class="modal-backdrop" id="modalWorkout">
+<!-- ==================== MODAL: КОМПЛЕКС ==================== -->
+<div class="modal-bg" id="m-comp" onclick="if(event.target===this)closeModal('m-comp')">
   <div class="modal">
-    <div class="modal-head">
-      <h3 class="modal-title" id="workoutModalTitle">Новая тренировка</h3>
-      <button class="modal-close" onclick="closeModal('modalWorkout')">✕</button>
+    <h3>Новый комплекс</h3>
+    <div class="field"><label>Название</label><input placeholder="Например, Комплекс «Сидни»"></div>
+    <div class="field"><label>Упражнения</label>
+      <select><option>Прыжки на скакалке</option><option>Махи гирей американские</option><option>Подтягивания</option><option>Отжимания</option><option>Приседания</option></select>
     </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Название</label>
-        <input type="text" class="form-input" id="wName" placeholder="Например: Силовая: верх тела">
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Дата</label>
-          <input type="date" class="form-input" id="wDate">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Тип</label>
-          <select class="form-select" id="wType">
-            <option value="force">Силовая</option>
-            <option value="flex">Гибкость / пластика</option>
-            <option value="rest">Восстановление</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Упражнения</label>
-        <div class="picker-scroll" id="wExercisePicker"></div>
-        <div class="hint">Отметьте упражнения — они добавятся в тренировку с настройками дозировки.</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Дозировка</label>
-        <div id="wDoseList"></div>
+    <div class="field">
+      <label>Дозировка</label>
+      <div class="row">
+        <input placeholder="Подходы">
+        <input placeholder="Повтор">
+        <input placeholder="Отдых, с">
       </div>
     </div>
-    <div class="modal-foot">
-      <button class="btn btn-secondary" onclick="closeModal('modalWorkout')">Отмена</button>
-      <button class="btn btn-primary" id="saveWorkoutBtn">Сохранить</button>
+    <div class="field">
+      <label>Тип комплекса</label>
+      <div class="chips">
+        <div class="chip on" onclick="pickOne(this)">Открытый</div>
+        <div class="chip" onclick="pickOne(this)">Закрытый</div>
+      </div>
     </div>
+    <button class="btn primary" style="width:100%" onclick="closeModal('m-comp')">Сохранить</button>
+    <button class="close" onclick="closeModal('m-comp')">Отмена</button>
   </div>
 </div>
 
-<!-- ============================================================
-     МОДАЛЬНОЕ ОКНО: КОМПЛЕКС
-     ============================================================ -->
-<div class="modal-backdrop" id="modalComplex">
+<!-- ==================== MODAL: ТРЕНИРОВКА ==================== -->
+<div class="modal-bg" id="m-train" onclick="if(event.target===this)closeModal('m-train')">
   <div class="modal">
-    <div class="modal-head">
-      <h3 class="modal-title">Новый комплекс</h3>
-      <button class="modal-close" onclick="closeModal('modalComplex')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Название комплекса</label>
-        <input type="text" class="form-input" id="cName" placeholder="Например: Круговая на всё тело">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Формат исполнения</label>
-        <div class="radio-group">
-          <label class="radio-chip"><input type="radio" name="cFormat" value="круги" checked> Несколько кругов</label>
-          <label class="radio-chip"><input type="radio" name="cFormat" value="по очереди"> По очереди</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Кругов</label>
-          <input type="number" class="num-input" id="cRounds" value="3" min="1" max="20">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Отдых между упр. (сек)</label>
-          <input type="number" class="num-input" id="cRestEx" value="15" min="0">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Отдых между кругами (сек)</label>
-          <input type="number" class="num-input" id="cRestRound" value="60" min="0">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Таймер: подготовка / работа / отдых / финал (сек)</label>
-        <div class="form-row" style="grid-template-columns:repeat(4,minmax(0,1fr));">
-          <input type="number" class="num-input" id="tPrep" value="10" min="0">
-          <input type="number" class="num-input" id="tWork" value="45" min="0">
-          <input type="number" class="num-input" id="tRest" value="15" min="0">
-          <input type="number" class="num-input" id="tFinal" value="30" min="0">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Упражнения (по порядку)</label>
-        <div class="picker-scroll" id="cExercisePicker"></div>
-        <div class="hint">Отметьте упражнения в нужном порядке — они добавятся списком.</div>
+    <h3>Новая тренировка</h3>
+    <div class="field"><label>Дата</label><input type="date" value="2027-03-25"></div>
+    <div class="field">
+      <label>Повторять</label>
+      <div class="days" id="daysRow">
+        <div class="d" onclick="this.classList.toggle('on')">Пн</div>
+        <div class="d" onclick="this.classList.toggle('on')">Вт</div>
+        <div class="d" onclick="this.classList.toggle('on')">Ср</div>
+        <div class="d" onclick="this.classList.toggle('on')">Чт</div>
+        <div class="d" onclick="this.classList.toggle('on')">Пт</div>
+        <div class="d" onclick="this.classList.toggle('on')">Сб</div>
+        <div class="d" onclick="this.classList.toggle('on')">Вс</div>
       </div>
     </div>
-    <div class="modal-foot">
-      <button class="btn btn-secondary" onclick="closeModal('modalComplex')">Отмена</button>
-      <button class="btn btn-primary" id="saveComplexBtn">Сохранить</button>
+    <div class="field"><label>Время</label><input type="time" value="16:00"></div>
+    <div class="field"><label>Добавить упражнение</label>
+      <select><option>Прыжки на скакалке</option><option>Махи гирей американские — 3×16кг×5мин 30с</option><option>Комплекс «Сидни»</option><option>Комплекс «Растяжка 7»</option></select>
     </div>
+    <button class="btn primary" style="width:100%" onclick="closeModal('m-train')">Создать</button>
+    <button class="close" onclick="closeModal('m-train')">Отмена</button>
   </div>
 </div>
 
-<!-- ============================================================
-     МОДАЛЬНОЕ ОКНО: ТАЙМЕР
-     ============================================================ -->
-<div class="modal-backdrop" id="modalTimer">
-  <div class="modal" style="max-width:520px;">
-    <div class="modal-head">
-      <h3 class="modal-title">Таймер комплекса</h3>
-      <button class="modal-close" onclick="closeModal('modalTimer')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Комплекс</label>
-        <select class="form-select" id="timerComplex"></select>
-      </div>
-
-      <div class="timer-display" id="timerDisplay">00:00</div>
-
-      <div class="timer-phases">
-        <div class="timer-phase" data-phase="prep"><span class="label">Подготовка</span><span class="value" id="tPrepVal">10с</span></div>
-        <div class="timer-phase" data-phase="work"><span class="label">Работа</span><span class="value" id="tWorkVal">45с</span></div>
-        <div class="timer-phase" data-phase="rest"><span class="label">Отдых</span><span class="value" id="tRestVal">15с</span></div>
-        <div class="timer-phase" data-phase="final"><span class="label">Финал</span><span class="value" id="tFinalVal">30с</span></div>
-      </div>
-
-      <div class="timer-meta" id="timerMeta">Круг 1 из 3</div>
-      <div class="timer-current" id="timerCurrent">—</div>
-
-      <div class="timer-controls">
-        <button class="btn btn-primary" id="timerStartBtn">▶ Старт</button>
-        <button class="btn btn-secondary" id="timerResetBtn">⟲ Сброс</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     МОДАЛЬНОЕ ОКНО: ПРОГРЕССИЯ
-     ============================================================ -->
-<div class="modal-backdrop" id="modalProgression">
+<!-- ==================== MODAL: ТАЙМЕР ==================== -->
+<div class="modal-bg" id="m-timer" onclick="if(event.target===this)closeModal('m-timer')">
   <div class="modal">
-    <div class="modal-head">
-      <h3 class="modal-title">Прогрессия тренировок</h3>
-      <button class="modal-close" onclick="closeModal('modalProgression')">✕</button>
+    <h3>Таймер</h3>
+    <div class="timer-display" id="tDisp">00:30</div>
+    <div class="timer-sub" id="tSub">подготовка</div>
+    <div class="timer-grid">
+      <div class="tcell"><div class="lbl">Круги</div><div class="v" id="tRound">1/5</div></div>
+      <div class="tcell"><div class="lbl">Подход</div><div class="v">1/3</div></div>
+      <div class="tcell"><div class="lbl">Отдых</div><div class="v">30с</div></div>
     </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Тренировка-шаблон</label>
-        <select class="form-select" id="progWorkout"></select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Тип прогрессии</label>
-        <div class="radio-group">
-          <label class="radio-chip"><input type="radio" name="progType" value="weight" checked> Увеличить вес</label>
-          <label class="radio-chip"><input type="radio" name="progType" value="volume"> Увеличить объём</label>
-          <label class="radio-chip"><input type="radio" name="progType" value="time"> Увеличить время</label>
-          <label class="radio-chip"><input type="radio" name="progType" value="complexity"> Усложнить технику</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Величина прироста</label>
-        <div class="form-row">
-          <input type="number" class="num-input" id="progWeight" value="5" step="2.5" placeholder="+кг">
-          <input type="number" class="num-input" id="progReps" value="2" placeholder="+повт.">
-          <input type="number" class="num-input" id="progTime" value="10" placeholder="+сек">
-        </div>
-        <div class="hint">Используется только поле, соответствующее выбранному типу прогрессии.</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Начать с</label>
-        <input type="month" class="form-input" id="progMonth">
-      </div>
-
-      <div class="hint" id="progPreview"></div>
+    <div class="timer-controls">
+      <button class="btn primary" onclick="toggleTimer()" id="tBtn" style="flex:2">▶ Старт</button>
+      <button class="btn" onclick="resetTimer()">⟳</button>
     </div>
-    <div class="modal-foot">
-      <button class="btn btn-secondary" onclick="closeModal('modalProgression')">Отмена</button>
-      <button class="btn btn-primary" id="applyProgressionBtn">Создать версию</button>
-    </div>
+    <button class="close" onclick="closeModal('m-timer')">Закрыть</button>
   </div>
 </div>
 
 <script>
-/* ============================================================
-   ДАННЫЕ
-   ============================================================ */
-const STORAGE_KEY = 'fitness_planner_v1';
+/* ===================== DATA ===================== */
+const weekData = [
+  {wd:'Пн', num:23, done:true},
+  {wd:'Вт', num:24, done:true},
+  {wd:'Ср', num:25, done:true},
+  {wd:'Чт', num:26, done:false},
+  {wd:'Пт', num:27, done:false},
+  {wd:'Сб', num:28, done:false},
+  {wd:'Вс', num:29, done:false},
+];
+const todayIdx = 2; // Ср
 
-function todayISO() {
-  const d = new Date();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${d.getFullYear()}-${m}-${day}`;
-}
+const trainings = [
+  {time:'16:00', name:'Скакалка', meta:'ОП: 12 минут', done:true},
+  {time:'16:15', name:'Гиря · Комплекс 1', meta:'ОП: 24 минуты', done:true},
+  {time:'16:50', name:'Вис обратный', meta:'ОП: 15 минут', done:false},
+  {time:'17:05', name:'Стретчинг К7', meta:'ОП: 25 минут', done:false},
+];
 
-const DEFAULT_DATA = {
-  exercises: [
-    {
-      id: 'ex1', name: 'Жим лёжа', variant: 'широкий', equip: 'снаряд',
-      direction: ['сила'], body: ['руки', 'корпус'],
-      technique: 'Лопатки сведены. Гриф касается нижней части груди. Локти под углом 45° к корпусу.',
-      photos: []
-    },
-    {
-      id: 'ex2', name: 'Тяга штанги в наклоне', variant: 'средний', equip: 'снаряд',
-      direction: ['сила'], body: ['руки', 'корпус'],
-      technique: 'Корпус наклонён до 45°. Тяга к низу живота, локти вдоль тела.',
-      photos: []
-    },
-    {
-      id: 'ex3', name: 'Планка', variant: 'прямой', equip: 'без',
-      direction: ['сила', 'координация'], body: ['корпус'],
-      technique: 'Тело — прямая линия. Не прогибать поясницу. Дыхание ровное.',
-      photos: []
-    },
-    {
-      id: 'ex4', name: 'Выпады', variant: 'средний', equip: 'снаряд',
-      direction: ['сила', 'координация'], body: ['ноги'],
-      technique: 'Колено не выходит за носок. Спина прямая. Опускаться до угла 90°.',
-      photos: []
-    },
-    {
-      id: 'ex5', name: 'Круговые движения шеей', variant: 'средний', equip: 'без',
-      direction: ['пластика'], body: ['шея'],
-      technique: 'Медленно, без резких движений. Амплитуда комфортная.',
-      photos: []
-    }
-  ],
-  complexes: [
-    {
-      id: 'cx1', name: 'Круговая: всё тело',
-      exercises: ['ex1', 'ex3', 'ex4'],
-      format: 'круги', rounds: 3,
-      restEx: 15, restRound: 60,
-      timer: { prep: 10, work: 45, rest: 15, final: 30 }
-    }
-  ],
-  workouts: [
-    {
-      id: 'w1', name: 'Силовая: верх тела', date: todayISO(), type: 'force',
-      doses: [
-        { exerciseId: 'ex1', sets: 4, reps: 10, weight: 60, rest: 90 },
-        { exerciseId: 'ex2', sets: 4, reps: 12, weight: 40, rest: 60 }
-      ]
-    }
-  ]
-};
+const exercises = [
+  'Отжимания средняя постановка рук',
+  'Подтягивания на турнике широким пр. хватом',
+  'Подтягивания на турнике средним обр. хватом',
+  'Подтягивания на турнике на 1 руке пр. хватом',
+  'Приседания с широкой постановкой ног',
+  'Приседания на одной ноге (пистолетик)',
+  'Прыжки на скакалке',
+  'Прыжки на скакалке с ноги на ногу лево-право',
+  'Прыжки на скакалке с ноги на ногу перед-зад',
+  'Круговые шраги на турнике',
+];
 
-let DATA = load();
-let state = {
-  currentMonth: new Date(),
-  selectedDate: todayISO(),
-  editingExerciseId: null,
-  editingWorkoutId: null,
-  timer: { running: false, paused: false, phase: 'idle', remaining: 0, round: 1, exerciseIdx: 0, intervalId: null }
-};
+const zones = ['Шея','Грудь','Голени','Плечи','Ягодицы','Стопы','Спина','Бедра','Кисти'];
+const gears = ['Гвозди','Скакалка','Гиря','Турник','Брусья','Кольца','Босу','TRX','Эспандер','Резина борцовская','Ролл МФР','Fightball','Баланс подушка','Без снаряда'];
 
-let tempWorkoutDoses = [];
-let tempComplexExercises = [];
-
-function load() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch (e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
-}
-
-function save() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); } catch (e) {}
-}
-
-function uid() { return 'id_' + Math.random().toString(36).slice(2, 10); }
-
-/* ============================================================
-   УТИЛИТЫ
-   ============================================================ */
-const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-
-function fmtDate(iso) {
-  if (!iso) return '';
-  const [y, m, d] = iso.split('-');
-  return `${d}.${m}.${y}`;
-}
-
-function escapeHtml(s) {
-  if (s == null) return '';
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-  if (id === 'modalTimer') resetTimer();
-}
-
-/* ============================================================
-   НАВИГАЦИЯ
-   ============================================================ */
-document.querySelectorAll('.nav-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
-  });
-});
-
-/* ============================================================
-   ТЕМА
-   ============================================================ */
-const themeToggle = document.getElementById('themeToggle');
-themeToggle.addEventListener('click', () => {
-  const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'energy' ? 'night' : 'energy';
-  document.documentElement.setAttribute('data-theme', next);
-  themeToggle.textContent = next === 'energy' ? '🌙' : '☀️';
-  try { localStorage.setItem('fitness_theme', next); } catch (e) {}
-});
-
-try {
-  const savedTheme = localStorage.getItem('fitness_theme');
-  if (savedTheme) {
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    themeToggle.textContent = savedTheme === 'energy' ? '🌙' : '☀️';
-  }
-} catch (e) {}
-
-/* ============================================================
-   КАЛЕНДАРЬ
-   ============================================================ */
-function renderCalendar() {
-  const y = state.currentMonth.getFullYear();
-  const m = state.currentMonth.getMonth();
-
-  document.getElementById('calMonth').textContent = `${MONTHS[m]} ${y}`;
-
-  const first = new Date(y, m, 1);
-  const startDay = (first.getDay() + 6) % 7;
-  const daysInMonth = new Date(y, m + 1, 0).getDate();
-
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
-
-  for (let i = 0; i < startDay; i++) {
-    const d = document.createElement('div');
-    d.className = 'cal-day empty';
-    grid.appendChild(d);
-  }
-
-  const todayStr = todayISO();
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const el = document.createElement('div');
-    el.className = 'cal-day';
-    if (iso === todayStr) el.classList.add('today');
-    if (iso === state.selectedDate) el.classList.add('selected');
-
-    const dayWorkouts = DATA.workouts.filter(w => w.date === iso);
-
-    let dots = '';
-    if (dayWorkouts.length) {
-      dots = '<div class="cal-day-dots">';
-      if (dayWorkouts.some(w => w.type === 'force')) dots += '<span class="cal-dot workout"></span>';
-      if (dayWorkouts.some(w => w.type === 'flex')) dots += '<span class="cal-dot complex"></span>';
-      if (dayWorkouts.some(w => w.type === 'rest')) dots += '<span class="cal-dot rest"></span>';
-      dots += '</div>';
-    }
-
-    el.innerHTML = `<span class="cal-day-num">${day}</span>${dots}`;
-
-    el.addEventListener('click', () => {
-      state.selectedDate = iso;
-      renderCalendar();
-      renderDayPanel();
-    });
-
-    grid.appendChild(el);
-  }
-}
-
-document.getElementById('calPrev').addEventListener('click', () => {
-  state.currentMonth.setMonth(state.currentMonth.getMonth() - 1);
-  renderCalendar();
-});
-document.getElementById('calNext').addEventListener('click', () => {
-  state.currentMonth.setMonth(state.currentMonth.getMonth() + 1);
-  renderCalendar();
-});
-document.getElementById('calToday').addEventListener('click', () => {
-  state.currentMonth = new Date();
-  state.selectedDate = todayISO();
-  renderCalendar();
-  renderDayPanel();
-});
-
-/* ============================================================
-   ПАНЕЛЬ ДНЯ
-   ============================================================ */
-function renderDayPanel() {
-  const iso = state.selectedDate;
-  const list = DATA.workouts.filter(w => w.date === iso);
-  document.getElementById('dayTitle').textContent = `Тренировки на ${fmtDate(iso)}`;
-
-  const container = document.getElementById('dayList');
-
-  if (!list.length) {
-    container.innerHTML = '<div class="empty-state">Пока пусто — отличный день для отдыха 🌿</div>';
-    return;
-  }
-
-  container.innerHTML = list.map(w => {
-    const icon = w.type === 'force' ? '🏋️' : w.type === 'flex' ? '🧘' : '💤';
-    const cls = w.type === 'force' ? 'force' : w.type === 'flex' ? 'flex' : 'rest';
-    const total = w.doses.reduce((s, d) => s + d.sets * (d.rest + 30), 0);
-    return `
-      <div class="workout-item" onclick="editWorkout('${w.id}')">
-        <div class="workout-icon ${cls}">${icon}</div>
-        <div class="workout-info">
-          <div class="workout-name">${escapeHtml(w.name)}</div>
-          <div class="workout-meta">${w.doses.length} упр. · ~${Math.round(total / 60)} мин</div>
-        </div>
-        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); deleteWorkout('${w.id}')">✕</button>
-      </div>
-    `;
-  }).join('');
-}
-
-/* ============================================================
-   СТАТИСТИКА
-   ============================================================ */
-function renderStats() {
-  const dirs = { 'сила': 0, 'ловкость': 0, 'координация': 0, 'пластика': 0 };
-  let total = 0;
-
-  DATA.workouts.forEach(w => {
-    w.doses.forEach(d => {
-      const ex = DATA.exercises.find(e => e.id === d.exerciseId);
-      if (!ex) return;
-      ex.direction.forEach(dir => {
-        if (dirs[dir] !== undefined) dirs[dir] += 1;
-        total += 1;
-      });
-    });
-  });
-
-  const colors = { 'сила': 'var(--accent)', 'ловкость': 'var(--success)', 'координация': 'var(--warning)', 'пластика': 'var(--danger)' };
-
-  document.getElementById('statList').innerHTML = Object.entries(dirs).map(([k, v]) => {
-    const pct = total ? Math.round(v / total * 100) : 0;
-    return `
-      <div class="stat-item">
-        <div class="stat-head"><span>${k}</span><span>${pct}%</span></div>
-        <div class="stat-bar"><div class="stat-fill" style="width:${pct}%; background:${colors[k]};"></div></div>
-      </div>
-    `;
-  }).join('');
-}
-
-function renderUpcoming() {
-  const today = todayISO();
-  const upcoming = DATA.workouts
-    .filter(w => w.date >= today)
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .slice(0, 4);
-
-  const el = document.getElementById('upcomingList');
-  if (!upcoming.length) {
-    el.innerHTML = '<div class="empty-state">Нет запланированных</div>';
-    return;
-  }
-
-  el.innerHTML = upcoming.map(w => {
-    const icon = w.type === 'force' ? '🏋️' : w.type === 'flex' ? '🧘' : '💤';
-    const cls = w.type === 'force' ? 'force' : w.type === 'flex' ? 'flex' : 'rest';
-    return `
-      <div class="workout-item" style="margin-bottom:8px;">
-        <div class="workout-icon ${cls}">${icon}</div>
-        <div class="workout-info">
-          <div class="workout-name">${escapeHtml(w.name)}</div>
-          <div class="workout-meta">${fmtDate(w.date)}</div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-/* ============================================================
-   УПРАЖНЕНИЯ
-   ============================================================ */
-function renderExercises() {
-  const el = document.getElementById('exerciseList');
-  if (!DATA.exercises.length) {
-    el.innerHTML = '<div class="empty-state">Упражнений пока нет</div>';
-    return;
-  }
-
-  el.innerHTML = DATA.exercises.map(ex => {
-    const photos = ex.photos && ex.photos.length
-      ? ex.photos.map(p => `<div class="photo"><img src="${escapeHtml(p)}" alt="" onerror="this.replaceWith(document.createTextNode('🖼️'))"></div>`).join('')
-      : '<div class="photo">🖼️</div><div class="photo">🖼️</div><div class="photo">🖼️</div>';
-
-    return `
-      <div class="exercise-card">
-        <div class="exercise-head">
-          <div style="min-width:0;">
-            <div class="exercise-name">${escapeHtml(ex.name)}</div>
-            <div class="exercise-variant">${escapeHtml(ex.variant)} · ${ex.equip === 'снаряд' ? 'со снарядом' : 'без снаряда'}</div>
-          </div>
-          <button class="btn btn-danger btn-sm" onclick="deleteExercise('${ex.id}')">✕</button>
-        </div>
-        <div class="tags">
-          ${ex.direction.map(d => `<span class="tag direction">${escapeHtml(d)}</span>`).join('')}
-          ${ex.body.map(b => `<span class="tag body">${escapeHtml(b)}</span>`).join('')}
-          <span class="tag equip">${ex.equip === 'снаряд' ? '🎯 снаряд' : '🙌 без'}</span>
-        </div>
-        ${ex.technique ? `<div class="technique">${escapeHtml(ex.technique)}</div>` : ''}
-        <div class="photo-strip">${photos}</div>
-        <div class="exercise-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editExercise('${ex.id}')">✏️ Редактировать</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-document.getElementById('newExerciseBtn').addEventListener('click', () => {
-  state.editingExerciseId = null;
-  document.getElementById('exerciseModalTitle').textContent = 'Новое упражнение';
-  document.getElementById('exName').value = '';
-  document.querySelector('input[name="variant"][value="средний"]').checked = true;
-  document.querySelector('input[name="equip"][value="без"]').checked = true;
-  document.querySelectorAll('#exDirection input').forEach(i => i.checked = i.value === 'сила');
-  document.querySelectorAll('#exBody input').forEach(i => i.checked = i.value === 'руки');
-  document.getElementById('exTechnique').value = '';
-  document.getElementById('exPhotos').value = '';
-  openModal('modalExercise');
-});
-
-function editExercise(id) {
-  const ex = DATA.exercises.find(e => e.id === id);
-  if (!ex) return;
-  state.editingExerciseId = id;
-  document.getElementById('exerciseModalTitle').textContent = 'Редактировать упражнение';
-  document.getElementById('exName').value = ex.name;
-  document.querySelector(`input[name="variant"][value="${ex.variant}"]`).checked = true;
-  document.querySelector(`input[name="equip"][value="${ex.equip}"]`).checked = true;
-  document.querySelectorAll('#exDirection input').forEach(i => i.checked = ex.direction.includes(i.value));
-  document.querySelectorAll('#exBody input').forEach(i => i.checked = ex.body.includes(i.value));
-  document.getElementById('exTechnique').value = ex.technique || '';
-  document.getElementById('exPhotos').value = (ex.photos || []).join(', ');
-  openModal('modalExercise');
-}
-
-document.getElementById('saveExerciseBtn').addEventListener('click', () => {
-  const name = document.getElementById('exName').value.trim();
-  if (!name) { alert('Введите название'); return; }
-
-  const ex = {
-    id: state.editingExerciseId || uid(),
-    name,
-    variant: document.querySelector('input[name="variant"]:checked').value,
-    equip: document.querySelector('input[name="equip"]:checked').value,
-    direction: [...document.querySelectorAll('#exDirection input:checked')].map(i => i.value),
-    body: [...document.querySelectorAll('#exBody input:checked')].map(i => i.value),
-    technique: document.getElementById('exTechnique').value.trim(),
-    photos: document.getElementById('exPhotos').value.split(',').map(s => s.trim()).filter(Boolean)
-  };
-
-  if (state.editingExerciseId) {
-    const i = DATA.exercises.findIndex(e => e.id === state.editingExerciseId);
-    DATA.exercises[i] = ex;
-  } else {
-    DATA.exercises.push(ex);
-  }
-
-  save();
-  renderExercises();
-  renderStats();
-  closeModal('modalExercise');
-});
-
-function deleteExercise(id) {
-  if (!confirm('Удалить упражнение?')) return;
-  DATA.exercises = DATA.exercises.filter(e => e.id !== id);
-  save();
-  renderExercises();
-  renderStats();
-}
-
-/* ============================================================
-   ТРЕНИРОВКИ
-   ============================================================ */
-function renderWorkouts() {
-  const el = document.getElementById('workoutGrid');
-  if (!DATA.workouts.length) {
-    el.innerHTML = '<div class="empty-state">Тренировок пока нет</div>';
-    return;
-  }
-
-  const sorted = [...DATA.workouts].sort((a, b) => b.date.localeCompare(a.date));
-
-  el.innerHTML = sorted.map(w => {
-    const icon = w.type === 'force' ? '🏋️' : w.type === 'flex' ? '🧘' : '💤';
-    const cls = w.type === 'force' ? 'force' : w.type === 'flex' ? 'flex' : 'rest';
-    const dirs = {};
-    let totalSets = 0;
-
-    w.doses.forEach(d => {
-      const ex = DATA.exercises.find(e => e.id === d.exerciseId);
-      if (ex) ex.direction.forEach(dr => dirs[dr] = (dirs[dr] || 0) + 1);
-      totalSets += d.sets;
-    });
-
-    return `
-      <div class="exercise-card">
-        <div class="exercise-head">
-          <div class="workout-icon ${cls}" style="width:40px;height:40px;font-size:18px;">${icon}</div>
-          <div style="flex:1;min-width:0;">
-            <div class="exercise-name">${escapeHtml(w.name)}</div>
-            <div class="exercise-variant">${fmtDate(w.date)}</div>
-          </div>
-        </div>
-        <div class="tags">
-          <span class="tag direction">${w.doses.length} упражнений</span>
-          <span class="tag body">${totalSets} подходов</span>
-          ${Object.keys(dirs).map(d => `<span class="tag equip">${escapeHtml(d)}</span>`).join('')}
-        </div>
-        <div class="exercise-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editWorkout('${w.id}')">✏️</button>
-          <button class="btn btn-primary btn-sm" onclick="startWorkoutTimer('${w.id}')">▶ Таймер</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteWorkout('${w.id}')">✕</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function renderWorkoutPicker() {
-  const el = document.getElementById('wExercisePicker');
-  if (!DATA.exercises.length) {
-    el.innerHTML = '<div class="muted" style="padding:6px;">Сначала добавьте упражнения</div>';
-    return;
-  }
-  el.innerHTML = DATA.exercises.map(ex => `
-    <label class="picker-item">
-      <input type="checkbox" value="${ex.id}" onchange="onWorkoutExerciseToggle(this)">
-      <span>${escapeHtml(ex.name)} <span class="muted">(${escapeHtml(ex.variant)})</span></span>
-    </label>
+/* ===================== RENDER ===================== */
+function renderWeek(){
+  document.getElementById('week').innerHTML = weekData.map((d,i)=>`
+    <div class="day ${i===todayIdx?'today':''} ${d.done?'done':''}">
+      <div class="wd">${d.wd}</div>
+      <div class="num">${d.num}</div>
+    </div>
   `).join('');
 }
 
-function onWorkoutExerciseToggle(cb) {
-  const id = cb.value;
-  if (cb.checked) {
-    tempWorkoutDoses.push({ exerciseId: id, sets: 3, reps: 10, weight: 0, rest: 60 });
-  } else {
-    tempWorkoutDoses = tempWorkoutDoses.filter(d => d.exerciseId !== id);
-  }
-  renderDoseList();
-}
-
-function renderDoseList() {
-  const el = document.getElementById('wDoseList');
-  if (!tempWorkoutDoses.length) {
-    el.innerHTML = '<div class="muted">Отметьте упражнения выше</div>';
-    return;
-  }
-
-  el.innerHTML = tempWorkoutDoses.map((d, i) => {
-    const ex = DATA.exercises.find(e => e.id === d.exerciseId);
-    return `
-      <div class="dose-box">
-        <div class="dose-title">${escapeHtml(ex ? ex.name : '—')}</div>
-        <div class="form-row" style="grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px;">
-          <div>
-            <div class="hint" style="margin:0 0 3px;">Подходы</div>
-            <input type="number" class="num-input" value="${d.sets}" min="1" onchange="updateDose(${i},'sets',this.value)">
-          </div>
-          <div>
-            <div class="hint" style="margin:0 0 3px;">Повт./сек</div>
-            <input type="number" class="num-input" value="${d.reps}" min="1" onchange="updateDose(${i},'reps',this.value)">
-          </div>
-          <div>
-            <div class="hint" style="margin:0 0 3px;">Вес, кг</div>
-            <input type="number" class="num-input" value="${d.weight}" min="0" step="2.5" onchange="updateDose(${i},'weight',this.value)">
-          </div>
-          <div>
-            <div class="hint" style="margin:0 0 3px;">Отдых, с</div>
-            <input type="number" class="num-input" value="${d.rest}" min="0" onchange="updateDose(${i},'rest',this.value)">
-          </div>
-        </div>
+function renderTrainings(){
+  document.getElementById('trainList').innerHTML = trainings.map((t,i)=>`
+    <div class="train">
+      <div class="time">${t.time}</div>
+      <div class="info">
+        <div class="name">${t.name}</div>
+        <div class="meta">${t.meta}</div>
       </div>
-    `;
-  }).join('');
-}
-
-function updateDose(i, field, val) {
-  tempWorkoutDoses[i][field] = Number(val) || 0;
-}
-
-function resetWorkoutForm() {
-  state.editingWorkoutId = null;
-  document.getElementById('workoutModalTitle').textContent = 'Новая тренировка';
-  document.getElementById('wName').value = '';
-  document.getElementById('wDate').value = state.selectedDate || todayISO();
-  document.getElementById('wType').value = 'force';
-  tempWorkoutDoses = [];
-  renderWorkoutPicker();
-  renderDoseList();
-}
-
-document.getElementById('newWorkoutBtn').addEventListener('click', () => {
-  resetWorkoutForm();
-  openModal('modalWorkout');
-});
-
-document.getElementById('addWorkoutBtn').addEventListener('click', () => {
-  resetWorkoutForm();
-  openModal('modalWorkout');
-});
-
-function editWorkout(id) {
-  const w = DATA.workouts.find(x => x.id === id);
-  if (!w) return;
-  state.editingWorkoutId = id;
-  document.getElementById('workoutModalTitle').textContent = 'Редактировать тренировку';
-  document.getElementById('wName').value = w.name;
-  document.getElementById('wDate').value = w.date;
-  document.getElementById('wType').value = w.type;
-  tempWorkoutDoses = JSON.parse(JSON.stringify(w.doses));
-  renderWorkoutPicker();
-  tempWorkoutDoses.forEach(d => {
-    const cb = document.querySelector(`#wExercisePicker input[value="${d.exerciseId}"]`);
-    if (cb) cb.checked = true;
-  });
-  renderDoseList();
-  openModal('modalWorkout');
-}
-
-document.getElementById('saveWorkoutBtn').addEventListener('click', () => {
-  const name = document.getElementById('wName').value.trim();
-  if (!name) { alert('Введите название тренировки'); return; }
-  if (!tempWorkoutDoses.length) { alert('Добавьте хотя бы одно упражнение'); return; }
-
-  const w = {
-    id: state.editingWorkoutId || uid(),
-    name,
-    date: document.getElementById('wDate').value || todayISO(),
-    type: document.getElementById('wType').value,
-    doses: JSON.parse(JSON.stringify(tempWorkoutDoses))
-  };
-
-  const existingIdx = DATA.workouts.findIndex(x => x.id === w.id);
-  if (existingIdx >= 0) DATA.workouts[existingIdx] = w;
-  else DATA.workouts.push(w);
-
-  save();
-  renderWorkouts();
-  renderCalendar();
-  renderDayPanel();
-  renderStats();
-  renderUpcoming();
-  closeModal('modalWorkout');
-});
-
-function deleteWorkout(id) {
-  if (!confirm('Удалить тренировку?')) return;
-  DATA.workouts = DATA.workouts.filter(w => w.id !== id);
-  save();
-  renderWorkouts();
-  renderCalendar();
-  renderDayPanel();
-  renderStats();
-  renderUpcoming();
-}
-
-/* ============================================================
-   КОМПЛЕКСЫ
-   ============================================================ */
-function renderComplexes() {
-  const el = document.getElementById('complexList');
-  if (!DATA.complexes.length) {
-    el.innerHTML = '<div class="empty-state">Комплексов пока нет</div>';
-    return;
-  }
-
-  el.innerHTML = DATA.complexes.map(c => {
-    const exNames = c.exercises.map(id => {
-      const ex = DATA.exercises.find(e => e.id === id);
-      return ex ? ex.name : '—';
-    }).join(' → ');
-
-    return `
-      <div class="complex-card">
-        <div class="exercise-head">
-          <div style="min-width:0;">
-            <div class="exercise-name">${escapeHtml(c.name)}</div>
-            <div class="exercise-variant">${escapeHtml(c.format)} · ${c.rounds} кругов · ${c.exercises.length} упр.</div>
-          </div>
-          <button class="btn btn-danger btn-sm" onclick="deleteComplex('${c.id}')">✕</button>
-        </div>
-        <div class="technique">${escapeHtml(exNames)}</div>
-        <div class="tags">
-          <span class="tag direction">Работа: ${c.timer.work}с</span>
-          <span class="tag body">Отдых: ${c.timer.rest}с</span>
-          <span class="tag equip">Подг.: ${c.timer.prep}с · Финал: ${c.timer.final}с</span>
-        </div>
-        <div class="exercise-actions">
-          <button class="btn btn-primary btn-sm" onclick="startComplexTimer('${c.id}')">▶ Запустить</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function renderComplexPicker() {
-  const el = document.getElementById('cExercisePicker');
-  if (!DATA.exercises.length) {
-    el.innerHTML = '<div class="muted" style="padding:6px;">Сначала добавьте упражнения</div>';
-    return;
-  }
-  el.innerHTML = DATA.exercises.map(ex => `
-    <label class="picker-item">
-      <input type="checkbox" value="${ex.id}" onchange="onComplexExerciseToggle(this)">
-      <span>${escapeHtml(ex.name)}</span>
-    </label>
+      <div class="chk ${t.done?'on':''}" onclick="this.classList.toggle('on')"></div>
+    </div>
   `).join('');
 }
 
-function onComplexExerciseToggle(cb) {
-  if (cb.checked) {
-    tempComplexExercises.push(cb.value);
+let filter = 'all';
+function setFilter(el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  filter = el.dataset.f;
+  renderEx();
+}
+
+function renderEx(){
+  const q = (document.getElementById('exSearch').value || '').toLowerCase();
+  const list = exercises.filter(e=>e.toLowerCase().includes(q));
+  document.getElementById('exList').innerHTML = list.length
+    ? list.map(e=>{
+        const gear = gears[Math.floor(Math.random()*gears.length)];
+        return `<div class="ex"><div class="txt">${e}</div><div class="badge">${gear}</div></div>`;
+      }).join('')
+    : '<div style="color:var(--mut);text-align:center;padding:20px">Ничего не найдено</div>';
+}
+
+function renderChips(){
+  document.getElementById('zones').innerHTML =
+    zones.map(z=>`<div class="chip" onclick="this.classList.toggle('on')">${z}</div>`).join('')
+    + '<div class="chip add">+ Добавить</div>';
+  document.getElementById('gears').innerHTML =
+    gears.map(g=>`<div class="chip" onclick="this.classList.toggle('on')">${g}</div>`).join('')
+    + '<div class="chip add">+ Добавить</div>';
+}
+
+/* ===================== NAV ===================== */
+function nav(el){
+  document.querySelectorAll('nav.bottom button').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById(el.dataset.v).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ===================== MODAL ===================== */
+function openModal(id){ document.getElementById(id).classList.add('on'); }
+function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+function pickOne(el){
+  el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ===================== TIMER ===================== */
+let tSec = 30, tInt = null, tRun = false;
+function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function updTimer(){
+  document.getElementById('tDisp').textContent = fmt(tSec);
+}
+function toggleTimer(){
+  const btn = document.getElementById('tBtn');
+  if(tRun){
+    clearInterval(tInt); tRun=false; btn.textContent='▶ Старт';
   } else {
-    tempComplexExercises = tempComplexExercises.filter(id => id !== cb.value);
+    tRun=true; btn.textContent='⏸ Пауза';
+    tInt = setInterval(()=>{
+      if(tSec>0){ tSec--; updTimer(); }
+      else { clearInterval(tInt); tRun=false; btn.textContent='▶ Старт'; tSec=30; updTimer(); }
+    },1000);
   }
 }
+function resetTimer(){ clearInterval(tInt); tRun=false; tSec=30; updTimer(); document.getElementById('tBtn').textContent='▶ Старт'; }
 
-document.getElementById('newComplexBtn').addEventListener('click', () => {
-  document.getElementById('cName').value = '';
-  document.querySelector('input[name="cFormat"][value="круги"]').checked = true;
-  document.getElementById('cRounds').value = 3;
-  document.getElementById('cRestEx').value = 15;
-  document.getElementById('cRestRound').value = 60;
-  document.getElementById('tPrep').value = 10;
-  document.getElementById('tWork').value = 45;
-  document.getElementById('tRest').value = 15;
-  document.getElementById('tFinal').value = 30;
-  tempComplexExercises = [];
-  renderComplexPicker();
-  openModal('modalComplex');
-});
-
-document.getElementById('saveComplexBtn').addEventListener('click', () => {
-  const name = document.getElementById('cName').value.trim();
-  if (!name) { alert('Введите название комплекса'); return; }
-  if (!tempComplexExercises.length) { alert('Выберите упражнения'); return; }
-
-  const c = {
-    id: uid(),
-    name,
-    exercises: [...tempComplexExercises],
-    format: document.querySelector('input[name="cFormat"]:checked').value,
-    rounds: Number(document.getElementById('cRounds').value) || 3,
-    restEx: Number(document.getElementById('cRestEx').value) || 0,
-    restRound: Number(document.getElementById('cRestRound').value) || 0,
-    timer: {
-      prep: Number(document.getElementById('tPrep').value) || 0,
-      work: Number(document.getElementById('tWork').value) || 0,
-      rest: Number(document.getElementById('tRest').value) || 0,
-      final: Number(document.getElementById('tFinal').value) || 0
-    }
-  };
-
-  DATA.complexes.push(c);
-  save();
-  renderComplexes();
-  closeModal('modalComplex');
-});
-
-function deleteComplex(id) {
-  if (!confirm('Удалить комплекс?')) return;
-  DATA.complexes = DATA.complexes.filter(c => c.id !== id);
-  save();
-  renderComplexes();
-}
-
-/* ============================================================
-   ТАЙМЕР
-   ============================================================ */
-function openTimer() {
-  const sel = document.getElementById('timerComplex');
-  if (!DATA.complexes.length) {
-    sel.innerHTML = '<option value="">Нет комплексов</option>';
-  } else {
-    sel.innerHTML = DATA.complexes.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
-  }
-  sel.onchange = updateTimerFromComplex;
-  updateTimerFromComplex();
-  resetTimer();
-  openModal('modalTimer');
-}
-
-function updateTimerFromComplex() {
-  const id = document.getElementById('timerComplex').value;
-  const c = DATA.complexes.find(x => x.id === id);
-  if (!c) {
-    document.getElementById('timerMeta').textContent = '—';
-    document.getElementById('timerCurrent').textContent = '—';
-    return;
-  }
-  document.getElementById('tPrepVal').textContent = c.timer.prep + 'с';
-  document.getElementById('tWorkVal').textContent = c.timer.work + 'с';
-  document.getElementById('tRestVal').textContent = c.timer.rest + 'с';
-  document.getElementById('tFinalVal').textContent = c.timer.final + 'с';
-  document.getElementById('timerMeta').textContent = `Круг 1 из ${c.rounds}`;
-  document.getElementById('timerCurrent').textContent = '—';
-}
-
-function resetTimer() {
-  stopTimerInterval();
-  state.timer = { running: false, paused: false, phase: 'idle', remaining: 0, round: 1, exerciseIdx: 0, intervalId: null };
-  document.getElementById('timerDisplay').textContent = '00:00';
-  document.getElementById('timerStartBtn').textContent = '▶ Старт';
-  document.querySelectorAll('.timer-phase').forEach(p => p.classList.remove('active'));
-  updateTimerFromComplex();
-}
-
-function stopTimerInterval() {
-  if (state.timer.intervalId) {
-    clearInterval(state.timer.intervalId);
-    state.timer.intervalId = null;
-  }
-  state.timer.running = false;
-}
-
-function startComplexTimer(id) {
-  openTimer();
-  document.getElementById('timerComplex').value = id;
-  updateTimerFromComplex();
-  setTimeout(() => {
-    const btn = document.getElementById('timerStartBtn');
-    if (btn) btn.click();
-  }, 100);
-}
-
-function startWorkoutTimer(id) {
-  openTimer();
-}
-
-document.getElementById('timerStartBtn').addEventListener('click', () => {
-  const t = state.timer;
-  if (t.running && !t.paused) {
-    t.paused = true;
-    document.getElementById('timerStartBtn').textContent = '▶ Продолжить';
-    return;
-  }
-  if (t.paused) {
-    t.paused = false;
-    document.getElementById('timerStartBtn').textContent = '⏸ Пауза';
-    return;
-  }
-
-  const id = document.getElementById('timerComplex').value;
-  const c = DATA.complexes.find(x => x.id === id);
-  if (!c) { alert('Выберите комплекс'); return; }
-
-  t.running = true;
-  t.paused = false;
-  t.phase = 'prep';
-  t.remaining = c.timer.prep;
-  t.round = 1;
-  t.exerciseIdx = 0;
-  document.getElementById('timerStartBtn').textContent = '⏸ Пауза';
-
-  runTimerTick();
-  t.intervalId = setInterval(runTimerTick, 1000);
-});
-
-document.getElementById('timerResetBtn').addEventListener('click', resetTimer);
-
-function runTimerTick() {
-  const t = state.timer;
-  if (!t.running || t.paused) return;
-
-  const id = document.getElementById('timerComplex').value;
-  const c = DATA.complexes.find(x => x.id === id);
-  if (!c) return;
-
-  if (t.remaining <= 0) {
-    if (t.phase === 'prep') {
-      t.phase = 'work';
-      t.remaining = c.timer.work;
-    } else if (t.phase === 'work') {
-      t.exerciseIdx++;
-      if (t.exerciseIdx >= c.exercises.length) {
-        t.exerciseIdx = 0;
-        t.round++;
-        if (t.round > c.rounds) {
-          t.phase = 'final';
-          t.remaining = c.timer.final;
-        } else {
-          t.phase = 'rest';
-          t.remaining = c.restRound;
-        }
-      } else {
-        t.phase = 'rest';
-        t.remaining = c.restEx;
-      }
-    } else if (t.phase === 'rest') {
-      t.phase = 'work';
-      t.remaining = c.timer.work;
-    } else if (t.phase === 'final') {
-      stopTimerInterval();
-      document.getElementById('timerDisplay').textContent = 'Готово!';
-      document.getElementById('timerStartBtn').textContent = '▶ Старт';
-      document.querySelectorAll('.timer-phase').forEach(p => p.classList.remove('active'));
-      return;
-    }
-  }
-
-  const mm = String(Math.floor(t.remaining / 60)).padStart(2, '0');
-  const ss = String(t.remaining % 60).padStart(2, '0');
-  document.getElementById('timerDisplay').textContent = `${mm}:${ss}`;
-
-  document.querySelectorAll('.timer-phase').forEach(p => {
-    p.classList.toggle('active', p.dataset.phase === t.phase);
-  });
-
-  document.getElementById('timerMeta').textContent = `Круг ${Math.min(t.round, c.rounds)} из ${c.rounds}`;
-
-  if (t.phase === 'prep') {
-    document.getElementById('timerCurrent').textContent = 'Приготовьтесь';
-  } else if (t.phase === 'final') {
-    document.getElementById('timerCurrent').textContent = 'Финал';
-  } else {
-    const exId = c.exercises[t.exerciseIdx];
-    const ex = DATA.exercises.find(e => e.id === exId);
-    document.getElementById('timerCurrent').textContent = ex ? ex.name : '—';
-  }
-
-  t.remaining--;
-}
-
-/* ============================================================
-   ПРОГРЕССИЯ
-   ============================================================ */
-function openProgression() {
-  const sel = document.getElementById('progWorkout');
-  if (!DATA.workouts.length) {
-    sel.innerHTML = '<option value="">Нет тренировок</option>';
-  } else {
-    sel.innerHTML = DATA.workouts.map(w => `<option value="${w.id}">${escapeHtml(w.name)} (${fmtDate(w.date)})</option>`).join('');
-  }
-
-  const now = new Date();
-  now.setMonth(now.getMonth() + 1);
-  document.getElementById('progMonth').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-
-  document.getElementById('progPreview').textContent = '';
-  sel.onchange = updateProgressionPreview;
-  document.querySelectorAll('input[name="progType"]').forEach(r => r.onchange = updateProgressionPreview);
-  document.getElementById('progWeight').oninput = updateProgressionPreview;
-  document.getElementById('progReps').oninput = updateProgressionPreview;
-  document.getElementById('progTime').oninput = updateProgressionPreview;
-
-  updateProgressionPreview();
-  openModal('modalProgression');
-}
-
-function updateProgressionPreview() {
-  const id = document.getElementById('progWorkout').value;
-  const w = DATA.workouts.find(x => x.id === id);
-  if (!w) { document.getElementById('progPreview').textContent = ''; return; }
-
-  const type = document.querySelector('input[name="progType"]:checked').value;
-  let msg = '';
-  if (type === 'weight') {
-    const delta = Number(document.getElementById('progWeight').value) || 0;
-    msg = `Вес каждого упражнения увеличится на ${delta} кг.`;
-  } else if (type === 'volume') {
-    const delta = Number(document.getElementById('progReps').value) || 0;
-    msg = `Повторения увеличатся на ${delta} в каждом подходе.`;
-  } else if (type === 'time') {
-    const delta = Number(document.getElementById('progTime').value) || 0;
-    msg = `Время работы (сек) увеличится на ${delta}.`;
-  } else {
-    msg = 'К упражнениям добавится пометка об усложнении техники.';
-  }
-  document.getElementById('progPreview').textContent = 'Предпросмотр: ' + msg;
-}
-
-document.getElementById('applyProgressionBtn').addEventListener('click', () => {
-  const id = document.getElementById('progWorkout').value;
-  const w = DATA.workouts.find(x => x.id === id);
-  if (!w) { alert('Выберите тренировку'); return; }
-
-  const type = document.querySelector('input[name="progType"]:checked').value;
-  const monthVal = document.getElementById('progMonth').value;
-  if (!monthVal) { alert('Укажите месяц'); return; }
-
-  const newW = JSON.parse(JSON.stringify(w));
-  newW.id = uid();
-  newW.name = w.name + ' (прогрессия)';
-  newW.date = monthVal + '-01';
-
-  newW.doses.forEach(d => {
-    if (type === 'weight') d.weight = (d.weight || 0) + (Number(document.getElementById('progWeight').value) || 0);
-    if (type === 'volume') d.reps = (d.reps || 0) + (Number(document.getElementById('progReps').value) || 0);
-    if (type === 'time') d.reps = (d.reps || 0) + (Number(document.getElementById('progTime').value) || 0);
-    if (type === 'complexity') d.note = 'Усложнённая техника';
-  });
-
-  DATA.workouts.push(newW);
-  save();
-  renderWorkouts();
-  renderCalendar();
-  renderStats();
-  renderUpcoming();
-  closeModal('modalProgression');
-  alert('Новая версия тренировки создана на ' + fmtDate(newW.date));
-});
-
-/* ============================================================
-   ЗАКРЫТИЕ МОДАЛОК
-   ============================================================ */
-document.querySelectorAll('.modal-backdrop').forEach(bd => {
-  bd.addEventListener('click', e => {
-    if (e.target === bd) closeModal(bd.id);
-  });
-});
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-backdrop.open').forEach(bd => closeModal(bd.id));
-  }
-});
-
-/* ============================================================
-   ИНИЦИАЛИЗАЦИЯ
-   ============================================================ */
-function init() {
-  renderCalendar();
-  renderDayPanel();
-  renderStats();
-  renderUpcoming();
-  renderWorkouts();
-  renderExercises();
-  renderComplexes();
-}
-
-init();
+/* ===================== INIT ===================== */
+renderWeek();
+renderTrainings();
+renderEx();
+renderChips();
+updTimer();
 </script>
 </body>
 </html>
