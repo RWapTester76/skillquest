@@ -8,7 +8,7 @@
   :root{
     --bg:#0e1116; --bg2:#151a22; --card:#1a2029; --card2:#222a36;
     --line:#2a3340; --txt:#e8edf4; --mut:#8a97a8;
-    --acc:#ff5b2e; --acc2:#ffb02e; --ok:#2ecc71;
+    --acc:#ff5b2e; --acc2:#ffb02e; --ok:#2ecc71; --blue:#3aa0ff;
     --shadow:0 8px 24px rgba(0,0,0,.35); --r:16px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -55,11 +55,20 @@
   .train .chk.on{background:var(--ok);border-color:var(--ok);box-shadow:0 0 12px rgba(46,204,113,.5)}
   .train .chk.on::after{content:"✓";color:#0e1116;font-weight:900;font-size:15px}
 
-  .profile{display:flex;align-items:center;gap:14px}
-  .avatar{width:64px;height:64px;border-radius:50%;flex:0 0 auto;
+  /* AVATAR */
+  .avatar-wrap{position:relative;width:80px;height:80px;flex:0 0 auto}
+  .avatar{width:80px;height:80px;border-radius:50%;
     background:linear-gradient(135deg,var(--acc),var(--acc2));
     display:flex;align-items:center;justify-content:center;
-    font-weight:900;font-size:24px;color:#0e1116;box-shadow:0 0 22px rgba(255,91,46,.35)}
+    font-weight:900;font-size:30px;color:#0e1116;
+    box-shadow:0 0 22px rgba(255,91,46,.35);
+    background-size:cover;background-position:center;overflow:hidden}
+  .avatar.has-img{color:transparent}
+  .avatar-edit{position:absolute;bottom:-2px;right:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--card2);border:2px solid var(--line);color:var(--acc);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s}
+  .avatar-edit:active{transform:scale(.9)}
+  .profile{display:flex;align-items:center;gap:14px}
   .profile .pinfo{flex:1}
   .profile .pname{font-size:18px;font-weight:800}
   .profile .pmeta{font-size:12px;color:var(--mut);margin-top:4px}
@@ -77,12 +86,17 @@
     background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.2s}
   .tab.active{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0e1116;border-color:transparent;box-shadow:0 4px 14px rgba(255,91,46,.35)}
 
-  .ex{padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--line);
-    margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:.2s}
-  .ex .txt{font-size:13.5px;line-height:1.35;font-weight:500;flex:1}
+  .ex{padding:10px;border-radius:12px;background:var(--card);border:1px solid var(--line);
+    margin-bottom:8px;display:flex;gap:10px;align-items:center;transition:.2s}
+  .ex .thumb{width:56px;height:56px;border-radius:10px;flex:0 0 auto;object-fit:cover;
+    background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:20px;overflow:hidden}
+  .ex .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .ex .txt{font-size:13.5px;line-height:1.35;font-weight:500;flex:1;min-width:0}
+  .ex .txt .sub{font-size:11px;color:var(--mut);margin-top:3px}
   .ex .badge{font-size:10px;color:var(--acc2);background:rgba(255,176,46,.12);
     padding:3px 8px;border-radius:20px;font-weight:700;flex:0 0 auto;
-    border:1px solid rgba(255,176,46,.25)}
+    border:1px solid rgba(255,176,46,.25);white-space:nowrap}
   .ex .del{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);
     background:transparent;color:var(--mut);font-size:16px;cursor:pointer;
     display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:.2s}
@@ -107,6 +121,8 @@
   .btn:active{transform:scale(.97)}
   .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0e1116;border-color:transparent;box-shadow:0 6px 18px rgba(255,91,46,.35)}
   .btn.danger{background:rgba(255,91,46,.12);color:var(--acc);border-color:rgba(255,91,46,.3)}
+  .btn.blue{background:rgba(58,160,255,.12);color:var(--blue);border-color:rgba(58,160,255,.3)}
+  .btn.green{background:rgba(46,204,113,.12);color:var(--ok);border-color:rgba(46,204,113,.3)}
 
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
     display:none;align-items:flex-end;justify-content:center;z-index:100}
@@ -137,6 +153,18 @@
   .close{width:100%;padding:14px;border-radius:12px;border:none;background:var(--card);
     color:var(--mut);font-weight:700;margin-top:8px;cursor:pointer;font-size:14px}
 
+  /* FOTO UPLOAD */
+  .photo-zone{position:relative;border:2px dashed var(--line);border-radius:12px;
+    padding:20px;text-align:center;cursor:pointer;transition:.2s;background:var(--card);
+    min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+  .photo-zone:hover{border-color:var(--acc);background:rgba(255,91,46,.05)}
+  .photo-zone.has-img{padding:0;border-style:solid;overflow:hidden;min-height:180px}
+  .photo-zone img{width:100%;max-height:260px;object-fit:cover;display:block}
+  .photo-zone .ico{font-size:32px;opacity:.5}
+  .photo-zone .hint{font-size:12px;color:var(--mut)}
+  .photo-zone .clear-img{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);
+    color:#fff;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px}
+
   .timer-display{text-align:center;font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;
     letter-spacing:2px;background:linear-gradient(180deg,#fff,var(--acc2));
     -webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 4px;line-height:1}
@@ -163,8 +191,13 @@
   .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);
     background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0e1116;
     padding:12px 20px;border-radius:12px;font-weight:700;font-size:13px;
-    opacity:0;pointer-events:none;transition:.3s;z-index:200;box-shadow:0 8px 24px rgba(255,91,46,.4)}
+    opacity:0;pointer-events:none;transition:.3s;z-index:200;box-shadow:0 8px 24px rgba(255,91,46,.4);
+    max-width:90%;text-align:center}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .share-note{font-size:11px;color:var(--mut);margin-top:8px;line-height:1.5;padding:10px;background:rgba(255,255,255,.02);border-radius:10px;border-left:2px solid var(--acc2)}
+
+  .ex-preview{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -245,28 +278,49 @@
   <section class="view" id="v-prof">
     <div class="card">
       <div class="profile">
-        <div class="avatar">А</div>
+        <div class="avatar-wrap">
+          <div class="avatar" id="avatar">А</div>
+          <div class="avatar-edit" onclick="document.getElementById('avatarInput').click()">📷</div>
+          <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="loadAvatar(this)">
+        </div>
         <div class="pinfo">
-          <div class="pname">Александр</div>
-          <div class="pmeta">Возраст: <b>34</b> · Вес: <b>78 кг</b></div>
+          <div class="pname" id="pName">Александр</div>
+          <div class="pmeta">Возраст: <b id="pAge">34</b> · Вес: <b id="pWeight">78</b> кг</div>
         </div>
       </div>
+      <button class="btn" style="width:100%;margin-top:12px" onclick="document.getElementById('avatarInput').click()">📷 Загрузить аватарку</button>
+      <button class="btn danger" style="width:100%;margin-top:8px" onclick="removeAvatar()">Убрать аватарку</button>
     </div>
+
     <div class="card">
       <h2><span class="dot"></span>Профиль</h2>
-      <div class="field"><label>Имя</label><input value="Александр"></div>
+      <div class="field"><label>Имя</label><input id="inName" value="Александр" oninput="document.getElementById('pName').textContent=this.value"></div>
       <div class="row">
-        <div class="field"><label>Возраст</label><input type="number" value="34"></div>
-        <div class="field"><label>Вес, кг</label><input type="number" value="78"></div>
+        <div class="field"><label>Возраст</label><input id="inAge" type="number" value="34" oninput="document.getElementById('pAge').textContent=this.value"></div>
+        <div class="field"><label>Вес, кг</label><input id="inWeight" type="number" value="78" oninput="document.getElementById('pWeight').textContent=this.value"></div>
       </div>
-      <button class="btn primary" style="width:100%" onclick="toast('Профиль сохранён ✓')">Сохранить</button>
+      <button class="btn primary" style="width:100%" onclick="saveProfile()">Сохранить</button>
     </div>
+
+    <div class="card">
+      <h2><span class="dot"></span>Обмен базами упражнений</h2>
+      <button class="btn blue" style="width:100%;margin-bottom:8px" onclick="exportDB()">📤 Экспорт базы (.json)</button>
+      <button class="btn green" style="width:100%;margin-bottom:8px" onclick="document.getElementById('importInput').click()">📥 Импорт базы (.json)</button>
+      <button class="btn" style="width:100%;margin-bottom:8px" onclick="shareDB()">🔗 Поделиться (Share API)</button>
+      <button class="btn" style="width:100%" onclick="copyDB()">📋 Скопировать в буфер</button>
+      <input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="importDB(this)">
+      <div class="share-note">
+        💡 <b>Как поделиться:</b> экспортируй файл и отправь другу в Telegram/WhatsApp. Он зайдёт в приложение → «Импорт базы» → выберет файл. Или используй Web Share (работает на телефонах — сразу откроется меню «Поделиться»).
+      </div>
+    </div>
+
     <div class="card">
       <h2><span class="dot"></span>Таймер</h2>
       <button class="btn primary" style="width:100%" onclick="openModal('m-timer')">Открыть таймер</button>
     </div>
+
     <div class="card">
-      <h2><span class="dot"></span>Данные</h2>
+      <h2><span class="dot"></span>Опасная зона</h2>
       <button class="btn danger" style="width:100%" onclick="resetAll()">🗑 Сбросить всё</button>
     </div>
   </section>
@@ -297,6 +351,16 @@
   <div class="modal">
     <h3>Добавить упражнение</h3>
     <div class="field"><label>Название *</label><input id="exName" placeholder="Например, подтягивания"></div>
+
+    <div class="field">
+      <label>Фото упражнения</label>
+      <div class="photo-zone" id="photoZone" onclick="if(!this.classList.contains('has-img'))document.getElementById('exPhoto').click()">
+        <div class="ico">🖼</div>
+        <div class="hint">Нажми, чтобы загрузить фото</div>
+      </div>
+      <input type="file" id="exPhoto" accept="image/*" style="display:none" onchange="loadExPhoto(this)">
+    </div>
+
     <div class="row">
       <div class="field"><label>Пар 1</label><input id="exP1" placeholder="—"></div>
       <div class="field"><label>Пар 2</label><input id="exP2" placeholder="—"></div>
@@ -353,7 +417,7 @@
       </div>
     </div>
     <div class="field"><label>Время</label><input type="time" id="tTime" value="16:00"></div>
-    <div class="field"><label>Название</label><input id="tName" placeholder="Например, Комплекс «Сидни»"></div>
+    <div class="field"><label>Название</label><input id="tName" placeholder="Комплекс «Сидни»"></div>
     <button class="btn primary" style="width:100%" onclick="saveTrain()">Создать</button>
     <button class="close" onclick="closeModal('m-train')">Отмена</button>
   </div>
@@ -388,10 +452,10 @@ const DEFAULT_GEARS = ['Гвозди','Скакалка','Гиря','Турни�
 /* ========== ХРАНИЛИЩЕ ========== */
 const store = {
   get(k, def){ try{ const v = localStorage.getItem('as_'+k); return v ? JSON.parse(v) : def; }catch(e){ return def; } },
-  set(k, v){ try{ localStorage.setItem('as_'+k, JSON.stringify(v)); }catch(e){} }
+  set(k, v){ try{ localStorage.setItem('as_'+k, JSON.stringify(v)); }catch(e){ toast('Ошибка сохранения — возможно, переполнено хранилище'); } }
 };
 
-let exercises = store.get('exercises', []);   // изначально пусто — пользователь добавляет сам
+let exercises = store.get('exercises', []);
 let zones = store.get('zones', DEFAULT_ZONES);
 let gears = store.get('gears', DEFAULT_GEARS);
 let trainings = store.get('trainings', [
@@ -400,7 +464,9 @@ let trainings = store.get('trainings', [
   {time:'16:50', name:'Вис обратный', meta:'ОП: 15 мин', done:false},
   {time:'17:05', name:'Стретчинг К7', meta:'ОП: 25 мин', done:false}
 ]);
+let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
 let filter = 'all';
+let currentExPhoto = null; // временное фото для модалки
 
 /* ========== TOAST ========== */
 let toastT;
@@ -409,7 +475,115 @@ function toast(msg){
   el.textContent = msg;
   el.classList.add('on');
   clearTimeout(toastT);
-  toastT = setTimeout(()=>el.classList.remove('on'), 1800);
+  toastT = setTimeout(()=>el.classList.remove('on'), 2200);
+}
+
+/* ========== АВАТАР ========== */
+function loadAvatar(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    // Сжимаем через canvas до 300x300
+    const img = new Image();
+    img.onload = () => {
+      const size = 300;
+      const canvas = document.createElement('canvas');
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      // Обрезка по центру (квадрат)
+      const min = Math.min(img.width, img.height);
+      const sx = (img.width - min) / 2;
+      const sy = (img.height - min) / 2;
+      ctx.drawImage(img, sx, sy, min, min, 0, 0, size, size);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      profile.avatar = dataUrl;
+      store.set('profile', profile);
+      applyAvatar();
+      toast('Аватарка загружена ✓');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function applyAvatar(){
+  const el = document.getElementById('avatar');
+  if(profile.avatar){
+    el.style.backgroundImage = `url(${profile.avatar})`;
+    el.textContent = '';
+    el.classList.add('has-img');
+  } else {
+    el.style.backgroundImage = '';
+    el.textContent = (profile.name || 'А').charAt(0).toUpperCase();
+    el.classList.remove('has-img');
+  }
+  document.getElementById('pName').textContent = profile.name;
+  document.getElementById('pAge').textContent = profile.age;
+  document.getElementById('pWeight').textContent = profile.weight;
+  document.getElementById('inName').value = profile.name;
+  document.getElementById('inAge').value = profile.age;
+  document.getElementById('inWeight').value = profile.weight;
+}
+
+function removeAvatar(){
+  if(!profile.avatar){ toast('Нет аватарки'); return; }
+  if(confirm('Убрать аватарку?')){
+    profile.avatar = null;
+    store.set('profile', profile);
+    applyAvatar();
+    toast('Аватарка убрана');
+  }
+}
+
+function saveProfile(){
+  profile.name = document.getElementById('inName').value.trim() || 'Безымянный';
+  profile.age = +document.getElementById('inAge').value || 0;
+  profile.weight = +document.getElementById('inWeight').value || 0;
+  store.set('profile', profile);
+  applyAvatar();
+  toast('Профиль сохранён ✓');
+}
+
+/* ========== ФОТО УПРАЖНЕНИЯ ========== */
+function loadExPhoto(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const maxW = 600;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+      currentExPhoto = dataUrl;
+      renderPhotoZone();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function renderPhotoZone(){
+  const z = document.getElementById('photoZone');
+  if(currentExPhoto){
+    z.classList.add('has-img');
+    z.innerHTML = `<img src="${currentExPhoto}" alt=""><button class="clear-img" onclick="event.stopPropagation();clearExPhoto()">✕</button>`;
+  } else {
+    z.classList.remove('has-img');
+    z.innerHTML = `<div class="ico">🖼</div><div class="hint">Нажми, чтобы загрузить фото</div>`;
+  }
+}
+
+function clearExPhoto(){
+  currentExPhoto = null;
+  renderPhotoZone();
 }
 
 /* ========== РЕНДЕР ========== */
@@ -463,8 +637,15 @@ function renderEx(){
   }
   box.innerHTML = list.map(e=>{
     const idx = exercises.indexOf(e);
+    const thumb = e.photo
+      ? `<div class="thumb"><img src="${e.photo}" alt=""></div>`
+      : `<div class="thumb">💪</div>`;
     return `<div class="ex">
-      <div class="txt">${e.name}${e.desc?`<div style="font-size:11px;color:var(--mut);margin-top:3px">${e.desc}</div>`:''}</div>
+      ${thumb}
+      <div class="txt">
+        ${e.name}
+        ${e.desc ? `<div class="sub">${e.desc}</div>` : ''}
+      </div>
       <div class="badge">${e.gear||'—'}</div>
       <button class="del" onclick="delEx(${idx})">✕</button>
     </div>`;
@@ -513,10 +694,8 @@ function addGear(){
 }
 
 function fillSelects(){
-  const gSel = document.getElementById('exGear');
-  const zSel = document.getElementById('exZone');
-  gSel.innerHTML = gears.map(g=>`<option>${g}</option>`).join('');
-  zSel.innerHTML = zones.map(z=>`<option>${z}</option>`).join('');
+  document.getElementById('exGear').innerHTML = gears.map(g=>`<option>${g}</option>`).join('');
+  document.getElementById('exZone').innerHTML = zones.map(z=>`<option>${z}</option>`).join('');
 }
 
 /* ========== СОХРАНЕНИЕ ========== */
@@ -526,6 +705,7 @@ function saveEx(){
 
   exercises.push({
     name,
+    photo: currentExPhoto,
     p1: document.getElementById('exP1').value.trim(),
     p2: document.getElementById('exP2').value.trim(),
     limb: document.getElementById('exLimb').classList.contains('on'),
@@ -540,6 +720,8 @@ function saveEx(){
   document.getElementById('exP1').value = '';
   document.getElementById('exP2').value = '';
   document.getElementById('exDesc').value = '';
+  currentExPhoto = null;
+  renderPhotoZone();
 
   closeModal('m-ex');
   renderEx();
@@ -573,6 +755,128 @@ function resetAll(){
   }
 }
 
+/* ========== ЭКСПОРТ / ИМПОРТ / SHARE ========== */
+function buildDB(){
+  return {
+    app: 'AS-Fit',
+    version: 1,
+    exported: new Date().toISOString(),
+    exercises,
+    zones,
+    gears,
+    trainings,
+    profile: {...profile} // без аватарки? можно с ней, но файл будет большой. Оставим с аватаркой.
+  };
+}
+
+function exportDB(){
+  if(!exercises.length && !zones.length && !gears.length){
+    toast('Нечего экспортировать'); return;
+  }
+  const data = JSON.stringify(buildDB(), null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `as-fit-base-${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  toast('Файл базы скачан ✓');
+}
+
+function importDB(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.exercises && !data.zones && !data.gears){
+        toast('Неверный формат файла'); return;
+      }
+      const merge = confirm(
+        `Найдено упражнений: ${(data.exercises||[]).length}\n` +
+        `Зон: ${(data.zones||[]).length}\n` +
+        `Снарядов: ${(data.gears||[]).length}\n\n` +
+        `OK — ДОБАВИТЬ к текущим\n` +
+        `Отмена — ЗАМЕНИТЬ текущие`
+      );
+      if(merge){
+        if(Array.isArray(data.exercises)) exercises = exercises.concat(data.exercises);
+        if(Array.isArray(data.zones)) zones = [...new Set(zones.concat(data.zones))];
+        if(Array.isArray(data.gears)) gears = [...new Set(gears.concat(data.gears))];
+      } else {
+        exercises = Array.isArray(data.exercises) ? data.exercises : exercises;
+        zones = Array.isArray(data.zones) ? data.zones : zones;
+        gears = Array.isArray(data.gears) ? data.gears : gears;
+      }
+      store.set('exercises', exercises);
+      store.set('zones', zones);
+      store.set('gears', gears);
+      renderEx();
+      renderChips();
+      fillSelects();
+      toast(`Импорт завершён: +${(data.exercises||[]).length} упр.`);
+    }catch(err){
+      toast('Ошибка чтения файла: '+err.message);
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+async function shareDB(){
+  const data = JSON.stringify(buildDB(), null, 2);
+  const fileName = `as-fit-base-${new Date().toISOString().slice(0,10)}.json`;
+  const file = new File([data], fileName, {type:'application/json'});
+
+  // Web Share API (мобильные)
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({
+        files: [file],
+        title: 'Моя база упражнений — АС',
+        text: 'Держи мою базу упражнений из АС Fit 🏋️'
+      });
+      toast('Отправлено ✓');
+    }catch(e){
+      if(e.name !== 'AbortError') toast('Share не удался: '+e.message);
+    }
+  } else if(navigator.share){
+    try{
+      await navigator.share({
+        title: 'Моя база упражнений — АС',
+        text: `Экспортировано ${exercises.length} упражнений. Открой приложение АС, чтобы импортировать файл.`
+      });
+      toast('Отправлено ✓');
+    }catch(e){
+      if(e.name !== 'AbortError') toast('Share не удался');
+    }
+  } else {
+    toast('Share API не поддерживается — используй экспорт файла');
+  }
+}
+
+async function copyDB(){
+  const data = JSON.stringify(buildDB());
+  try{
+    await navigator.clipboard.writeText(data);
+    toast('База скопирована в буфер ✓');
+  }catch(e){
+    // fallback для старых браузеров
+    const ta = document.createElement('textarea');
+    ta.value = data;
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); toast('Скопировано ✓'); }
+    catch(_){ toast('Не удалось скопировать'); }
+    document.body.removeChild(ta);
+  }
+}
+
 /* ========== NAV ========== */
 function nav(el){
   document.querySelectorAll('nav.bottom button').forEach(b=>b.classList.remove('on'));
@@ -584,7 +888,10 @@ function nav(el){
 
 /* ========== МОДАЛКИ ========== */
 function openModal(id){
-  if(id==='m-ex') fillSelects();
+  if(id==='m-ex'){
+    fillSelects();
+    renderPhotoZone();
+  }
   document.getElementById(id).classList.add('on');
 }
 function closeModal(id){ document.getElementById(id).classList.remove('on'); }
@@ -624,6 +931,7 @@ renderTrainings();
 renderEx();
 renderChips();
 fillSelects();
+applyAvatar();
 updTimer();
 </script>
 </body>
