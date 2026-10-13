@@ -6,11 +6,10 @@
 <meta name="theme-color" content="#0e1116">
 <title>АС — Фитнес</title>
 <style>
-  /* ============ ТЕМЫ (9 схем) ============ */
   :root, [data-theme="neon"]{
-    --bg:#0e1116; --bg2:#151a22; --card:#1a2029; --card2:#222a36;
-    --line:#2a3340; --txt:#e8edf4; --mut:#8a97a8;
-    --acc:#ff5b2e; --acc2:#ffb02e; --ok:#2ecc71; --blue:#3aa0ff;
+    --bg:#0e1116;--bg2:#151a22;--card:#1a2029;--card2:#222a36;
+    --line:#2a3340;--txt:#e8edf4;--mut:#8a97a8;
+    --acc:#ff5b2e;--acc2:#ffb02e;--ok:#2ecc71;--blue:#3aa0ff;
     --grad:linear-gradient(135deg,var(--acc),var(--acc2));
     --shadow:0 8px 24px rgba(0,0,0,.35);
   }
@@ -24,15 +23,18 @@
   [data-theme="sand"]{--bg:#f5f1e8;--bg2:#ebe4d6;--card:#fff;--card2:#f9f6ee;--line:#d6cdb8;--txt:#2a2419;--mut:#8a7d63;--acc:#b45309;--acc2:#78350f;--ok:#16a34a;--grad:linear-gradient(135deg,#b45309,#78350f);--shadow:0 4px 16px rgba(42,36,25,.1)}
 
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;height:100%;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;-webkit-font-smoothing:antialiased}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:var(--bg);color:var(--txt);padding-bottom:110px;overflow-x:hidden;
-    transition:background .3s,color .3s}
-  .app{max-width:560px;margin:0 auto;padding:12px}
+    background:var(--bg);color:var(--txt);min-height:100vh;
+    overflow-x:hidden;transition:background .3s,color .3s;
+    padding-bottom:120px}
+
+  /* Обёртка для отступов */
+  .app{max-width:560px;margin:0 auto;padding:12px 12px 120px}
 
   /* HEADER */
   header.top{display:flex;align-items:center;justify-content:space-between;
-    padding:6px 4px 12px;position:sticky;top:0;z-index:30;background:var(--bg);
+    padding:8px 4px;position:sticky;top:0;z-index:30;background:var(--bg);
     margin:-12px -12px 8px;padding-left:16px;padding-right:16px;padding-top:14px}
   .logo{font-weight:800;font-size:20px;letter-spacing:1px;background:var(--grad);
     -webkit-background-clip:text;background-clip:text;color:transparent}
@@ -43,7 +45,17 @@
     display:flex;align-items:center;justify-content:center;transition:.2s}
   .icon-btn:active{transform:scale(.92);background:var(--card2)}
 
-  /* CARDS */
+  /* XP BAR в шапке */
+  .xp-head{display:flex;align-items:center;gap:8px;flex:1;max-width:180px}
+  .xp-lvl{width:36px;height:36px;border-radius:50%;background:var(--grad);
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;
+    color:var(--bg);flex:0 0 auto;box-shadow:0 0 12px color-mix(in srgb, var(--acc) 50%, transparent)}
+  .xp-info{flex:1;min-width:0}
+  .xp-rank{font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.8px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .xp-bar{height:5px;background:var(--line);border-radius:5px;overflow:hidden;margin-top:3px}
+  .xp-bar i{display:block;height:100%;background:var(--grad);border-radius:5px;transition:width .6s}
+
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
     padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
   .card h2{margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;
@@ -58,7 +70,7 @@
   .prog .bar{height:4px;background:var(--line);border-radius:4px;margin-top:6px;overflow:hidden}
   .prog .bar i{display:block;height:100%;background:var(--grad);border-radius:4px;transition:width .4s}
 
-  /* CALENDAR: HEADER + WEEK */
+  /* CALENDAR */
   .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
   .cal-head .title{font-size:14px;font-weight:800}
   .cal-head .title b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -68,7 +80,6 @@
     display:flex;align-items:center;justify-content:center;transition:.2s}
   .cal-nav button:active{transform:scale(.92);background:var(--card)}
 
-  /* WEEK DAYS ROW */
   .week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:4px}
   .day{background:var(--card2);border:1px solid var(--line);border-radius:10px;
     padding:7px 3px;text-align:center;cursor:pointer;transition:.2s;position:relative}
@@ -82,18 +93,13 @@
   .day.done::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
     width:4px;height:4px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok)}
   .day.selected.done::after{background:var(--bg)}
-  .day.empty{background:transparent;border-color:transparent;cursor:default}
 
-  /* MONTH GRID */
   .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
   .month-grid .mhead{text-align:center;font-size:10px;color:var(--mut);
     text-transform:uppercase;font-weight:700;padding:4px 0}
-  .mday{
-    aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  .mday{aspect-ratio:1;display:flex;align-items:center;justify-content:center;
     border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;
-    background:var(--card2);border:1px solid transparent;transition:.15s;
-    position:relative;
-  }
+    background:var(--card2);border:1px solid transparent;transition:.15s;position:relative}
   .mday:active{transform:scale(.92)}
   .mday.other{color:var(--mut);opacity:.35;background:transparent}
   .mday.today{border-color:var(--acc);color:var(--acc);font-weight:800}
@@ -110,6 +116,10 @@
   .train .info{flex:1;min-width:0}
   .train .name{font-weight:600;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .train .meta{font-size:11px;color:var(--mut);margin-top:2px}
+  .train .xp-badge{font-size:10px;font-weight:800;color:var(--ok);
+    background:color-mix(in srgb, var(--ok) 12%, transparent);
+    padding:3px 7px;border-radius:20px;border:1px solid color-mix(in srgb, var(--ok) 30%, transparent);
+    white-space:nowrap}
   .train .chk{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);
     display:flex;align-items:center;justify-content:center;flex:0 0 auto;cursor:pointer;transition:.2s}
   .train .chk.on{background:var(--ok);border-color:var(--ok);box-shadow:0 0 10px var(--ok)}
@@ -154,8 +164,7 @@
     display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:20px;overflow:hidden}
   .ex .thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .ex .txt{font-size:13px;line-height:1.35;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
-  .ex .txt .sub{font-size:11px;color:var(--mut);margin-top:3px;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ex .txt .sub{font-size:11px;color:var(--mut);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .ex .badge{font-size:10px;color:var(--acc2);
     background:color-mix(in srgb, var(--acc2) 15%, transparent);
     padding:3px 8px;border-radius:20px;font-weight:700;flex:0 0 auto;
@@ -234,6 +243,35 @@
   .mini-stat .l{font-size:10px;color:var(--mut);text-transform:uppercase;
     letter-spacing:.8px;margin-top:3px}
 
+  /* XP CARD */
+  .xp-card{background:linear-gradient(135deg, color-mix(in srgb, var(--acc) 18%, var(--card)), var(--card));
+    border:1px solid color-mix(in srgb, var(--acc) 30%, transparent)}
+  .xp-main{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .xp-level-big{width:72px;height:72px;border-radius:50%;background:var(--grad);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:var(--bg);box-shadow:0 0 24px color-mix(in srgb, var(--acc) 45%, transparent);
+    flex:0 0 auto}
+  .xp-level-big .num{font-size:26px;font-weight:900;line-height:1}
+  .xp-level-big .lbl{font-size:8px;font-weight:800;letter-spacing:1px;margin-top:2px;opacity:.8}
+  .xp-meta{flex:1;min-width:0}
+  .xp-meta .rank{font-size:15px;font-weight:800;background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .xp-meta .total{font-size:11px;color:var(--mut);margin-top:3px}
+  .xp-meta .bar{height:7px;background:var(--line);border-radius:7px;overflow:hidden;margin-top:8px}
+  .xp-meta .bar i{display:block;height:100%;background:var(--grad);border-radius:7px;transition:width .6s}
+
+  .xp-formula{font-size:11px;color:var(--mut);line-height:1.7;
+    background:var(--card2);padding:10px 12px;border-radius:10px;
+    border-left:2px solid var(--acc2);margin-top:8px}
+  .xp-formula code{color:var(--acc2);font-weight:700;background:transparent;font-family:inherit}
+  .xp-formula b{color:var(--txt)}
+
+  /* LOG ITEM */
+  .log-item{display:flex;justify-content:space-between;align-items:center;
+    padding:8px 10px;background:var(--card2);border-radius:8px;font-size:12px;margin-bottom:5px}
+  .log-item .l{color:var(--mut);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .log-item .v{color:var(--ok);font-weight:800;font-variant-numeric:tabular-nums}
+
   /* THEME PICKER */
   .themes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .theme-tile{border-radius:12px;border:2px solid var(--line);overflow:hidden;
@@ -248,18 +286,23 @@
     align-items:center;justify-content:center;font-size:12px;font-weight:900}
   .theme-tile.on .check{display:flex}
 
-  /* MODAL */
-  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);
+  /* MODAL — ФИКС СКРОЛЛА */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);
     backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-    display:none;align-items:flex-end;justify-content:center;z-index:100}
+    display:none;align-items:flex-end;justify-content:center;z-index:100;
+    overflow:hidden;padding:0}
   .modal-bg.on{display:flex;animation:fade .2s}
   @keyframes fade{from{opacity:0}to{opacity:1}}
   .modal{background:var(--bg2);width:100%;max-width:560px;
-    border-radius:22px 22px 0 0;padding:18px 16px 26px;border-top:1px solid var(--line);
-    max-height:90vh;overflow-y:auto;animation:up .28s cubic-bezier(.2,.9,.3,1.1)}
+    border-radius:22px 22px 0 0;padding:18px 16px 24px;border-top:1px solid var(--line);
+    max-height:92vh;overflow-y:auto;overflow-x:hidden;
+    animation:up .28s cubic-bezier(.2,.9,.3,1.1);
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    padding-bottom:calc(24px + env(safe-area-inset-bottom))}
   @keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .modal::before{content:"";display:block;width:40px;height:4px;border-radius:4px;
-    background:var(--line);margin:-6px auto 14px}
+    background:var(--line);margin:-6px auto 14px;flex:0 0 auto}
   .modal h3{margin:0 0 14px;font-size:17px;font-weight:800;
     background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .field{margin-bottom:11px}
@@ -267,7 +310,8 @@
     letter-spacing:1px;margin-bottom:5px;font-weight:600}
   .field input,.field select,.field textarea{width:100%;padding:11px 12px;border-radius:10px;
     background:var(--card);border:1px solid var(--line);color:var(--txt);
-    font-size:14px;outline:none;font-family:inherit;transition:.2s}
+    font-size:14px;outline:none;font-family:inherit;transition:.2s;
+    -webkit-appearance:none;appearance:none}
   .field input:focus,.field select:focus,.field textarea:focus{
     border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb, var(--acc) 20%, transparent)}
   .field textarea{resize:vertical;min-height:60px}
@@ -284,7 +328,7 @@
   .photo-zone{position:relative;border:2px dashed var(--line);border-radius:12px;
     padding:18px;text-align:center;cursor:pointer;transition:.2s;background:var(--card);
     min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-  .photo-zone:active{border-color:var(--acc);background:color-mix(in srgb, var(--acc) 5%, var(--card))}
+  .photo-zone:active{border-color:var(--acc)}
   .photo-zone.has-img{padding:0;border-style:solid;overflow:hidden;min-height:160px}
   .photo-zone img{width:100%;max-height:240px;object-fit:cover;display:block}
   .photo-zone .ico{font-size:28px;opacity:.5}
@@ -292,11 +336,39 @@
   .photo-zone .clear-img{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);
     color:#fff;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px}
 
-  /* TIMER */
-  .timer-display{text-align:center;font-size:58px;font-weight:900;font-variant-numeric:tabular-nums;
-    letter-spacing:2px;background:var(--grad);
-    -webkit-background-clip:text;background-clip:text;color:transparent;margin:4px 0;line-height:1}
-  .timer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+  /* ============ РЕДАКТОР ТАЙМЕРА ============ */
+  .timer-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .timer-preset{padding:7px 12px;border-radius:10px;font-size:11.5px;font-weight:700;
+    background:var(--card2);border:1px solid var(--line);color:var(--mut);cursor:pointer;transition:.2s}
+  .timer-preset:active{transform:scale(.95)}
+  .timer-preset.on{background:var(--grad);color:var(--bg);border-color:transparent}
+
+  .time-editor{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+  .time-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+    background:var(--card2);padding:10px 12px;border-radius:12px;border:1px solid var(--line)}
+  .time-row .lbl{font-size:12px;font-weight:700}
+  .time-row .lbl small{display:block;font-size:10px;color:var(--mut);font-weight:500;margin-top:2px}
+  .time-controls{display:flex;align-items:center;gap:6px}
+  .time-controls button{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);
+    background:var(--card);color:var(--txt);font-size:16px;font-weight:900;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .time-controls button:active{transform:scale(.9);background:var(--card2)}
+  .time-controls .val{min-width:56px;text-align:center;font-size:16px;font-weight:900;
+    font-variant-numeric:tabular-nums;color:var(--acc2)}
+
+  /* Таймер live */
+  .timer-display{text-align:center;font-size:60px;font-weight:900;font-variant-numeric:tabular-nums;
+    letter-spacing:1px;background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 4px;line-height:1}
+  .timer-phase{text-align:center;font-size:12px;font-weight:800;letter-spacing:2px;
+    text-transform:uppercase;color:var(--mut);margin-bottom:14px}
+  .timer-phase.prep{color:var(--blue)}
+  .timer-phase.work{color:var(--acc)}
+  .timer-phase.rest{color:var(--ok)}
+  .timer-progress{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:0 auto 14px;
+    max-width:400px}
+  .timer-progress i{display:block;height:100%;background:var(--grad);transition:width .3s linear}
+  .timer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
   .tcell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px;text-align:center}
   .tcell .lbl{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
   .tcell .v{font-size:17px;font-weight:800;margin-top:2px}
@@ -324,14 +396,22 @@
     max-width:90%;text-align:center}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
+  /* XP FLY */
+  .xp-fly{position:fixed;top:80px;left:50%;transform:translateX(-50%);
+    background:var(--grad);color:var(--bg);font-weight:900;font-size:20px;
+    padding:12px 24px;border-radius:14px;z-index:300;pointer-events:none;
+    box-shadow:0 8px 32px color-mix(in srgb, var(--acc) 60%, transparent);
+    animation:xpfly 1.6s cubic-bezier(.2,.9,.3,1.2);opacity:0}
+  @keyframes xpfly{
+    0%{opacity:0;transform:translateX(-50%) translateY(20px) scale(.6)}
+    20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.15)}
+    60%{opacity:1;transform:translateX(-50%) translateY(-10px) scale(1)}
+    100%{opacity:0;transform:translateX(-50%) translateY(-60px) scale(.9)}
+  }
+
   .note{font-size:11px;color:var(--mut);margin-top:8px;line-height:1.5;
     padding:9px 12px;background:var(--card2);border-radius:10px;border-left:2px solid var(--acc2)}
   .note b{color:var(--acc2)}
-
-  .filter-tabs{display:flex;gap:6px;margin-bottom:10px}
-  .filter-tabs .ft{flex:1;padding:9px;border-radius:10px;font-size:12px;font-weight:700;
-    background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;text-align:center}
-  .filter-tabs .ft.on{background:var(--grad);color:var(--bg);border-color:transparent}
 </style>
 </head>
 <body>
@@ -339,21 +419,27 @@
 <div class="app">
   <header class="top">
     <div class="logo">АС <span>FIT SYSTEM</span></div>
+    <div class="xp-head" onclick="navTo('v-stat')" style="cursor:pointer">
+      <div class="xp-lvl" id="headLvl">1</div>
+      <div class="xp-info">
+        <div class="xp-rank" id="headRank">Новичок</div>
+        <div class="xp-bar"><i id="headXpBar" style="width:0%"></i></div>
+      </div>
+    </div>
     <div class="head-actions">
-      <button class="icon-btn" onclick="toggleFabMenu()" title="Быстрые действия">⚡</button>
+      <button class="icon-btn" onclick="openTimerQuick()" title="Таймер">⏱</button>
       <button class="icon-btn" onclick="navTo('v-prof')" title="Настройки">⚙️</button>
     </div>
   </header>
 
-  <!-- ============ ГЛАВНАЯ: КАЛЕНДАРЬ ============ -->
+  <!-- ============ ГЛАВНАЯ ============ -->
   <section class="view on" id="v-main">
     <div class="prog-row">
       <div class="prog"><div class="lbl">Неделя</div><div class="val" id="weekNum">12<span style="color:var(--mut);font-size:11px">/52</span></div><div class="bar"><i style="width:23%"></i></div></div>
       <div class="prog"><div class="lbl">Месяц</div><div class="val" id="monthLabel">Март</div><div class="bar"><i style="width:33%"></i></div></div>
-      <div class="prog"><div class="lbl">Год</div><div class="val" id="yearLabel">2027</div><div class="bar"><i style="width:20%"></i></div></div>
+      <div class="prog"><div class="lbl">XP</div><div class="val" id="xpTopVal">0</div><div class="bar"><i id="xpTopBar" style="width:0%"></i></div></div>
     </div>
 
-    <!-- НЕДЕЛЯ -->
     <div class="card">
       <div class="cal-head">
         <div class="title">Неделя <b id="weekRange">24–30 марта</b></div>
@@ -366,7 +452,6 @@
       <div class="week" id="weekRow"></div>
     </div>
 
-    <!-- МЕСЯЦ -->
     <div class="card">
       <div class="cal-head">
         <div class="title"><b id="monthTitle">Март 2027</b></div>
@@ -379,7 +464,6 @@
       <div class="month-grid" id="monthGrid"></div>
     </div>
 
-    <!-- ТРЕНИРОВКИ ВЫБРАННОГО ДНЯ -->
     <div class="card">
       <h2><span class="dot"></span>Тренировки · <span id="selectedDateLabel" style="color:var(--acc2)"></span></h2>
       <div id="trainList"></div>
@@ -388,7 +472,7 @@
     <button class="btn primary full" onclick="openModal('m-train')">+ Добавить тренировку</button>
   </section>
 
-  <!-- ============ УПРАЖНЕНИЯ (СВАП: ФИЛЬТРЫ СВЕРХУ) ============ -->
+  <!-- ============ УПРАЖНЕНИЯ ============ -->
   <section class="view" id="v-ex">
     <div class="search">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
@@ -419,8 +503,37 @@
     </div>
   </section>
 
-  <!-- ============ СТАТИСТИКА ============ -->
+  <!-- ============ СТАТИСТИКА + XP ============ -->
   <section class="view" id="v-stat">
+    <!-- XP CARD -->
+    <div class="card xp-card">
+      <div class="xp-main">
+        <div class="xp-level-big">
+          <div class="num" id="xpLevel">1</div>
+          <div class="lbl">LEVEL</div>
+        </div>
+        <div class="xp-meta">
+          <div class="rank" id="xpRank">Новичок</div>
+          <div class="total"><b id="xpTotal">0</b> XP всего · до след. <b id="xpToNext">100</b> XP</div>
+          <div class="bar"><i id="xpBar" style="width:0%"></i></div>
+        </div>
+      </div>
+      <div class="xp-formula">
+        <b>📐 Формулы XP:</b><br>
+        • Время: <code>сек × 0.01</code><br>
+        • С весом: <code>(вес / масса тела) × 0.01 × повторы</code><br>
+        • Свой вес: <code>повторы × 0.1</code><br>
+        • Комплекс (круги): <code>сумма + бонус 20%</code>
+      </div>
+    </div>
+
+    <!-- XP за последние тренировки -->
+    <div class="card">
+      <h2><span class="dot"></span>Последние начисления XP</h2>
+      <div id="xpLog"><div class="empty" style="padding:12px">Пока нет данных.<br>Отметь тренировку галочкой ✓</div></div>
+    </div>
+
+    <!-- Сводка -->
     <div class="card">
       <h2><span class="dot"></span>Сводка</h2>
       <div class="stats-grid">
@@ -431,7 +544,6 @@
       </div>
     </div>
 
-    <!-- СТАТИСТИКА ПО УПРАЖНЕНИЯМ -->
     <div class="card">
       <h2><span class="dot"></span>📊 Статистика упражнений</h2>
       <div class="stats-grid">
@@ -445,13 +557,11 @@
     <div class="card">
       <h2><span class="dot"></span>Предпочтения: снаряды</h2>
       <div class="stat-list" id="statGears"></div>
-      <div class="note">💡 Процент от общего числа упражнений (в скобках).</div>
     </div>
 
     <div class="card">
       <h2><span class="dot"></span>Предпочтения: части тела</h2>
       <div class="stat-list" id="statZones"></div>
-      <div class="note">🎯 Видно, какие зоны качаются, а какие забыты.</div>
     </div>
 
     <div class="card">
@@ -462,14 +572,6 @@
     <div class="card">
       <h2><span class="dot"></span>По категориям</h2>
       <div class="stat-list" id="statCats"></div>
-    </div>
-
-    <div class="card">
-      <h2><span class="dot"></span>Прогресс недели</h2>
-      <div class="prog-row" style="margin-bottom:0">
-        <div class="prog"><div class="lbl">Тренировок</div><div class="val">3<span style="color:var(--mut);font-size:11px">/5</span></div><div class="bar"><i style="width:60%"></i></div></div>
-        <div class="prog"><div class="lbl">Время</div><div class="val">76<span style="color:var(--mut);font-size:11px"> мин</span></div><div class="bar"><i style="width:55%"></i></div></div>
-      </div>
     </div>
   </section>
 
@@ -484,7 +586,7 @@
         </div>
         <div class="pinfo">
           <div class="pname" id="pName">Александр</div>
-          <div class="pmeta">Возраст: <b id="pAge">34</b> · Вес: <b id="pWeight">78</b> кг</div>
+          <div class="pmeta">Возраст: <b id="pAge">34</b> · Масса: <b id="pWeight">78</b> кг</div>
         </div>
       </div>
       <div class="btn-row" style="margin-top:12px">
@@ -498,9 +600,73 @@
       <div class="field"><label>Имя</label><input id="inName" value="Александр"></div>
       <div class="row">
         <div class="field"><label>Возраст</label><input id="inAge" type="number" value="34"></div>
-        <div class="field"><label>Вес, кг</label><input id="inWeight" type="number" value="78"></div>
+        <div class="field"><label>Масса тела, кг</label><input id="inWeight" type="number" value="78"></div>
       </div>
-      <button class="btn primary full" onclick="saveProfile()">Сохранить</button>
+      <div class="note">⚖️ Масса тела используется в формуле XP для упражнений с отягощением.</div>
+      <button class="btn primary full" style="margin-top:8px" onclick="saveProfile()">Сохранить</button>
+    </div>
+
+    <!-- РЕДАКТОР ТАЙМЕРА -->
+    <div class="card">
+      <h2><span class="dot"></span>⏱ Редактор таймера</h2>
+      <div class="timer-presets" id="timerPresets"></div>
+
+      <div class="time-editor">
+        <div class="time-row">
+          <div class="lbl">Подготовка <small>перед стартом</small></div>
+          <div class="time-controls">
+            <button onclick="adjTimer('prep',-5)">−</button>
+            <span class="val" id="tPrep">10с</span>
+            <button onclick="adjTimer('prep',5)">+</button>
+          </div>
+        </div>
+        <div class="time-row">
+          <div class="lbl">Работа <small>фаза нагрузки</small></div>
+          <div class="time-controls">
+            <button onclick="adjTimer('work',-5)">−</button>
+            <span class="val" id="tWork">30с</span>
+            <button onclick="adjTimer('work',5)">+</button>
+          </div>
+        </div>
+        <div class="time-row">
+          <div class="lbl">Отдых <small>между подходами</small></div>
+          <div class="time-controls">
+            <button onclick="adjTimer('rest',-5)">−</button>
+            <span class="val" id="tRest">30с</span>
+            <button onclick="adjTimer('rest',5)">+</button>
+          </div>
+        </div>
+        <div class="time-row">
+          <div class="lbl">Подходов <small>в одном круге</small></div>
+          <div class="time-controls">
+            <button onclick="adjTimer('sets',-1)">−</button>
+            <span class="val" id="tSets">3</span>
+            <button onclick="adjTimer('sets',1)">+</button>
+          </div>
+        </div>
+        <div class="time-row">
+          <div class="lbl">Кругов <small>повторений цикла</small></div>
+          <div class="time-controls">
+            <button onclick="adjTimer('rounds',-1)">−</button>
+            <span class="val" id="tRounds">5</span>
+            <button onclick="adjTimer('rounds',1)">+</button>
+          </div>
+        </div>
+        <div class="time-row">
+          <div class="lbl">Отдых между кругами <small>доп. пауза</small></div>
+          <div class="time-controls">
+            <button onclick="adjTimer('roundRest',-10)">−</button>
+            <span class="val" id="tRoundRest">60с</span>
+            <button onclick="adjTimer('roundRest',10)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn primary" onclick="openModal('m-timer')">▶ Открыть таймер</button>
+        <button class="btn" onclick="saveTimerConfig()">💾 Сохранить</button>
+      </div>
+      <button class="btn full" style="margin-top:8px" onclick="resetTimerConfig()">⟳ Сброс по умолчанию</button>
     </div>
 
     <div class="card">
@@ -515,12 +681,6 @@
       <button class="btn full" style="margin-bottom:8px" onclick="shareDB()">🔗 Поделиться (Share API)</button>
       <button class="btn full" onclick="copyDB()">📋 Скопировать в буфер</button>
       <input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="importDB(this)">
-      <div class="note">💡 Экспорт → отправь файл. Друг: импорт → выберет файл.</div>
-    </div>
-
-    <div class="card">
-      <h2><span class="dot"></span>Таймер</h2>
-      <button class="btn primary full" onclick="openModal('m-timer')">Открыть таймер</button>
     </div>
 
     <div class="card">
@@ -551,7 +711,7 @@
   </button>
   <button data-v="v-stat" onclick="nav(this)">
     <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>
-    Стат.
+    XP / Стат.
   </button>
   <button data-v="v-prof" onclick="nav(this)">
     <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>
@@ -559,7 +719,7 @@
   </button>
 </nav>
 
-<!-- MODALS -->
+<!-- ============ MODAL: УПРАЖНЕНИЕ ============ -->
 <div class="modal-bg" id="m-ex" onclick="if(event.target===this)closeModal('m-ex')">
   <div class="modal">
     <h3>Добавить упражнение</h3>
@@ -575,25 +735,35 @@
       <div class="field"><label>Пар 1</label><input id="exP1" placeholder="—"></div>
       <div class="field"><label>Пар 2</label><input id="exP2" placeholder="—"></div>
     </div>
-    <div class="field">
-      <label>Смена конечностей</label>
-      <div class="chips"><div class="chip on" id="exLimb" onclick="this.classList.toggle('on')">✓ Да</div></div>
-    </div>
     <div class="field"><label>Снаряд</label><select id="exGear"></select></div>
     <div class="field"><label>Зона</label><select id="exZone"></select></div>
     <div class="field"><label>Категория</label><select id="exCat"></select></div>
     <div class="field"><label>Тип</label>
       <select id="exType"><option>Сила</option><option>Спец упражнение</option><option>Растяжка</option><option>Скоростно-силовое</option><option>Выносливость</option></select>
     </div>
-    <div class="field"><label>Уровень</label>
-      <select id="exLevel"><option>Начинающий</option><option>Средний</option><option>Продвинутый</option></select>
+
+    <div class="field">
+      <label>Формат выполнения</label>
+      <select id="exFormat">
+        <option value="time">⏱ На время (сек)</option>
+        <option value="weight">🏋️ С отягощением (кг × повторы)</option>
+        <option value="reps">💪 Свой вес (повторы)</option>
+      </select>
     </div>
+    <div class="note" id="formatHint">Формат определяет формулу XP. На время — сек×0.01. С весом — (вес/масса)×0.01×повторы. Свой вес — повторы×0.1.</div>
+
+    <div class="row">
+      <div class="field"><label>Рабочий вес, кг</label><input id="exWeight" type="number" placeholder="0" value="0"></div>
+      <div class="field"><label>Повторы / сек</label><input id="exReps" type="number" placeholder="0" value="0"></div>
+    </div>
+
     <div class="field"><label>Описание</label><textarea id="exDesc" placeholder="Техника, нюансы..."></textarea></div>
     <button class="btn primary full" style="margin-top:8px" onclick="saveEx()">Сохранить</button>
     <button class="close" onclick="closeModal('m-ex')">Отмена</button>
   </div>
 </div>
 
+<!-- ============ MODAL: КОМПЛЕКС ============ -->
 <div class="modal-bg" id="m-comp" onclick="if(event.target===this)closeModal('m-comp')">
   <div class="modal">
     <h3>Новый комплекс</h3>
@@ -610,6 +780,7 @@
   </div>
 </div>
 
+<!-- ============ MODAL: ТРЕНИРОВКА ============ -->
 <div class="modal-bg" id="m-train" onclick="if(event.target===this)closeModal('m-train')">
   <div class="modal">
     <h3>Новая тренировка</h3>
@@ -618,36 +789,47 @@
       <div class="field"><label>Дата</label><input type="date" id="tDate"></div>
       <div class="field"><label>Время</label><input type="time" id="tTime" value="16:00"></div>
     </div>
+
     <div class="field">
-      <label>Повторять по дням</label>
-      <div class="days" id="daysRow">
-        <div class="d" onclick="this.classList.toggle('on')">Пн</div>
-        <div class="d" onclick="this.classList.toggle('on')">Вт</div>
-        <div class="d" onclick="this.classList.toggle('on')">Ср</div>
-        <div class="d" onclick="this.classList.toggle('on')">Чт</div>
-        <div class="d" onclick="this.classList.toggle('on')">Пт</div>
-        <div class="d" onclick="this.classList.toggle('on')">Сб</div>
-        <div class="d" onclick="this.classList.toggle('on')">Вс</div>
-      </div>
+      <label>Тип начисления XP</label>
+      <select id="tXpType">
+        <option value="time">⏱ На время (общее время, сек)</option>
+        <option value="weight">🏋️ С отягощением</option>
+        <option value="reps">💪 Повторы</option>
+        <option value="manual">⚙️ Вручную (задать XP)</option>
+      </select>
     </div>
+
+    <div class="row">
+      <div class="field"><label>Рабочий вес, кг</label><input id="tWeight" type="number" value="0"></div>
+      <div class="field"><label>Повторы / сек</label><input id="tReps" type="number" value="0"></div>
+    </div>
+    <div class="field"><label>Ручной XP (если выбрано выше)</label><input id="tXpManual" type="number" value="0"></div>
+
+    <div class="note">⭐ XP рассчитывается при отметке тренировки как выполненной. Формулы учитывают формат.</div>
+
     <button class="btn primary full" onclick="saveTrain()">Создать</button>
     <button class="close" onclick="closeModal('m-train')">Отмена</button>
   </div>
 </div>
 
+<!-- ============ MODAL: ТАЙМЕР ============ -->
 <div class="modal-bg" id="m-timer" onclick="if(event.target===this)closeModal('m-timer')">
   <div class="modal">
     <h3>Таймер</h3>
-    <div class="timer-display" id="tDisp">00:30</div>
+    <div class="timer-phase" id="tPhase">Подготовка</div>
+    <div class="timer-display" id="tDisp">00:10</div>
+    <div class="timer-progress"><i id="tProgress" style="width:0%"></i></div>
     <div class="timer-grid">
-      <div class="tcell"><div class="lbl">Круг</div><div class="v">1/5</div></div>
-      <div class="tcell"><div class="lbl">Подход</div><div class="v">1/3</div></div>
-      <div class="tcell"><div class="lbl">Отдых</div><div class="v">30с</div></div>
+      <div class="tcell"><div class="lbl">Круг</div><div class="v" id="tRoundCur">1/5</div></div>
+      <div class="tcell"><div class="lbl">Подход</div><div class="v" id="tSetCur">1/3</div></div>
+      <div class="tcell"><div class="lbl">Отдых</div><div class="v" id="tRestCur">30с</div></div>
     </div>
     <div class="btn-row">
       <button class="btn primary" onclick="toggleTimer()" id="tBtn" style="flex:2">▶ Старт</button>
       <button class="btn" onclick="resetTimer()">⟳</button>
     </div>
+    <button class="btn full" style="margin-top:8px" onclick="closeModal('m-timer');navTo('v-prof')">⚙️ Настроить</button>
     <button class="close" onclick="closeModal('m-timer')">Закрыть</button>
   </div>
 </div>
@@ -659,7 +841,6 @@
 const DEFAULT_ZONES = ['Шея','Грудь','Голени','Плечи','Ягодицы','Стопы','Спина','Бедра','Кисти','Пресс','Кор'];
 const DEFAULT_GEARS = ['Гвозди','Скакалка','Гиря','Турник','Брусья','Кольца','Босу','TRX','Эспандер','Резина борцовская','Ролл МФР','Fightball','Баланс подушка','Без снаряда','Гантели','Штанга'];
 const DEFAULT_CATS = ['Силовые','Скоростно-силовые','Выносливость','Координационные','Гибкость','Собственный вес','Гиревой спорт','Функциональные'];
-const TYPES = ['Сила','Спец упражнение','Растяжка','Скоростно-силовое','Выносливость'];
 const THEMES = [
   {id:'neon',name:'Neon',c1:'#ff5b2e',c2:'#ffb02e',bg:'#0e1116'},
   {id:'ocean',name:'Ocean',c1:'#00d4ff',c2:'#0088cc',bg:'#08131c'},
@@ -675,6 +856,45 @@ const MONTHS_RU = ['Январь','Февраль','Март','Апрель','М
 const MONTHS_RU_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const WD_SHORT = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
+/* ============== XP: ранги и уровни ============== */
+const RANKS = [
+  {min:1,  name:'Новичок',       color:'#8a97a8'},
+  {min:5,  name:'Любитель',      color:'#3aa0ff'},
+  {min:10, name:'Атлет',         color:'#2ecc71'},
+  {min:20, name:'Спортсмен',     color:'#ffb02e'},
+  {min:35, name:'Мастер',        color:'#ff5b2e'},
+  {min:50, name:'Ветеран',       color:'#a855f7'},
+  {min:75, name:'Чемпион',       color:'#00e5ff'},
+  {min:100,name:'Легенда',       color:'#ff00e5'},
+];
+// Формула: XP для перехода с уровня N на N+1 = 100 + 25*N^1.4
+function xpForLevel(level){
+  return Math.round(100 + 25 * Math.pow(level, 1.4));
+}
+// Общий XP, необходимый для достижения уровня N
+function totalXpForLevel(level){
+  let sum = 0;
+  for(let i=1; i<level; i++) sum += xpForLevel(i);
+  return sum;
+}
+// По общему XP — вычислить уровень и прогресс
+function computeLevel(totalXp){
+  let level = 1, remaining = totalXp;
+  while(true){
+    const need = xpForLevel(level);
+    if(remaining < need) break;
+    remaining -= need;
+    level++;
+    if(level > 999) break;
+  }
+  return {level, current: remaining, need: xpForLevel(level)};
+}
+function rankForLevel(lvl){
+  let r = RANKS[0];
+  for(const x of RANKS) if(lvl >= x.min) r = x;
+  return r;
+}
+
 /* ==================== ХРАНИЛИЩЕ ==================== */
 const store = {
   get(k, def){ try{ const v = localStorage.getItem('as_'+k); return v ? JSON.parse(v) : def; }catch(e){ return def; } },
@@ -685,22 +905,29 @@ let exercises = store.get('exercises', []);
 let zones = store.get('zones', DEFAULT_ZONES);
 let gears = store.get('gears', DEFAULT_GEARS);
 let cats = store.get('cats', DEFAULT_CATS);
-let trainings = store.get('trainings', []); // {date:'YYYY-MM-DD', time, name, meta, done}
+let trainings = store.get('trainings', []);
 let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
 let theme = store.get('theme', 'neon');
 let filter = 'all';
 let currentExPhoto = null;
 
+let totalXp = store.get('totalXp', 0);
+let xpLog = store.get('xpLog', []); // [{date, name, xp}]
+
+let timerConfig = store.get('timerConfig', {
+  prep: 10, work: 30, rest: 30, sets: 3, rounds: 5, roundRest: 60
+});
+
 /* Календарные переменные */
 const TODAY = new Date();
 let viewMonth = TODAY.getMonth();
 let viewYear = TODAY.getFullYear();
-let selectedDate = new Date(TODAY); // выбранный день
-let weekStart = startOfWeek(TODAY); // понедельник текущей недели
+let selectedDate = new Date(TODAY);
+let weekStart = startOfWeek(TODAY);
 
 function startOfWeek(d){
   const x = new Date(d);
-  const day = (x.getDay()+6)%7; // 0=Пн
+  const day = (x.getDay()+6)%7;
   x.setDate(x.getDate()-day);
   x.setHours(0,0,0,0);
   return x;
@@ -716,10 +943,113 @@ function isoDate(d){
 let toastT;
 function toast(msg){
   const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('on');
+  el.textContent = msg; el.classList.add('on');
   clearTimeout(toastT);
   toastT = setTimeout(()=>el.classList.remove('on'), 2200);
+}
+
+/* ==================== XP FLY анимация ==================== */
+function xpFly(amount){
+  const el = document.createElement('div');
+  el.className = 'xp-fly';
+  el.textContent = `+${amount} XP`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 1700);
+}
+
+/* ==================== XP ФОРМУЛЫ ==================== */
+// Время: секунды × 0.01
+function xpFromTime(seconds){
+  return Math.round(seconds * 0.01 * 100) / 100;
+}
+// Вес: (рабочий_вес / масса_тела) × 0.01 × повторы
+function xpFromWeight(workWeight, bodyWeight, reps){
+  if(!bodyWeight || bodyWeight <= 0) bodyWeight = 70;
+  return Math.round(((workWeight / bodyWeight) * 0.01 * reps) * 100) / 100;
+}
+// Свой вес: повторы × 0.1
+function xpFromReps(reps){
+  return Math.round(reps * 0.1 * 100) / 100;
+}
+// Расчёт XP для тренировки по её данным
+function calcTrainingXp(t){
+  const type = t.xpType || 'time';
+  if(type === 'manual') return Math.max(0, +t.xpManual || 0);
+  if(type === 'time') return xpFromTime(+t.reps || 0);
+  if(type === 'weight') return xpFromWeight(+t.weight || 0, profile.weight || 70, +t.reps || 0);
+  if(type === 'reps') return xpFromReps(+t.reps || 0);
+  return 0;
+}
+
+/* ==================== XP СИСТЕМА ==================== */
+function addXp(amount, label){
+  if(amount <= 0) return;
+  totalXp += amount;
+  store.set('totalXp', totalXp);
+  xpLog.unshift({
+    date: new Date().toISOString(),
+    name: label,
+    xp: Math.round(amount * 100) / 100
+  });
+  if(xpLog.length > 50) xpLog = xpLog.slice(0, 50);
+  store.set('xpLog', xpLog);
+  xpFly(Math.round(amount * 100) / 100);
+  updateXpUI();
+}
+function removeXp(amount, label){
+  if(amount <= 0) return;
+  totalXp = Math.max(0, totalXp - amount);
+  store.set('totalXp', totalXp);
+  xpLog.unshift({date: new Date().toISOString(), name: label + ' (отмена)', xp: -Math.round(amount*100)/100});
+  if(xpLog.length > 50) xpLog = xpLog.slice(0, 50);
+  store.set('xpLog', xpLog);
+  updateXpUI();
+}
+
+function updateXpUI(){
+  const info = computeLevel(totalXp);
+  const rank = rankForLevel(info.level);
+  const pct = info.need > 0 ? Math.round((info.current/info.need)*100) : 0;
+
+  // Шапка
+  document.getElementById('headLvl').textContent = info.level;
+  document.getElementById('headRank').textContent = rank.name;
+  document.getElementById('headXpBar').style.width = pct + '%';
+
+  // Статистика
+  document.getElementById('xpLevel').textContent = info.level;
+  document.getElementById('xpRank').textContent = rank.name;
+  document.getElementById('xpTotal').textContent = Math.round(totalXp);
+  document.getElementById('xpToNext').textContent = Math.round(info.need - info.current);
+  document.getElementById('xpBar').style.width = pct + '%';
+
+  // Верхняя полоса
+  const top = document.getElementById('xpTopVal');
+  if(top){
+    top.innerHTML = Math.round(totalXp) + '<span style="color:var(--mut);font-size:11px"> XP</span>';
+    document.getElementById('xpTopBar').style.width = pct + '%';
+  }
+
+  // Лог
+  renderXpLog();
+}
+
+function renderXpLog(){
+  const el = document.getElementById('xpLog');
+  if(!el) return;
+  if(!xpLog.length){
+    el.innerHTML = '<div class="empty" style="padding:12px">Пока нет данных.<br>Отметь тренировку ✓</div>';
+    return;
+  }
+  el.innerHTML = xpLog.slice(0, 15).map(l=>{
+    const d = new Date(l.date);
+    const dt = `${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    const cls = l.xp >= 0 ? '' : 'style="color:var(--acc)"';
+    return `<div class="log-item">
+      <div class="l">${dt} · ${l.name}</div>
+      <div class="v" ${cls}>${l.xp >= 0 ? '+' : ''}${Math.round(l.xp*100)/100} XP</div>
+    </div>`;
+  }).join('');
 }
 
 /* ==================== ТЕМА ==================== */
@@ -832,10 +1162,9 @@ function renderPhotoZone(){
 }
 function clearExPhoto(){ currentExPhoto = null; renderPhotoZone(); }
 
-/* ==================== КАЛЕНДАРЬ: НЕДЕЛЯ ==================== */
+/* ==================== КАЛЕНДАРЬ ==================== */
 function renderWeek(){
   const endOfWeek = addDays(weekStart, 6);
-  // Заголовок диапазона
   let rangeTxt;
   if(weekStart.getMonth() === endOfWeek.getMonth()){
     rangeTxt = `${weekStart.getDate()}–${endOfWeek.getDate()} ${MONTHS_RU_GEN[weekStart.getMonth()]}`;
@@ -843,12 +1172,8 @@ function renderWeek(){
     rangeTxt = `${weekStart.getDate()} ${MONTHS_RU_GEN[weekStart.getMonth()]} – ${endOfWeek.getDate()} ${MONTHS_RU_GEN[endOfWeek.getMonth()]}`;
   }
   document.getElementById('weekRange').textContent = rangeTxt;
+  document.getElementById('weekNum').innerHTML = getISOWeek(weekStart) + '<span style="color:var(--mut);font-size:11px">/52</span>';
 
-  // Номер недели ISO
-  const weekNum = getISOWeek(weekStart);
-  document.getElementById('weekNum').innerHTML = weekNum + '<span style="color:var(--mut);font-size:11px">/52</span>';
-
-  // Дни
   let html = '';
   for(let i=0;i<7;i++){
     const d = addDays(weekStart, i);
@@ -864,7 +1189,6 @@ function renderWeek(){
   }
   document.getElementById('weekRow').innerHTML = html;
 }
-
 function getISOWeek(d){
   const date = new Date(d);
   date.setHours(0,0,0,0);
@@ -872,7 +1196,6 @@ function getISOWeek(d){
   const week1 = new Date(date.getFullYear(), 0, 4);
   return 1 + Math.round(((date - week1)/86400000 - 3 + ((week1.getDay()+6)%7))/7);
 }
-
 function shiftWeek(n){
   weekStart = addDays(weekStart, 7*n);
   selectedDate = new Date(weekStart);
@@ -881,51 +1204,39 @@ function shiftWeek(n){
 function goToday(){
   selectedDate = new Date(TODAY);
   weekStart = startOfWeek(TODAY);
-  viewMonth = TODAY.getMonth();
-  viewYear = TODAY.getFullYear();
+  viewMonth = TODAY.getMonth(); viewYear = TODAY.getFullYear();
   renderWeek(); renderMonth(); renderTrainings(); updateTopProgress();
 }
 function selectDate(d){
   selectedDate = d;
   weekStart = startOfWeek(d);
   viewMonth = d.getMonth(); viewYear = d.getFullYear();
-  renderWeek(); renderMonth(); renderTrainings(); updateTopProgress();
+  renderWeek(); renderMonth(); renderTrainings();
 }
 
-/* ==================== КАЛЕНДАРЬ: МЕСЯЦ ==================== */
 function renderMonth(){
   document.getElementById('monthTitle').textContent = `${MONTHS_RU[viewMonth]} ${viewYear}`;
   document.getElementById('monthLabel').textContent = MONTHS_RU[viewMonth];
-  document.getElementById('yearLabel').textContent = viewYear;
 
   const first = new Date(viewYear, viewMonth, 1);
-  const startDow = (first.getDay()+6)%7; // 0=Пн
+  const startDow = (first.getDay()+6)%7;
   const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
   const prevMonthDays = new Date(viewYear, viewMonth, 0).getDate();
 
   let html = WD_SHORT.map(w=>`<div class="mhead">${w}</div>`).join('');
-
-  // Предыдущий месяц (хвост)
   for(let i=startDow-1; i>=0; i--){
-    const d = prevMonthDays - i;
-    const date = new Date(viewYear, viewMonth-1, d);
-    html += mdayHtml(date, true);
+    html += mdayHtml(new Date(viewYear, viewMonth-1, prevMonthDays-i), true);
   }
-  // Текущий месяц
   for(let d=1; d<=daysInMonth; d++){
-    const date = new Date(viewYear, viewMonth, d);
-    html += mdayHtml(date, false);
+    html += mdayHtml(new Date(viewYear, viewMonth, d), false);
   }
-  // Следующий месяц (начало)
   const total = startDow + daysInMonth;
   const trailing = (7 - (total%7))%7;
   for(let d=1; d<=trailing; d++){
-    const date = new Date(viewYear, viewMonth+1, d);
-    html += mdayHtml(date, true);
+    html += mdayHtml(new Date(viewYear, viewMonth+1, d), true);
   }
   document.getElementById('monthGrid').innerHTML = html;
 }
-
 function mdayHtml(date, other){
   const isToday = sameDay(date, TODAY);
   const isSel = sameDay(date, selectedDate);
@@ -939,28 +1250,23 @@ function mdayHtml(date, other){
   if(doneAll) cls.push('done');
   return `<div class="${cls.join(' ')}" onclick="selectDate(new Date(${date.getFullYear()}, ${date.getMonth()}, ${date.getDate()}))">${date.getDate()}</div>`;
 }
-
 function shiftMonth(n){
   viewMonth += n;
   if(viewMonth < 0){ viewMonth = 11; viewYear--; }
   if(viewMonth > 11){ viewMonth = 0; viewYear++; }
-  renderMonth(); updateTopProgress();
+  renderMonth();
 }
 
 /* ==================== ТРЕНИРОВКИ ==================== */
-function hasTrainingOn(date){
-  return trainings.some(t => t.date === isoDate(date));
-}
+function hasTrainingOn(date){ return trainings.some(t => t.date === isoDate(date)); }
 function allTrainingsDoneOn(date){
   const list = trainings.filter(t => t.date === isoDate(date));
   return list.length > 0 && list.every(t => t.done);
 }
-
 function renderTrainings(){
   const key = isoDate(selectedDate);
   const list = trainings.filter(t => t.date === key).sort((a,b)=>a.time.localeCompare(b.time));
 
-  // Заголовок с датой
   const dLabel = `${selectedDate.getDate()} ${MONTHS_RU_GEN[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`;
   document.getElementById('selectedDateLabel').textContent = dLabel;
 
@@ -971,21 +1277,32 @@ function renderTrainings(){
   }
   box.innerHTML = list.map(t=>{
     const idx = trainings.indexOf(t);
+    const xp = calcTrainingXp(t);
+    const xpShow = xp > 0 ? `<div class="xp-badge">+${Math.round(xp*100)/100} XP</div>` : '';
     return `<div class="train">
       <div class="time">${t.time}</div>
       <div class="info"><div class="name">${t.name}</div><div class="meta">${t.meta||''}</div></div>
+      ${xpShow}
       <div class="chk ${t.done?'on':''}" onclick="toggleTrain(${idx})"></div>
     </div>`;
   }).join('');
 }
 function toggleTrain(i){
-  trainings[i].done = !trainings[i].done;
+  const t = trainings[i];
+  const xp = calcTrainingXp(t);
+  t.done = !t.done;
+  if(t.done && xp > 0){
+    addXp(xp, t.name);
+    t.xpAwarded = xp;
+  } else if(!t.done && t.xpAwarded){
+    removeXp(t.xpAwarded, t.name);
+    t.xpAwarded = 0;
+  }
   store.set('trainings', trainings);
   renderTrainings(); renderWeek(); renderMonth(); renderStats();
 }
 
 function updateTopProgress(){
-  // Простая логика: считаем прогресс недели и месяца по кол-ву тренировок с done
   const wStart = startOfWeek(TODAY);
   const wEnd = addDays(wStart, 6);
   const weekTrains = trainings.filter(t=>{
@@ -993,17 +1310,13 @@ function updateTopProgress(){
     return d >= wStart && d <= wEnd;
   });
   const weekDone = weekTrains.filter(t=>t.done).length;
-
   const monthTrains = trainings.filter(t=>{
     const d = new Date(t.date);
     return d.getMonth()===TODAY.getMonth() && d.getFullYear()===TODAY.getFullYear();
   });
   const monthDone = monthTrains.filter(t=>t.done).length;
-
-  // Считаем % (условно: 5 тренировок в неделю, 20 в месяц — как цель)
-  const wPct = Math.min(100, Math.round((weekDone/Math.max(1, weekTrains.length))*100)) || 0;
-  const mPct = Math.min(100, Math.round((monthDone/Math.max(1, monthTrains.length))*100)) || 0;
-
+  const wPct = Math.min(100, Math.round((weekDone/Math.max(1, weekTrains.length))*100));
+  const mPct = Math.min(100, Math.round((monthDone/Math.max(1, monthTrains.length))*100));
   const progs = document.querySelectorAll('#v-main .prog');
   if(progs[0]) progs[0].querySelector('.bar i').style.width = wPct + '%';
   if(progs[1]) progs[1].querySelector('.bar i').style.width = mPct + '%';
@@ -1013,7 +1326,6 @@ function updateTopProgress(){
 function renderEx(){
   const q = (document.getElementById('exSearch').value||'').toLowerCase();
   let list = exercises.filter(e=>e.name.toLowerCase().includes(q));
-
   if(filter==='zone'){
     const active = [...document.querySelectorAll('#zones .chip.on')].map(c=>c.dataset.val);
     if(active.length) list = list.filter(e=>active.includes(e.zone));
@@ -1022,9 +1334,7 @@ function renderEx(){
     const active = [...document.querySelectorAll('#gears .chip.on')].map(c=>c.dataset.val);
     if(active.length) list = list.filter(e=>active.includes(e.gear));
   }
-
   document.getElementById('exCount').textContent = list.length;
-
   const box = document.getElementById('exList');
   if(!list.length){
     box.innerHTML = '<div class="empty">Список пуст.<br>Жми <b>+</b> для добавления</div>';
@@ -1046,7 +1356,6 @@ function renderEx(){
     </div>`;
   }).join('');
 }
-
 function delEx(idx){
   const name = exercises[idx].name;
   exercises.splice(idx,1);
@@ -1062,9 +1371,7 @@ function clearAllEx(){
     toast('Все упражнения удалены');
   }
 }
-
 function renderChips(){
-  // Зоны: показываем количество упражнений и %
   document.getElementById('zones').innerHTML =
     zones.map(z=>{
       const cnt = exercises.filter(e=>e.zone===z).length;
@@ -1072,7 +1379,6 @@ function renderChips(){
       return `<div class="chip" data-val="${z}" onclick="toggleChip(this)">${z} <span class="cnt">${cnt} · ${pct}%</span></div>`;
     }).join('') +
     '<div class="chip add" onclick="addZone()">+ Добавить</div>';
-
   document.getElementById('gears').innerHTML =
     gears.map(g=>{
       const cnt = exercises.filter(e=>e.gear===g).length;
@@ -1102,31 +1408,22 @@ function renderStats(){
   document.getElementById('stTrains').textContent = trainings.length;
   document.getElementById('stGears').textContent = new Set(exercises.map(e=>e.gear).filter(Boolean)).size;
   document.getElementById('stZones').textContent = new Set(exercises.map(e=>e.zone).filter(Boolean)).size;
-
-  // Статистика упражнений
   document.getElementById('stWithPhoto').textContent = exercises.filter(e=>e.photo).length;
   document.getElementById('stNoPhoto').textContent = exercises.filter(e=>!e.photo).length;
   document.getElementById('stDesc').textContent = exercises.filter(e=>e.desc && e.desc.trim()).length;
   const avgZones = exercises.length ? (new Set(exercises.map(e=>e.zone)).size).toFixed(1) : 0;
   document.getElementById('stAvgZones').textContent = avgZones;
-
-  // Проценты от общего числа
   const total = exercises.length || 1;
   renderBarsWithPct('statGears', countBy(exercises, 'gear'), total);
   renderBarsWithPct('statZones', countBy(exercises, 'zone'), total);
   renderBarsWithPct('statTypes', countBy(exercises, 'type'), total);
   renderBarsWithPct('statCats', countBy(exercises, 'category'), total);
 }
-
 function countBy(arr, key){
   const m = {};
-  arr.forEach(e=>{
-    const k = e[key] || '—';
-    m[k] = (m[k]||0)+1;
-  });
+  arr.forEach(e=>{ const k = e[key] || '—'; m[k] = (m[k]||0)+1; });
   return m;
 }
-
 function renderBarsWithPct(containerId, counts, total){
   const el = document.getElementById(containerId);
   const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
@@ -1139,10 +1436,7 @@ function renderBarsWithPct(containerId, counts, total){
     const pct = Math.round((v/total)*100);
     const w = Math.round((v/max)*100);
     return `<div class="stat-item">
-      <div class="stat-top">
-        <span class="lbl">${k}</span>
-        <span class="val">${v} <b>· ${pct}%</b></span>
-      </div>
+      <div class="stat-top"><span class="lbl">${k}</span><span class="val">${v} <b>· ${pct}%</b></span></div>
       <div class="stat-bar"><i style="width:${w}%"></i></div>
     </div>`;
   }).join('');
@@ -1156,59 +1450,254 @@ function saveEx(){
     name, photo: currentExPhoto,
     p1: document.getElementById('exP1').value.trim(),
     p2: document.getElementById('exP2').value.trim(),
-    limb: document.getElementById('exLimb').classList.contains('on'),
     gear: document.getElementById('exGear').value,
     zone: document.getElementById('exZone').value,
     category: document.getElementById('exCat').value,
     type: document.getElementById('exType').value,
-    level: document.getElementById('exLevel').value,
+    format: document.getElementById('exFormat').value,
+    weight: +document.getElementById('exWeight').value || 0,
+    reps: +document.getElementById('exReps').value || 0,
     desc: document.getElementById('exDesc').value.trim()
   });
   store.set('exercises', exercises);
   document.getElementById('exName').value = '';
   document.getElementById('exP1').value = '';
   document.getElementById('exP2').value = '';
+  document.getElementById('exWeight').value = 0;
+  document.getElementById('exReps').value = 0;
   document.getElementById('exDesc').value = '';
   currentExPhoto = null; renderPhotoZone();
   closeModal('m-ex');
   renderEx(); renderChips(); renderStats();
   toast('Упражнение добавлено ✓');
 }
-
 function saveComp(){
   const n = document.getElementById('cName').value.trim();
   if(!n){ toast('Введи название'); return; }
   closeModal('m-comp'); toast('Комплекс создан ✓');
   document.getElementById('cName').value = '';
 }
-
 function saveTrain(){
   const name = document.getElementById('tName').value.trim();
   if(!name){ toast('Введи название'); return; }
   const time = document.getElementById('tTime').value || '00:00';
   const date = document.getElementById('tDate').value || isoDate(selectedDate);
-  trainings.push({date, time, name, meta: date, done: false});
+  const xpType = document.getElementById('tXpType').value;
+  const weight = +document.getElementById('tWeight').value || 0;
+  const reps = +document.getElementById('tReps').value || 0;
+  const xpManual = +document.getElementById('tXpManual').value || 0;
+  const t = {date, time, name, meta: date, done: false, xpType, weight, reps, xpManual};
+  trainings.push(t);
   store.set('trainings', trainings);
   document.getElementById('tName').value = '';
+  document.getElementById('tWeight').value = 0;
+  document.getElementById('tReps').value = 0;
+  document.getElementById('tXpManual').value = 0;
   closeModal('m-train');
-  // Выбираем тот день, куда добавили
   const d = new Date(date);
-  if(!isNaN(d)){
-    selectDate(new Date(d.getFullYear(), d.getMonth(), d.getDate()));
-  }
-  renderStats();
+  if(!isNaN(d)) selectDate(new Date(d.getFullYear(), d.getMonth(), d.getDate()));
   toast('Тренировка добавлена ✓');
 }
-
 function resetAll(){
   if(confirm('Сбросить ВСЕ данные?')){ localStorage.clear(); location.reload(); }
+}
+
+/* ==================== РЕДАКТОР ТАЙМЕРА ==================== */
+const TIMER_PRESETS = [
+  {name:'Табата',     cfg:{prep:10, work:20, rest:10, sets:8, rounds:1, roundRest:0}},
+  {name:'HIIT',       cfg:{prep:10, work:40, rest:20, sets:6, rounds:1, roundRest:0}},
+  {name:'EMOM',       cfg:{prep:10, work:50, rest:10, sets:10, rounds:1, roundRest:0}},
+  {name:'Силовой',    cfg:{prep:15, work:45, rest:90, sets:5, rounds:1, roundRest:0}},
+  {name:'Растяжка',   cfg:{prep:5, work:60, rest:10, sets:6, rounds:1, roundRest:0}},
+  {name:'Круги',      cfg:{prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60}},
+];
+function renderTimerPresets(){
+  document.getElementById('timerPresets').innerHTML = TIMER_PRESETS.map((p,i)=>
+    `<div class="timer-preset" onclick="applyTimerPreset(${i})">${p.name}</div>`
+  ).join('');
+}
+function applyTimerPreset(i){
+  const p = TIMER_PRESETS[i];
+  Object.assign(timerConfig, p.cfg);
+  saveTimerConfig(true);
+  renderTimerEditor();
+  toast(`Пресет «${p.name}» применён`);
+}
+function renderTimerEditor(){
+  document.getElementById('tPrep').textContent = timerConfig.prep + 'с';
+  document.getElementById('tWork').textContent = timerConfig.work + 'с';
+  document.getElementById('tRest').textContent = timerConfig.rest + 'с';
+  document.getElementById('tSets').textContent = timerConfig.sets;
+  document.getElementById('tRounds').textContent = timerConfig.rounds;
+  document.getElementById('tRoundRest').textContent = timerConfig.roundRest + 'с';
+}
+function adjTimer(key, delta){
+  const mins = {
+    prep: 5, work: 5, rest: 5, sets: 1, rounds: 1, roundRest: 10
+  };
+  timerConfig[key] = Math.max(0, timerConfig[key] + delta);
+  if(key === 'sets') timerConfig[key] = Math.max(1, timerConfig[key]);
+  if(key === 'rounds') timerConfig[key] = Math.max(1, timerConfig[key]);
+  renderTimerEditor();
+}
+function saveTimerConfig(silent){
+  store.set('timerConfig', timerConfig);
+  if(!silent) toast('Настройки таймера сохранены ✓');
+  updateTimerUI();
+}
+function resetTimerConfig(){
+  timerConfig = {prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60};
+  saveTimerConfig(true);
+  renderTimerEditor();
+  toast('Сброшено по умолчанию');
+}
+
+/* ==================== ТАЙМЕР ==================== */
+let tState = {
+  phase: 'prep',   // prep | work | rest | roundRest | done
+  remaining: 0,
+  set: 1,
+  round: 1,
+  running: false,
+  int: null,
+  totalPhase: 0
+};
+
+function updateTimerUI(){
+  if(!tState.totalPhase) tState.totalPhase = 1;
+  const pct = Math.max(0, Math.min(100, (1 - tState.remaining / tState.totalPhase) * 100));
+  const display = document.getElementById('tDisp');
+  const phaseEl = document.getElementById('tPhase');
+  const prog = document.getElementById('tProgress');
+  if(display) display.textContent = fmt(Math.max(0, tState.remaining));
+  if(prog) prog.style.width = pct + '%';
+  if(phaseEl){
+    phaseEl.className = 'timer-phase ' + (tState.phase === 'prep' ? 'prep' : tState.phase === 'work' ? 'work' : 'rest');
+    const labels = {prep:'Подготовка', work:'Работа', rest:'Отдых', roundRest:'Отдых между кругами', done:'Готово!'};
+    phaseEl.textContent = labels[tState.phase] || '';
+  }
+  const rEl = document.getElementById('tRoundCur');
+  const sEl = document.getElementById('tSetCur');
+  const restEl = document.getElementById('tRestCur');
+  if(rEl) rEl.textContent = `${tState.round}/${timerConfig.rounds}`;
+  if(sEl) sEl.textContent = `${tState.set}/${timerConfig.sets}`;
+  if(restEl) restEl.textContent = timerConfig.rest + 'с';
+}
+
+function resetTimer(){
+  if(tState.int) clearInterval(tState.int);
+  tState = {
+    phase: 'prep',
+    remaining: timerConfig.prep,
+    totalPhase: timerConfig.prep || 1,
+    set: 1, round: 1, running: false, int: null
+  };
+  const btn = document.getElementById('tBtn');
+  if(btn) btn.textContent = '▶ Старт';
+  updateTimerUI();
+  // Если в редакторе — обновим значения
+  renderTimerEditor();
+}
+function toggleTimer(){
+  const btn = document.getElementById('tBtn');
+  if(tState.running){
+    clearInterval(tState.int);
+    tState.running = false;
+    if(btn) btn.textContent = '▶ Продолжить';
+    return;
+  }
+  tState.running = true;
+  if(btn) btn.textContent = '⏸ Пауза';
+  tState.int = setInterval(() => {
+    if(tState.remaining > 0){
+      tState.remaining--;
+      updateTimerUI();
+    } else {
+      nextPhase();
+    }
+  }, 1000);
+  updateTimerUI();
+}
+
+function nextPhase(){
+  // Логика переходов:
+  // prep -> work -> rest -> (если set<sets) work (set+1)
+  //                     -> (если set=sets и round<rounds) roundRest -> work (round+1, set=1)
+  //                     -> done
+  if(tState.phase === 'prep'){
+    tState.phase = 'work';
+    tState.remaining = timerConfig.work;
+    tState.totalPhase = timerConfig.work || 1;
+  } else if(tState.phase === 'work'){
+    if(tState.set < timerConfig.sets){
+      tState.phase = 'rest';
+      tState.remaining = timerConfig.rest;
+      tState.totalPhase = timerConfig.rest || 1;
+    } else {
+      if(tState.round < timerConfig.rounds){
+        tState.phase = 'roundRest';
+        tState.remaining = timerConfig.roundRest;
+        tState.totalPhase = timerConfig.roundRest || 1;
+      } else {
+        tState.phase = 'done';
+        tState.remaining = 0;
+        clearInterval(tState.int);
+        tState.running = false;
+        const btn = document.getElementById('tBtn');
+        if(btn) btn.textContent = '▶ Заново';
+        if(navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
+        beep(880, 0.3); setTimeout(()=>beep(880,0.3), 400); setTimeout(()=>beep(1320,0.4), 800);
+      }
+    }
+  } else if(tState.phase === 'rest'){
+    tState.set++;
+    tState.phase = 'work';
+    tState.remaining = timerConfig.work;
+    tState.totalPhase = timerConfig.work || 1;
+  } else if(tState.phase === 'roundRest'){
+    tState.round++;
+    tState.set = 1;
+    tState.phase = 'work';
+    tState.remaining = timerConfig.work;
+    tState.totalPhase = timerConfig.work || 1;
+  }
+  if(tState.phase !== 'done'){
+    beep(660, 0.15);
+    if(navigator.vibrate) navigator.vibrate(100);
+  }
+  updateTimerUI();
+}
+
+/* Простой звуковой сигнал через Web Audio */
+let audioCtx = null;
+function beep(freq, dur){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.frequency.value = freq;
+    osc.type = 'sine';
+    gain.gain.value = 0.15;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + dur);
+  }catch(e){}
+}
+
+function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+
+function openTimerQuick(){
+  // Быстрое открытие с текущими настройками
+  document.getElementById('m-timer').classList.add('on');
+  resetTimer();
 }
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
   return {
-    app:'AS-Fit', version:1, exported: new Date().toISOString(),
-    exercises, zones, gears, cats, trainings, theme,
+    app:'AS-Fit', version:2, exported: new Date().toISOString(),
+    exercises, zones, gears, cats, trainings, theme, timerConfig, totalXp, xpLog,
     profile: {...profile}
   };
 }
@@ -1245,12 +1734,16 @@ function importDB(input){
         gears = Array.isArray(data.gears) ? data.gears : gears;
         cats = Array.isArray(data.cats) ? data.cats : cats;
         trainings = Array.isArray(data.trainings) ? data.trainings : trainings;
+        totalXp = typeof data.totalXp === 'number' ? data.totalXp : totalXp;
+        if(data.timerConfig) timerConfig = {...timerConfig, ...data.timerConfig};
       }
       store.set('exercises', exercises); store.set('zones', zones);
       store.set('gears', gears); store.set('cats', cats);
-      store.set('trainings', trainings);
+      store.set('trainings', trainings); store.set('totalXp', totalXp);
+      store.set('timerConfig', timerConfig);
       renderEx(); renderChips(); fillSelects(); renderStats();
-      renderWeek(); renderMonth(); renderTrainings();
+      renderWeek(); renderMonth(); renderTrainings(); updateXpUI();
+      renderTimerEditor();
       toast(`Импорт: +${(data.exercises||[]).length} упр.`);
     }catch(err){ toast('Ошибка: '+err.message); }
   };
@@ -1287,7 +1780,7 @@ function nav(el){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.getElementById(el.dataset.v).classList.add('on');
   closeFabMenu();
-  if(el.dataset.v === 'v-stat') renderStats();
+  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function navTo(id){
@@ -1297,10 +1790,9 @@ function navTo(id){
 
 /* ==================== МОДАЛКИ ==================== */
 function openModal(id){
-  if(id==='m-ex'){ fillSelects(); renderPhotoZone(); }
-  if(id==='m-train'){
-    document.getElementById('tDate').value = isoDate(selectedDate);
-  }
+  if(id === 'm-ex'){ fillSelects(); renderPhotoZone(); }
+  if(id === 'm-train'){ document.getElementById('tDate').value = isoDate(selectedDate); }
+  if(id === 'm-timer'){ resetTimer(); }
   document.getElementById(id).classList.add('on');
 }
 function closeModal(id){ document.getElementById(id).classList.remove('on'); }
@@ -1317,23 +1809,6 @@ function pickOne(el){
   el.classList.add('on');
 }
 
-/* ==================== ТАЙМЕР ==================== */
-let tSec = 30, tInt = null, tRun = false;
-function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
-function updTimer(){ document.getElementById('tDisp').textContent = fmt(tSec); }
-function toggleTimer(){
-  const btn = document.getElementById('tBtn');
-  if(tRun){ clearInterval(tInt); tRun=false; btn.textContent='▶ Старт'; }
-  else{
-    tRun=true; btn.textContent='⏸ Пауза';
-    tInt = setInterval(()=>{
-      if(tSec>0){ tSec--; updTimer(); }
-      else{ clearInterval(tInt); tRun=false; btn.textContent='▶ Старт'; tSec=30; updTimer(); toast('Время!'); }
-    },1000);
-  }
-}
-function resetTimer(){ clearInterval(tInt); tRun=false; tSec=30; updTimer(); document.getElementById('tBtn').textContent='▶ Старт'; }
-
 /* ==================== СТАРТ ==================== */
 document.documentElement.setAttribute('data-theme', theme);
 renderWeek();
@@ -1345,11 +1820,25 @@ fillSelects();
 applyAvatar();
 renderThemes();
 renderStats();
+updateXpUI();
+renderTimerPresets();
+renderTimerEditor();
 updateTopProgress();
-updTimer();
+resetTimer();
 
 document.addEventListener('click', e => {
   if(!e.target.closest('#fabBtn') && !e.target.closest('#fabMenu')) closeFabMenu();
+});
+
+// Отслеживание изменения формата упражнения
+document.getElementById('exFormat').addEventListener('change', function(){
+  const hint = document.getElementById('formatHint');
+  const hints = {
+    time: '⏱ Формат «Время»: XP = секунды × 0.01. Идеально для растяжки, планок, кардио.',
+    weight: '🏋️ Формат «Вес»: XP = (рабочий вес / масса тела) × 0.01 × повторы. Для штанги, гири, гантелей.',
+    reps: '💪 Формат «Свой вес»: XP = повторы × 0.1. Для отжиманий, подтягиваний, приседаний.'
+  };
+  hint.textContent = hints[this.value];
 });
 </script>
 </body>
