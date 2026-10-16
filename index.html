@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
-<title>АС — Фитнес v2</title>
+<title>АС — Фитнес v2.1</title>
 <style>
 :root,[data-theme="neon"]{--bg:#0e1116;--bg2:#151a22;--card:#1a2029;--card2:#222a36;--line:#2a3340;--txt:#e8edf4;--mut:#8a97a8;--acc:#ff5b2e;--acc2:#ffb02e;--ok:#2ecc71;--blue:#3aa0ff;--grad:linear-gradient(135deg,var(--acc),var(--acc2))}
 [data-theme="ocean"]{--bg:#08131c;--bg2:#0d1f2d;--card:#102636;--card2:#153244;--line:#1d435b;--txt:#e0f4ff;--mut:#7ba9c7;--acc:#00d4ff;--acc2:#0088cc;--ok:#00e0b0;--grad:linear-gradient(135deg,#00d4ff,#0088cc)}
@@ -255,13 +255,22 @@ nav.bottom button.on{color:var(--acc)}
 @keyframes xpfly{0%{opacity:0;transform:translateX(-50%) translateY(20px) scale(.6)}20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.15)}60%{opacity:1;transform:translateX(-50%) translateY(-10px) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-60px) scale(.9)}}
 .note{font-size:11px;color:var(--mut);margin-top:8px;line-height:1.5;padding:9px 12px;background:var(--card2);border-radius:10px;border-left:2px solid var(--acc2)}
 .note b{color:var(--acc2)}
+.info-block{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.info-block h4{margin:0 0 8px;font-size:13.5px;font-weight:800;color:var(--txt);display:flex;align-items:center;gap:6px}
+.info-block p{margin:0 0 6px;font-size:12.5px;line-height:1.55;color:var(--mut)}
+.info-block p:last-child{margin-bottom:0}
+.info-block p b{color:var(--txt);font-weight:700}
+.emoji-picker{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;max-height:140px;overflow-y:auto;padding:6px;background:var(--card2);border-radius:10px;border:1px solid var(--line)}
+.emoji-picker span{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border-radius:8px;transition:.15s;border:1px solid transparent}
+.emoji-picker span:hover{background:var(--card);border-color:var(--line)}
+.emoji-picker span.on{background:var(--grad);border-color:transparent}
 </style>
 </head>
 <body>
 
 <div class="app">
   <header class="top">
-    <div class="logo">АС <span>FIT SYSTEM v2</span></div>
+    <div class="logo">АС <span>FIT SYSTEM v2.1</span></div>
     <div class="xp-head" onclick="navTo('v-stat')">
       <div class="xp-lvl" id="headLvl">1</div>
       <div class="xp-info">
@@ -275,7 +284,6 @@ nav.bottom button.on{color:var(--acc)}
     </div>
   </header>
 
-  <!-- ============ ГЛАВНАЯ: КАЛЕНДАРЬ + ТРЕНИРОВКИ ============ -->
   <section class="view on" id="v-main">
     <div class="prog-row">
       <div class="prog"><div class="lbl">Неделя</div><div class="val" id="weekNum">1<span style="color:var(--mut);font-size:11px">/52</span></div><div class="bar"><i style="width:0%"></i></div></div>
@@ -313,11 +321,10 @@ nav.bottom button.on{color:var(--acc)}
     </div>
     <div class="btn-row">
       <button class="btn primary" onclick="openTrainModal()">+ Тренировка</button>
-      <button class="btn" onclick="openModal('m-train-list')">📋 Все шаблоны</button>
+      <button class="btn" onclick="openTrainList()">📋 Все шаблоны</button>
     </div>
   </section>
 
-  <!-- ============ УПРАЖНЕНИЯ ============ -->
   <section class="view" id="v-ex">
     <div class="search">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"/></svg>
@@ -333,6 +340,9 @@ nav.bottom button.on{color:var(--acc)}
     <div class="chips" id="zones"></div>
     <div class="sec-title">Снаряды</div>
     <div class="chips" id="gears"></div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn small full" onclick="addCustomGear()">+ Свой снаряд со значком</button>
+    </div>
     <div class="sec-title">Навыки</div>
     <div class="chips" id="skills"></div>
     <div class="sec-title">Упражнения (<span id="exCount">0</span>)</div>
@@ -340,13 +350,13 @@ nav.bottom button.on{color:var(--acc)}
     <div class="btn-row" style="margin-top:12px">
       <button class="btn primary" onclick="openExModal()">+ Упражнение</button>
       <button class="btn" onclick="openCompModal()">+ Комплекс</button>
+      <button class="btn" onclick="openCompList()">📋 Мои комплексы</button>
     </div>
     <div class="btn-row" style="margin-top:8px">
       <button class="btn danger full" onclick="clearAllEx()">🗑 Очистить все упражнения</button>
     </div>
   </section>
 
-  <!-- ============ СТАТИСТИКА + XP ============ -->
   <section class="view" id="v-stat">
     <div class="card xp-card">
       <div class="xp-main">
@@ -404,7 +414,6 @@ nav.bottom button.on{color:var(--acc)}
     </div>
   </section>
 
-  <!-- ============ ПРОФИЛЬ ============ -->
   <section class="view" id="v-prof">
     <div class="card">
       <div class="profile">
@@ -455,22 +464,24 @@ nav.bottom button.on{color:var(--acc)}
       <input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="importDB(this)">
     </div>
     <div class="card">
+      <h2><span class="lft"><span class="dot"></span>ℹ️ Справка</span></h2>
+      <button class="btn primary full" onclick="openModal('m-info')">📖 Как пользоваться приложением</button>
+    </div>
+    <div class="card">
       <h2><span class="lft"><span class="dot"></span>Опасная зона</span></h2>
       <button class="btn danger full" onclick="resetAll()">🗑 Сбросить всё</button>
     </div>
   </section>
 </div>
 
-<!-- FAB -->
 <div class="fab-menu" id="fabMenu">
   <button onclick="openTrainModal();closeFabMenu()"><span class="emoji">🏋️</span>Тренировка</button>
   <button onclick="openExModal();closeFabMenu()"><span class="emoji">💪</span>Упражнение</button>
   <button onclick="openCompModal();closeFabMenu()"><span class="emoji">🔁</span>Комплекс</button>
-  <button onclick="openModal('m-timer');closeFabMenu()"><span class="emoji">⏱</span>Таймер</button>
+  <button onclick="openCompList();closeFabMenu()"><span class="emoji">📋</span>Мои комплексы</button>
 </div>
 <button class="fab" id="fabBtn" onclick="toggleFabMenu()">+</button>
 
-<!-- NAV -->
 <nav class="bottom">
   <button class="on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>Календарь</button>
   <button data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>Упр.</button>
@@ -490,18 +501,9 @@ nav.bottom button.on{color:var(--acc)}
       </div>
       <input type="file" id="exPhoto" accept="image/*" style="display:none" onchange="loadExPhoto(this)">
     </div>
-    <div class="field">
-      <label>Зоны (можно несколько)</label>
-      <div class="chips" id="exZonesPick"></div>
-    </div>
-    <div class="field">
-      <label>Снаряды (можно несколько)</label>
-      <div class="chips" id="exGearsPick"></div>
-    </div>
-    <div class="field">
-      <label>Навыки (можно несколько)</label>
-      <div class="chips" id="exSkillsPick"></div>
-    </div>
+    <div class="field"><label>Зоны (можно несколько)</label><div class="chips" id="exZonesPick"></div></div>
+    <div class="field"><label>Снаряды (можно несколько)</label><div class="chips" id="exGearsPick"></div></div>
+    <div class="field"><label>Навыки (можно несколько)</label><div class="chips" id="exSkillsPick"></div></div>
     <div class="field">
       <label>Формат XP</label>
       <select id="exFormat">
@@ -521,8 +523,15 @@ nav.bottom button.on{color:var(--acc)}
   <div class="modal">
     <h3 id="trainModalTitle">Новая тренировка</h3>
     <div class="field"><label>Название *</label><input id="tName" placeholder="Скакалка"></div>
+    <div class="row">
+      <div class="field"><label>Дата с</label><input type="date" id="tStartDate"></div>
+      <div class="field"><label>Дата по</label><input type="date" id="tEndDate"></div>
+    </div>
+    <div class="note" style="margin-bottom:11px">
+      📅 Тренировка появится в календаре <b>только</b> в этом периоде и в выбранные дни недели. Оставь пусто — шаблон действует бессрочно.
+    </div>
     <div class="field">
-      <label>Дни недели (шаблон)</label>
+      <label>Дни недели</label>
       <div class="days" id="daysRow">
         <div class="d" data-d="1" onclick="this.classList.toggle('on')">Пн</div>
         <div class="d" data-d="2" onclick="this.classList.toggle('on')">Вт</div>
@@ -537,14 +546,12 @@ nav.bottom button.on{color:var(--acc)}
       <div class="field"><label>Время</label><input type="time" id="tTime" value="16:00"></div>
       <div class="field"><label>Длительность, мин</label><input type="number" id="tDuration" value="30"></div>
     </div>
-
     <div class="sec-title">Упражнения</div>
     <div id="tExList"><div class="empty" style="padding:10px">Пока пусто</div></div>
     <div class="btn-row" style="margin-top:8px">
       <button class="btn" onclick="openPickEx('train')">+ Упражнение</button>
       <button class="btn" onclick="openPickComp('train')">+ Комплекс</button>
     </div>
-
     <button class="btn primary full" style="margin-top:12px" onclick="saveTrain()">Сохранить</button>
     <button class="close" onclick="closeModal('m-train')">Отмена</button>
   </div>
@@ -582,7 +589,7 @@ nav.bottom button.on{color:var(--acc)}
 <!-- ========== MODAL: СПИСОК КОМПЛЕКСОВ ========== -->
 <div class="modal-bg" id="m-comp-list" onclick="if(event.target===this)closeModal('m-comp-list')">
   <div class="modal">
-    <h3>Мои комплексы</h3>
+    <h3>📋 Мои комплексы</h3>
     <div id="compList"></div>
     <button class="close" onclick="closeModal('m-comp-list')">Закрыть</button>
   </div>
@@ -610,11 +617,11 @@ nav.bottom button.on{color:var(--acc)}
   </div>
 </div>
 
-<!-- ========== MODAL: НАСТРОЙКА УПРАЖНЕНИЯ В ТРЕНИРОВКЕ ========== -->
+<!-- ========== MODAL: НАСТРОЙКА УПРАЖНЕНИЯ ========== -->
 <div class="modal-bg" id="m-ex-config" onclick="if(event.target===this)closeModal('m-ex-config')">
   <div class="modal">
     <h3 id="exCfgTitle">Настройка упражнения</h3>
-    <div class="field" id="exCfgNameWrap"><label>Упражнение</label><div id="exCfgName" style="font-size:15px;font-weight:700;padding:11px 12px;background:var(--card);border-radius:10px"></div></div>
+    <div class="field"><label>Упражнение</label><div id="exCfgName" style="font-size:15px;font-weight:700;padding:11px 12px;background:var(--card);border-radius:10px"></div></div>
     <div class="row">
       <div class="field"><label>Подходы</label><input type="number" id="exCfgSets" value="3" min="1"></div>
       <div class="field"><label>Повторы</label><input type="number" id="exCfgReps" value="10" min="0"></div>
@@ -651,25 +658,99 @@ nav.bottom button.on{color:var(--acc)}
   </div>
 </div>
 
+<!-- ========== MODAL: НОВЫЙ СНАРЯД ========== -->
+<div class="modal-bg" id="m-new-gear" onclick="if(event.target===this)closeModal('m-new-gear')">
+  <div class="modal">
+    <h3>Новый снаряд</h3>
+    <div class="field"><label>Название</label><input id="ngName" placeholder="Например, Канат"></div>
+    <div class="field">
+      <label>Значок (эмодзи)</label>
+      <input id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:22px;text-align:center">
+      <div class="emoji-picker" id="emojiPicker"></div>
+    </div>
+    <button class="btn primary full" onclick="saveCustomGear()">Добавить</button>
+    <button class="close" onclick="closeModal('m-new-gear')">Отмена</button>
+  </div>
+</div>
+
+<!-- ========== MODAL: ИНФО ========== -->
+<div class="modal-bg" id="m-info" onclick="if(event.target===this)closeModal('m-info')">
+  <div class="modal">
+    <h3>📖 Как пользоваться</h3>
+    <div class="info-block">
+      <h4>🏋️ Тренировки</h4>
+      <p><b>Создать:</b> «+ Тренировка». Введи название, выбери <b>период</b> (с — по), отметь <b>дни недели</b>, укажи время. Тренировка появится в календаре только в этом периоде.</p>
+      <p><b>Если период пуст</b> — действует бессрочно.</p>
+      <p><b>Упражнения:</b> «+ Упражнение» (готовое) или «+ Комплекс» (набор).</p>
+      <p><b>Отметить выполненной:</b> жми ✓. <b>Будущие тренировки отметить нельзя</b> — только сегодня и прошлое.</p>
+      <p><b>Правки на день:</b> разверни тренировку → «✏️ Изменить». Сохранится только для этого дня.</p>
+    </div>
+    <div class="info-block">
+      <h4>💪 Упражнения</h4>
+      <p>У каждого упражнения может быть <b>несколько зон, снарядов и навыков</b>.</p>
+      <p><b>Формат XP:</b></p>
+      <p>⏱ Время → XP = секунды × 0.01</p>
+      <p>🏋️ Вес → XP = (раб.вес / масса) × 0.01 × повторы</p>
+      <p>💪 Свой вес → XP = повторы × 0.1</p>
+    </div>
+    <div class="info-block">
+      <h4>🔁 Комплексы</h4>
+      <p>Комплекс = готовый набор упражнений с дозировками. Создай один раз — вставляй в любую тренировку одним тапом.</p>
+      <p>В меню «📋 Мои комплексы» можно просмотреть, отредактировать или удалить любой комплекс.</p>
+    </div>
+    <div class="info-block">
+      <h4>🎒 Зоны, снаряды, навыки</h4>
+      <p>Все три категории прокачиваются отдельно. При отметке тренировки XP делится между всеми задействованными сущностями.</p>
+      <p><b>Свои снаряды:</b> кнопка «+ Свой снаряд со значком» — введи имя и эмодзи.</p>
+    </div>
+    <div class="info-block">
+      <h4>⭐ Опыт (XP)</h4>
+      <p>Уровень N → N+1 требует N XP (1 → 2 = 1, 2 → 3 = 2, ...).</p>
+      <p>8 рангов: Новичок → Любитель → Атлет → Спортсмен → Мастер → Ветеран → Чемпион → Легенда.</p>
+    </div>
+    <div class="info-block">
+      <h4>🌙 Распад</h4>
+      <p>Если снаряд/зона/навык не тренируется долго — XP падает:</p>
+      <p>• 7–13 дней: −0.1%/день</p>
+      <p>• 14–29 дней: −0.25%/день</p>
+      <p>• 30–59 дней: −0.5%/день</p>
+      <p>• 60+ дней: −1%/день</p>
+    </div>
+    <div class="info-block">
+      <h4>⏱ Таймер</h4>
+      <p>Настраивается в профиле. 6 параметров. Все поля можно <b>вводить цифрами</b>.</p>
+      <p>6 пресетов: Табата, HIIT, EMOM, Силовой, Растяжка, Круги.</p>
+    </div>
+    <div class="info-block">
+      <h4>📤 Обмен базами</h4>
+      <p><b>Экспорт</b> — скачивает .json со всем содержимым.</p>
+      <p><b>Импорт</b> — при загрузке спросит: добавить или заменить.</p>
+      <p><b>Поделиться</b> — откроет системное меню (Telegram, WhatsApp, AirDrop).</p>
+    </div>
+    <div class="info-block">
+      <h4>💾 Данные</h4>
+      <p>Всё хранится локально в браузере. Ничего не отправляется в интернет. Делай периодически экспорт базы — на случай очистки данных браузера.</p>
+    </div>
+    <button class="close" onclick="closeModal('m-info')">Понятно</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <script>
 /* ============================================================
-   АС FIT v2 — архитектура
+   АС FIT v2.1 — модель данных
    ------------------------------------------------------------
-   Зоны: {id, name, emoji} — Кардио 🫁, Спина 🔙 и т.д.
-   Снаряды: {id, name, emoji} — Скакалка 🪢, Гиря 🏋️ и т.д.
-   Навыки: {id, name, emoji} — Координация 🎯, Сила 💪 и т.д.
-   Упражнение: {id, name, photo, zones:[id], gears:[id], skills:[id], format, desc}
-   Комплекс: {id, name, type:'open'|'closed', exercises:[{exId, sets, reps, time, rest, weight, note}]}
-   Тренировка (шаблон): {
-     id, name, days:[0..6] (0=Вс), time, duration,
-     exercises:[{exId, sets, reps, time, rest, weight, note}],
-     dayOverrides: {'YYYY-MM-DD': {time?, exercises?}} — правки для конкретного дня
-   }
-   Выполнения: {'YYYY-MM-DD': {trainId: {done:true, xpAwarded:N}}}
+   zones:   [{id, name, emoji}]
+   gears:   [{id, name, emoji}]
+   skills:  [{id, name, emoji}]
+   exercises: [{id, name, photo, zones:[], gears:[], skills:[], format, desc}]
+   complexes: [{id, name, type:'open'|'closed', exercises:[{exId, sets, reps, time, rest, weight, note}]}]
+   trainings: [{id, name, days:[0..6], time, duration, startDate, endDate,
+                exercises:[...], dayOverrides:{'YYYY-MM-DD':{time?, exercises?}}}]
+   completions: {'YYYY-MM-DD': {trainId: {done, xpAwarded}}}
    ============================================================ */
 
-/* ==================== КОНСТАНТЫ: ЗОНЫ С ЭМОДЗИ ==================== */
+/* ==================== ЗОНЫ С ЭМОДЗИ ==================== */
 const DEFAULT_ZONES = [
   {id:'cardio',   name:'Кардио',    emoji:'🫁'},
   {id:'neck',     name:'Шея',       emoji:'🦒'},
@@ -686,23 +767,23 @@ const DEFAULT_ZONES = [
   {id:'stretch',  name:'Растяжка',  emoji:'🧘'},
 ];
 
-/* ==================== КОНСТАНТЫ: СНАРЯДЫ ==================== */
+/* ==================== СНАРЯДЫ ==================== */
 const DEFAULT_GEARS = [
-  {id:'none',     name:'Без снаряда',  emoji:'🙌'},
-  {id:'rope',     name:'Скакалка',     emoji:'🪢'},
-  {id:'kb',       name:'Гиря',         emoji:'🏋️'},
-  {id:'pullup',   name:'Турник',       emoji:'🎿'},
-  {id:'bars',     name:'Брусья',       emoji:'🏗️'},
-  {id:'rings',    name:'Кольца',       emoji:'⭕'},
-  {id:'trx',      name:'TRX',          emoji:'🪢'},
-  {id:'band',     name:'Эспандер',     emoji:'🎗️'},
-  {id:'db',       name:'Гантели',      emoji:'🏋️'},
-  {id:'bb',       name:'Штанга',       emoji:'🏋️'},
-  {id:'ball',     name:'Мяч',          emoji:'⚽'},
-  {id:'mat',      name:'Коврик',       emoji:'🟦'},
+  {id:'none',     name:'Без снаряда', emoji:'🙌'},
+  {id:'rope',     name:'Скакалка',    emoji:'🪢'},
+  {id:'kb',       name:'Гиря',        emoji:'🏋️'},
+  {id:'pullup',   name:'Турник',      emoji:'🎿'},
+  {id:'bars',     name:'Брусья',      emoji:'🏗️'},
+  {id:'rings',    name:'Кольца',      emoji:'⭕'},
+  {id:'trx',      name:'TRX',         emoji:'🪢'},
+  {id:'band',     name:'Эспандер',    emoji:'🎗️'},
+  {id:'db',       name:'Гантели',     emoji:'🏋️'},
+  {id:'bb',       name:'Штанга',      emoji:'🏋️'},
+  {id:'ball',     name:'Мяч',         emoji:'⚽'},
+  {id:'mat',      name:'Коврик',      emoji:'🟦'},
 ];
 
-/* ==================== КОНСТАНТЫ: НАВЫКИ ==================== */
+/* ==================== НАВЫКИ ==================== */
 const DEFAULT_SKILLS = [
   {id:'coord',    name:'Координация',  emoji:'🎯'},
   {id:'strength', name:'Сила',         emoji:'💪'},
@@ -729,8 +810,8 @@ const THEMES = [
 
 const MONTHS_RU = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const MONTHS_RU_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-const WD_SHORT = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс']; // индекс 0 = Пн
-const WD_ISO   = [1,2,3,4,5,6,0];                       // соответствует WD_SHORT по позиции
+const WD_SHORT = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+const WD_ISO   = [1,2,3,4,5,6,0];
 
 const RANKS = [
   {min:1,   name:'Новичок'},
@@ -765,10 +846,10 @@ const store = {
 let zones  = store.get('zones',  DEFAULT_ZONES);
 let gears  = store.get('gears',  DEFAULT_GEARS);
 let skills = store.get('skills', DEFAULT_SKILLS);
-let exercises = store.get('exercises', []);  // {id, name, photo, zones:[], gears:[], skills:[], format, desc}
-let complexes = store.get('complexes', []);  // {id, name, type, exercises:[{exId, sets, reps, time, rest, weight, note}]}
-let trainings = store.get('trainings', []);  // {id, name, days:[], time, duration, exercises:[...], dayOverrides:{}}
-let completions = store.get('completions', {}); // {'YYYY-MM-DD': {trainId: {done, xpAwarded}}}
+let exercises = store.get('exercises', []);
+let complexes = store.get('complexes', []);
+let trainings = store.get('trainings', []);
+let completions = store.get('completions', {});
 
 let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
 let theme = store.get('theme', 'neon');
@@ -783,14 +864,13 @@ let xpSkills = store.get('xpSkills', {});
 
 let timerConfig = store.get('timerConfig', {prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60});
 
-// Промежуточные данные для модалок
 let editingExId = null;
 let editingTrainId = null;
 let editingCompId = null;
-let tempTrainEx = [];   // временный список упражнений в модалке тренировки
-let tempCompEx = [];    // временный список упражнений в модалке комплекса
-let pickTarget = null;  // 'train' | 'comp'
-let exConfigTarget = null; // {listRef:'tempTrainEx'|'tempCompEx', index}
+let tempTrainEx = [];
+let tempCompEx = [];
+let pickTarget = null;
+let exConfigTarget = null;
 
 /* ==================== УТИЛИТЫ ДАТ ==================== */
 const TODAY = new Date();
@@ -805,7 +885,7 @@ function sameDay(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()=
 function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
-/* ==================== ТОСТЫ И АНИМАЦИИ ==================== */
+/* ==================== ТОСТЫ ==================== */
 let toastT;
 function toast(msg){
   const el = document.getElementById('toast'); if(!el) return;
@@ -818,12 +898,11 @@ function xpFly(amt){
   document.body.appendChild(el); setTimeout(()=>el.remove(), 1700);
 }
 
-/* ==================== XP ФОРМУЛЫ ==================== */
+/* ==================== XP ФОРМУЛЫ РАСЧЁТА ==================== */
 function xpFromTime(s){ return Math.round(s*0.01*100)/100; }
 function xpFromWeight(w, bw, r){ if(!bw||bw<=0) bw=70; return Math.round((w/bw)*0.01*r*100)/100; }
 function xpFromReps(r){ return Math.round(r*0.1*100)/100; }
 
-// XP за одну тренировку (по её упражнениям, с учётом подхода/повторов/времени)
 function calcTrainXp(tr, override){
   if(!tr || !tr.exercises) return 0;
   const exs = (override && override.exercises) ? override.exercises : tr.exercises;
@@ -833,16 +912,16 @@ function calcTrainXp(tr, override){
     if(!ex) return;
     const sets = +e.sets || 1;
     const reps = +e.reps || 0;
-    const time = +e.time || 0;   // секунды за подход
+    const time = +e.time || 0;
     const weight = +e.weight || 0;
-    if(ex.format === 'time')   total += xpFromTime(time) * sets;
+    if(ex.format === 'time')        total += xpFromTime(time) * sets;
     else if(ex.format === 'weight') total += xpFromWeight(weight, profile.weight||70, reps) * sets;
-    else                        total += xpFromReps(reps) * sets;
+    else                            total += xpFromReps(reps) * sets;
   });
   return Math.round(total * 100) / 100;
 }
 
-/* ==================== НАЧИСЛЕНИЕ XP ==================== */
+/* ==================== XP НАЧИСЛЕНИЕ ==================== */
 function ensureXpMaps(){
   if(!xpGears || typeof xpGears !== 'object') xpGears = {};
   if(!xpZones || typeof xpZones !== 'object') xpZones = {};
@@ -852,16 +931,13 @@ function ensureXpMaps(){
   skills.forEach(s => { if(!xpSkills[s.id]) xpSkills[s.id] = {xp:0, lastTrained:null}; });
   store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
 }
-
 function addSkillXpTo(mapKey, id, amount){
   const map = mapKey === 'gears' ? xpGears : mapKey === 'zones' ? xpZones : xpSkills;
   if(!map[id]) return;
   map[id].xp = Math.max(0, map[id].xp + amount);
   map[id].lastTrained = new Date().toISOString();
 }
-
 function distributeXpToSkills(tr, xp){
-  // Раздаём XP снарядам, зонам и навыкам из упражнений тренировки
   if(!tr || !tr.exercises || !xp) return;
   const gSet = new Set(), zSet = new Set(), sSet = new Set();
   tr.exercises.forEach(e => {
@@ -871,7 +947,6 @@ function distributeXpToSkills(tr, xp){
     (ex.zones || []).forEach(z => zSet.add(z));
     (ex.skills || []).forEach(s => sSet.add(s));
   });
-  // Делим XP равномерно между всеми сущностями (снаряд/зона/навык получают одинаково)
   const totalEntities = gSet.size + zSet.size + sSet.size;
   if(totalEntities === 0) return;
   const per = xp / totalEntities;
@@ -880,7 +955,6 @@ function distributeXpToSkills(tr, xp){
   sSet.forEach(s => addSkillXpTo('skills', s, per));
   store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
 }
-
 function addXp(amount, label, tr){
   if(amount <= 0) return;
   totalXp += amount; store.set('totalXp', totalXp);
@@ -931,7 +1005,7 @@ function applyDecayOnLoad(){
   if(lost > 0) setTimeout(()=>toast('🌙 Распад: −'+lost.toFixed(2)+' XP'), 1500);
 }
 
-/* ==================== РЕНДЕР: XP UI ==================== */
+/* ==================== XP UI ==================== */
 function updateXpUI(){
   const info = computeLevel(totalXp);
   const rank = rankForLevel(info.level);
@@ -1114,14 +1188,18 @@ function mdayHtml(date, other){
 }
 function shiftMonth(n){ viewMonth += n; if(viewMonth<0){viewMonth=11;viewYear--} if(viewMonth>11){viewMonth=0;viewYear++} renderMonth(); }
 
-/* ==================== ТРЕНИРОВКИ (шаблоны) ==================== */
-// Возвращает тренировки-шаблоны, которые попадают на указанную дату (по дню недели)
+/* ==================== ТРЕНИРОВКИ ==================== */
+// Тренировки на дату — учитываем период start/end
 function getTrainsForDate(date){
-  const dow = date.getDay(); // 0=Вс..6=Сб
-  return trainings.filter(t => Array.isArray(t.days) && t.days.includes(dow));
+  const dow = date.getDay();
+  const dIso = isoDate(date);
+  return trainings.filter(t => {
+    if(!Array.isArray(t.days) || !t.days.includes(dow)) return false;
+    if(t.startDate && dIso < t.startDate) return false;
+    if(t.endDate && dIso > t.endDate) return false;
+    return true;
+  });
 }
-
-// Получить эффективные настройки тренировки на конкретную дату (с учётом dayOverrides)
 function getEffectiveTrain(tr, date){
   if(!tr) return null;
   const key = isoDate(date);
@@ -1133,8 +1211,6 @@ function getEffectiveTrain(tr, date){
     _override: !!over
   };
 }
-
-// Отметка done для конкретной тренировки на конкретную дату
 function isTrainDone(date, tr){
   const key = isoDate(date);
   return !!(completions[key] && completions[key][tr.id] && completions[key][tr.id].done);
@@ -1158,6 +1234,8 @@ function renderTrainings(){
   const list = getTrainsForDate(selectedDate).sort((a,b) => a.time.localeCompare(b.time));
   const tc = document.getElementById('trainsCount'); if(tc) tc.textContent = list.length;
 
+  const isFuture = isoDate(selectedDate) > isoDate(TODAY);
+
   const box = document.getElementById('trainList'); if(!box) return;
   if(!list.length){
     box.innerHTML = '<div class="empty">На <b>'+dLabel+'</b> тренировок нет</div>';
@@ -1168,6 +1246,7 @@ function renderTrainings(){
     const done = isTrainDone(selectedDate, tr);
     const xp = calcTrainXp(tr, eff);
     const exs = eff.exercises || [];
+
     const exListHtml = exs.map((e, idx) => {
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
@@ -1184,17 +1263,26 @@ function renderTrainings(){
       return '<div class="ex-item">'+
         '<div class="row1"><div class="ex-name">'+ex.name+'</div><div class="ex-badge">'+dosage.join(' ')+'</div></div>'+
         '<div class="row2">'+(zonesE?'<span class="chip-mini">'+zonesE+'</span>':'')+(gearsE?'<span class="chip-mini">'+gearsE+'</span>':'')+(skillsE?'<span class="chip-mini">'+skillsE+'</span>':'')+'</div>'+
-        '<div class="train-actions"><button onclick="editDayOverride(\''+tr.id+'\', '+idx+')">✏️ Изменить</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑 Убрать</button></div>'+
+        (isFuture ? '' : '<div class="train-actions"><button onclick="editDayOverride(\''+tr.id+'\', '+idx+')">✏️ Изменить</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑 Убрать</button></div>')+
       '</div>';
     }).join('');
+
+    const chkHtml = isFuture
+      ? '<div class="chk" style="opacity:.4;cursor:not-allowed" title="Будущую тренировку отметить нельзя" onclick="event.stopPropagation();toast(\'🔒 Будущую тренировку отметить нельзя\')">🔒</div>'
+      : '<div class="chk '+(done?'on':'')+'" onclick="event.stopPropagation();toggleTrain(\''+tr.id+'\')"></div>';
+
+    const periodInfo = (tr.startDate || tr.endDate)
+      ? '<div class="meta" style="font-size:10px;color:var(--acc2);margin-top:2px">📅 '+ (tr.startDate||'…') +' → '+ (tr.endDate||'…') +'</div>'
+      : '';
+
     return '<div class="train">'+
       '<div class="train-head" onclick="toggleTrainBody(this)">'+
         '<div class="time">'+eff.time+'</div>'+
-        '<div class="info"><div class="name">'+tr.name+'</div><div class="meta">'+exs.length+' упр. · '+Math.round(xp*100)/100+' XP</div></div>'+
-        '<div class="chk '+(done?'on':'')+'" onclick="event.stopPropagation();toggleTrain(\''+tr.id+'\')"></div>'+
+        '<div class="info"><div class="name">'+tr.name+'</div><div class="meta">'+exs.length+' упр. · '+Math.round(xp*100)/100+' XP</div>'+periodInfo+'</div>'+
+        chkHtml+
       '</div>'+
       '<div class="train-body">'+(exListHtml||'<div class="empty" style="padding:8px;font-size:12px">Нет упражнений</div>')+
-        '<div class="train-actions"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️ Настроить шаблон</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упражнение</button></div>'+
+        (isFuture ? '' : '<div class="train-actions"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️ Настроить шаблон</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упражнение</button></div>')+
       '</div>'+
     '</div>';
   }).join('');
@@ -1203,10 +1291,14 @@ function toggleTrainBody(head){
   const body = head.nextElementSibling;
   if(body) body.classList.toggle('on');
 }
-
-// Отметить/снять выполнение
 function toggleTrain(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  const todayIso = isoDate(TODAY);
+  const selIso = isoDate(selectedDate);
+  if(selIso > todayIso){
+    toast('🔒 Будущую тренировку отметить нельзя');
+    return;
+  }
   const key = isoDate(selectedDate);
   const wasDone = isTrainDone(selectedDate, tr);
   if(wasDone){
@@ -1224,7 +1316,6 @@ function toggleTrain(trainId){
 }
 
 /* ==================== РЕДАКТИРОВАНИЕ ДНЯ ==================== */
-// Открывает модалку конфигурации упражнения, но изменения идут в dayOverrides для конкретного дня
 function editDayOverride(trainId, exIndex){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   const key = isoDate(selectedDate);
@@ -1233,7 +1324,6 @@ function editDayOverride(trainId, exIndex){
   const list = tr.dayOverrides[key].exercises;
   const e = list[exIndex]; if(!e) return;
   const ex = exercises.find(x => x.id === e.exId);
-  editingExId = null;
   exConfigTarget = {type:'override', trainId, dayKey:key, index:exIndex};
   const el = (id) => document.getElementById(id);
   el('exCfgTitle').textContent = 'Изменить (только этот день)';
@@ -1254,7 +1344,7 @@ function removeExFromDay(trainId, exIndex){
   if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
   tr.dayOverrides[key].exercises.splice(exIndex, 1);
   store.set('trainings', trainings);
-  renderTrainings(); toast('Убрано на '+key);
+  renderTrainings(); toast('Убрано');
 }
 function addExToDay(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
@@ -1287,7 +1377,6 @@ function renderEx(){
   const box = document.getElementById('exList'); if(!box) return;
   if(!list.length){ box.innerHTML = '<div class="empty">Список пуст</div>'; return; }
   box.innerHTML = list.map(e => {
-    const idx = exercises.indexOf(e);
     const thumb = e.photo ? '<div class="thumb"><img src="'+e.photo+'"></div>' : '<div class="thumb">💪</div>';
     const zBadges = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).join('');
     const gBadges = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).join('');
@@ -1404,8 +1493,9 @@ function openTrainModal(trainId){
   el('tName').value = tr ? tr.name : '';
   el('tTime').value = tr ? tr.time : '16:00';
   el('tDuration').value = tr ? (tr.duration||30) : 30;
+  el('tStartDate').value = tr ? (tr.startDate||'') : '';
+  el('tEndDate').value = tr ? (tr.endDate||'') : '';
 
-  // Дни
   document.querySelectorAll('#daysRow .d').forEach(d => {
     const day = +d.dataset.d;
     d.classList.toggle('on', tr ? (tr.days||[]).includes(day) : false);
@@ -1437,7 +1527,6 @@ function removeTempEx(target, idx){
   if(target === 'train'){ tempTrainEx.splice(idx, 1); renderTempTrainEx(); }
   else { tempCompEx.splice(idx, 1); renderTempCompEx(); }
 }
-
 function saveTrain(){
   const name = document.getElementById('tName').value.trim();
   if(!name){ toast('Введи название'); return; }
@@ -1445,9 +1534,18 @@ function saveTrain(){
   if(!days.length){ toast('Выбери хотя бы один день'); return; }
   const time = document.getElementById('tTime').value || '16:00';
   const duration = +document.getElementById('tDuration').value || 30;
+  const startDate = document.getElementById('tStartDate').value || '';
+  const endDate = document.getElementById('tEndDate').value || '';
+
+  if(startDate && endDate && startDate > endDate){
+    toast('Дата «с» позже даты «по»');
+    return;
+  }
+
   const trData = {
     id: editingTrainId || uid(),
     name, days, time, duration,
+    startDate, endDate,
     exercises: JSON.parse(JSON.stringify(tempTrainEx)),
     dayOverrides: editingTrainId ? (trainings.find(t=>t.id===editingTrainId)?.dayOverrides || {}) : {}
   };
@@ -1472,7 +1570,6 @@ function openCompModal(compId){
   el('compModalTitle').textContent = c ? 'Изменить комплекс' : 'Новый комплекс';
   el('cName').value = c ? c.name : '';
   tempCompEx = c ? JSON.parse(JSON.stringify(c.exercises||[])) : [];
-  // Тип
   document.querySelectorAll('#compType .chip').forEach(ch => {
     const isOpen = ch.textContent.trim() === 'Открытый';
     ch.classList.toggle('on', c ? (c.type === (isOpen?'open':'closed')) : isOpen);
@@ -1524,7 +1621,7 @@ function saveComp(){
   editingCompId = null;
 }
 
-/* ==================== ВЫБОР УПРАЖНЕНИЙ ДЛЯ ТРЕНИРОВКИ/КОМПЛЕКСА ==================== */
+/* ==================== ВЫБОР УПРАЖНЕНИЙ ==================== */
 function openPickEx(target){
   pickTarget = target;
   const el = document.getElementById('pickTitle');
@@ -1557,8 +1654,7 @@ function pickExercise(exId){
     tempTrainEx.push(newEntry);
     renderTempTrainEx();
   } else if(pickTarget === 'day'){
-    // Ветка добавления в конкретный день
-    const cfg = exConfigTarget; // {type:'newInDay', trainId, dayKey}
+    const cfg = exConfigTarget;
     if(!cfg) return;
     const tr = trainings.find(t => t.id === cfg.trainId); if(!tr) return;
     if(!tr.dayOverrides) tr.dayOverrides = {};
@@ -1569,12 +1665,11 @@ function pickExercise(exId){
     renderTrainings(); toast('Добавлено в этот день');
   }
   closeModal('m-pick-ex');
-  // Автоматически открыть настройку дозировки
   if(pickTarget === 'comp') openExConfig('comp', tempCompEx.length-1);
   else if(pickTarget === 'train') openExConfig('train', tempTrainEx.length-1);
 }
 
-/* ==================== НАСТРОЙКА ДОЗИРОВКИ УПРАЖНЕНИЯ ==================== */
+/* ==================== НАСТРОЙКА ДОЗИРОВКИ ==================== */
 function openExConfig(target, index){
   const list = target === 'comp' ? tempCompEx : tempTrainEx;
   const e = list[index]; if(!e) return;
@@ -1592,7 +1687,7 @@ function openExConfig(target, index){
   openModal('m-ex-config');
 }
 function saveExConfig(){
-  const cfg = exConfigTarget; if(!cfg) { closeModal('m-ex-config'); return; }
+  const cfg = exConfigTarget; if(!cfg){ closeModal('m-ex-config'); return; }
   const data = {
     sets: +document.getElementById('exCfgSets').value || 1,
     reps: +document.getElementById('exCfgReps').value || 0,
@@ -1617,7 +1712,6 @@ function saveExConfig(){
       renderTrainings();
     }
   } else if(cfg.type === 'newInDay'){
-    // уже добавлен — данные применятся к последнему
     const tr = trainings.find(t => t.id === cfg.trainId);
     if(tr && tr.dayOverrides && tr.dayOverrides[cfg.dayKey]){
       const list = tr.dayOverrides[cfg.dayKey].exercises;
@@ -1654,15 +1748,22 @@ function pickComplex(compId){
 }
 
 /* ==================== СПИСОК ШАБЛОНОВ ==================== */
+function openTrainList(){ renderTrainTemplates(); openModal('m-train-list'); }
 function renderTrainTemplates(){
   const el = document.getElementById('trainTemplates'); if(!el) return;
   if(!trainings.length){ el.innerHTML = '<div class="empty" style="padding:12px">Шаблонов нет</div>'; return; }
   el.innerHTML = trainings.map(tr => {
     const days = (tr.days||[]).map(d => WD_SHORT[WD_ISO.indexOf(d)]).join(' ');
-    return '<div class="comp-item" onclick="openTrainModal(\''+tr.id+'\');closeModal(\'m-train-list\')">'+
+    const period = (tr.startDate || tr.endDate)
+      ? ' · 📅 ' + (tr.startDate||'…') + '→' + (tr.endDate||'…')
+      : '';
+    return '<div class="comp-item">'+
       '<div class="nm">'+tr.name+'</div>'+
-      '<div class="meta"><span>📅 '+days+'</span><span>⏰ '+tr.time+'</span><span>'+tr.exercises.length+' упр.</span></div>'+
-      '<div class="train-actions" style="margin-top:8px"><button onclick="event.stopPropagation();delTrain(\''+tr.id+'\')">🗑 Удалить</button></div>'+
+      '<div class="meta"><span>📅 '+days+'</span><span>⏰ '+tr.time+'</span><span>'+tr.exercises.length+' упр.</span>'+period+'</div>'+
+      '<div class="train-actions" style="margin-top:8px">'+
+        '<button onclick="openTrainModal(\''+tr.id+'\');closeModal(\'m-train-list\')">✏️ Изменить</button>'+
+        '<button onclick="delTrain(\''+tr.id+'\')">🗑 Удалить</button>'+
+      '</div>'+
     '</div>';
   }).join('');
 }
@@ -1674,7 +1775,7 @@ function delTrain(id){
   toast('Удалено');
 }
 
-/* ==================== РЕДАКТОР ТАЙМЕРА ==================== */
+/* ==================== ТАЙМЕР РЕДАКТОР ==================== */
 const TIMER_PRESETS = [
   {name:'Табата', cfg:{prep:10, work:20, rest:10, sets:8, rounds:1, roundRest:0}},
   {name:'HIIT', cfg:{prep:10, work:40, rest:20, sets:6, rounds:1, roundRest:0}},
@@ -1683,16 +1784,14 @@ const TIMER_PRESETS = [
   {name:'Растяжка', cfg:{prep:5, work:60, rest:10, sets:6, rounds:1, roundRest:0}},
   {name:'Круги', cfg:{prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60}},
 ];
-
 const TIMER_FIELDS = [
-  {key:'prep',      label:'Подготовка',    hint:'перед стартом',       step:5,  min:0},
-  {key:'work',      label:'Работа',        hint:'фаза нагрузки',       step:5,  min:0},
-  {key:'rest',      label:'Отдых',         hint:'между подходами',     step:5,  min:0},
-  {key:'sets',      label:'Подходов',      hint:'в круге',             step:1,  min:1},
-  {key:'rounds',    label:'Кругов',        hint:'циклов',              step:1,  min:1},
-  {key:'roundRest', label:'Отдых кругами', hint:'доп. пауза',          step:10, min:0},
+  {key:'prep',      label:'Подготовка',    hint:'перед стартом',   step:5,  min:0},
+  {key:'work',      label:'Работа',        hint:'фаза нагрузки',   step:5,  min:0},
+  {key:'rest',      label:'Отдых',         hint:'между подходами', step:5,  min:0},
+  {key:'sets',      label:'Подходов',      hint:'в круге',         step:1,  min:1},
+  {key:'rounds',    label:'Кругов',        hint:'циклов',          step:1,  min:1},
+  {key:'roundRest', label:'Отдых кругами', hint:'доп. пауза',      step:10, min:0},
 ];
-
 function renderTimerEditor(){
   const el = document.getElementById('timeEditor'); if(!el) return;
   el.innerHTML = TIMER_FIELDS.map(f => {
@@ -1809,11 +1908,9 @@ function renderStats(){
   setT('stComps', complexes.length);
   setT('stGears', new Set(exercises.flatMap(e => e.gears||[])).size);
 
-  // Проценты — считаем встречаемость в упражнениях
   countFlat('statGears', exercises.flatMap(e => e.gears||[]), gears, 'id');
   countFlat('statZones', exercises.flatMap(e => e.zones||[]), zones, 'id');
   renderSkillsStats('statSkills');
-
   renderSkillXp();
 }
 function countFlat(containerId, arr, entities, idKey){
@@ -1850,7 +1947,7 @@ function renderSkillsStats(containerId){
   }).join('');
 }
 
-/* ==================== XP СНАРЯДОВ / ЗОН / НАВЫКОВ (прокачка) ==================== */
+/* ==================== XP СНАРЯДОВ / ЗОН / НАВЫКОВ ==================== */
 function skillRankInfo(xp){
   const info = computeLevel(xp); let icon = '🥉';
   if(info.level >= 50) icon = '👑';
@@ -1923,15 +2020,9 @@ function importDB(input){
         if(Array.isArray(data.exercises)) exercises = exercises.concat(data.exercises);
         if(Array.isArray(data.complexes)) complexes = complexes.concat(data.complexes);
         if(Array.isArray(data.trainings)) trainings = trainings.concat(data.trainings);
-        if(Array.isArray(data.zones)) {
-          data.zones.forEach(z => { if(!zones.find(x => x.id === z.id)) zones.push(z); });
-        }
-        if(Array.isArray(data.gears)) {
-          data.gears.forEach(g => { if(!gears.find(x => x.id === g.id)) gears.push(g); });
-        }
-        if(Array.isArray(data.skills)) {
-          data.skills.forEach(s => { if(!skills.find(x => x.id === s.id)) skills.push(s); });
-        }
+        if(Array.isArray(data.zones)) data.zones.forEach(z => { if(!zones.find(x => x.id === z.id)) zones.push(z); });
+        if(Array.isArray(data.gears)) data.gears.forEach(g => { if(!gears.find(x => x.id === g.id)) gears.push(g); });
+        if(Array.isArray(data.skills)) data.skills.forEach(s => { if(!skills.find(x => x.id === s.id)) skills.push(s); });
       } else {
         zones = data.zones || zones; gears = data.gears || gears; skills = data.skills || skills;
         exercises = data.exercises || []; complexes = data.complexes || [];
@@ -1975,23 +2066,117 @@ function renderAll(){
   renderEx(); renderChips();
   renderStats(); updateXpUI(); renderSkillXp();
   renderThemes(); applyAvatar(); renderTimerPresets(); renderTimerEditor();
-  renderTrainTemplates();
+  if(document.getElementById('m-train-list')?.classList.contains('on')) renderTrainTemplates();
+  if(document.getElementById('m-comp-list')?.classList.contains('on')) renderCompList();
 }
 
-/* ==================== СТАРТ ==================== */
+/* ==================== СВОИ СНАРЯДЫ ==================== */
+const EMOJI_PRESETS = [
+  '🪢','🏋️','🎿','🏗️','⭕','🎗️','⚽','🏀','🏐','🎾','🥊','🥋','🎽','🦯','🪃','🛹','🛼','⛸️','🧘','🤸',
+  '🏃','🚴','🏊','⛹️','🤾','🏌️','🪝','🧱','🪜','🛞','🧗','🥌','🏑','🏒','🎯','🥏','🏓','🏸','🎳','🪀',
+  '🪁','⚙️','🔗','🧲','🪨','🪵','🧊','🟫','🟩','🟦','🟥','🟨','🟪','⬛','⬜','🔴','🟠','🟡','🟢','🔵'
+];
+
+function addCustomGear(){
+  document.getElementById('ngName').value = '';
+  document.getElementById('ngEmoji').value = '';
+  const picker = document.getElementById('emojiPicker');
+  if(picker){
+    picker.innerHTML = EMOJI_PRESETS.map(e =>
+      '<span onclick="pickEmoji(this, \''+e+'\')">'+e+'</span>'
+    ).join('');
+  }
+  openModal('m-new-gear');
+}
+
+function pickEmoji(el, e){
+  document.querySelectorAll('#emojiPicker span').forEach(s => s.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('ngEmoji').value = e;
+}
+
+function saveCustomGear(){
+  const name = document.getElementById('ngName').value.trim();
+  const emoji = document.getElementById('ngEmoji').value.trim() || '🎒';
+  if(!name){ toast('Введи название'); return; }
+  const id = 'custom_' + uid();
+  gears.push({id, name, emoji});
+  store.set('gears', gears);
+  ensureXpMaps();
+  closeModal('m-new-gear');
+  renderChips();
+  renderStats();
+  renderSkillXp();
+  toast('Снаряд «'+name+'» добавлен ✓');
+}
+
+/* ==================== МЕНЮ КОМПЛЕКСОВ ==================== */
+function openCompList(){
+  renderCompList();
+  openModal('m-comp-list');
+}
+
+function renderCompList(){
+  const el = document.getElementById('compList'); if(!el) return;
+  if(!complexes.length){
+    el.innerHTML = '<div class="empty" style="padding:12px">Комплексов пока нет.<br>Создай через <b>+ Комплекс</b></div>';
+    return;
+  }
+  el.innerHTML = complexes.map(c => {
+    const exList = c.exercises.slice(0, 3).map(e => {
+      const ex = exercises.find(x => x.id === e.exId);
+      return ex ? ex.name : '?';
+    }).join(', ') + (c.exercises.length > 3 ? ' +' + (c.exercises.length - 3) : '');
+
+    return '<div class="comp-item">'+
+      '<div class="nm">'+c.name+'</div>'+
+      '<div class="meta"><span>'+(c.type==='closed'?'🔒 Закрытый':'🔓 Открытый')+'</span><span>'+c.exercises.length+' упр.</span></div>'+
+      '<div class="meta" style="margin-top:6px;font-size:11px;opacity:.7">'+(exList||'—')+'</div>'+
+      '<div class="train-actions" style="margin-top:10px">'+
+        '<button onclick="editCompFromList(\''+c.id+'\')">✏️ Редактировать</button>'+
+        '<button onclick="delComp(\''+c.id+'\')">🗑 Удалить</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function editCompFromList(id){
+  closeModal('m-comp-list');
+  setTimeout(()=>openCompModal(id), 200);
+}
+
+function delComp(id){
+  if(!confirm('Удалить комплекс?')) return;
+  complexes = complexes.filter(c => c.id !== id);
+  store.set('complexes', complexes);
+  renderCompList();
+  renderStats();
+  toast('Комплекс удалён');
+}
+
+/* ==================== СТАРТ ПРИЛОЖЕНИЯ ==================== */
 document.documentElement.setAttribute('data-theme', theme);
 ensureXpMaps();
 applyDecayOnLoad();
 renderAll();
 resetTimer();
 
+// Закрытие FAB при клике вне
 document.addEventListener('click', e => {
   if(!e.target.closest('#fabBtn') && !e.target.closest('#fabMenu')) closeFabMenu();
 });
 
-// Обработчики для модалок, которые открываются по onclick-атрибутам
-document.getElementById('m-train-list').addEventListener('click', e => {
-  if(e.target.id === 'm-train-list') return;
+// Закрытие модалок по Esc (для десктопа)
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.modal-bg.on').forEach(m => m.classList.remove('on'));
+  }
+});
+
+// Инициализация модалки выбора упражнения (заполнение поиска)
+document.addEventListener('DOMContentLoaded', () => {
+  const ps = document.getElementById('pickSearch');
+  if(ps) ps.value = '';
 });
 </script>
 </body>
