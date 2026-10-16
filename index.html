@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
-<title>АС — Фитнес</title>
+<title>АС — Фитнес v2</title>
 <style>
 :root,[data-theme="neon"]{--bg:#0e1116;--bg2:#151a22;--card:#1a2029;--card2:#222a36;--line:#2a3340;--txt:#e8edf4;--mut:#8a97a8;--acc:#ff5b2e;--acc2:#ffb02e;--ok:#2ecc71;--blue:#3aa0ff;--grad:linear-gradient(135deg,var(--acc),var(--acc2))}
 [data-theme="ocean"]{--bg:#08131c;--bg2:#0d1f2d;--card:#102636;--card2:#153244;--line:#1d435b;--txt:#e0f4ff;--mut:#7ba9c7;--acc:#00d4ff;--acc2:#0088cc;--ok:#00e0b0;--grad:linear-gradient(135deg,#00d4ff,#0088cc)}
@@ -32,8 +32,10 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .xp-bar{height:5px;background:var(--line);border-radius:5px;overflow:hidden;margin-top:3px}
 .xp-bar i{display:block;height:100%;background:var(--grad);border-radius:5px;transition:width .6s}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
-.card h2{margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;color:var(--mut);display:flex;align-items:center;gap:8px}
+.card h2{margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;color:var(--mut);display:flex;align-items:center;gap:8px;justify-content:space-between}
+.card h2 .lft{display:flex;align-items:center;gap:8px}
 .card h2 .dot{width:6px;height:6px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc)}
+.card h2 .cnt-badge{font-size:10px;background:var(--grad);color:var(--bg);padding:2px 8px;border-radius:20px;font-weight:800;-webkit-text-fill-color:var(--bg)}
 .prog-row{display:flex;gap:8px;margin-bottom:12px}
 .prog{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .prog .lbl{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
@@ -67,15 +69,26 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .mday.has-train::after{content:"";position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--acc2)}
 .mday.has-train.done::after{background:var(--ok)}
 .mday.selected::after{background:var(--bg) !important}
-.train{display:flex;gap:10px;align-items:center;padding:11px;border-radius:12px;background:var(--card2);border:1px solid var(--line);margin-bottom:7px}
-.train .time{font-weight:800;font-size:14px;color:var(--acc2);min-width:48px;font-variant-numeric:tabular-nums}
-.train .info{flex:1;min-width:0}
-.train .name{font-weight:600;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.train .meta{font-size:11px;color:var(--mut);margin-top:2px}
-.train .xp-badge{font-size:10px;font-weight:800;color:var(--ok);background:rgba(46,204,113,.15);padding:3px 7px;border-radius:20px;border:1px solid rgba(46,204,113,.3);white-space:nowrap}
-.train .chk{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;flex:0 0 auto;cursor:pointer;transition:.2s}
-.train .chk.on{background:var(--ok);border-color:var(--ok)}
-.train .chk.on::after{content:"✓";color:var(--bg);font-weight:900;font-size:14px}
+.train{background:var(--card2);border:1px solid var(--line);border-radius:12px;margin-bottom:7px;overflow:hidden}
+.train-head{display:flex;gap:10px;align-items:center;padding:11px;cursor:pointer}
+.train-head .time{font-weight:800;font-size:14px;color:var(--acc2);min-width:48px;font-variant-numeric:tabular-nums}
+.train-head .info{flex:1;min-width:0}
+.train-head .name{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.train-head .meta{font-size:11px;color:var(--mut);margin-top:2px}
+.train-head .chk{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;flex:0 0 auto;cursor:pointer;transition:.2s}
+.train-head .chk.on{background:var(--ok);border-color:var(--ok)}
+.train-head .chk.on::after{content:"✓";color:var(--bg);font-weight:900;font-size:14px}
+.train-body{padding:0 11px 11px;border-top:1px solid var(--line);display:none}
+.train-body.on{display:block}
+.ex-item{padding:10px;background:var(--card);border-radius:10px;margin-top:8px;font-size:12.5px}
+.ex-item .row1{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px}
+.ex-item .ex-name{font-weight:700;font-size:13px;flex:1}
+.ex-item .ex-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.ex-item .row2{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;font-size:11px;color:var(--mut)}
+.ex-item .chip-mini{padding:2px 7px;background:var(--card2);border:1px solid var(--line);border-radius:20px;color:var(--mut);font-size:10.5px}
+.train-actions{display:flex;gap:6px;margin-top:8px}
+.train-actions button{flex:1;padding:8px;border-radius:9px;font-size:11.5px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer}
+.train-actions button:active{transform:scale(.97)}
 .profile{display:flex;align-items:center;gap:12px}
 .avatar-wrap{position:relative;width:72px;height:72px;flex:0 0 auto}
 .avatar{width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px;color:var(--bg);background-size:cover;background-position:center;overflow:hidden}
@@ -96,9 +109,8 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .ex{padding:10px;border-radius:12px;background:var(--card);border:1px solid var(--line);margin-bottom:7px;display:flex;gap:10px;align-items:center}
 .ex .thumb{width:52px;height:52px;border-radius:10px;flex:0 0 auto;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:20px;overflow:hidden}
 .ex .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.ex .txt{font-size:13px;line-height:1.35;font-weight:500;flex:1;min-width:0;overflow:hidden}
-.ex .txt .sub{font-size:11px;color:var(--mut);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ex .badge{font-size:10px;color:var(--acc2);background:rgba(255,176,46,.15);padding:3px 8px;border-radius:20px;font-weight:700;flex:0 0 auto;border:1px solid rgba(255,176,46,.3);white-space:nowrap}
+.ex .txt{font-size:13px;line-height:1.35;font-weight:600;flex:1;min-width:0;overflow:hidden}
+.ex .txt .sub{font-size:11px;color:var(--mut);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}
 .ex .del{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--mut);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
 .empty{color:var(--mut);text-align:center;padding:20px 12px;font-size:13px;line-height:1.5}
 .empty b{color:var(--acc2)}
@@ -108,6 +120,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .chip .cnt{font-size:10px;opacity:.7;font-weight:700}
 .chip.on .cnt{opacity:.9}
 .chip.add{color:var(--acc2);border-style:dashed;border-color:var(--acc2)}
+.chip .emoji{font-size:13px}
 .sec-title{font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:1.1px;margin:12px 0 6px;display:flex;align-items:center;gap:8px}
 .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
 .btn{padding:12px 14px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;background:var(--card);color:var(--txt);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;gap:6px}
@@ -116,6 +129,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .btn.danger{background:rgba(255,91,46,.12);color:var(--acc);border-color:rgba(255,91,46,.3)}
 .btn.blue{background:rgba(58,160,255,.12);color:var(--blue);border-color:rgba(58,160,255,.3)}
 .btn.green{background:rgba(46,204,113,.12);color:var(--ok);border-color:rgba(46,204,113,.3)}
+.btn.small{padding:8px 12px;font-size:11.5px}
 .btn.full{width:100%}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap}
 .btn-row .btn{flex:1;min-width:0}
@@ -189,7 +203,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .row{display:flex;gap:8px}
 .row .field{flex:1}
 .days{display:flex;gap:4px;margin-top:4px}
-.days .d{flex:1;padding:9px 0;border-radius:9px;text-align:center;font-size:11px;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer}
+.days .d{flex:1;padding:9px 0;border-radius:9px;text-align:center;font-size:11px;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;transition:.15s}
 .days .d.on{background:var(--grad);color:var(--bg);border-color:transparent}
 .close{width:100%;padding:13px;border-radius:12px;border:none;background:var(--card);color:var(--mut);font-weight:700;margin-top:6px;cursor:pointer;font-size:13px}
 .photo-zone{position:relative;border:2px dashed var(--line);border-radius:12px;padding:18px;text-align:center;cursor:pointer;background:var(--card);min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
@@ -201,13 +215,14 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .timer-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .timer-preset{padding:7px 12px;border-radius:10px;font-size:11.5px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--mut);cursor:pointer}
 .timer-preset:active{transform:scale(.95)}
-.time-editor{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.time-editor{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .time-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--card2);padding:10px 12px;border-radius:12px;border:1px solid var(--line)}
 .time-row .lbl{font-size:12px;font-weight:700}
 .time-row .lbl small{display:block;font-size:10px;color:var(--mut);font-weight:500;margin-top:2px}
 .time-controls{display:flex;align-items:center;gap:6px}
 .time-controls button{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.time-controls .val{min-width:56px;text-align:center;font-size:16px;font-weight:900;color:var(--acc2)}
+.time-controls input{width:70px;padding:8px 6px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--acc2);font-size:15px;font-weight:900;text-align:center;outline:none;font-family:inherit}
+.time-controls input:focus{border-color:var(--acc)}
 .timer-display{text-align:center;font-size:60px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 4px;line-height:1}
 .timer-phase{text-align:center;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
 .timer-phase.prep{color:var(--blue)}
@@ -219,6 +234,15 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .tcell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px;text-align:center}
 .tcell .lbl{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
 .tcell .v{font-size:17px;font-weight:800;margin-top:2px}
+.comp-ex-item{display:flex;gap:8px;align-items:center;padding:9px 11px;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:6px}
+.comp-ex-item .info{flex:1;min-width:0}
+.comp-ex-item .nm{font-size:12.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.comp-ex-item .ds{font-size:11px;color:var(--mut);margin-top:2px}
+.comp-ex-item .rm{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;font-size:13px}
+.comp-item{padding:12px;background:var(--card2);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.2s}
+.comp-item:active{transform:scale(.98)}
+.comp-item .nm{font-size:14px;font-weight:800;margin-bottom:4px}
+.comp-item .meta{font-size:11.5px;color:var(--mut);display:flex;gap:8px;flex-wrap:wrap}
 nav.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px 10px;z-index:50;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 nav.bottom button{background:none;border:none;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;cursor:pointer;padding:4px 8px;transition:.2s;flex:1;max-width:80px}
 nav.bottom button svg{width:22px;height:22px;fill:currentColor}
@@ -237,7 +261,7 @@ nav.bottom button.on{color:var(--acc)}
 
 <div class="app">
   <header class="top">
-    <div class="logo">АС <span>FIT SYSTEM</span></div>
+    <div class="logo">АС <span>FIT SYSTEM v2</span></div>
     <div class="xp-head" onclick="navTo('v-stat')">
       <div class="xp-lvl" id="headLvl">1</div>
       <div class="xp-info">
@@ -251,6 +275,7 @@ nav.bottom button.on{color:var(--acc)}
     </div>
   </header>
 
+  <!-- ============ ГЛАВНАЯ: КАЛЕНДАРЬ + ТРЕНИРОВКИ ============ -->
   <section class="view on" id="v-main">
     <div class="prog-row">
       <div class="prog"><div class="lbl">Неделя</div><div class="val" id="weekNum">1<span style="color:var(--mut);font-size:11px">/52</span></div><div class="bar"><i style="width:0%"></i></div></div>
@@ -280,12 +305,19 @@ nav.bottom button.on{color:var(--acc)}
       <div class="month-grid" id="monthGrid"></div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Тренировки · <span id="selectedDateLabel" style="color:var(--acc2)"></span></h2>
+      <h2>
+        <span class="lft"><span class="dot"></span>Тренировки · <span id="selectedDateLabel" style="color:var(--acc2)"></span></span>
+        <span class="cnt-badge" id="trainsCount">0</span>
+      </h2>
       <div id="trainList"></div>
     </div>
-    <button class="btn primary full" onclick="openModal('m-train')">+ Добавить тренировку</button>
+    <div class="btn-row">
+      <button class="btn primary" onclick="openTrainModal()">+ Тренировка</button>
+      <button class="btn" onclick="openModal('m-train-list')">📋 Все шаблоны</button>
+    </div>
   </section>
 
+  <!-- ============ УПРАЖНЕНИЯ ============ -->
   <section class="view" id="v-ex">
     <div class="search">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"/></svg>
@@ -293,24 +325,28 @@ nav.bottom button.on{color:var(--acc)}
     </div>
     <div class="tabs">
       <div class="tab active" data-f="all" onclick="setFilter(this)">Все</div>
-      <div class="tab" data-f="zone" onclick="setFilter(this)">По зонам</div>
-      <div class="tab" data-f="gear" onclick="setFilter(this)">По снарядам</div>
+      <div class="tab" data-f="zone" onclick="setFilter(this)">Зоны</div>
+      <div class="tab" data-f="gear" onclick="setFilter(this)">Снаряды</div>
+      <div class="tab" data-f="skill" onclick="setFilter(this)">Навыки</div>
     </div>
     <div class="sec-title">Зоны</div>
     <div class="chips" id="zones"></div>
     <div class="sec-title">Снаряды</div>
     <div class="chips" id="gears"></div>
+    <div class="sec-title">Навыки</div>
+    <div class="chips" id="skills"></div>
     <div class="sec-title">Упражнения (<span id="exCount">0</span>)</div>
     <div id="exList"></div>
     <div class="btn-row" style="margin-top:12px">
-      <button class="btn primary" onclick="openModal('m-ex')">+ Упражнение</button>
-      <button class="btn" onclick="openModal('m-comp')">+ Комплекс</button>
+      <button class="btn primary" onclick="openExModal()">+ Упражнение</button>
+      <button class="btn" onclick="openCompModal()">+ Комплекс</button>
     </div>
     <div class="btn-row" style="margin-top:8px">
       <button class="btn danger full" onclick="clearAllEx()">🗑 Очистить все упражнения</button>
     </div>
   </section>
 
+  <!-- ============ СТАТИСТИКА + XP ============ -->
   <section class="view" id="v-stat">
     <div class="card xp-card">
       <div class="xp-main">
@@ -330,41 +366,45 @@ nav.bottom button.on{color:var(--acc)}
       </div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>🎒 Опыт снарядов</h2>
+      <h2><span class="lft"><span class="dot"></span>🎒 Опыт снарядов</span></h2>
       <div id="skillGears" class="stat-list"></div>
-      <div class="note">🌙 7+ дней без тренировки — XP начинает падать.</div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>💪 Опыт зон тела</h2>
+      <h2><span class="lft"><span class="dot"></span>💪 Опыт зон</span></h2>
       <div id="skillZones" class="stat-list"></div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Последние начисления XP</h2>
+      <h2><span class="lft"><span class="dot"></span>🎯 Опыт навыков</span></h2>
+      <div id="skillSkills" class="stat-list"></div>
+    </div>
+    <div class="card">
+      <h2><span class="lft"><span class="dot"></span>Последние начисления XP</span></h2>
       <div id="xpLog"></div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Сводка</h2>
+      <h2><span class="lft"><span class="dot"></span>Сводка</span></h2>
       <div class="stats-grid">
         <div class="mini-stat"><div class="v" id="stTotal">0</div><div class="l">Упражнений</div></div>
         <div class="mini-stat"><div class="v" id="stTrains">0</div><div class="l">Тренировок</div></div>
+        <div class="mini-stat"><div class="v" id="stComps">0</div><div class="l">Комплексов</div></div>
         <div class="mini-stat"><div class="v" id="stGears">0</div><div class="l">Снарядов</div></div>
-        <div class="mini-stat"><div class="v" id="stZones">0</div><div class="l">Зон</div></div>
       </div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Предпочтения: снаряды</h2>
+      <h2><span class="lft"><span class="dot"></span>Предпочтения: снаряды</span></h2>
       <div class="stat-list" id="statGears"></div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Предпочтения: зоны</h2>
+      <h2><span class="lft"><span class="dot"></span>Предпочтения: зоны</span></h2>
       <div class="stat-list" id="statZones"></div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Типы</h2>
-      <div class="stat-list" id="statTypes"></div>
+      <h2><span class="lft"><span class="dot"></span>Навыки: прокачка</span></h2>
+      <div class="stat-list" id="statSkills"></div>
     </div>
   </section>
 
+  <!-- ============ ПРОФИЛЬ ============ -->
   <section class="view" id="v-prof">
     <div class="card">
       <div class="profile">
@@ -384,7 +424,7 @@ nav.bottom button.on{color:var(--acc)}
       </div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Данные профиля</h2>
+      <h2><span class="lft"><span class="dot"></span>Данные профиля</span></h2>
       <div class="field"><label>Имя</label><input id="inName"></div>
       <div class="row">
         <div class="field"><label>Возраст</label><input id="inAge" type="number"></div>
@@ -393,16 +433,9 @@ nav.bottom button.on{color:var(--acc)}
       <button class="btn primary full" onclick="saveProfile()">Сохранить</button>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>⏱ Редактор таймера</h2>
+      <h2><span class="lft"><span class="dot"></span>⏱ Настройка таймера</span></h2>
       <div class="timer-presets" id="timerPresets"></div>
-      <div class="time-editor">
-        <div class="time-row"><div class="lbl">Подготовка<small>перед стартом</small></div><div class="time-controls"><button onclick="adjTimer('prep',-5)">−</button><span class="val" id="tPrep">10с</span><button onclick="adjTimer('prep',5)">+</button></div></div>
-        <div class="time-row"><div class="lbl">Работа<small>фаза нагрузки</small></div><div class="time-controls"><button onclick="adjTimer('work',-5)">−</button><span class="val" id="tWork">30с</span><button onclick="adjTimer('work',5)">+</button></div></div>
-        <div class="time-row"><div class="lbl">Отдых<small>между подходами</small></div><div class="time-controls"><button onclick="adjTimer('rest',-5)">−</button><span class="val" id="tRest">30с</span><button onclick="adjTimer('rest',5)">+</button></div></div>
-        <div class="time-row"><div class="lbl">Подходов<small>в круге</small></div><div class="time-controls"><button onclick="adjTimer('sets',-1)">−</button><span class="val" id="tSets">3</span><button onclick="adjTimer('sets',1)">+</button></div></div>
-        <div class="time-row"><div class="lbl">Кругов<small>циклов</small></div><div class="time-controls"><button onclick="adjTimer('rounds',-1)">−</button><span class="val" id="tRounds">5</span><button onclick="adjTimer('rounds',1)">+</button></div></div>
-        <div class="time-row"><div class="lbl">Отдых между кругами<small>доп. пауза</small></div><div class="time-controls"><button onclick="adjTimer('roundRest',-10)">−</button><span class="val" id="tRoundRest">60с</span><button onclick="adjTimer('roundRest',10)">+</button></div></div>
-      </div>
+      <div class="time-editor" id="timeEditor"></div>
       <div class="btn-row">
         <button class="btn primary" onclick="openModal('m-timer')">▶ Открыть</button>
         <button class="btn" onclick="saveTimerConfig()">💾 Сохранить</button>
@@ -410,11 +443,11 @@ nav.bottom button.on{color:var(--acc)}
       <button class="btn full" style="margin-top:8px" onclick="resetTimerConfig()">⟳ Сброс</button>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>🎨 Цветовая схема (9)</h2>
+      <h2><span class="lft"><span class="dot"></span>🎨 Цветовая схема (9)</span></h2>
       <div class="themes-grid" id="themesGrid"></div>
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Обмен базами</h2>
+      <h2><span class="lft"><span class="dot"></span>Обмен базами</span></h2>
       <button class="btn blue full" style="margin-bottom:8px" onclick="exportDB()">📤 Экспорт (.json)</button>
       <button class="btn green full" style="margin-bottom:8px" onclick="document.getElementById('importInput').click()">📥 Импорт (.json)</button>
       <button class="btn full" style="margin-bottom:8px" onclick="shareDB()">🔗 Поделиться</button>
@@ -422,20 +455,22 @@ nav.bottom button.on{color:var(--acc)}
       <input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="importDB(this)">
     </div>
     <div class="card">
-      <h2><span class="dot"></span>Опасная зона</h2>
+      <h2><span class="lft"><span class="dot"></span>Опасная зона</span></h2>
       <button class="btn danger full" onclick="resetAll()">🗑 Сбросить всё</button>
     </div>
   </section>
 </div>
 
+<!-- FAB -->
 <div class="fab-menu" id="fabMenu">
-  <button onclick="openModal('m-train');closeFabMenu()"><span class="emoji">🏋️</span>Тренировка</button>
-  <button onclick="openModal('m-ex');closeFabMenu()"><span class="emoji">💪</span>Упражнение</button>
-  <button onclick="openModal('m-comp');closeFabMenu()"><span class="emoji">🔁</span>Комплекс</button>
+  <button onclick="openTrainModal();closeFabMenu()"><span class="emoji">🏋️</span>Тренировка</button>
+  <button onclick="openExModal();closeFabMenu()"><span class="emoji">💪</span>Упражнение</button>
+  <button onclick="openCompModal();closeFabMenu()"><span class="emoji">🔁</span>Комплекс</button>
   <button onclick="openModal('m-timer');closeFabMenu()"><span class="emoji">⏱</span>Таймер</button>
 </div>
 <button class="fab" id="fabBtn" onclick="toggleFabMenu()">+</button>
 
+<!-- NAV -->
 <nav class="bottom">
   <button class="on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>Календарь</button>
   <button data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>Упр.</button>
@@ -443,10 +478,11 @@ nav.bottom button.on{color:var(--acc)}
   <button data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>Профиль</button>
 </nav>
 
+<!-- ========== MODAL: УПРАЖНЕНИЕ ========== -->
 <div class="modal-bg" id="m-ex" onclick="if(event.target===this)closeModal('m-ex')">
   <div class="modal">
-    <h3>Добавить упражнение</h3>
-    <div class="field"><label>Название *</label><input id="exName" placeholder="Подтягивания"></div>
+    <h3 id="exModalTitle">Новое упражнение</h3>
+    <div class="field"><label>Название *</label><input id="exName" placeholder="Прыжки на скакалке"></div>
     <div class="field">
       <label>Фото</label>
       <div class="photo-zone" id="photoZone" onclick="if(!this.classList.contains('has-img'))document.getElementById('exPhoto').click()">
@@ -454,64 +490,147 @@ nav.bottom button.on{color:var(--acc)}
       </div>
       <input type="file" id="exPhoto" accept="image/*" style="display:none" onchange="loadExPhoto(this)">
     </div>
-    <div class="field"><label>Снаряд</label><select id="exGear"></select></div>
-    <div class="field"><label>Зона</label><select id="exZone"></select></div>
-    <div class="field"><label>Категория</label><select id="exCat"></select></div>
-    <div class="field"><label>Тип</label><select id="exType"><option>Сила</option><option>Спец упражнение</option><option>Растяжка</option><option>Скоростно-силовое</option><option>Выносливость</option></select></div>
     <div class="field">
-      <label>Формат</label>
+      <label>Зоны (можно несколько)</label>
+      <div class="chips" id="exZonesPick"></div>
+    </div>
+    <div class="field">
+      <label>Снаряды (можно несколько)</label>
+      <div class="chips" id="exGearsPick"></div>
+    </div>
+    <div class="field">
+      <label>Навыки (можно несколько)</label>
+      <div class="chips" id="exSkillsPick"></div>
+    </div>
+    <div class="field">
+      <label>Формат XP</label>
       <select id="exFormat">
-        <option value="time">⏱ На время (сек)</option>
-        <option value="weight">🏋️ С весом (кг × повторы)</option>
+        <option value="time">⏱ Время (сек)</option>
+        <option value="weight">🏋️ Вес (кг × повторы)</option>
         <option value="reps">💪 Свой вес (повторы)</option>
       </select>
     </div>
-    <div class="field"><label>Описание</label><textarea id="exDesc"></textarea></div>
+    <div class="field"><label>Описание</label><textarea id="exDesc" placeholder="Техника, нюансы..."></textarea></div>
     <button class="btn primary full" onclick="saveEx()">Сохранить</button>
     <button class="close" onclick="closeModal('m-ex')">Отмена</button>
   </div>
 </div>
 
+<!-- ========== MODAL: ТРЕНИРОВКА ========== -->
+<div class="modal-bg" id="m-train" onclick="if(event.target===this)closeModal('m-train')">
+  <div class="modal">
+    <h3 id="trainModalTitle">Новая тренировка</h3>
+    <div class="field"><label>Название *</label><input id="tName" placeholder="Скакалка"></div>
+    <div class="field">
+      <label>Дни недели (шаблон)</label>
+      <div class="days" id="daysRow">
+        <div class="d" data-d="1" onclick="this.classList.toggle('on')">Пн</div>
+        <div class="d" data-d="2" onclick="this.classList.toggle('on')">Вт</div>
+        <div class="d" data-d="3" onclick="this.classList.toggle('on')">Ср</div>
+        <div class="d" data-d="4" onclick="this.classList.toggle('on')">Чт</div>
+        <div class="d" data-d="5" onclick="this.classList.toggle('on')">Пт</div>
+        <div class="d" data-d="6" onclick="this.classList.toggle('on')">Сб</div>
+        <div class="d" data-d="0" onclick="this.classList.toggle('on')">Вс</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Время</label><input type="time" id="tTime" value="16:00"></div>
+      <div class="field"><label>Длительность, мин</label><input type="number" id="tDuration" value="30"></div>
+    </div>
+
+    <div class="sec-title">Упражнения</div>
+    <div id="tExList"><div class="empty" style="padding:10px">Пока пусто</div></div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn" onclick="openPickEx('train')">+ Упражнение</button>
+      <button class="btn" onclick="openPickComp('train')">+ Комплекс</button>
+    </div>
+
+    <button class="btn primary full" style="margin-top:12px" onclick="saveTrain()">Сохранить</button>
+    <button class="close" onclick="closeModal('m-train')">Отмена</button>
+  </div>
+</div>
+
+<!-- ========== MODAL: ВСЕ ШАБЛОНЫ ========== -->
+<div class="modal-bg" id="m-train-list" onclick="if(event.target===this)closeModal('m-train-list')">
+  <div class="modal">
+    <h3>Шаблоны тренировок</h3>
+    <div id="trainTemplates"></div>
+    <button class="close" onclick="closeModal('m-train-list')">Закрыть</button>
+  </div>
+</div>
+
+<!-- ========== MODAL: КОМПЛЕКС ========== -->
 <div class="modal-bg" id="m-comp" onclick="if(event.target===this)closeModal('m-comp')">
   <div class="modal">
-    <h3>Новый комплекс</h3>
-    <div class="field"><label>Название</label><input id="cName"></div>
+    <h3 id="compModalTitle">Новый комплекс</h3>
+    <div class="field"><label>Название *</label><input id="cName" placeholder="Комплекс «Сидни»"></div>
+    <div class="sec-title">Упражнения в комплексе</div>
+    <div id="cExList"><div class="empty" style="padding:10px">Пока пусто</div></div>
+    <button class="btn full" style="margin-top:8px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
+    <div class="field" style="margin-top:12px">
+      <label>Тип комплекса</label>
+      <div class="chips" id="compType">
+        <div class="chip on" onclick="pickCompType(this)">Открытый</div>
+        <div class="chip" onclick="pickCompType(this)">Закрытый</div>
+      </div>
+    </div>
     <button class="btn primary full" onclick="saveComp()">Сохранить</button>
     <button class="close" onclick="closeModal('m-comp')">Отмена</button>
   </div>
 </div>
 
-<div class="modal-bg" id="m-train" onclick="if(event.target===this)closeModal('m-train')">
+<!-- ========== MODAL: СПИСОК КОМПЛЕКСОВ ========== -->
+<div class="modal-bg" id="m-comp-list" onclick="if(event.target===this)closeModal('m-comp-list')">
   <div class="modal">
-    <h3>Новая тренировка</h3>
-    <div class="field"><label>Название *</label><input id="tName"></div>
-    <div class="row">
-      <div class="field"><label>Дата</label><input type="date" id="tDate"></div>
-      <div class="field"><label>Время</label><input type="time" id="tTime" value="16:00"></div>
-    </div>
-    <div class="row">
-      <div class="field"><label>Снаряд</label><select id="tGear"></select></div>
-      <div class="field"><label>Зона</label><select id="tZone"></select></div>
-    </div>
-    <div class="field">
-      <label>Тип XP</label>
-      <select id="tXpType">
-        <option value="time">⏱ На время (сек)</option>
-        <option value="weight">🏋️ С весом</option>
-        <option value="reps">💪 Повторы</option>
-        <option value="manual">⚙️ Вручную</option>
-      </select>
-    </div>
-    <div class="row">
-      <div class="field"><label>Вес, кг</label><input id="tWeight" type="number" value="0"></div>
-      <div class="field"><label>Повторы/сек</label><input id="tReps" type="number" value="0"></div>
-    </div>
-    <div class="field"><label>Ручной XP</label><input id="tXpManual" type="number" value="0"></div>
-    <button class="btn primary full" onclick="saveTrain()">Создать</button>
-    <button class="close" onclick="closeModal('m-train')">Отмена</button>
+    <h3>Мои комплексы</h3>
+    <div id="compList"></div>
+    <button class="close" onclick="closeModal('m-comp-list')">Закрыть</button>
   </div>
 </div>
 
+<!-- ========== MODAL: ВЫБОР УПРАЖНЕНИЯ ========== -->
+<div class="modal-bg" id="m-pick-ex" onclick="if(event.target===this)closeModal('m-pick-ex')">
+  <div class="modal">
+    <h3 id="pickTitle">Выбор упражнения</h3>
+    <div class="search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"/></svg>
+      <input placeholder="Поиск..." id="pickSearch" oninput="renderPickEx()">
+    </div>
+    <div id="pickExList"></div>
+    <button class="close" onclick="closeModal('m-pick-ex')">Отмена</button>
+  </div>
+</div>
+
+<!-- ========== MODAL: ВЫБОР КОМПЛЕКСА ========== -->
+<div class="modal-bg" id="m-pick-comp" onclick="if(event.target===this)closeModal('m-pick-comp')">
+  <div class="modal">
+    <h3>Выбор комплекса</h3>
+    <div id="pickCompList"></div>
+    <button class="close" onclick="closeModal('m-pick-comp')">Отмена</button>
+  </div>
+</div>
+
+<!-- ========== MODAL: НАСТРОЙКА УПРАЖНЕНИЯ В ТРЕНИРОВКЕ ========== -->
+<div class="modal-bg" id="m-ex-config" onclick="if(event.target===this)closeModal('m-ex-config')">
+  <div class="modal">
+    <h3 id="exCfgTitle">Настройка упражнения</h3>
+    <div class="field" id="exCfgNameWrap"><label>Упражнение</label><div id="exCfgName" style="font-size:15px;font-weight:700;padding:11px 12px;background:var(--card);border-radius:10px"></div></div>
+    <div class="row">
+      <div class="field"><label>Подходы</label><input type="number" id="exCfgSets" value="3" min="1"></div>
+      <div class="field"><label>Повторы</label><input type="number" id="exCfgReps" value="10" min="0"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Время, сек</label><input type="number" id="exCfgTime" value="0" min="0"></div>
+      <div class="field"><label>Отдых, сек</label><input type="number" id="exCfgRest" value="60" min="0"></div>
+    </div>
+    <div class="field"><label>Рабочий вес, кг</label><input type="number" id="exCfgWeight" value="0" min="0"></div>
+    <div class="field"><label>Заметка</label><input id="exCfgNote" placeholder="напр. разминка"></div>
+    <button class="btn primary full" onclick="saveExConfig()">ОК</button>
+    <button class="close" onclick="closeModal('m-ex-config')">Отмена</button>
+  </div>
+</div>
+
+<!-- ========== MODAL: ТАЙМЕР ========== -->
 <div class="modal-bg" id="m-timer" onclick="if(event.target===this)closeModal('m-timer')">
   <div class="modal">
     <h3>Таймер</h3>
@@ -519,696 +638,1369 @@ nav.bottom button.on{color:var(--acc)}
     <div class="timer-display" id="tDisp">00:10</div>
     <div class="timer-progress"><i id="tProgress" style="width:0%"></i></div>
     <div class="timer-grid">
-      <div class="tcell"><div class="lbl">Круг</div><div class="v" id="tRoundCur">1/5</div></div>
-      <div class="tcell"><div class="lbl">Подход</div><div class="v" id="tSetCur">1/3</div></div>
+      <div class="tcell"><div class="lbl">Круг</div><div class="v" id="tRoundCur">1/1</div></div>
+      <div class="tcell"><div class="lbl">Подход</div><div class="v" id="tSetCur">1/1</div></div>
       <div class="tcell"><div class="lbl">Отдых</div><div class="v" id="tRestCur">30с</div></div>
     </div>
     <div class="btn-row">
       <button class="btn primary" onclick="toggleTimer()" id="tBtn" style="flex:2">▶ Старт</button>
       <button class="btn" onclick="resetTimer()">⟳</button>
     </div>
+    <button class="btn full" style="margin-top:8px" onclick="closeModal('m-timer');navTo('v-prof')">⚙️ Настроить</button>
     <button class="close" onclick="closeModal('m-timer')">Закрыть</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
 <script>
-/* ==================== КОНСТАНТЫ ==================== */
-const DEFAULT_ZONES=['Шея','Грудь','Голени','Плечи','Ягодицы','Стопы','Спина','Бедра','Кисти','Пресс','Кор'];
-const DEFAULT_GEARS=['Скакалка','Гиря','Турник','Брусья','Кольца','TRX','Эспандер','Без снаряда','Гантели','Штанга'];
-const DEFAULT_CATS=['Силовые','Скоростно-силовые','Выносливость','Координационные','Гибкость','Собственный вес','Гиревой спорт','Функциональные'];
-const THEMES=[
-{id:'neon',name:'Neon',c1:'#ff5b2e',c2:'#ffb02e',bg:'#0e1116'},
-{id:'ocean',name:'Ocean',c1:'#00d4ff',c2:'#0088cc',bg:'#08131c'},
-{id:'matrix',name:'Matrix',c1:'#00ff6a',c2:'#00aa44',bg:'#050d08'},
-{id:'royal',name:'Royal',c1:'#a855f7',c2:'#ec4899',bg:'#0d0818'},
-{id:'sunset',name:'Sunset',c1:'#ff6b3d',c2:'#ffb800',bg:'#1a0d0d'},
-{id:'mint',name:'Mint',c1:'#10b981',c2:'#059669',bg:'#f0fdf9'},
-{id:'carbon',name:'Carbon',c1:'#e5e5e5',c2:'#737373',bg:'#0a0a0a'},
-{id:'cyber',name:'Cyber',c1:'#00e5ff',c2:'#ff00e5',bg:'#0a0518'},
-{id:'sand',name:'Sand',c1:'#b45309',c2:'#78350f',bg:'#f5f1e8'}];
-const MONTHS_RU=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const MONTHS_RU_GEN=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-const WD_SHORT=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-const RANKS=[{min:1,name:'Новичок'},{min:5,name:'Любитель'},{min:10,name:'Атлет'},{min:20,name:'Спортсмен'},{min:35,name:'Мастер'},{min:50,name:'Ветеран'},{min:75,name:'Чемпион'},{min:100,name:'Легенда'}];
+/* ============================================================
+   АС FIT v2 — архитектура
+   ------------------------------------------------------------
+   Зоны: {id, name, emoji} — Кардио 🫁, Спина 🔙 и т.д.
+   Снаряды: {id, name, emoji} — Скакалка 🪢, Гиря 🏋️ и т.д.
+   Навыки: {id, name, emoji} — Координация 🎯, Сила 💪 и т.д.
+   Упражнение: {id, name, photo, zones:[id], gears:[id], skills:[id], format, desc}
+   Комплекс: {id, name, type:'open'|'closed', exercises:[{exId, sets, reps, time, rest, weight, note}]}
+   Тренировка (шаблон): {
+     id, name, days:[0..6] (0=Вс), time, duration,
+     exercises:[{exId, sets, reps, time, rest, weight, note}],
+     dayOverrides: {'YYYY-MM-DD': {time?, exercises?}} — правки для конкретного дня
+   }
+   Выполнения: {'YYYY-MM-DD': {trainId: {done:true, xpAwarded:N}}}
+   ============================================================ */
+
+/* ==================== КОНСТАНТЫ: ЗОНЫ С ЭМОДЗИ ==================== */
+const DEFAULT_ZONES = [
+  {id:'cardio',   name:'Кардио',    emoji:'🫁'},
+  {id:'neck',     name:'Шея',       emoji:'🦒'},
+  {id:'shoulders',name:'Плечи',     emoji:'💪'},
+  {id:'back',     name:'Спина',     emoji:'🔙'},
+  {id:'chest',    name:'Грудь',     emoji:'🫀'},
+  {id:'glutes',   name:'Ягодицы',   emoji:'🍑'},
+  {id:'hips',     name:'Бедра',     emoji:'🦵'},
+  {id:'calves',   name:'Голени',    emoji:'🦿'},
+  {id:'feet',     name:'Стопы',     emoji:'🦶'},
+  {id:'hands',    name:'Кисти',     emoji:'✋'},
+  {id:'abs',      name:'Пресс',     emoji:'🔥'},
+  {id:'core',     name:'Кор',       emoji:'🎯'},
+  {id:'stretch',  name:'Растяжка',  emoji:'🧘'},
+];
+
+/* ==================== КОНСТАНТЫ: СНАРЯДЫ ==================== */
+const DEFAULT_GEARS = [
+  {id:'none',     name:'Без снаряда',  emoji:'🙌'},
+  {id:'rope',     name:'Скакалка',     emoji:'🪢'},
+  {id:'kb',       name:'Гиря',         emoji:'🏋️'},
+  {id:'pullup',   name:'Турник',       emoji:'🎿'},
+  {id:'bars',     name:'Брусья',       emoji:'🏗️'},
+  {id:'rings',    name:'Кольца',       emoji:'⭕'},
+  {id:'trx',      name:'TRX',          emoji:'🪢'},
+  {id:'band',     name:'Эспандер',     emoji:'🎗️'},
+  {id:'db',       name:'Гантели',      emoji:'🏋️'},
+  {id:'bb',       name:'Штанга',       emoji:'🏋️'},
+  {id:'ball',     name:'Мяч',          emoji:'⚽'},
+  {id:'mat',      name:'Коврик',       emoji:'🟦'},
+];
+
+/* ==================== КОНСТАНТЫ: НАВЫКИ ==================== */
+const DEFAULT_SKILLS = [
+  {id:'coord',    name:'Координация',  emoji:'🎯'},
+  {id:'strength', name:'Сила',         emoji:'💪'},
+  {id:'speed',    name:'Скорость',     emoji:'⚡'},
+  {id:'endurance',name:'Выносливость', emoji:'🔋'},
+  {id:'flex',     name:'Гибкость',     emoji:'🧘'},
+  {id:'power',    name:'Мощность',     emoji:'🚀'},
+  {id:'balance',  name:'Баланс',       emoji:'⚖️'},
+  {id:'agility',  name:'Ловкость',     emoji:'🐆'},
+];
+
+/* ==================== ТЕМЫ ==================== */
+const THEMES = [
+  {id:'neon',name:'Neon',c1:'#ff5b2e',c2:'#ffb02e',bg:'#0e1116'},
+  {id:'ocean',name:'Ocean',c1:'#00d4ff',c2:'#0088cc',bg:'#08131c'},
+  {id:'matrix',name:'Matrix',c1:'#00ff6a',c2:'#00aa44',bg:'#050d08'},
+  {id:'royal',name:'Royal',c1:'#a855f7',c2:'#ec4899',bg:'#0d0818'},
+  {id:'sunset',name:'Sunset',c1:'#ff6b3d',c2:'#ffb800',bg:'#1a0d0d'},
+  {id:'mint',name:'Mint',c1:'#10b981',c2:'#059669',bg:'#f0fdf9'},
+  {id:'carbon',name:'Carbon',c1:'#e5e5e5',c2:'#737373',bg:'#0a0a0a'},
+  {id:'cyber',name:'Cyber',c1:'#00e5ff',c2:'#ff00e5',bg:'#0a0518'},
+  {id:'sand',name:'Sand',c1:'#b45309',c2:'#78350f',bg:'#f5f1e8'},
+];
+
+const MONTHS_RU = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const MONTHS_RU_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const WD_SHORT = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс']; // индекс 0 = Пн
+const WD_ISO   = [1,2,3,4,5,6,0];                       // соответствует WD_SHORT по позиции
+
+const RANKS = [
+  {min:1,   name:'Новичок'},
+  {min:5,   name:'Любитель'},
+  {min:10,  name:'Атлет'},
+  {min:20,  name:'Спортсмен'},
+  {min:35,  name:'Мастер'},
+  {min:50,  name:'Ветеран'},
+  {min:75,  name:'Чемпион'},
+  {min:100, name:'Легенда'},
+];
 
 /* ==================== XP ФОРМУЛЫ ==================== */
-function totalXpForLevel(n){return Math.round(n*(n-1)/2)}
+function totalXpForLevel(n){ return Math.round(n*(n-1)/2); }
 function computeLevel(xp){
-  xp=Math.max(0,xp);
-  let lvl=Math.floor((1+Math.sqrt(1+8*xp))/2);
-  if(lvl<1)lvl=1;
-  while(totalXpForLevel(lvl+1)<=xp)lvl++;
-  while(lvl>1&&totalXpForLevel(lvl)>xp)lvl--;
-  return{level:lvl,current:xp-totalXpForLevel(lvl),need:lvl};
+  xp = Math.max(0, xp);
+  let lvl = Math.floor((1 + Math.sqrt(1 + 8*xp)) / 2);
+  if(lvl < 1) lvl = 1;
+  while(totalXpForLevel(lvl+1) <= xp) lvl++;
+  while(lvl > 1 && totalXpForLevel(lvl) > xp) lvl--;
+  return {level: lvl, current: xp - totalXpForLevel(lvl), need: lvl};
 }
-function rankForLevel(l){let r=RANKS[0];for(const x of RANKS)if(l>=x.min)r=x;return r}
+function rankForLevel(l){ let r = RANKS[0]; for(const x of RANKS) if(l >= x.min) r = x; return r; }
 
 /* ==================== STORE ==================== */
-const store={
-  get(k,d){try{const v=localStorage.getItem('as_'+k);return v?JSON.parse(v):d}catch(e){return d}},
-  set(k,v){try{localStorage.setItem('as_'+k,JSON.stringify(v))}catch(e){console.error(e)}}
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('as2_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('as2_'+k, JSON.stringify(v)); }catch(e){ console.error('store err', e); } }
 };
-let exercises=store.get('exercises',[]);
-let zones=store.get('zones',DEFAULT_ZONES);
-let gears=store.get('gears',DEFAULT_GEARS);
-let cats=store.get('cats',DEFAULT_CATS);
-let trainings=store.get('trainings',[]);
-let profile=store.get('profile',{name:'Александр',age:34,weight:78,avatar:null});
-let theme=store.get('theme','neon');
-let filter='all';
-let currentExPhoto=null;
-let totalXp=store.get('totalXp',0);
-let xpLog=store.get('xpLog',[]);
-let xpGears=store.get('xpGears',{});
-let xpZones=store.get('xpZones',{});
-let timerConfig=store.get('timerConfig',{prep:10,work:30,rest:30,sets:3,rounds:5,roundRest:60});
 
-const TODAY=new Date();
-let viewMonth=TODAY.getMonth();
-let viewYear=TODAY.getFullYear();
-let selectedDate=new Date(TODAY);
-let weekStart=startOfWeek(TODAY);
+/* ==================== ДАННЫЕ ==================== */
+let zones  = store.get('zones',  DEFAULT_ZONES);
+let gears  = store.get('gears',  DEFAULT_GEARS);
+let skills = store.get('skills', DEFAULT_SKILLS);
+let exercises = store.get('exercises', []);  // {id, name, photo, zones:[], gears:[], skills:[], format, desc}
+let complexes = store.get('complexes', []);  // {id, name, type, exercises:[{exId, sets, reps, time, rest, weight, note}]}
+let trainings = store.get('trainings', []);  // {id, name, days:[], time, duration, exercises:[...], dayOverrides:{}}
+let completions = store.get('completions', {}); // {'YYYY-MM-DD': {trainId: {done, xpAwarded}}}
 
-function startOfWeek(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);x.setHours(0,0,0,0);return x}
-function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
-function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
-function isoDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
+let theme = store.get('theme', 'neon');
+let filter = 'all';
+let currentExPhoto = null;
 
-/* ==================== TOAST ==================== */
+let totalXp = store.get('totalXp', 0);
+let xpLog = store.get('xpLog', []);
+let xpGears = store.get('xpGears', {});
+let xpZones = store.get('xpZones', {});
+let xpSkills = store.get('xpSkills', {});
+
+let timerConfig = store.get('timerConfig', {prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60});
+
+// Промежуточные данные для модалок
+let editingExId = null;
+let editingTrainId = null;
+let editingCompId = null;
+let tempTrainEx = [];   // временный список упражнений в модалке тренировки
+let tempCompEx = [];    // временный список упражнений в модалке комплекса
+let pickTarget = null;  // 'train' | 'comp'
+let exConfigTarget = null; // {listRef:'tempTrainEx'|'tempCompEx', index}
+
+/* ==================== УТИЛИТЫ ДАТ ==================== */
+const TODAY = new Date();
+let viewMonth = TODAY.getMonth();
+let viewYear = TODAY.getFullYear();
+let selectedDate = new Date(TODAY);
+let weekStart = startOfWeek(TODAY);
+
+function startOfWeek(d){ const x=new Date(d); const day=(x.getDay()+6)%7; x.setDate(x.getDate()-day); x.setHours(0,0,0,0); return x; }
+function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+function sameDay(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+/* ==================== ТОСТЫ И АНИМАЦИИ ==================== */
 let toastT;
 function toast(msg){
-  const el=document.getElementById('toast');
-  if(!el)return;
-  el.textContent=msg;el.classList.add('on');
-  clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('on'),2000);
-}
-
-/* ==================== XP СНАРЯДОВ/ЗОН ==================== */
-function ensureXpMaps(){
-  if(!xpGears||typeof xpGears!=='object')xpGears={};
-  if(!xpZones||typeof xpZones!=='object')xpZones={};
-  gears.forEach(g=>{if(!xpGears[g])xpGears[g]={xp:0,lastTrained:null}});
-  zones.forEach(z=>{if(!xpZones[z])xpZones[z]={xp:0,lastTrained:null}});
-}
-function addSkillXp(g,z,amt){
-  const iso=new Date().toISOString();
-  if(g&&xpGears[g]){xpGears[g].xp=Math.max(0,xpGears[g].xp+amt);xpGears[g].lastTrained=iso}
-  if(z&&xpZones[z]){xpZones[z].xp=Math.max(0,xpZones[z].xp+amt);xpZones[z].lastTrained=iso}
-  store.set('xpGears',xpGears);store.set('xpZones',xpZones);
-}
-function removeSkillXp(g,z,amt){
-  if(g&&xpGears[g])xpGears[g].xp=Math.max(0,xpGears[g].xp-amt);
-  if(z&&xpZones[z])xpZones[z].xp=Math.max(0,xpZones[z].xp-amt);
-  store.set('xpGears',xpGears);store.set('xpZones',xpZones);
-}
-function daysBetween(iso1,iso2){return Math.floor((new Date(iso2)-new Date(iso1))/86400000)}
-const DECAY_TIERS=[{days:60,rate:.01},{days:30,rate:.005},{days:14,rate:.0025},{days:7,rate:.001}];
-const GLOBAL_DECAY=[{days:30,rate:2},{days:14,rate:1},{days:7,rate:.5}];
-function applyDecayOnLoad(){
-  const last=store.get('decayLastCheck',null);
-  const now=new Date().toISOString();
-  if(last&&daysBetween(last,now)<1)return;
-  ensureXpMaps();
-  let lost=0;
-  for(const g in xpGears){
-    const o=xpGears[g];
-    if(!o.xp||!o.lastTrained)continue;
-    const d=daysBetween(o.lastTrained,now);
-    let rate=0;for(const t of DECAY_TIERS)if(d>=t.days){rate=t.rate;break}
-    if(rate>0){const dec=o.xp*rate;o.xp=Math.max(0,o.xp-dec);lost+=dec}
-  }
-  for(const z in xpZones){
-    const o=xpZones[z];
-    if(!o.xp||!o.lastTrained)continue;
-    const d=daysBetween(o.lastTrained,now);
-    let rate=0;for(const t of DECAY_TIERS)if(d>=t.days){rate=t.rate;break}
-    if(rate>0){const dec=o.xp*rate;o.xp=Math.max(0,o.xp-dec);lost+=dec}
-  }
-  store.set('xpGears',xpGears);store.set('xpZones',xpZones);store.set('decayLastCheck',now);
-  if(lost>0)setTimeout(()=>toast('🌙 Распад: −'+lost.toFixed(2)+' XP'),1500);
-}
-function xpFromTime(s){return Math.round(s*.01*100)/100}
-function xpFromWeight(w,bw,r){if(!bw||bw<=0)bw=70;return Math.round((w/bw)*.01*r*100)/100}
-function xpFromReps(r){return Math.round(r*.1*100)/100}
-function calcTrainingXp(t){
-  const type=t.xpType||'time';
-  if(type==='manual')return Math.max(0,+t.xpManual||0);
-  if(type==='time')return xpFromTime(+t.reps||0);
-  if(type==='weight')return xpFromWeight(+t.weight||0,profile.weight||70,+t.reps||0);
-  if(type==='reps')return xpFromReps(+t.reps||0);
-  return 0;
+  const el = document.getElementById('toast'); if(!el) return;
+  el.textContent = msg; el.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove('on'), 2200);
 }
 function xpFly(amt){
-  const el=document.createElement('div');
-  el.className='xp-fly';el.textContent='+'+amt+' XP';
-  document.body.appendChild(el);setTimeout(()=>el.remove(),1700);
+  const el = document.createElement('div');
+  el.className = 'xp-fly'; el.textContent = '+'+amt+' XP';
+  document.body.appendChild(el); setTimeout(()=>el.remove(), 1700);
 }
-function addXp(amt,label,g,z){
-  if(amt<=0)return;
-  totalXp+=amt;store.set('totalXp',totalXp);
-  xpLog.unshift({date:new Date().toISOString(),name:label,xp:Math.round(amt*100)/100});
-  if(xpLog.length>50)xpLog=xpLog.slice(0,50);
-  store.set('xpLog',xpLog);
-  if(g||z)addSkillXp(g,z,amt);
-  xpFly(Math.round(amt*100)/100);
+
+/* ==================== XP ФОРМУЛЫ ==================== */
+function xpFromTime(s){ return Math.round(s*0.01*100)/100; }
+function xpFromWeight(w, bw, r){ if(!bw||bw<=0) bw=70; return Math.round((w/bw)*0.01*r*100)/100; }
+function xpFromReps(r){ return Math.round(r*0.1*100)/100; }
+
+// XP за одну тренировку (по её упражнениям, с учётом подхода/повторов/времени)
+function calcTrainXp(tr, override){
+  if(!tr || !tr.exercises) return 0;
+  const exs = (override && override.exercises) ? override.exercises : tr.exercises;
+  let total = 0;
+  exs.forEach(e => {
+    const ex = exercises.find(x => x.id === e.exId);
+    if(!ex) return;
+    const sets = +e.sets || 1;
+    const reps = +e.reps || 0;
+    const time = +e.time || 0;   // секунды за подход
+    const weight = +e.weight || 0;
+    if(ex.format === 'time')   total += xpFromTime(time) * sets;
+    else if(ex.format === 'weight') total += xpFromWeight(weight, profile.weight||70, reps) * sets;
+    else                        total += xpFromReps(reps) * sets;
+  });
+  return Math.round(total * 100) / 100;
+}
+
+/* ==================== НАЧИСЛЕНИЕ XP ==================== */
+function ensureXpMaps(){
+  if(!xpGears || typeof xpGears !== 'object') xpGears = {};
+  if(!xpZones || typeof xpZones !== 'object') xpZones = {};
+  if(!xpSkills || typeof xpSkills !== 'object') xpSkills = {};
+  gears.forEach(g => { if(!xpGears[g.id]) xpGears[g.id] = {xp:0, lastTrained:null}; });
+  zones.forEach(z => { if(!xpZones[z.id]) xpZones[z.id] = {xp:0, lastTrained:null}; });
+  skills.forEach(s => { if(!xpSkills[s.id]) xpSkills[s.id] = {xp:0, lastTrained:null}; });
+  store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
+}
+
+function addSkillXpTo(mapKey, id, amount){
+  const map = mapKey === 'gears' ? xpGears : mapKey === 'zones' ? xpZones : xpSkills;
+  if(!map[id]) return;
+  map[id].xp = Math.max(0, map[id].xp + amount);
+  map[id].lastTrained = new Date().toISOString();
+}
+
+function distributeXpToSkills(tr, xp){
+  // Раздаём XP снарядам, зонам и навыкам из упражнений тренировки
+  if(!tr || !tr.exercises || !xp) return;
+  const gSet = new Set(), zSet = new Set(), sSet = new Set();
+  tr.exercises.forEach(e => {
+    const ex = exercises.find(x => x.id === e.exId);
+    if(!ex) return;
+    (ex.gears || []).forEach(g => gSet.add(g));
+    (ex.zones || []).forEach(z => zSet.add(z));
+    (ex.skills || []).forEach(s => sSet.add(s));
+  });
+  // Делим XP равномерно между всеми сущностями (снаряд/зона/навык получают одинаково)
+  const totalEntities = gSet.size + zSet.size + sSet.size;
+  if(totalEntities === 0) return;
+  const per = xp / totalEntities;
+  gSet.forEach(g => addSkillXpTo('gears', g, per));
+  zSet.forEach(z => addSkillXpTo('zones', z, per));
+  sSet.forEach(s => addSkillXpTo('skills', s, per));
+  store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
+}
+
+function addXp(amount, label, tr){
+  if(amount <= 0) return;
+  totalXp += amount; store.set('totalXp', totalXp);
+  xpLog.unshift({date: new Date().toISOString(), name: label, xp: Math.round(amount*100)/100});
+  if(xpLog.length > 50) xpLog = xpLog.slice(0, 50);
+  store.set('xpLog', xpLog);
+  if(tr) distributeXpToSkills(tr, amount);
+  xpFly(Math.round(amount*100)/100);
   updateXpUI();
 }
-function removeXp(amt,label,g,z){
-  if(amt<=0)return;
-  totalXp=Math.max(0,totalXp-amt);store.set('totalXp',totalXp);
-  xpLog.unshift({date:new Date().toISOString(),name:label+' (отмена)',xp:-Math.round(amt*100)/100});
-  if(xpLog.length>50)xpLog=xpLog.slice(0,50);
-  store.set('xpLog',xpLog);
-  if(g||z)removeSkillXp(g,z,amt);
+function removeXp(amount, label, tr){
+  if(amount <= 0) return;
+  totalXp = Math.max(0, totalXp - amount); store.set('totalXp', totalXp);
+  xpLog.unshift({date: new Date().toISOString(), name: label+' (отмена)', xp: -Math.round(amount*100)/100});
+  if(xpLog.length > 50) xpLog = xpLog.slice(0, 50);
+  store.set('xpLog', xpLog);
+  if(tr) distributeXpToSkills(tr, -amount);
   updateXpUI();
 }
+
+/* ==================== DECAY ==================== */
+const DECAY_TIERS = [
+  {days:60, rate:0.01}, {days:30, rate:0.005}, {days:14, rate:0.0025}, {days:7, rate:0.001}
+];
+const GLOBAL_DECAY = [{days:30, rate:2}, {days:14, rate:1}, {days:7, rate:0.5}];
+
+function daysBetween(iso1, iso2){ return Math.floor((new Date(iso2) - new Date(iso1)) / 86400000); }
+
+function applyDecayOnLoad(){
+  const last = store.get('decayLastCheck', null);
+  const now = new Date().toISOString();
+  if(last && daysBetween(last, now) < 1) return;
+  ensureXpMaps();
+  let lost = 0;
+  const decayMap = (map) => {
+    for(const k in map){
+      const o = map[k];
+      if(!o.xp || !o.lastTrained) continue;
+      const d = daysBetween(o.lastTrained, now);
+      let rate = 0;
+      for(const t of DECAY_TIERS) if(d >= t.days){ rate = t.rate; break; }
+      if(rate > 0){ const dec = o.xp * rate; o.xp = Math.max(0, o.xp - dec); lost += dec; }
+    }
+  };
+  decayMap(xpGears); decayMap(xpZones); decayMap(xpSkills);
+  store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
+  store.set('decayLastCheck', now);
+  if(lost > 0) setTimeout(()=>toast('🌙 Распад: −'+lost.toFixed(2)+' XP'), 1500);
+}
+
+/* ==================== РЕНДЕР: XP UI ==================== */
 function updateXpUI(){
-  const info=computeLevel(totalXp);
-  const rank=rankForLevel(info.level);
-  const pct=info.need>0?Math.round(info.current/info.need*100):0;
-  const setT=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-  const setW=(id,v)=>{const e=document.getElementById(id);if(e)e.style.width=v+'%'};
-  setT('headLvl',info.level);setT('headRank',rank.name);setW('headXpBar',pct);
-  setT('xpLevel',info.level);setT('xpRank',rank.name);setT('xpTotal',Math.round(totalXp));
-  setT('xpToNext',Math.round(info.need-info.current));setW('xpBar',pct);
-  const top=document.getElementById('xpTopVal');
-  if(top){top.innerHTML=Math.round(totalXp)+'<span style="color:var(--mut);font-size:11px"> XP</span>';setW('xpTopBar',pct)}
+  const info = computeLevel(totalXp);
+  const rank = rankForLevel(info.level);
+  const pct = info.need > 0 ? Math.round(info.current/info.need*100) : 0;
+  const setT = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
+  const setW = (id, v) => { const e = document.getElementById(id); if(e) e.style.width = v+'%'; };
+  setT('headLvl', info.level); setT('headRank', rank.name); setW('headXpBar', pct);
+  setT('xpLevel', info.level); setT('xpRank', rank.name); setT('xpTotal', Math.round(totalXp));
+  setT('xpToNext', Math.round(info.need - info.current)); setW('xpBar', pct);
+  const top = document.getElementById('xpTopVal');
+  if(top){ top.innerHTML = Math.round(totalXp)+'<span style="color:var(--mut);font-size:11px"> XP</span>'; setW('xpTopBar', pct); }
   renderXpLog();
 }
 function renderXpLog(){
-  const el=document.getElementById('xpLog');if(!el)return;
-  if(!xpLog.length){el.innerHTML='<div class="empty" style="padding:12px">Пока нет данных</div>';return}
-  el.innerHTML=xpLog.slice(0,15).map(l=>{
-    const d=new Date(l.date);
-    const dt=d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  const el = document.getElementById('xpLog'); if(!el) return;
+  if(!xpLog.length){ el.innerHTML = '<div class="empty" style="padding:12px">Пока нет данных</div>'; return; }
+  el.innerHTML = xpLog.slice(0, 15).map(l => {
+    const d = new Date(l.date);
+    const dt = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
     return '<div class="log-item"><div class="l">'+dt+' · '+l.name+'</div><div class="v">'+(l.xp>=0?'+':'')+l.xp+' XP</div></div>';
   }).join('');
 }
 
-/* ==================== THEME ==================== */
+/* ==================== ТЕМА ==================== */
 function applyTheme(id){
-  theme=id;document.documentElement.setAttribute('data-theme',id);
-  store.set('theme',id);renderThemes();
+  theme = id;
+  document.documentElement.setAttribute('data-theme', id);
+  store.set('theme', id);
+  renderThemes();
 }
 function renderThemes(){
-  const el=document.getElementById('themesGrid');if(!el)return;
-  el.innerHTML=THEMES.map(t=>'<div class="theme-tile '+(t.id===theme?'on':'')+'" onclick="applyTheme(\''+t.id+'\')"><div class="swatch"><div style="background:'+t.bg+'"></div><div style="background:'+t.c1+'"></div><div style="background:'+t.c2+'"></div></div><div class="name">'+t.name+'</div><div class="check">✓</div></div>').join('');
+  const el = document.getElementById('themesGrid'); if(!el) return;
+  el.innerHTML = THEMES.map(t =>
+    '<div class="theme-tile '+(t.id===theme?'on':'')+'" onclick="applyTheme(\''+t.id+'\')">'+
+    '<div class="swatch"><div style="background:'+t.bg+'"></div><div style="background:'+t.c1+'"></div><div style="background:'+t.c2+'"></div></div>'+
+    '<div class="name">'+t.name+'</div><div class="check">✓</div></div>'
+  ).join('');
 }
 
 /* ==================== FAB ==================== */
-function toggleFabMenu(){const m=document.getElementById('fabMenu');if(m)m.classList.toggle('on')}
-function closeFabMenu(){const m=document.getElementById('fabMenu');if(m)m.classList.remove('on')}
+function toggleFabMenu(){ const m = document.getElementById('fabMenu'); if(m) m.classList.toggle('on'); }
+function closeFabMenu(){ const m = document.getElementById('fabMenu'); if(m) m.classList.remove('on'); }
 
-/* ==================== AVATAR ==================== */
+/* ==================== АВАТАР ==================== */
 function loadAvatar(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const img=new Image();
-    img.onload=()=>{
-      const size=300;const c=document.createElement('canvas');c.width=size;c.height=size;
-      const ctx=c.getContext('2d');const min=Math.min(img.width,img.height);
-      ctx.drawImage(img,(img.width-min)/2,(img.height-min)/2,min,min,0,0,size,size);
-      profile.avatar=c.toDataURL('image/jpeg',.85);store.set('profile',profile);
-      applyAvatar();toast('Аватар загружен ✓');
-    };img.src=e.target.result;
-  };reader.readAsDataURL(file);input.value='';
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const size = 300;
+      const c = document.createElement('canvas'); c.width = size; c.height = size;
+      const ctx = c.getContext('2d'); const min = Math.min(img.width, img.height);
+      ctx.drawImage(img, (img.width-min)/2, (img.height-min)/2, min, min, 0, 0, size, size);
+      profile.avatar = c.toDataURL('image/jpeg', 0.85);
+      store.set('profile', profile); applyAvatar(); toast('Аватар загружен ✓');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file); input.value = '';
 }
 function applyAvatar(){
-  const el=document.getElementById('avatar');if(!el)return;
-  if(profile.avatar){el.style.backgroundImage='url('+profile.avatar+')';el.textContent='';el.classList.add('has-img')}
-  else{el.style.backgroundImage='';el.textContent=(profile.name||'А').charAt(0).toUpperCase();el.classList.remove('has-img')}
-  const setV=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-  const setI=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v};
-  setV('pName',profile.name);setV('pAge',profile.age);setV('pWeight',profile.weight);
-  setI('inName',profile.name);setI('inAge',profile.age);setI('inWeight',profile.weight);
+  const el = document.getElementById('avatar'); if(!el) return;
+  if(profile.avatar){ el.style.backgroundImage = 'url('+profile.avatar+')'; el.textContent=''; el.classList.add('has-img'); }
+  else { el.style.backgroundImage=''; el.textContent=(profile.name||'А').charAt(0).toUpperCase(); el.classList.remove('has-img'); }
+  const setT = (id,v) => { const e=document.getElementById(id); if(e) e.textContent = v; };
+  const setI = (id,v) => { const e=document.getElementById(id); if(e) e.value = v; };
+  setT('pName', profile.name); setT('pAge', profile.age); setT('pWeight', profile.weight);
+  setI('inName', profile.name); setI('inAge', profile.age); setI('inWeight', profile.weight);
 }
 function removeAvatar(){
-  if(!profile.avatar){toast('Нет аватарки');return}
-  if(confirm('Убрать?')){profile.avatar=null;store.set('profile',profile);applyAvatar();toast('Убрана')}
+  if(!profile.avatar){ toast('Нет аватарки'); return; }
+  if(confirm('Убрать?')){ profile.avatar=null; store.set('profile', profile); applyAvatar(); toast('Убрана'); }
 }
 function saveProfile(){
-  profile.name=document.getElementById('inName').value.trim()||'Безымянный';
-  profile.age=+document.getElementById('inAge').value||0;
-  profile.weight=+document.getElementById('inWeight').value||0;
-  store.set('profile',profile);applyAvatar();toast('Сохранено ✓');
+  profile.name = document.getElementById('inName').value.trim() || 'Безымянный';
+  profile.age  = +document.getElementById('inAge').value || 0;
+  profile.weight = +document.getElementById('inWeight').value || 0;
+  store.set('profile', profile); applyAvatar(); toast('Сохранено ✓');
 }
 
-/* ==================== EX PHOTO ==================== */
+/* ==================== ФОТО УПРАЖНЕНИЯ ==================== */
 function loadExPhoto(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const img=new Image();
-    img.onload=()=>{
-      const maxW=600;const s=Math.min(1,maxW/img.width);
-      const c=document.createElement('canvas');c.width=img.width*s;c.height=img.height*s;
-      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-      currentExPhoto=c.toDataURL('image/jpeg',.8);renderPhotoZone();
-    };img.src=e.target.result;
-  };reader.readAsDataURL(file);input.value='';
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const maxW = 600; const s = Math.min(1, maxW/img.width);
+      const c = document.createElement('canvas'); c.width = img.width*s; c.height = img.height*s;
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      currentExPhoto = c.toDataURL('image/jpeg', 0.8);
+      renderPhotoZone();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file); input.value = '';
 }
 function renderPhotoZone(){
-  const z=document.getElementById('photoZone');if(!z)return;
-  if(currentExPhoto){z.classList.add('has-img');z.innerHTML='<img src="'+currentExPhoto+'"><button class="clear-img" onclick="event.stopPropagation();clearExPhoto()">✕</button>'}
-  else{z.classList.remove('has-img');z.innerHTML='<div class="ico">🖼</div><div class="hint">Нажми для загрузки</div>'}
+  const z = document.getElementById('photoZone'); if(!z) return;
+  if(currentExPhoto){ z.classList.add('has-img'); z.innerHTML = '<img src="'+currentExPhoto+'"><button class="clear-img" onclick="event.stopPropagation();clearExPhoto()">✕</button>'; }
+  else { z.classList.remove('has-img'); z.innerHTML = '<div class="ico">🖼</div><div class="hint">Нажми для загрузки</div>'; }
 }
-function clearExPhoto(){currentExPhoto=null;renderPhotoZone()}
+function clearExPhoto(){ currentExPhoto = null; renderPhotoZone(); }
 
-/* ==================== CALENDAR ==================== */
+/* ==================== NAV ==================== */
+function nav(el){
+  document.querySelectorAll('nav.bottom button').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  const v = document.getElementById(el.dataset.v); if(v) v.classList.add('on');
+  closeFabMenu();
+  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function navTo(id){ const b = document.querySelector('nav.bottom button[data-v="'+id+'"]'); if(b) nav(b); }
+
+/* ==================== MODALS ==================== */
+function openModal(id){ const el = document.getElementById(id); if(el) el.classList.add('on'); }
+function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('on'); }
+
+/* ==================== КАЛЕНДАРЬ ==================== */
 function getISOWeek(d){
-  const date=new Date(d);date.setHours(0,0,0,0);
+  const date = new Date(d); date.setHours(0,0,0,0);
   date.setDate(date.getDate()+3-((date.getDay()+6)%7));
-  const week1=new Date(date.getFullYear(),0,4);
-  return 1+Math.round(((date-week1)/86400000-3+((week1.getDay()+6)%7))/7);
+  const week1 = new Date(date.getFullYear(), 0, 4);
+  return 1 + Math.round(((date - week1)/86400000 - 3 + ((week1.getDay()+6)%7))/7);
 }
 function renderWeek(){
-  const end=addDays(weekStart,6);
-  const range=weekStart.getMonth()===end.getMonth()
-    ?weekStart.getDate()+'–'+end.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]
-    :weekStart.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]+' – '+end.getDate()+' '+MONTHS_RU_GEN[end.getMonth()];
-  const rr=document.getElementById('weekRange');if(rr)rr.textContent=range;
-  const wn=document.getElementById('weekNum');
-  if(wn)wn.innerHTML=getISOWeek(weekStart)+'<span style="color:var(--mut);font-size:11px">/52</span>';
-  let html='';
+  const end = addDays(weekStart, 6);
+  const range = weekStart.getMonth() === end.getMonth()
+    ? weekStart.getDate()+'–'+end.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]
+    : weekStart.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]+' – '+end.getDate()+' '+MONTHS_RU_GEN[end.getMonth()];
+  const rr = document.getElementById('weekRange'); if(rr) rr.textContent = range;
+  const wn = document.getElementById('weekNum');
+  if(wn) wn.innerHTML = getISOWeek(weekStart)+'<span style="color:var(--mut);font-size:11px">/52</span>';
+
+  let html = '';
   for(let i=0;i<7;i++){
-    const d=addDays(weekStart,i);
-    const isToday=sameDay(d,TODAY);
-    const isSel=sameDay(d,selectedDate);
-    const hasT=hasTrainingOn(d);
-    const doneAll=hasT&&allTrainingsDoneOn(d);
-    html+='<div class="day '+(isToday?'today ':'')+(isSel?'selected ':'')+(hasT?'done ':'')+(doneAll?'done':'')+'" onclick="selectDate(new Date('+d.getFullYear()+','+d.getMonth()+','+d.getDate()+'))"><div class="wd">'+WD_SHORT[i]+'</div><div class="num">'+d.getDate()+'</div></div>';
+    const d = addDays(weekStart, i);
+    const isToday = sameDay(d, TODAY);
+    const isSel = sameDay(d, selectedDate);
+    const trains = getTrainsForDate(d);
+    const allDone = trains.length > 0 && trains.every(t => isTrainDone(d, t));
+    html += '<div class="day '+(isToday?'today ':'')+(isSel?'selected ':'')+(trains.length?'done ':'')+(allDone?'done':'')+'" onclick="selectDate(new Date('+d.getFullYear()+','+d.getMonth()+','+d.getDate()+'))">'+
+            '<div class="wd">'+WD_SHORT[i]+'</div><div class="num">'+d.getDate()+'</div></div>';
   }
-  const el=document.getElementById('weekRow');if(el)el.innerHTML=html;
+  const el = document.getElementById('weekRow'); if(el) el.innerHTML = html;
 }
-function shiftWeek(n){weekStart=addDays(weekStart,7*n);selectedDate=new Date(weekStart);renderWeek();renderMonth();renderTrainings();updateTopProgress()}
-function goToday(){selectedDate=new Date(TODAY);weekStart=startOfWeek(TODAY);viewMonth=TODAY.getMonth();viewYear=TODAY.getFullYear();renderWeek();renderMonth();renderTrainings()}
-function selectDate(d){selectedDate=d;weekStart=startOfWeek(d);viewMonth=d.getMonth();viewYear=d.getFullYear();renderWeek();renderMonth();renderTrainings()}
+function shiftWeek(n){ weekStart = addDays(weekStart, 7*n); selectedDate = new Date(weekStart); renderWeek(); renderMonth(); renderTrainings(); }
+function goToday(){ selectedDate = new Date(TODAY); weekStart = startOfWeek(TODAY); viewMonth = TODAY.getMonth(); viewYear = TODAY.getFullYear(); renderWeek(); renderMonth(); renderTrainings(); }
+function selectDate(d){ selectedDate = d; weekStart = startOfWeek(d); viewMonth = d.getMonth(); viewYear = d.getFullYear(); renderWeek(); renderMonth(); renderTrainings(); }
 function renderMonth(){
-  const mt=document.getElementById('monthTitle');if(mt)mt.textContent=MONTHS_RU[viewMonth]+' '+viewYear;
-  const ml=document.getElementById('monthLabel');if(ml)ml.textContent=MONTHS_RU[viewMonth];
-  const first=new Date(viewYear,viewMonth,1);
-  const startDow=(first.getDay()+6)%7;
-  const daysInMonth=new Date(viewYear,viewMonth+1,0).getDate();
-  const prevDays=new Date(viewYear,viewMonth,0).getDate();
-  let html=WD_SHORT.map(w=>'<div class="mhead">'+w+'</div>').join('');
-  for(let i=startDow-1;i>=0;i--)html+=mdayHtml(new Date(viewYear,viewMonth-1,prevDays-i),true);
-  for(let d=1;d<=daysInMonth;d++)html+=mdayHtml(new Date(viewYear,viewMonth,d),false);
-  const total=startDow+daysInMonth;const trail=(7-total%7)%7;
-  for(let d=1;d<=trail;d++)html+=mdayHtml(new Date(viewYear,viewMonth+1,d),true);
-  const el=document.getElementById('monthGrid');if(el)el.innerHTML=html;
+  const mt = document.getElementById('monthTitle'); if(mt) mt.textContent = MONTHS_RU[viewMonth]+' '+viewYear;
+  const ml = document.getElementById('monthLabel'); if(ml) ml.textContent = MONTHS_RU[viewMonth];
+  const first = new Date(viewYear, viewMonth, 1);
+  const startDow = (first.getDay()+6)%7;
+  const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+  const prevDays = new Date(viewYear, viewMonth, 0).getDate();
+  let html = WD_SHORT.map(w => '<div class="mhead">'+w+'</div>').join('');
+  for(let i=startDow-1; i>=0; i--) html += mdayHtml(new Date(viewYear, viewMonth-1, prevDays-i), true);
+  for(let d=1; d<=daysInMonth; d++) html += mdayHtml(new Date(viewYear, viewMonth, d), false);
+  const total = startDow + daysInMonth;
+  const trail = (7 - total%7)%7;
+  for(let d=1; d<=trail; d++) html += mdayHtml(new Date(viewYear, viewMonth+1, d), true);
+  const el = document.getElementById('monthGrid'); if(el) el.innerHTML = html;
 }
-function mdayHtml(date,other){
-  const isToday=sameDay(date,TODAY);
-  const isSel=sameDay(date,selectedDate);
-  const hasT=hasTrainingOn(date);
-  const doneAll=hasT&&allTrainingsDoneOn(date);
-  let cls='mday';
-  if(other)cls+=' other';
-  if(isToday)cls+=' today';
-  if(isSel)cls+=' selected';
-  if(hasT)cls+=' has-train';
-  if(doneAll)cls+=' done';
+function mdayHtml(date, other){
+  const isToday = sameDay(date, TODAY);
+  const isSel = sameDay(date, selectedDate);
+  const trains = getTrainsForDate(date);
+  const allDone = trains.length > 0 && trains.every(t => isTrainDone(date, t));
+  let cls = 'mday';
+  if(other) cls += ' other';
+  if(isToday) cls += ' today';
+  if(isSel) cls += ' selected';
+  if(trains.length) cls += ' has-train';
+  if(allDone) cls += ' done';
   return '<div class="'+cls+'" onclick="selectDate(new Date('+date.getFullYear()+','+date.getMonth()+','+date.getDate()+'))">'+date.getDate()+'</div>';
 }
-function shiftMonth(n){viewMonth+=n;if(viewMonth<0){viewMonth=11;viewYear--}if(viewMonth>11){viewMonth=0;viewYear++}renderMonth()}
+function shiftMonth(n){ viewMonth += n; if(viewMonth<0){viewMonth=11;viewYear--} if(viewMonth>11){viewMonth=0;viewYear++} renderMonth(); }
 
-/* ==================== TRAININGS ==================== */
-function hasTrainingOn(d){return trainings.some(t=>t.date===isoDate(d))}
-function allTrainingsDoneOn(d){const l=trainings.filter(t=>t.date===isoDate(d));return l.length>0&&l.every(t=>t.done)}
+/* ==================== ТРЕНИРОВКИ (шаблоны) ==================== */
+// Возвращает тренировки-шаблоны, которые попадают на указанную дату (по дню недели)
+function getTrainsForDate(date){
+  const dow = date.getDay(); // 0=Вс..6=Сб
+  return trainings.filter(t => Array.isArray(t.days) && t.days.includes(dow));
+}
+
+// Получить эффективные настройки тренировки на конкретную дату (с учётом dayOverrides)
+function getEffectiveTrain(tr, date){
+  if(!tr) return null;
+  const key = isoDate(date);
+  const over = tr.dayOverrides && tr.dayOverrides[key] ? tr.dayOverrides[key] : null;
+  return {
+    ...tr,
+    time: over && over.time ? over.time : tr.time,
+    exercises: over && over.exercises ? over.exercises : tr.exercises,
+    _override: !!over
+  };
+}
+
+// Отметка done для конкретной тренировки на конкретную дату
+function isTrainDone(date, tr){
+  const key = isoDate(date);
+  return !!(completions[key] && completions[key][tr.id] && completions[key][tr.id].done);
+}
+function setTrainDone(date, trId, done, xpAwarded){
+  const key = isoDate(date);
+  if(!completions[key]) completions[key] = {};
+  if(done){
+    completions[key][trId] = {done:true, xpAwarded: xpAwarded || 0};
+  } else {
+    delete completions[key][trId];
+    if(!Object.keys(completions[key]).length) delete completions[key];
+  }
+  store.set('completions', completions);
+}
+
 function renderTrainings(){
-  const key=isoDate(selectedDate);
-  const list=trainings.filter(t=>t.date===key).sort((a,b)=>a.time.localeCompare(b.time));
-  const dLabel=selectedDate.getDate()+' '+MONTHS_RU_GEN[selectedDate.getMonth()]+' '+selectedDate.getFullYear();
-  const sdl=document.getElementById('selectedDateLabel');if(sdl)sdl.textContent=dLabel;
-  const box=document.getElementById('trainList');if(!box)return;
-  if(!list.length){box.innerHTML='<div class="empty">На <b>'+dLabel+'</b> тренировок нет</div>';return}
-  box.innerHTML=list.map(t=>{
-    const idx=trainings.indexOf(t);
-    const xp=calcTrainingXp(t);
-    const xpShow=xp>0?'<div class="xp-badge">+'+Math.round(xp*100)/100+' XP</div>':'';
-    return '<div class="train"><div class="time">'+t.time+'</div><div class="info"><div class="name">'+t.name+'</div><div class="meta">'+(t.meta||'')+'</div></div>'+xpShow+'<div class="chk '+(t.done?'on':'')+'" onclick="toggleTrain('+idx+')"></div></div>';
+  const dLabel = selectedDate.getDate()+' '+MONTHS_RU_GEN[selectedDate.getMonth()]+' '+selectedDate.getFullYear();
+  const sdl = document.getElementById('selectedDateLabel'); if(sdl) sdl.textContent = dLabel;
+
+  const list = getTrainsForDate(selectedDate).sort((a,b) => a.time.localeCompare(b.time));
+  const tc = document.getElementById('trainsCount'); if(tc) tc.textContent = list.length;
+
+  const box = document.getElementById('trainList'); if(!box) return;
+  if(!list.length){
+    box.innerHTML = '<div class="empty">На <b>'+dLabel+'</b> тренировок нет</div>';
+    return;
+  }
+  box.innerHTML = list.map(tr => {
+    const eff = getEffectiveTrain(tr, selectedDate);
+    const done = isTrainDone(selectedDate, tr);
+    const xp = calcTrainXp(tr, eff);
+    const exs = eff.exercises || [];
+    const exListHtml = exs.map((e, idx) => {
+      const ex = exercises.find(x => x.id === e.exId);
+      if(!ex) return '';
+      const zonesE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji+z.name : ''; }).filter(Boolean).join(' ');
+      const gearsE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji+g.name : ''; }).filter(Boolean).join(' ');
+      const skillsE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? s.emoji+s.name : ''; }).filter(Boolean).join(' ');
+      const dosage = [];
+      if(e.sets) dosage.push(e.sets+'×');
+      if(e.reps) dosage.push(e.reps+' повт.');
+      if(e.time) dosage.push(e.time+'с');
+      if(e.weight) dosage.push(e.weight+' кг');
+      if(e.rest) dosage.push('отдых '+e.rest+'с');
+      if(e.note) dosage.push('· '+e.note);
+      return '<div class="ex-item">'+
+        '<div class="row1"><div class="ex-name">'+ex.name+'</div><div class="ex-badge">'+dosage.join(' ')+'</div></div>'+
+        '<div class="row2">'+(zonesE?'<span class="chip-mini">'+zonesE+'</span>':'')+(gearsE?'<span class="chip-mini">'+gearsE+'</span>':'')+(skillsE?'<span class="chip-mini">'+skillsE+'</span>':'')+'</div>'+
+        '<div class="train-actions"><button onclick="editDayOverride(\''+tr.id+'\', '+idx+')">✏️ Изменить</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑 Убрать</button></div>'+
+      '</div>';
+    }).join('');
+    return '<div class="train">'+
+      '<div class="train-head" onclick="toggleTrainBody(this)">'+
+        '<div class="time">'+eff.time+'</div>'+
+        '<div class="info"><div class="name">'+tr.name+'</div><div class="meta">'+exs.length+' упр. · '+Math.round(xp*100)/100+' XP</div></div>'+
+        '<div class="chk '+(done?'on':'')+'" onclick="event.stopPropagation();toggleTrain(\''+tr.id+'\')"></div>'+
+      '</div>'+
+      '<div class="train-body">'+(exListHtml||'<div class="empty" style="padding:8px;font-size:12px">Нет упражнений</div>')+
+        '<div class="train-actions"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️ Настроить шаблон</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упражнение</button></div>'+
+      '</div>'+
+    '</div>';
   }).join('');
 }
-function toggleTrain(i){
-  const t=trainings[i];
-  const xp=calcTrainingXp(t);
-  t.done=!t.done;
-  if(t.done&&xp>0){addXp(xp,t.name,t.gear,t.zone);t.xpAwarded=xp}
-  else if(!t.done&&t.xpAwarded){removeXp(t.xpAwarded,t.name,t.gear,t.zone);t.xpAwarded=0}
-  store.set('trainings',trainings);
-  renderTrainings();renderWeek();renderMonth();renderStats();
-}
-function updateTopProgress(){
-  const wS=startOfWeek(TODAY);const wE=addDays(wS,6);
-  const wT=trainings.filter(t=>{const d=new Date(t.date);return d>=wS&&d<=wE});
-  const wD=wT.filter(t=>t.done).length;
-  const mT=trainings.filter(t=>{const d=new Date(t.date);return d.getMonth()===TODAY.getMonth()&&d.getFullYear()===TODAY.getFullYear()});
-  const mD=mT.filter(t=>t.done).length;
-  const wPct=Math.min(100,Math.round(wD/Math.max(1,wT.length)*100));
-  const mPct=Math.min(100,Math.round(mD/Math.max(1,mT.length)*100));
-  const progs=document.querySelectorAll('#v-main .prog');
-  if(progs[0])progs[0].querySelector('.bar i').style.width=wPct+'%';
-  if(progs[1])progs[1].querySelector('.bar i').style.width=mPct+'%';
+function toggleTrainBody(head){
+  const body = head.nextElementSibling;
+  if(body) body.classList.toggle('on');
 }
 
-/* ==================== EXERCISES ==================== */
+// Отметить/снять выполнение
+function toggleTrain(trainId){
+  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  const key = isoDate(selectedDate);
+  const wasDone = isTrainDone(selectedDate, tr);
+  if(wasDone){
+    const c = completions[key] && completions[key][tr.id];
+    const xpAwarded = c ? c.xpAwarded : 0;
+    setTrainDone(selectedDate, tr.id, false);
+    if(xpAwarded > 0) removeXp(xpAwarded, tr.name, tr);
+  } else {
+    const eff = getEffectiveTrain(tr, selectedDate);
+    const xp = calcTrainXp(tr, eff);
+    setTrainDone(selectedDate, tr.id, true, xp);
+    if(xp > 0) addXp(xp, tr.name, tr);
+  }
+  renderTrainings(); renderWeek(); renderMonth(); renderStats();
+}
+
+/* ==================== РЕДАКТИРОВАНИЕ ДНЯ ==================== */
+// Открывает модалку конфигурации упражнения, но изменения идут в dayOverrides для конкретного дня
+function editDayOverride(trainId, exIndex){
+  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  const key = isoDate(selectedDate);
+  if(!tr.dayOverrides) tr.dayOverrides = {};
+  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+  const list = tr.dayOverrides[key].exercises;
+  const e = list[exIndex]; if(!e) return;
+  const ex = exercises.find(x => x.id === e.exId);
+  editingExId = null;
+  exConfigTarget = {type:'override', trainId, dayKey:key, index:exIndex};
+  const el = (id) => document.getElementById(id);
+  el('exCfgTitle').textContent = 'Изменить (только этот день)';
+  el('exCfgName').textContent = ex ? ex.name : 'Упражнение';
+  el('exCfgSets').value = e.sets||1;
+  el('exCfgReps').value = e.reps||0;
+  el('exCfgTime').value = e.time||0;
+  el('exCfgRest').value = e.rest||0;
+  el('exCfgWeight').value = e.weight||0;
+  el('exCfgNote').value = e.note||'';
+  openModal('m-ex-config');
+}
+function removeExFromDay(trainId, exIndex){
+  if(!confirm('Убрать упражнение из этого дня?')) return;
+  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  const key = isoDate(selectedDate);
+  if(!tr.dayOverrides) tr.dayOverrides = {};
+  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+  tr.dayOverrides[key].exercises.splice(exIndex, 1);
+  store.set('trainings', trainings);
+  renderTrainings(); toast('Убрано на '+key);
+}
+function addExToDay(trainId){
+  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  const key = isoDate(selectedDate);
+  if(!tr.dayOverrides) tr.dayOverrides = {};
+  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+  pickTarget = 'day';
+  exConfigTarget = {type:'newInDay', trainId, dayKey:key};
+  openModal('m-pick-ex'); renderPickEx();
+}
+function editTrainFromDay(trainId){ openTrainModal(trainId); }
+
+/* ==================== РЕНДЕР УПРАЖНЕНИЙ ==================== */
 function renderEx(){
-  const q=(document.getElementById('exSearch')?.value||'').toLowerCase();
-  let list=exercises.filter(e=>e.name.toLowerCase().includes(q));
-  if(filter==='zone'){
-    const a=[...document.querySelectorAll('#zones .chip.on')].map(c=>c.dataset.val);
-    if(a.length)list=list.filter(e=>a.includes(e.zone));
+  const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
+  let list = exercises.filter(e => e.name.toLowerCase().includes(q));
+  if(filter === 'zone'){
+    const a = [...document.querySelectorAll('#zones .chip.on')].map(c => c.dataset.val);
+    if(a.length) list = list.filter(e => (e.zones||[]).some(z => a.includes(z)));
   }
-  if(filter==='gear'){
-    const a=[...document.querySelectorAll('#gears .chip.on')].map(c=>c.dataset.val);
-    if(a.length)list=list.filter(e=>a.includes(e.gear));
+  if(filter === 'gear'){
+    const a = [...document.querySelectorAll('#gears .chip.on')].map(c => c.dataset.val);
+    if(a.length) list = list.filter(e => (e.gears||[]).some(g => a.includes(g)));
   }
-  const ec=document.getElementById('exCount');if(ec)ec.textContent=list.length;
-  const box=document.getElementById('exList');if(!box)return;
-  if(!list.length){box.innerHTML='<div class="empty">Список пуст</div>';return}
-  box.innerHTML=list.map(e=>{
-    const idx=exercises.indexOf(e);
-    const thumb=e.photo?'<div class="thumb"><img src="'+e.photo+'"></div>':'<div class="thumb">💪</div>';
-    return '<div class="ex">'+thumb+'<div class="txt">'+e.name+(e.desc?'<div class="sub">'+e.desc+'</div>':'')+'</div><div class="badge">'+(e.gear||'—')+'</div><button class="del" onclick="delEx('+idx+')">✕</button></div>';
+  if(filter === 'skill'){
+    const a = [...document.querySelectorAll('#skills .chip.on')].map(c => c.dataset.val);
+    if(a.length) list = list.filter(e => (e.skills||[]).some(s => a.includes(s)));
+  }
+  const ec = document.getElementById('exCount'); if(ec) ec.textContent = list.length;
+  const box = document.getElementById('exList'); if(!box) return;
+  if(!list.length){ box.innerHTML = '<div class="empty">Список пуст</div>'; return; }
+  box.innerHTML = list.map(e => {
+    const idx = exercises.indexOf(e);
+    const thumb = e.photo ? '<div class="thumb"><img src="'+e.photo+'"></div>' : '<div class="thumb">💪</div>';
+    const zBadges = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).join('');
+    const gBadges = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).join('');
+    return '<div class="ex" onclick="openExModal(\''+e.id+'\')">'+thumb+
+      '<div class="txt">'+e.name+(e.desc?'<div class="sub">'+e.desc+'</div>':'')+'</div>'+
+      '<div class="badge">'+zBadges+' '+gBadges+'</div>'+
+      '<button class="del" onclick="event.stopPropagation();delEx(\''+e.id+'\')">✕</button></div>';
   }).join('');
 }
-function delEx(i){const n=exercises[i].name;exercises.splice(i,1);store.set('exercises',exercises);renderEx();renderChips();renderStats();toast('Удалено: '+n)}
+function delEx(id){
+  const e = exercises.find(x => x.id === id); if(!e) return;
+  if(!confirm('Удалить «'+e.name+'»?')) return;
+  exercises = exercises.filter(x => x.id !== id);
+  store.set('exercises', exercises);
+  renderEx(); renderChips(); renderStats(); toast('Удалено');
+}
 function clearAllEx(){
-  if(!exercises.length){toast('Список пуст');return}
-  if(confirm('Удалить все?')){exercises=[];store.set('exercises',exercises);renderEx();renderChips();renderStats();toast('Очищено')}
+  if(!exercises.length){ toast('Список пуст'); return; }
+  if(confirm('Удалить все упражнения?')){ exercises = []; store.set('exercises', exercises); renderEx(); renderChips(); renderStats(); toast('Очищено'); }
 }
-function renderChips(){
-  const z=document.getElementById('zones');if(z)z.innerHTML=zones.map(zn=>{const c=exercises.filter(e=>e.zone===zn).length;const p=exercises.length?Math.round(c/exercises.length*100):0;return '<div class="chip" data-val="'+zn+'" onclick="toggleChip(this)">'+zn+' <span class="cnt">'+c+' · '+p+'%</span></div>'}).join('')+'<div class="chip add" onclick="addZone()">+ Добавить</div>';
-  const g=document.getElementById('gears');if(g)g.innerHTML=gears.map(gn=>{const c=exercises.filter(e=>e.gear===gn).length;const p=exercises.length?Math.round(c/exercises.length*100):0;return '<div class="chip" data-val="'+gn+'" onclick="toggleChip(this)">'+gn+' <span class="cnt">'+c+' · '+p+'%</span></div>'}).join('')+'<div class="chip add" onclick="addGear()">+ Добавить</div>';
-}
-function toggleChip(el){el.classList.toggle('on');renderEx()}
-function addZone(){const z=prompt('Название зоны:');if(z&&!zones.includes(z)){zones.push(z);store.set('zones',zones);ensureXpMaps();renderChips();fillSelects()}}
-function addGear(){const g=prompt('Название снаряда:');if(g&&!gears.includes(g)){gears.push(g);store.set('gears',gears);ensureXpMaps();renderChips();fillSelects()}}
-function fillSelects(){
-  const eg=document.getElementById('exGear');if(eg)eg.innerHTML=gears.map(g=>'<option>'+g+'</option>').join('');
-  const ez=document.getElementById('exZone');if(ez)ez.innerHTML=zones.map(z=>'<option>'+z+'</option>').join('');
-  const ec=document.getElementById('exCat');if(ec)ec.innerHTML=cats.map(c=>'<option>'+c+'</option>').join('');
+function setFilter(el){
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active'); filter = el.dataset.f; renderEx();
 }
 
-/* ==================== STATS ==================== */
+/* ==================== ЧИПСЫ ФИЛЬТРОВ ==================== */
+function renderChips(){
+  const z = document.getElementById('zones');
+  if(z) z.innerHTML = zones.map(zn => {
+    const cnt = exercises.filter(e => (e.zones||[]).includes(zn.id)).length;
+    return '<div class="chip" data-val="'+zn.id+'" onclick="toggleChip(this)"><span class="emoji">'+zn.emoji+'</span>'+zn.name+' <span class="cnt">'+cnt+'</span></div>';
+  }).join('');
+
+  const g = document.getElementById('gears');
+  if(g) g.innerHTML = gears.map(gn => {
+    const cnt = exercises.filter(e => (e.gears||[]).includes(gn.id)).length;
+    return '<div class="chip" data-val="'+gn.id+'" onclick="toggleChip(this)"><span class="emoji">'+gn.emoji+'</span>'+gn.name+' <span class="cnt">'+cnt+'</span></div>';
+  }).join('');
+
+  const s = document.getElementById('skills');
+  if(s) s.innerHTML = skills.map(sk => {
+    const cnt = exercises.filter(e => (e.skills||[]).includes(sk.id)).length;
+    return '<div class="chip" data-val="'+sk.id+'" onclick="toggleChip(this)"><span class="emoji">'+sk.emoji+'</span>'+sk.name+' <span class="cnt">'+cnt+'</span></div>';
+  }).join('');
+}
+function toggleChip(el){ el.classList.toggle('on'); renderEx(); }
+
+/* ==================== МОДАЛКА УПРАЖНЕНИЯ ==================== */
+function openExModal(exId){
+  editingExId = exId || null;
+  const el = (id) => document.getElementById(id);
+  const e = exId ? exercises.find(x => x.id === exId) : null;
+
+  el('exModalTitle').textContent = e ? 'Изменить упражнение' : 'Новое упражнение';
+  el('exName').value = e ? e.name : '';
+  el('exDesc').value = e ? (e.desc||'') : '';
+  el('exFormat').value = e ? (e.format||'time') : 'time';
+  currentExPhoto = e ? (e.photo||null) : null;
+  renderPhotoZone();
+
+  renderMultiPick('exZonesPick', zones, e ? (e.zones||[]) : [], 'zone');
+  renderMultiPick('exGearsPick', gears, e ? (e.gears||[]) : [], 'gear');
+  renderMultiPick('exSkillsPick', skills, e ? (e.skills||[]) : [], 'skill');
+
+  openModal('m-ex');
+}
+function renderMultiPick(containerId, items, selectedIds, key){
+  const el = document.getElementById(containerId); if(!el) return;
+  el.innerHTML = items.map(it => {
+    const on = selectedIds.includes(it.id) ? 'on' : '';
+    return '<div class="chip '+on+'" data-id="'+it.id+'" data-key="'+key+'" onclick="this.classList.toggle(\'on\')"><span class="emoji">'+it.emoji+'</span>'+it.name+'</div>';
+  }).join('');
+}
+function getMultiPick(containerId){
+  const el = document.getElementById(containerId); if(!el) return [];
+  return [...el.querySelectorAll('.chip.on')].map(c => c.dataset.id);
+}
+function saveEx(){
+  const name = document.getElementById('exName').value.trim();
+  if(!name){ toast('Введи название'); return; }
+  const zonesPick  = getMultiPick('exZonesPick');
+  const gearsPick  = getMultiPick('exGearsPick');
+  const skillsPick = getMultiPick('exSkillsPick');
+  const exData = {
+    id: editingExId || uid(),
+    name,
+    photo: currentExPhoto,
+    zones: zonesPick,
+    gears: gearsPick,
+    skills: skillsPick,
+    format: document.getElementById('exFormat').value,
+    desc: document.getElementById('exDesc').value.trim()
+  };
+  if(editingExId){
+    const i = exercises.findIndex(x => x.id === editingExId);
+    if(i >= 0) exercises[i] = exData;
+  } else {
+    exercises.push(exData);
+  }
+  store.set('exercises', exercises);
+  closeModal('m-ex');
+  renderEx(); renderChips(); renderStats();
+  toast(editingExId ? 'Обновлено ✓' : 'Упражнение добавлено ✓');
+  editingExId = null;
+}
+
+/* ==================== МОДАЛКА ТРЕНИРОВКИ ==================== */
+function openTrainModal(trainId){
+  editingTrainId = trainId || null;
+  const el = (id) => document.getElementById(id);
+  const tr = trainId ? trainings.find(t => t.id === trainId) : null;
+
+  el('trainModalTitle').textContent = tr ? 'Изменить тренировку' : 'Новая тренировка';
+  el('tName').value = tr ? tr.name : '';
+  el('tTime').value = tr ? tr.time : '16:00';
+  el('tDuration').value = tr ? (tr.duration||30) : 30;
+
+  // Дни
+  document.querySelectorAll('#daysRow .d').forEach(d => {
+    const day = +d.dataset.d;
+    d.classList.toggle('on', tr ? (tr.days||[]).includes(day) : false);
+  });
+
+  tempTrainEx = tr ? JSON.parse(JSON.stringify(tr.exercises||[])) : [];
+  renderTempTrainEx();
+  openModal('m-train');
+}
+function renderTempTrainEx(){
+  const el = document.getElementById('tExList'); if(!el) return;
+  if(!tempTrainEx.length){ el.innerHTML = '<div class="empty" style="padding:10px">Пока пусто</div>'; return; }
+  el.innerHTML = tempTrainEx.map((e, idx) => {
+    const ex = exercises.find(x => x.id === e.exId);
+    const dosage = [];
+    if(e.sets) dosage.push(e.sets+'×');
+    if(e.reps) dosage.push(e.reps+' повт.');
+    if(e.time) dosage.push(e.time+'с');
+    if(e.weight) dosage.push(e.weight+' кг');
+    if(e.rest) dosage.push('отдых '+e.rest+'с');
+    return '<div class="comp-ex-item">'+
+      '<div class="info"><div class="nm">'+(ex?ex.name:'?')+'</div><div class="ds">'+dosage.join(' ')+'</div></div>'+
+      '<button class="btn small" onclick="openExConfig(\'train\', '+idx+')">✏️</button>'+
+      '<button class="rm" onclick="removeTempEx(\'train\', '+idx+')">✕</button>'+
+    '</div>';
+  }).join('');
+}
+function removeTempEx(target, idx){
+  if(target === 'train'){ tempTrainEx.splice(idx, 1); renderTempTrainEx(); }
+  else { tempCompEx.splice(idx, 1); renderTempCompEx(); }
+}
+
+function saveTrain(){
+  const name = document.getElementById('tName').value.trim();
+  if(!name){ toast('Введи название'); return; }
+  const days = [...document.querySelectorAll('#daysRow .d.on')].map(d => +d.dataset.d);
+  if(!days.length){ toast('Выбери хотя бы один день'); return; }
+  const time = document.getElementById('tTime').value || '16:00';
+  const duration = +document.getElementById('tDuration').value || 30;
+  const trData = {
+    id: editingTrainId || uid(),
+    name, days, time, duration,
+    exercises: JSON.parse(JSON.stringify(tempTrainEx)),
+    dayOverrides: editingTrainId ? (trainings.find(t=>t.id===editingTrainId)?.dayOverrides || {}) : {}
+  };
+  if(editingTrainId){
+    const i = trainings.findIndex(t => t.id === editingTrainId);
+    if(i >= 0) trainings[i] = trData;
+  } else {
+    trainings.push(trData);
+  }
+  store.set('trainings', trainings);
+  closeModal('m-train');
+  renderTrainings(); renderWeek(); renderMonth(); renderStats();
+  toast(editingTrainId ? 'Обновлено ✓' : 'Тренировка добавлена ✓');
+  editingTrainId = null;
+}
+
+/* ==================== МОДАЛКА КОМПЛЕКСА ==================== */
+function openCompModal(compId){
+  editingCompId = compId || null;
+  const el = (id) => document.getElementById(id);
+  const c = compId ? complexes.find(x => x.id === compId) : null;
+  el('compModalTitle').textContent = c ? 'Изменить комплекс' : 'Новый комплекс';
+  el('cName').value = c ? c.name : '';
+  tempCompEx = c ? JSON.parse(JSON.stringify(c.exercises||[])) : [];
+  // Тип
+  document.querySelectorAll('#compType .chip').forEach(ch => {
+    const isOpen = ch.textContent.trim() === 'Открытый';
+    ch.classList.toggle('on', c ? (c.type === (isOpen?'open':'closed')) : isOpen);
+  });
+  renderTempCompEx();
+  openModal('m-comp');
+}
+function renderTempCompEx(){
+  const el = document.getElementById('cExList'); if(!el) return;
+  if(!tempCompEx.length){ el.innerHTML = '<div class="empty" style="padding:10px">Пока пусто</div>'; return; }
+  el.innerHTML = tempCompEx.map((e, idx) => {
+    const ex = exercises.find(x => x.id === e.exId);
+    const dosage = [];
+    if(e.sets) dosage.push(e.sets+'×');
+    if(e.reps) dosage.push(e.reps+' повт.');
+    if(e.time) dosage.push(e.time+'с');
+    if(e.weight) dosage.push(e.weight+' кг');
+    if(e.rest) dosage.push('отдых '+e.rest+'с');
+    return '<div class="comp-ex-item">'+
+      '<div class="info"><div class="nm">'+(ex?ex.name:'?')+'</div><div class="ds">'+dosage.join(' ')+'</div></div>'+
+      '<button class="btn small" onclick="openExConfig(\'comp\', '+idx+')">✏️</button>'+
+      '<button class="rm" onclick="removeTempEx(\'comp\', '+idx+')">✕</button>'+
+    '</div>';
+  }).join('');
+}
+function pickCompType(el){
+  el.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+}
+function saveComp(){
+  const name = document.getElementById('cName').value.trim();
+  if(!name){ toast('Введи название'); return; }
+  const type = document.querySelector('#compType .chip.on')?.textContent.trim() === 'Закрытый' ? 'closed' : 'open';
+  const cData = {
+    id: editingCompId || uid(),
+    name, type,
+    exercises: JSON.parse(JSON.stringify(tempCompEx))
+  };
+  if(editingCompId){
+    const i = complexes.findIndex(c => c.id === editingCompId);
+    if(i >= 0) complexes[i] = cData;
+  } else {
+    complexes.push(cData);
+  }
+  store.set('complexes', complexes);
+  closeModal('m-comp');
+  renderStats();
+  toast(editingCompId ? 'Обновлено ✓' : 'Комплекс создан ✓');
+  editingCompId = null;
+}
+
+/* ==================== ВЫБОР УПРАЖНЕНИЙ ДЛЯ ТРЕНИРОВКИ/КОМПЛЕКСА ==================== */
+function openPickEx(target){
+  pickTarget = target;
+  const el = document.getElementById('pickTitle');
+  if(el) el.textContent = target === 'comp' ? 'Добавить в комплекс' : target === 'day' ? 'Добавить в этот день' : 'Добавить в тренировку';
+  const s = document.getElementById('pickSearch'); if(s) s.value = '';
+  renderPickEx();
+  openModal('m-pick-ex');
+}
+function renderPickEx(){
+  const q = (document.getElementById('pickSearch')?.value||'').toLowerCase();
+  const list = exercises.filter(e => e.name.toLowerCase().includes(q));
+  const el = document.getElementById('pickExList'); if(!el) return;
+  if(!list.length){ el.innerHTML = '<div class="empty" style="padding:12px">Нет упражнений</div>'; return; }
+  el.innerHTML = list.map(e => {
+    const zBadges = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji:''; }).join('');
+    const gBadges = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji:''; }).join('');
+    return '<div class="comp-ex-item" onclick="pickExercise(\''+e.id+'\')">'+
+      '<div class="info"><div class="nm">'+e.name+'</div><div class="ds">'+zBadges+' '+gBadges+'</div></div>'+
+      '<div style="font-size:18px;color:var(--acc)">+</div>'+
+    '</div>';
+  }).join('');
+}
+function pickExercise(exId){
+  const ex = exercises.find(x => x.id === exId); if(!ex) return;
+  const newEntry = {exId, sets:3, reps: ex.format==='time'?0:10, time: ex.format==='time'?60:0, rest:60, weight:0, note:''};
+  if(pickTarget === 'comp'){
+    tempCompEx.push(newEntry);
+    renderTempCompEx();
+  } else if(pickTarget === 'train'){
+    tempTrainEx.push(newEntry);
+    renderTempTrainEx();
+  } else if(pickTarget === 'day'){
+    // Ветка добавления в конкретный день
+    const cfg = exConfigTarget; // {type:'newInDay', trainId, dayKey}
+    if(!cfg) return;
+    const tr = trainings.find(t => t.id === cfg.trainId); if(!tr) return;
+    if(!tr.dayOverrides) tr.dayOverrides = {};
+    if(!tr.dayOverrides[cfg.dayKey]) tr.dayOverrides[cfg.dayKey] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+    const list = tr.dayOverrides[cfg.dayKey].exercises;
+    list.push(newEntry);
+    store.set('trainings', trainings);
+    renderTrainings(); toast('Добавлено в этот день');
+  }
+  closeModal('m-pick-ex');
+  // Автоматически открыть настройку дозировки
+  if(pickTarget === 'comp') openExConfig('comp', tempCompEx.length-1);
+  else if(pickTarget === 'train') openExConfig('train', tempTrainEx.length-1);
+}
+
+/* ==================== НАСТРОЙКА ДОЗИРОВКИ УПРАЖНЕНИЯ ==================== */
+function openExConfig(target, index){
+  const list = target === 'comp' ? tempCompEx : tempTrainEx;
+  const e = list[index]; if(!e) return;
+  const ex = exercises.find(x => x.id === e.exId);
+  exConfigTarget = {type:'temp', target, index};
+  const el = (id) => document.getElementById(id);
+  el('exCfgTitle').textContent = 'Настройка дозировки';
+  el('exCfgName').textContent = ex ? ex.name : 'Упражнение';
+  el('exCfgSets').value = e.sets||1;
+  el('exCfgReps').value = e.reps||0;
+  el('exCfgTime').value = e.time||0;
+  el('exCfgRest').value = e.rest||0;
+  el('exCfgWeight').value = e.weight||0;
+  el('exCfgNote').value = e.note||'';
+  openModal('m-ex-config');
+}
+function saveExConfig(){
+  const cfg = exConfigTarget; if(!cfg) { closeModal('m-ex-config'); return; }
+  const data = {
+    sets: +document.getElementById('exCfgSets').value || 1,
+    reps: +document.getElementById('exCfgReps').value || 0,
+    time: +document.getElementById('exCfgTime').value || 0,
+    rest: +document.getElementById('exCfgRest').value || 0,
+    weight: +document.getElementById('exCfgWeight').value || 0,
+    note: document.getElementById('exCfgNote').value.trim()
+  };
+
+  if(cfg.type === 'temp'){
+    const list = cfg.target === 'comp' ? tempCompEx : tempTrainEx;
+    if(list[cfg.index]){
+      list[cfg.index] = {...list[cfg.index], ...data};
+    }
+    if(cfg.target === 'comp') renderTempCompEx(); else renderTempTrainEx();
+  } else if(cfg.type === 'override'){
+    const tr = trainings.find(t => t.id === cfg.trainId);
+    if(tr && tr.dayOverrides && tr.dayOverrides[cfg.dayKey]){
+      const list = tr.dayOverrides[cfg.dayKey].exercises;
+      if(list[cfg.index]) list[cfg.index] = {...list[cfg.index], ...data};
+      store.set('trainings', trainings);
+      renderTrainings();
+    }
+  } else if(cfg.type === 'newInDay'){
+    // уже добавлен — данные применятся к последнему
+    const tr = trainings.find(t => t.id === cfg.trainId);
+    if(tr && tr.dayOverrides && tr.dayOverrides[cfg.dayKey]){
+      const list = tr.dayOverrides[cfg.dayKey].exercises;
+      const last = list[list.length-1];
+      if(last) Object.assign(last, data);
+      store.set('trainings', trainings);
+      renderTrainings();
+    }
+  }
+  closeModal('m-ex-config');
+  toast('Сохранено ✓');
+}
+
+/* ==================== ВЫБОР КОМПЛЕКСА ==================== */
+function openPickComp(target){
+  pickTarget = target;
+  const el = document.getElementById('pickCompList'); if(!el) return;
+  if(!complexes.length){ el.innerHTML = '<div class="empty" style="padding:12px">Комплексов нет</div>'; }
+  else {
+    el.innerHTML = complexes.map(c => '<div class="comp-ex-item" onclick="pickComplex(\''+c.id+'\')">'+
+      '<div class="info"><div class="nm">'+c.name+'</div><div class="ds">'+c.exercises.length+' упр. · '+(c.type==='closed'?'закрытый':'открытый')+'</div></div>'+
+      '<div style="font-size:18px;color:var(--acc)">+</div></div>').join('');
+  }
+  openModal('m-pick-comp');
+}
+function pickComplex(compId){
+  const c = complexes.find(x => x.id === compId); if(!c) return;
+  if(pickTarget === 'train'){
+    c.exercises.forEach(e => tempTrainEx.push(JSON.parse(JSON.stringify(e))));
+    renderTempTrainEx();
+  }
+  closeModal('m-pick-comp');
+  toast('Комплекс добавлен');
+}
+
+/* ==================== СПИСОК ШАБЛОНОВ ==================== */
+function renderTrainTemplates(){
+  const el = document.getElementById('trainTemplates'); if(!el) return;
+  if(!trainings.length){ el.innerHTML = '<div class="empty" style="padding:12px">Шаблонов нет</div>'; return; }
+  el.innerHTML = trainings.map(tr => {
+    const days = (tr.days||[]).map(d => WD_SHORT[WD_ISO.indexOf(d)]).join(' ');
+    return '<div class="comp-item" onclick="openTrainModal(\''+tr.id+'\');closeModal(\'m-train-list\')">'+
+      '<div class="nm">'+tr.name+'</div>'+
+      '<div class="meta"><span>📅 '+days+'</span><span>⏰ '+tr.time+'</span><span>'+tr.exercises.length+' упр.</span></div>'+
+      '<div class="train-actions" style="margin-top:8px"><button onclick="event.stopPropagation();delTrain(\''+tr.id+'\')">🗑 Удалить</button></div>'+
+    '</div>';
+  }).join('');
+}
+function delTrain(id){
+  if(!confirm('Удалить шаблон?')) return;
+  trainings = trainings.filter(t => t.id !== id);
+  store.set('trainings', trainings);
+  renderTrainTemplates(); renderTrainings(); renderWeek(); renderMonth(); renderStats();
+  toast('Удалено');
+}
+
+/* ==================== РЕДАКТОР ТАЙМЕРА ==================== */
+const TIMER_PRESETS = [
+  {name:'Табата', cfg:{prep:10, work:20, rest:10, sets:8, rounds:1, roundRest:0}},
+  {name:'HIIT', cfg:{prep:10, work:40, rest:20, sets:6, rounds:1, roundRest:0}},
+  {name:'EMOM', cfg:{prep:10, work:50, rest:10, sets:10, rounds:1, roundRest:0}},
+  {name:'Силовой', cfg:{prep:15, work:45, rest:90, sets:5, rounds:1, roundRest:0}},
+  {name:'Растяжка', cfg:{prep:5, work:60, rest:10, sets:6, rounds:1, roundRest:0}},
+  {name:'Круги', cfg:{prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60}},
+];
+
+const TIMER_FIELDS = [
+  {key:'prep',      label:'Подготовка',    hint:'перед стартом',       step:5,  min:0},
+  {key:'work',      label:'Работа',        hint:'фаза нагрузки',       step:5,  min:0},
+  {key:'rest',      label:'Отдых',         hint:'между подходами',     step:5,  min:0},
+  {key:'sets',      label:'Подходов',      hint:'в круге',             step:1,  min:1},
+  {key:'rounds',    label:'Кругов',        hint:'циклов',              step:1,  min:1},
+  {key:'roundRest', label:'Отдых кругами', hint:'доп. пауза',          step:10, min:0},
+];
+
+function renderTimerEditor(){
+  const el = document.getElementById('timeEditor'); if(!el) return;
+  el.innerHTML = TIMER_FIELDS.map(f => {
+    const v = timerConfig[f.key];
+    return '<div class="time-row">'+
+      '<div class="lbl">'+f.label+'<small>'+f.hint+'</small></div>'+
+      '<div class="time-controls">'+
+        '<button onclick="adjTimer(\''+f.key+'\','+(-f.step)+')">−</button>'+
+        '<input type="number" min="'+f.min+'" value="'+v+'" onchange="setTimerValue(\''+f.key+'\', this.value)">'+
+        '<button onclick="adjTimer(\''+f.key+'\','+f.step+')">+</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+function adjTimer(key, delta){
+  timerConfig[key] = Math.max(0, (timerConfig[key]||0) + delta);
+  if(key === 'sets') timerConfig[key] = Math.max(1, timerConfig[key]);
+  if(key === 'rounds') timerConfig[key] = Math.max(1, timerConfig[key]);
+  renderTimerEditor();
+}
+function setTimerValue(key, val){
+  let v = parseInt(val, 10) || 0;
+  if(key === 'sets' || key === 'rounds') v = Math.max(1, v);
+  else v = Math.max(0, v);
+  timerConfig[key] = v;
+  renderTimerEditor();
+}
+function saveTimerConfig(silent){
+  store.set('timerConfig', timerConfig);
+  if(!silent) toast('Сохранено ✓');
+  updateTimerUI();
+}
+function resetTimerConfig(){
+  timerConfig = {prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60};
+  saveTimerConfig(true); renderTimerEditor(); toast('Сброшено');
+}
+function renderTimerPresets(){
+  const el = document.getElementById('timerPresets'); if(!el) return;
+  el.innerHTML = TIMER_PRESETS.map((p, i) => '<div class="timer-preset" onclick="applyTimerPreset('+i+')">'+p.name+'</div>').join('');
+}
+function applyTimerPreset(i){
+  Object.assign(timerConfig, TIMER_PRESETS[i].cfg);
+  saveTimerConfig(true); renderTimerEditor(); toast('Пресет «'+TIMER_PRESETS[i].name+'» ✓');
+}
+
+/* ==================== ТАЙМЕР (LIVE) ==================== */
+let tState = {phase:'prep', remaining:0, set:1, round:1, running:false, int:null, totalPhase:0};
+function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function updateTimerUI(){
+  if(!tState.totalPhase) tState.totalPhase = 1;
+  const pct = Math.max(0, Math.min(100, (1 - tState.remaining/tState.totalPhase)*100));
+  const d = document.getElementById('tDisp'); if(d) d.textContent = fmt(Math.max(0, tState.remaining));
+  const p = document.getElementById('tProgress'); if(p) p.style.width = pct+'%';
+  const ph = document.getElementById('tPhase');
+  if(ph){
+    ph.className = 'timer-phase ' + (tState.phase==='prep'?'prep':tState.phase==='work'?'work':'rest');
+    const labels = {prep:'Подготовка', work:'Работа', rest:'Отдых', roundRest:'Отдых между кругами', done:'Готово!'};
+    ph.textContent = labels[tState.phase] || '';
+  }
+  const r = document.getElementById('tRoundCur'); if(r) r.textContent = tState.round+'/'+timerConfig.rounds;
+  const s = document.getElementById('tSetCur'); if(s) s.textContent = tState.set+'/'+timerConfig.sets;
+  const rs = document.getElementById('tRestCur'); if(rs) rs.textContent = timerConfig.rest+'с';
+}
+function resetTimer(){
+  if(tState.int) clearInterval(tState.int);
+  tState = {phase:'prep', remaining:timerConfig.prep, totalPhase:timerConfig.prep||1, set:1, round:1, running:false, int:null};
+  const b = document.getElementById('tBtn'); if(b) b.textContent = '▶ Старт';
+  updateTimerUI();
+}
+function toggleTimer(){
+  const btn = document.getElementById('tBtn');
+  if(tState.running){ clearInterval(tState.int); tState.running=false; if(btn) btn.textContent='▶ Продолжить'; return; }
+  tState.running = true; if(btn) btn.textContent = '⏸ Пауза';
+  tState.int = setInterval(() => {
+    if(tState.remaining > 0){ tState.remaining--; updateTimerUI(); }
+    else nextPhase();
+  }, 1000);
+  updateTimerUI();
+}
+function nextPhase(){
+  if(tState.phase === 'prep'){ tState.phase='work'; tState.remaining=timerConfig.work; tState.totalPhase=timerConfig.work||1; }
+  else if(tState.phase === 'work'){
+    if(tState.set < timerConfig.sets){ tState.phase='rest'; tState.remaining=timerConfig.rest; tState.totalPhase=timerConfig.rest||1; }
+    else if(tState.round < timerConfig.rounds){ tState.phase='roundRest'; tState.remaining=timerConfig.roundRest; tState.totalPhase=timerConfig.roundRest||1; }
+    else {
+      tState.phase='done'; tState.remaining=0;
+      clearInterval(tState.int); tState.running=false;
+      const b = document.getElementById('tBtn'); if(b) b.textContent = '▶ Заново';
+      if(navigator.vibrate) navigator.vibrate([200,100,200]);
+      beep(880,.3); setTimeout(()=>beep(1320,.4), 400);
+    }
+  }
+  else if(tState.phase === 'rest'){ tState.set++; tState.phase='work'; tState.remaining=timerConfig.work; tState.totalPhase=timerConfig.work||1; }
+  else if(tState.phase === 'roundRest'){ tState.round++; tState.set=1; tState.phase='work'; tState.remaining=timerConfig.work; tState.totalPhase=timerConfig.work||1; }
+  if(tState.phase !== 'done'){ beep(660,.15); if(navigator.vibrate) navigator.vibrate(80); }
+  updateTimerUI();
+}
+let audioCtx = null;
+function beep(freq, dur){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+    o.frequency.value = freq; o.type='sine'; g.gain.value = 0.15;
+    o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + dur);
+  }catch(e){}
+}
+function openTimerQuick(){ openModal('m-timer'); resetTimer(); }
+
+/* ==================== СТАТИСТИКА ==================== */
 function renderStats(){
-  const setT=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-  setT('stTotal',exercises.length);setT('stTrains',trainings.length);
-  setT('stGears',new Set(exercises.map(e=>e.gear).filter(Boolean)).size);
-  setT('stZones',new Set(exercises.map(e=>e.zone).filter(Boolean)).size);
-  const total=exercises.length||1;
-  renderBars('statGears',countBy(exercises,'gear'),total);
-  renderBars('statZones',countBy(exercises,'zone'),total);
-  renderBars('statTypes',countBy(exercises,'type'),total);
+  const setT = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
+  setT('stTotal', exercises.length);
+  setT('stTrains', trainings.length);
+  setT('stComps', complexes.length);
+  setT('stGears', new Set(exercises.flatMap(e => e.gears||[])).size);
+
+  // Проценты — считаем встречаемость в упражнениях
+  countFlat('statGears', exercises.flatMap(e => e.gears||[]), gears, 'id');
+  countFlat('statZones', exercises.flatMap(e => e.zones||[]), zones, 'id');
+  renderSkillsStats('statSkills');
+
   renderSkillXp();
 }
-function countBy(arr,key){const m={};arr.forEach(e=>{const k=e[key]||'—';m[k]=(m[k]||0)+1});return m}
-function renderBars(id,counts,total){
-  const el=document.getElementById(id);if(!el)return;
-  const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-  if(!entries.length){el.innerHTML='<div class="empty" style="padding:12px">Нет данных</div>';return}
-  const max=Math.max(...entries.map(e=>e[1]));
-  el.innerHTML=entries.map(([k,v])=>{
-    const pct=Math.round(v/total*100);const w=Math.round(v/max*100);
-    return '<div class="stat-item"><div class="stat-top"><span class="lbl">'+k+'</span><span class="val">'+v+' <b>· '+pct+'%</b></span></div><div class="stat-bar"><i style="width:'+w+'%"></i></div></div>';
+function countFlat(containerId, arr, entities, idKey){
+  const el = document.getElementById(containerId); if(!el) return;
+  const counts = {};
+  arr.forEach(id => counts[id] = (counts[id]||0) + 1);
+  const total = arr.length || 1;
+  const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  if(!entries.length){ el.innerHTML = '<div class="empty" style="padding:12px">Нет данных</div>'; return; }
+  const max = Math.max(...entries.map(e => e[1]));
+  el.innerHTML = entries.map(([id, v]) => {
+    const ent = entities.find(e => e[idKey] === id);
+    const nm = ent ? ent.emoji + ' ' + ent.name : id;
+    const pct = Math.round(v/total*100);
+    const w = Math.round(v/max*100);
+    return '<div class="stat-item"><div class="stat-top"><span class="lbl">'+nm+'</span><span class="val">'+v+' <b>· '+pct+'%</b></span></div><div class="stat-bar"><i style="width:'+w+'%"></i></div></div>';
   }).join('');
 }
-function skillRankInfo(xp){
-  const info=computeLevel(xp);let icon='🥉';
-  if(info.level>=50)icon='👑';else if(info.level>=20)icon='💎';else if(info.level>=10)icon='🥇';else if(info.level>=5)icon='🥈';
-  return{lvl:info.level,icon,current:info.current,need:info.need};
+function renderSkillsStats(containerId){
+  const el = document.getElementById(containerId); if(!el) return;
+  const arr = exercises.flatMap(e => e.skills||[]);
+  const total = arr.length || 1;
+  const counts = {};
+  arr.forEach(id => counts[id] = (counts[id]||0) + 1);
+  const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  if(!entries.length){ el.innerHTML = '<div class="empty" style="padding:12px">Нет данных</div>'; return; }
+  const max = Math.max(...entries.map(e => e[1]));
+  el.innerHTML = entries.map(([id, v]) => {
+    const sk = skills.find(s => s.id === id);
+    const nm = sk ? sk.emoji + ' ' + sk.name : id;
+    const pct = Math.round(v/total*100);
+    const w = Math.round(v/max*100);
+    return '<div class="stat-item"><div class="stat-top"><span class="lbl">'+nm+'</span><span class="val">'+v+' <b>· '+pct+'%</b></span></div><div class="stat-bar"><i style="width:'+w+'%"></i></div></div>';
+  }).join('');
 }
-function daysSinceLast(iso){if(!iso)return null;return Math.floor((new Date()-new Date(iso))/86400000)}
+
+/* ==================== XP СНАРЯДОВ / ЗОН / НАВЫКОВ (прокачка) ==================== */
+function skillRankInfo(xp){
+  const info = computeLevel(xp); let icon = '🥉';
+  if(info.level >= 50) icon = '👑';
+  else if(info.level >= 20) icon = '💎';
+  else if(info.level >= 10) icon = '🥇';
+  else if(info.level >= 5) icon = '🥈';
+  return {lvl: info.level, icon, current: info.current, need: info.need};
+}
+function daysSinceLast(iso){ if(!iso) return null; return Math.floor((Date.now() - new Date(iso).getTime())/86400000); }
 function decayStatus(days){
-  if(days===null)return{label:'не тренировался',cls:'cold'};
-  if(days<7)return{label:days+' дн. назад',cls:'fresh'};
-  if(days<14)return{label:days+' дн. · −0.1%/д',cls:'warn'};
-  if(days<30)return{label:days+' дн. · −0.25%/д',cls:'warn2'};
-  if(days<60)return{label:days+' дн. · −0.5%/д',cls:'bad'};
-  return{label:days+' дн. · −1%/д',cls:'bad2'};
+  if(days === null) return {label:'не тренировался', cls:'cold'};
+  if(days < 7)  return {label:days+' дн. назад', cls:'fresh'};
+  if(days < 14) return {label:days+' дн. · −0.1%/д', cls:'warn'};
+  if(days < 30) return {label:days+' дн. · −0.25%/д', cls:'warn2'};
+  if(days < 60) return {label:days+' дн. · −0.5%/д', cls:'bad'};
+  return {label:days+' дн. · −1%/д', cls:'bad2'};
 }
 function renderSkillXp(){
-  ['skillGears','skillZones'].forEach((id,kind)=>{
-    const el=document.getElementById(id);if(!el)return;
-    const map=kind===0?xpGears:xpZones;
-    const items=Object.entries(map).map(([n,d])=>({name:n,...d})).sort((a,b)=>(b.xp||0)-(a.xp||0));
-    if(!items.length||items.every(i=>!i.xp)){el.innerHTML='<div class="empty" style="padding:12px">Пока нет опыта</div>';return}
-    el.innerHTML=items.filter(i=>i.xp>0||i.lastTrained).map(item=>{
-      const info=skillRankInfo(item.xp||0);
-      const days=daysSinceLast(item.lastTrained);
-      const dec=decayStatus(days);
-      const pct=info.need>0?Math.round(info.current/info.need*100):0;
-      return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span class="skill-icon">'+info.icon+'</span><span>'+item.name+'</span></div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+(item.xp||0).toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div></div>';
+  const configs = [
+    {containerId:'skillGears',  map:xpGears,  entities:gears},
+    {containerId:'skillZones',  map:xpZones,  entities:zones},
+    {containerId:'skillSkills', map:xpSkills, entities:skills},
+  ];
+  configs.forEach(cfg => {
+    const el = document.getElementById(cfg.containerId); if(!el) return;
+    const items = Object.entries(cfg.map).map(([id, d]) => {
+      const ent = cfg.entities.find(x => x.id === id);
+      return {id, name: ent ? ent.emoji+' '+ent.name : id, xp: d.xp||0, lastTrained: d.lastTrained};
+    }).sort((a,b) => b.xp - a.xp);
+    if(!items.length || items.every(i => !i.xp)){
+      el.innerHTML = '<div class="empty" style="padding:12px">Пока нет опыта</div>';
+      return;
+    }
+    el.innerHTML = items.filter(i => i.xp > 0 || i.lastTrained).map(item => {
+      const info = skillRankInfo(item.xp);
+      const dec = decayStatus(daysSinceLast(item.lastTrained));
+      const pct = info.need > 0 ? Math.round(info.current/info.need*100) : 0;
+      return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span class="skill-icon">'+info.icon+'</span><span>'+item.name+'</span></div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.xp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div></div>';
     }).join('');
   });
 }
 
-/* ==================== SAVE ==================== */
-function saveEx(){
-  const name=document.getElementById('exName').value.trim();
-  if(!name){toast('Введи название');return}
-  exercises.push({
-    name,photo:currentExPhoto,
-    gear:document.getElementById('exGear').value,
-    zone:document.getElementById('exZone').value,
-    category:document.getElementById('exCat').value,
-    type:document.getElementById('exType').value,
-    format:document.getElementById('exFormat').value,
-    desc:document.getElementById('exDesc').value.trim()
-  });
-  store.set('exercises',exercises);
-  document.getElementById('exName').value='';
-  document.getElementById('exDesc').value='';
-  currentExPhoto=null;renderPhotoZone();
-  closeModal('m-ex');renderEx();renderChips();renderStats();
-  toast('Упражнение добавлено ✓');
-}
-function saveComp(){const n=document.getElementById('cName').value.trim();if(!n){toast('Введи название');return}closeModal('m-comp');document.getElementById('cName').value='';toast('Комплекс создан ✓')}
-function saveTrain(){
-  const name=document.getElementById('tName').value.trim();
-  if(!name){toast('Введи название');return}
-  const date=document.getElementById('tDate').value||isoDate(selectedDate);
-  const time=document.getElementById('tTime').value||'16:00';
-  const t={
-    date,time,name,meta:date,done:false,
-    xpType:document.getElementById('tXpType').value,
-    weight:+document.getElementById('tWeight').value||0,
-    reps:+document.getElementById('tReps').value||0,
-    xpManual:+document.getElementById('tXpManual').value||0,
-    gear:document.getElementById('tGear').value,
-    zone:document.getElementById('tZone').value
-  };
-  trainings.push(t);store.set('trainings',trainings);
-  document.getElementById('tName').value='';
-  closeModal('m-train');
-  const d=new Date(date);if(!isNaN(d))selectDate(new Date(d.getFullYear(),d.getMonth(),d.getDate()));
-  toast('Тренировка добавлена ✓');
-}
-function resetAll(){if(confirm('Сбросить всё?')){localStorage.clear();location.reload()}}
-
-/* ==================== TIMER PRESETS ==================== */
-const TIMER_PRESETS=[
-{name:'Табата',cfg:{prep:10,work:20,rest:10,sets:8,rounds:1,roundRest:0}},
-{name:'HIIT',cfg:{prep:10,work:40,rest:20,sets:6,rounds:1,roundRest:0}},
-{name:'EMOM',cfg:{prep:10,work:50,rest:10,sets:10,rounds:1,roundRest:0}},
-{name:'Силовой',cfg:{prep:15,work:45,rest:90,sets:5,rounds:1,roundRest:0}},
-{name:'Растяжка',cfg:{prep:5,work:60,rest:10,sets:6,rounds:1,roundRest:0}},
-{name:'Круги',cfg:{prep:10,work:30,rest:30,sets:3,rounds:5,roundRest:60}}];
-function renderTimerPresets(){
-  const el=document.getElementById('timerPresets');if(!el)return;
-  el.innerHTML=TIMER_PRESETS.map((p,i)=>'<div class="timer-preset" onclick="applyTimerPreset('+i+')">'+p.name+'</div>').join('');
-}
-function applyTimerPreset(i){Object.assign(timerConfig,TIMER_PRESETS[i].cfg);saveTimerConfig(true);renderTimerEditor();toast('Пресет «'+TIMER_PRESETS[i].name+'» ✓')}
-function renderTimerEditor(){
-  const setT=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-  setT('tPrep',timerConfig.prep+'с');setT('tWork',timerConfig.work+'с');setT('tRest',timerConfig.rest+'с');
-  setT('tSets',timerConfig.sets);setT('tRounds',timerConfig.rounds);setT('tRoundRest',timerConfig.roundRest+'с');
-}
-function adjTimer(key,delta){
-  timerConfig[key]=Math.max(0,timerConfig[key]+delta);
-  if(key==='sets')timerConfig[key]=Math.max(1,timerConfig[key]);
-  if(key==='rounds')timerConfig[key]=Math.max(1,timerConfig[key]);
-  renderTimerEditor();
-}
-function saveTimerConfig(silent){store.set('timerConfig',timerConfig);if(!silent)toast('Сохранено ✓');updateTimerUI()}
-function resetTimerConfig(){timerConfig={prep:10,work:30,rest:30,sets:3,rounds:5,roundRest:60};saveTimerConfig(true);renderTimerEditor();toast('Сброшено')}
-
-/* ==================== TIMER ==================== */
-let tState={phase:'prep',remaining:0,set:1,round:1,running:false,int:null,totalPhase:0};
-function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
-function updateTimerUI(){
-  if(!tState.totalPhase)tState.totalPhase=1;
-  const pct=Math.max(0,Math.min(100,(1-tState.remaining/tState.totalPhase)*100));
-  const d=document.getElementById('tDisp');if(d)d.textContent=fmt(Math.max(0,tState.remaining));
-  const p=document.getElementById('tProgress');if(p)p.style.width=pct+'%';
-  const ph=document.getElementById('tPhase');
-  if(ph){
-    ph.className='timer-phase '+(tState.phase==='prep'?'prep':tState.phase==='work'?'work':'rest');
-    const labels={prep:'Подготовка',work:'Работа',rest:'Отдых',roundRest:'Отдых между кругами',done:'Готово!'};
-    ph.textContent=labels[tState.phase]||'';
-  }
-  const r=document.getElementById('tRoundCur');if(r)r.textContent=tState.round+'/'+timerConfig.rounds;
-  const s=document.getElementById('tSetCur');if(s)s.textContent=tState.set+'/'+timerConfig.sets;
-  const rs=document.getElementById('tRestCur');if(rs)rs.textContent=timerConfig.rest+'с';
-}
-function resetTimer(){
-  if(tState.int)clearInterval(tState.int);
-  tState={phase:'prep',remaining:timerConfig.prep,totalPhase:timerConfig.prep||1,set:1,round:1,running:false,int:null};
-  const b=document.getElementById('tBtn');if(b)b.textContent='▶ Старт';
-  updateTimerUI();renderTimerEditor();
-}
-function toggleTimer(){
-  const btn=document.getElementById('tBtn');
-  if(tState.running){clearInterval(tState.int);tState.running=false;if(btn)btn.textContent='▶ Продолжить';return}
-  tState.running=true;if(btn)btn.textContent='⏸ Пауза';
-  tState.int=setInterval(()=>{
-    if(tState.remaining>0){tState.remaining--;updateTimerUI()}
-    else nextPhase();
-  },1000);
-  updateTimerUI();
-}
-function nextPhase(){
-  if(tState.phase==='prep'){tState.phase='work';tState.remaining=timerConfig.work;tState.totalPhase=timerConfig.work||1}
-  else if(tState.phase==='work'){
-    if(tState.set<timerConfig.sets){tState.phase='rest';tState.remaining=timerConfig.rest;tState.totalPhase=timerConfig.rest||1}
-    else if(tState.round<timerConfig.rounds){tState.phase='roundRest';tState.remaining=timerConfig.roundRest;tState.totalPhase=timerConfig.roundRest||1}
-    else{tState.phase='done';tState.remaining=0;clearInterval(tState.int);tState.running=false;if(btn)tState.running=false;const b=document.getElementById('tBtn');if(b)b.textContent='▶ Заново';if(navigator.vibrate)navigator.vibrate([200,100,200]);beep(880,.3);setTimeout(()=>beep(1320,.4),400)}
-  }
-  else if(tState.phase==='rest'){tState.set++;tState.phase='work';tState.remaining=timerConfig.work;tState.totalPhase=timerConfig.work||1}
-  else if(tState.phase==='roundRest'){tState.round++;tState.set=1;tState.phase='work';tState.remaining=timerConfig.work;tState.totalPhase=timerConfig.work||1}
-  if(tState.phase!=='done'){beep(660,.15);if(navigator.vibrate)navigator.vibrate(80)}
-  updateTimerUI();
-}
-let audioCtx=null;
-function beep(freq,dur){
-  try{
-    if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
-    o.frequency.value=freq;o.type='sine';g.gain.value=.15;
-    o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur);
-  }catch(e){}
-}
-function openTimerQuick(){openModal('m-timer');resetTimer()}
-
-/* ==================== EXPORT/IMPORT ==================== */
+/* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return{app:'AS-Fit',version:2,exported:new Date().toISOString(),exercises,zones,gears,cats,trainings,theme,timerConfig,totalXp,xpLog,xpGears,xpZones,profile:{...profile}};
+  return {
+    app:'AS-Fit', version:3, exported: new Date().toISOString(),
+    zones, gears, skills, exercises, complexes, trainings, completions,
+    theme, timerConfig, totalXp, xpLog, xpGears, xpZones, xpSkills,
+    profile: {...profile}
+  };
 }
 function exportDB(){
-  const data=JSON.stringify(buildDB(),null,2);
-  const blob=new Blob([data],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='as-fit-'+new Date().toISOString().slice(0,10)+'.json';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  const data = JSON.stringify(buildDB(), null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'as-fit-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
   toast('Файл скачан ✓');
 }
 function importDB(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      if(!data.exercises&&!data.zones&&!data.gears){toast('Неверный формат');return}
-      const merge=confirm('OK — добавить\nОтмена — заменить');
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const merge = confirm('OK — добавить к текущим\nОтмена — заменить');
       if(merge){
-        if(Array.isArray(data.exercises))exercises=exercises.concat(data.exercises);
-        if(Array.isArray(data.zones))zones=[...new Set(zones.concat(data.zones))];
-        if(Array.isArray(data.gears))gears=[...new Set(gears.concat(data.gears))];
-        if(Array.isArray(data.trainings))trainings=trainings.concat(data.trainings);
+        if(Array.isArray(data.exercises)) exercises = exercises.concat(data.exercises);
+        if(Array.isArray(data.complexes)) complexes = complexes.concat(data.complexes);
+        if(Array.isArray(data.trainings)) trainings = trainings.concat(data.trainings);
+        if(Array.isArray(data.zones)) {
+          data.zones.forEach(z => { if(!zones.find(x => x.id === z.id)) zones.push(z); });
+        }
+        if(Array.isArray(data.gears)) {
+          data.gears.forEach(g => { if(!gears.find(x => x.id === g.id)) gears.push(g); });
+        }
+        if(Array.isArray(data.skills)) {
+          data.skills.forEach(s => { if(!skills.find(x => x.id === s.id)) skills.push(s); });
+        }
       } else {
-        if(Array.isArray(data.exercises))exercises=data.exercises;
-        if(Array.isArray(data.zones))zones=data.zones;
-        if(Array.isArray(data.gears))gears=data.gears;
-        if(Array.isArray(data.trainings))trainings=data.trainings;
-        if(typeof data.totalXp==='number')totalXp=data.totalXp;
-        if(data.xpGears)xpGears=data.xpGears;
-        if(data.xpZones)xpZones=data.xpZones;
+        zones = data.zones || zones; gears = data.gears || gears; skills = data.skills || skills;
+        exercises = data.exercises || []; complexes = data.complexes || [];
+        trainings = data.trainings || []; completions = data.completions || {};
+        totalXp = typeof data.totalXp === 'number' ? data.totalXp : 0;
+        xpLog = data.xpLog || []; xpGears = data.xpGears || {}; xpZones = data.xpZones || {}; xpSkills = data.xpSkills || {};
       }
-      store.set('exercises',exercises);store.set('zones',zones);store.set('gears',gears);
-      store.set('trainings',trainings);store.set('totalXp',totalXp);
-      store.set('xpGears',xpGears);store.set('xpZones',xpZones);
+      store.set('zones', zones); store.set('gears', gears); store.set('skills', skills);
+      store.set('exercises', exercises); store.set('complexes', complexes);
+      store.set('trainings', trainings); store.set('completions', completions);
+      store.set('totalXp', totalXp); store.set('xpLog', xpLog);
+      store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
       ensureXpMaps();
-      renderEx();renderChips();fillSelects();renderStats();renderWeek();renderMonth();renderTrainings();updateXpUI();
+      renderAll();
       toast('Импорт готов ✓');
-    }catch(err){toast('Ошибка: '+err.message)}
+    } catch(err){ toast('Ошибка: '+err.message); }
   };
-  reader.readAsText(file);input.value='';
+  reader.readAsText(file); input.value = '';
 }
 async function shareDB(){
-  const data=JSON.stringify(buildDB(),null,2);
-  const file=new File([data],'as-fit.json',{type:'application/json'});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file],title:'База АС'});toast('Отправлено ✓')}
-    catch(e){if(e.name!=='AbortError')toast('Ошибка')}
+  const data = JSON.stringify(buildDB(), null, 2);
+  const file = new File([data], 'as-fit.json', {type:'application/json'});
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try { await navigator.share({files:[file], title:'База АС'}); toast('Отправлено ✓'); }
+    catch(e){ if(e.name !== 'AbortError') toast('Ошибка'); }
   } else if(navigator.share){
-    try{await navigator.share({title:'База АС',text:exercises.length+' упражнений'});toast('Отправлено ✓')}
-    catch(e){if(e.name!=='AbortError')toast('Ошибка')}
+    try { await navigator.share({title:'База АС', text: exercises.length+' упражнений'}); toast('Отправлено ✓'); }
+    catch(e){ if(e.name !== 'AbortError') toast('Ошибка'); }
   } else toast('Share недоступен');
 }
 async function copyDB(){
-  const data=JSON.stringify(buildDB());
-  try{await navigator.clipboard.writeText(data);toast('Скопировано ✓')}
-  catch(e){toast('Не удалось')}
+  const data = JSON.stringify(buildDB());
+  try { await navigator.clipboard.writeText(data); toast('Скопировано ✓'); }
+  catch(e){ toast('Не удалось'); }
+}
+function resetAll(){ if(confirm('Сбросить всё?')){ localStorage.clear(); location.reload(); } }
+
+/* ==================== РЕНДЕР ВСЕГО ==================== */
+function renderAll(){
+  renderWeek(); renderMonth(); renderTrainings();
+  renderEx(); renderChips();
+  renderStats(); updateXpUI(); renderSkillXp();
+  renderThemes(); applyAvatar(); renderTimerPresets(); renderTimerEditor();
+  renderTrainTemplates();
 }
 
-/* ==================== NAV ==================== */
-function nav(el){
-  document.querySelectorAll('nav.bottom button').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
-  const v=document.getElementById(el.dataset.v);if(v)v.classList.add('on');
-  closeFabMenu();
-  if(el.dataset.v==='v-stat'){renderStats();updateXpUI()}
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function navTo(id){const b=document.querySelector('nav.bottom button[data-v="'+id+'"]');if(b)nav(b)}
-
-/* ==================== MODALS ==================== */
-function openModal(id){
-  if(id==='m-ex'){fillSelects();renderPhotoZone()}
-  if(id==='m-train'){
-    const td=document.getElementById('tDate');if(td)td.value=isoDate(selectedDate);
-    const tg=document.getElementById('tGear');if(tg)tg.innerHTML='<option value="">—</option>'+gears.map(g=>'<option>'+g+'</option>').join('');
-    const tz=document.getElementById('tZone');if(tz)tz.innerHTML='<option value="">—</option>'+zones.map(z=>'<option>'+z+'</option>').join('');
-  }
-  if(id==='m-timer')resetTimer();
-  const el=document.getElementById(id);if(el)el.classList.add('on');
-}
-function closeModal(id){const el=document.getElementById(id);if(el)el.classList.remove('on')}
-
-/* ==================== FILTERS ==================== */
-function setFilter(el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');filter=el.dataset.f;renderEx();
-}
-
-/* ==================== START ==================== */
-document.documentElement.setAttribute('data-theme',theme);
+/* ==================== СТАРТ ==================== */
+document.documentElement.setAttribute('data-theme', theme);
 ensureXpMaps();
 applyDecayOnLoad();
-renderWeek();
-renderMonth();
-renderTrainings();
-renderEx();
-renderChips();
-fillSelects();
-applyAvatar();
-renderThemes();
-renderStats();
-updateXpUI();
-renderTimerPresets();
-renderTimerEditor();
-updateTopProgress();
+renderAll();
 resetTimer();
 
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#fabBtn')&&!e.target.closest('#fabMenu'))closeFabMenu();
+document.addEventListener('click', e => {
+  if(!e.target.closest('#fabBtn') && !e.target.closest('#fabMenu')) closeFabMenu();
+});
+
+// Обработчики для модалок, которые открываются по onclick-атрибутам
+document.getElementById('m-train-list').addEventListener('click', e => {
+  if(e.target.id === 'm-train-list') return;
 });
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
