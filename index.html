@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0e1116">
+<meta name="theme-color" content="#0b0e13">
+<meta name="description" content="АС Fit — адаптивный дневник тренировок и прогресса.">
 <title>АС — Фитнес v2.7</title>
 <style>
 :root{--bg:#0e1116;--bg2:#151a22;--card:#1a2029;--card2:#222a36;--line:#2a3340;--txt:#e8edf4;--mut:#8a97a8;--acc:#ff5b2e;--acc2:#ffb02e;--ok:#2ecc71;--blue:#3aa0ff;--grad:linear-gradient(135deg,var(--acc),var(--acc2))}
@@ -373,6 +374,56 @@ nav.bottom button.on{color:var(--acc)}
 .char-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:8px;font-size:9px;color:var(--mut)}
 .char-legend .lg{display:flex;align-items:center;gap:3px;background:var(--card2);padding:3px 5px;border-radius:6px;border:1px solid var(--line)}
 .char-legend .lg .dot-c{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+
+/* ===== AS FIT responsive redesign v3 ===== */
+:root{--bg:#0b0e13;--bg2:#111720;--card:#151d27;--card2:#1b2633;--line:#293747;--txt:#f2f5f9;--mut:#9aa8b8;--acc:#ff653f;--acc2:#ffc15a;--ok:#45d483;--blue:#64b5ff;--grad:linear-gradient(135deg,#ff653f 0%,#ffb84a 100%);color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:76px; -webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-size:15px;line-height:1.45;padding-bottom:calc(92px + env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% -15%,rgba(255,101,63,.09),transparent 45%),var(--bg)}
+button,input,select,textarea{font:inherit}button{touch-action:manipulation}
+button:focus-visible,[role=button]:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--acc2);outline-offset:3px}
+.app{max-width:1180px;padding:16px 18px calc(112px + env(safe-area-inset-bottom));}
+header.top{margin:-16px -18px 18px;padding:calc(12px + env(safe-area-inset-top)) 20px 12px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:color-mix(in srgb,var(--bg) 88%,transparent);border-bottom:1px solid color-mix(in srgb,var(--line) 65%,transparent);gap:16px}
+.logo{font-size:18px;letter-spacing:.8px}.logo span{font-size:9px;letter-spacing:2px;margin-top:1px}
+.xp-head{max-width:220px;gap:9px}.xp-lvl{width:34px;height:34px;font-size:12px}.xp-rank{font-size:10px}.xp-bar{height:4px;margin-top:4px}
+.theme-switch{width:58px;height:30px}.theme-switch .slider{width:22px;height:22px}.theme-switch[data-mode="dark"] .slider{left:calc(100% - 25px)}
+.card,.progress-card,.char-card{border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 5px 20px rgba(0,0,0,.08)}
+.card h2{font-size:12px;letter-spacing:.9px;margin-bottom:12px}.card h2 .dot{width:6px;height:6px}.card h2 .cnt-badge{font-size:10px;padding:3px 8px}
+.prog-row{gap:10px;margin-bottom:12px}.prog{border-radius:13px;padding:12px 14px}.prog .lbl{font-size:10px}.prog .val{font-size:18px;margin-top:3px}.prog .bar{height:4px;margin-top:8px}
+.cal-head{margin-bottom:10px}.cal-head .title{font-size:15px}.cal-nav{gap:6px}.cal-nav button{width:34px;height:34px;border-radius:10px;font-size:17px}
+.week{gap:6px;margin-top:5px}.day{border-radius:11px;padding:9px 3px 10px;min-height:65px}.day .wd{font-size:10px}.day .num{font-size:16px;margin-top:3px}.day-dots{margin-top:5px;gap:3px}.day-dot{width:4px;height:4px}
+.month-grid{gap:4px}.month-grid .mhead{font-size:10px;padding:5px 0}.mday{border-radius:10px;font-size:13px;min-height:34px}.mday .mday-dot{width:3px;height:3px}
+.train{border-radius:12px;margin-bottom:8px}.train-head{gap:10px;padding:12px}.train-head .time{font-size:13px;min-width:46px}.train-head .name{font-size:14px}.train-head .meta{font-size:11px;margin-top:2px}.train-head .chk,.train-head .run,.train-head .lock{width:34px;height:34px;border-radius:10px;font-size:13px}.train-body{padding:0 12px 12px}.ex-item{padding:10px;border-radius:10px;margin-top:8px;font-size:13px}.ex-item .ex-name{font-size:13px}.ex-item .row2{font-size:11px;gap:5px}.train-actions{gap:8px;margin-top:8px}.train-actions button{padding:9px;border-radius:9px;font-size:12px}
+.btn{padding:11px 14px;border-radius:11px;font-size:13px;min-height:42px}.btn.small{padding:8px 11px;font-size:12px;min-height:36px}.btn-row{gap:8px}.btn.primary{box-shadow:0 5px 14px rgba(255,101,63,.13)}
+.search{padding:10px 13px;border-radius:12px;gap:9px;margin-bottom:12px}.search input{font-size:15px;min-height:26px}.search svg{width:17px;height:17px}
+.tabs{gap:7px;margin-bottom:12px}.tab{padding:9px 14px;border-radius:10px;font-size:12px}.filter-row{gap:8px;margin-bottom:8px}.filter-toggle{padding:12px 14px;border-radius:12px;font-size:13px}.filter-toggle .lbl{font-size:11px}.filter-body{padding:10px;border-radius:12px;margin-bottom:8px}.chip{padding:7px 11px;font-size:11px}.sec-title{font-size:11px;margin:14px 0 8px}
+.ex{padding:10px;border-radius:12px;gap:10px;margin-bottom:7px}.ex .thumb{width:48px;height:48px;border-radius:10px;font-size:18px}.ex .txt{font-size:13px}.ex .txt .sub{font-size:11px}.ex .del{width:32px;height:32px;border-radius:9px;font-size:14px}
+.profile{gap:12px}.avatar-wrap,.avatar{width:64px;height:64px}.avatar{font-size:22px}.avatar-edit{width:26px;height:26px;font-size:12px}.profile .pname{font-size:16px}.profile .pmeta{font-size:12px}
+.fab{width:56px;height:56px;right:max(20px,calc((100vw - 1180px)/2 + 20px));bottom:calc(92px + env(safe-area-inset-bottom));font-size:27px;box-shadow:0 8px 24px rgba(0,0,0,.35)}.fab-menu{right:20px;bottom:calc(158px + env(safe-area-inset-bottom));gap:8px}.fab-menu button{padding:12px 16px;border-radius:12px;font-size:13px}
+nav.bottom{justify-content:center;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg2) 92%,transparent);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--line)}nav.bottom button{max-width:160px;min-height:52px;gap:4px;padding:6px 12px;border-radius:12px;font-size:10px;letter-spacing:.1px}nav.bottom button svg{width:21px;height:21px}nav.bottom button.on{background:color-mix(in srgb,var(--acc) 12%,transparent);color:var(--acc)}
+.modal-bg{padding-top:20px}.modal{max-width:680px;border-radius:24px 24px 0 0;padding:20px 20px calc(22px + env(safe-area-inset-bottom));max-height:92dvh}.modal::before{width:42px;height:4px;margin:-7px auto 14px}.modal h3{font-size:18px;margin-bottom:16px}.field{margin-bottom:12px}.field label{font-size:11px;margin-bottom:6px}.field input,.field select,.field textarea{padding:12px;border-radius:10px;font-size:16px;min-height:44px}.close{padding:13px;border-radius:11px;font-size:14px}.row{gap:10px}
+.weight-input-row input{font-size:16px;min-height:44px}.weight-input-row button{font-size:14px}.weight-stat{padding:10px;border-radius:10px}.weight-stat .l{font-size:10px}.weight-stat .v{font-size:18px}.stats-grid{gap:8px}.mini-stat{padding:12px;border-radius:12px}.mini-stat .v{font-size:20px}.mini-stat .l{font-size:10px}.stat-top{font-size:13px}.stat-bar{height:5px}.skill-item{padding:10px 12px;border-radius:11px}.skill-name{font-size:13px}.skill-lvl{font-size:11px}.skill-meta{font-size:11px}.info-block{padding:12px;border-radius:12px}.info-block h4{font-size:13px}.info-block p{font-size:12px}.exec-header{padding:12px 16px}.exec-header .close-x{width:40px;height:40px;border-radius:10px}.exec-header .title{font-size:15px}.exec-body{padding:18px}.exec-ex-name{font-size:22px}.exec-timer{font-size:68px}.exec-footer{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}.exec-footer .finish-btn{padding:15px;border-radius:12px;font-size:15px}
+.toast{bottom:calc(92px + env(safe-area-inset-bottom));font-size:13px;padding:11px 16px;border-radius:12px}
+@media(min-width:700px){
+ .app{padding-top:20px}.app #v-main{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:0 14px;align-items:start}
+ #v-main>.prog-row{grid-column:1/-1}#v-main>.card:nth-of-type(1){grid-column:1/-1}#v-main>.card:nth-of-type(2){grid-column:1/-1}#v-main>.card:nth-of-type(3){grid-column:1/-1}
+ #v-main>.btn-row{grid-column:1/-1}
+ #v-ex,#v-comps,#v-stat,#v-prof{max-width:900px;margin:0 auto}
+ .month-grid .mday{min-height:44px}
+ nav.bottom{top:78px;bottom:auto;left:calc(50% - 590px);right:auto;width:76px;flex-direction:column;justify-content:flex-start;padding:12px 8px;border:1px solid var(--line);border-radius:18px;gap:8px}
+ nav.bottom button{width:100%;max-width:none;min-height:64px;font-size:10px}
+ body{padding-bottom:30px}.app{padding-left:108px;padding-right:18px}header.top{margin-left:-108px;padding-left:120px}
+ .fab{bottom:24px;right:24px}.fab-menu{bottom:90px;right:24px}
+}
+@media(min-width:1000px){
+ .app{max-width:1320px;padding-left:118px;padding-right:24px}.app #v-main{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:0 18px}
+ header.top{margin-left:-118px;margin-right:-24px;padding-left:130px;padding-right:24px}
+ #v-main>.prog-row{grid-column:1/-1}#v-main>.card:nth-of-type(1){grid-column:1}#v-main>.card:nth-of-type(2){grid-column:2;grid-row:2}#v-main>.card:nth-of-type(3){grid-column:1/-1;grid-row:3}
+ #v-main>.btn-row{grid-column:1/-1}
+ nav.bottom{left:calc(50% - 660px)}
+}
+@media(max-width:380px){.app{padding-left:10px;padding-right:10px}.prog-row{gap:5px}.prog{padding:9px 8px}.prog .val{font-size:15px}.day{min-height:56px;padding-top:7px}.day .wd{font-size:9px}.day .num{font-size:14px}.card{padding:12px}.logo{font-size:16px}.xp-head{max-width:135px}.xp-rank{font-size:9px}nav.bottom{padding-left:4px;padding-right:4px}nav.bottom button{padding:5px 2px;font-size:8px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
