@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
-<title>АС — Фитнес v2.7</title>
+<title>АС — Фитнес v2.8</title>
 <style>
 :root{--bg:#0e1116;--bg2:#151a22;--card:#1a2029;--card2:#222a36;--line:#2a3340;--txt:#e8edf4;--mut:#8a97a8;--acc:#ff5b2e;--acc2:#ffb02e;--ok:#2ecc71;--blue:#3aa0ff;--grad:linear-gradient(135deg,var(--acc),var(--acc2))}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -244,7 +244,6 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .photo-zone{position:relative;border:2px dashed var(--line);border-radius:7px;padding:10px;text-align:center;cursor:pointer;background:var(--card);min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
 .photo-zone .ico{font-size:20px;opacity:.5}
 .photo-zone .hint{font-size:9.5px;color:var(--mut)}
-/* Медиа-галерея */
 .media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:6px}
 .media-item{position:relative;aspect-ratio:1;border-radius:7px;overflow:hidden;background:var(--card2);border:1px solid var(--line);cursor:pointer}
 .media-item img,.media-item video{width:100%;height:100%;object-fit:cover;display:block}
@@ -364,8 +363,6 @@ nav.bottom button.on{color:var(--acc)}
 .metric-tab.on{background:var(--grad);color:var(--bg);border-color:transparent}
 .progress-empty{text-align:center;padding:20px 12px;color:var(--mut);font-size:11px;line-height:1.5}
 .progress-info{font-size:10px;color:var(--mut);text-align:center;margin-top:4px}
-
-/* ========== ПЕРСОНАЖ ========== */
 .char-card{background:linear-gradient(135deg,rgba(255,91,46,.1),var(--card));border:1px solid rgba(255,91,46,.3);border-radius:10px;padding:10px;margin-bottom:8px}
 .char-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--mut);margin-bottom:6px;display:flex;align-items:center;gap:5px}
 .char-svg-wrap{width:100%;max-width:220px;margin:0 auto;display:block}
@@ -373,13 +370,37 @@ nav.bottom button.on{color:var(--acc)}
 .char-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:8px;font-size:9px;color:var(--mut)}
 .char-legend .lg{display:flex;align-items:center;gap:3px;background:var(--card2);padding:3px 5px;border-radius:6px;border:1px solid var(--line)}
 .char-legend .lg .dot-c{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+
+/* ========== ИЕРАРХИЯ ЗОН ========== */
+.zone-tree-group{margin-bottom:4px;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--card);width:100%}
+.zone-tree-head{display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:var(--card2);cursor:pointer;user-select:none}
+.zone-tree-head .name{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+.zone-tree-head .name .emoji{font-size:13px}
+.zone-tree-head .info{display:flex;align-items:center;gap:6px}
+.zone-tree-head .cnt{font-size:9px;color:var(--acc2);font-weight:800;background:rgba(255,176,46,.12);padding:1px 6px;border-radius:10px}
+.zone-tree-head .arrow{font-size:10px;color:var(--mut);transition:.2s}
+.zone-tree-group.open .zone-tree-head .arrow{transform:rotate(180deg)}
+.zone-tree-body{display:none;padding:5px}
+.zone-tree-group.open .zone-tree-body{display:block}
+.zone-tree-body .sub-chips{display:flex;flex-wrap:wrap;gap:3px}
+.zone-tree-body .sub-chip{padding:4px 8px;border-radius:12px;font-size:9.5px;font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:.15s}
+.zone-tree-body .sub-chip.on{background:var(--grad);color:var(--bg);border-color:transparent}
+.zone-tree-body .sub-chip .emoji{font-size:10px}
+.zone-tree-body .add-sub{color:var(--acc2);border-style:dashed;border-color:var(--acc2)}
+.skill-item .subzones{margin-top:5px;padding-left:14px;border-left:1px dashed var(--line);display:flex;flex-direction:column;gap:3px}
+.skill-item .subzone-row{display:flex;justify-content:space-between;align-items:center;font-size:9.5px;padding:2px 0;color:var(--mut)}
+.skill-item .subzone-row .sub-name{display:flex;align-items:center;gap:4px}
+.skill-item .subzone-row .sub-lvl{font-weight:800;color:var(--acc2);font-size:9px}
+.skill-item .subzone-row.weak .sub-name{color:#ff8c00}
+.skill-item .subzone-row.weak .sub-lvl{color:#ff8c00}
+.skill-item .subzone-row .warn{font-size:8px;color:#ff8c00}
 </style>
 </head>
 <body>
 
 <div class="app">
   <header class="top">
-    <div class="logo">АС <span>FIT v2.7</span></div>
+    <div class="logo">АС <span>FIT v2.8</span></div>
     <div class="xp-head" onclick="navTo('v-stat')">
       <div class="xp-lvl" id="headLvl">1</div>
       <div class="xp-info">
@@ -387,7 +408,7 @@ nav.bottom button.on{color:var(--acc)}
         <div class="xp-bar"><i id="headXpBar" style="width:0%"></i></div>
       </div>
     </div>
-    <div class="theme-switch" id="themeSwitch" data-mode="dark" onclick="toggleDayNight()" title="День / Ночь">
+    <div class="theme-switch" id="themeSwitch" data-mode="dark" onclick="toggleDayNight()">
       <span class="icon sun">☀️</span>
       <span class="icon moon">🌙</span>
       <div class="slider"></div>
@@ -640,7 +661,6 @@ nav.bottom button.on{color:var(--acc)}
   <div class="exec-footer" id="execFooter"></div>
 </div>
 
-<!-- Модалки будут в Части 2 -->
 <div class="modal-bg" id="m-weight" onclick="if(event.target===this)closeModal('m-weight')">
   <div class="modal">
     <h3>⚖️ Журнал веса</h3>
@@ -668,13 +688,12 @@ nav.bottom button.on{color:var(--acc)}
       <label>Медиа (несколько фото/видео)</label>
       <div class="media-grid" id="exMediaGrid"></div>
       <input type="file" id="exPhoto" accept="image/*,video/*" multiple style="display:none" onchange="loadExPhotos(this)">
-      <input type="file" id="exVideo" accept="video/*" style="display:none" onchange="loadExVideo(this)">
     </div>
     <div class="field">
       <label>Ссылка на сайт с упражнением</label>
       <input id="exLink" type="url" placeholder="https://...">
     </div>
-    <div class="field"><label>Зоны</label><div class="chips" id="exZonesPick"></div></div>
+    <div class="field"><label>Зоны</label><div class="chips" id="exZonesPick" style="flex-direction:column"></div></div>
     <div class="field"><label>Снаряды</label><div class="chips" id="exGearsPick"></div></div>
     <div class="field"><label>Навыки</label><div class="chips" id="exSkillsPick"></div></div>
     <div class="field">
@@ -810,130 +829,110 @@ nav.bottom button.on{color:var(--acc)}
 
 <div class="modal-bg" id="m-info" onclick="if(event.target===this)closeModal('m-info')">
   <div class="modal">
-    <h3>📖 Добро пожаловать в АС Fit!</h3>
-    <p style="font-size:12px;line-height:1.6;color:var(--txt);margin-bottom:10px">
-      Это не просто трекер тренировок — это твоя личная система прокачки тела и навыков. 
-      Здесь каждая тренировка даёт опыт не только тебе, но и каждому снаряду, зоне тела и навыку отдельно. 
-      А если долго не тренировать что-то — оно медленно «остывает». Как в RPG, только для реальной жизни.
-    </p>
-
+    <h3>📖 Как пользоваться</h3>
     <div class="info-block">
-      <h4>🏋️ Тренировки — твой календарь</h4>
-      <p>Нажми «+ Тренировка» на главном экране. Дай ей имя (например, «Утренняя скакалка»), выбери дни недели — Пн, Ср, Пт — и время. Хочешь привязать к конкретному периоду? Укажи даты «С» и «По». Если оставишь пусто — тренировка будет действовать бессрочно, пока сам не удалишь.</p>
-      <p>Внутри тренировки собираешь упражнения из готовых или из комплексов. Каждое упражнение имеет свою дозировку — подходы, повторы, время, отдых, рабочий вес.</p>
-      <p><b>Хочешь изменить один день?</b> Открой тренировку в конкретный день и нажми ✏️ у упражнения. Правки сохранятся только для этой даты. Остальные дни останутся как были.</p>
+      <h4>🏋️ Тренировки</h4>
+      <p><b>Создать:</b> «+ Тренировка». Название, период (С/По), дни недели, время.</p>
+      <p>Если период пустой — тренировка действует бессрочно.</p>
+      <p>Упражнения: «+ Упражнение» (готовое) или «+ Комплекс» (набор).</p>
+      <p>Правки на день: открой тренировку в конкретный день → ✏️ у упражнения. Сохранится только для этой даты.</p>
     </div>
-
     <div class="info-block">
-      <h4>✅ Как отметить выполнение</h4>
-      <p>Галочка ✓ — тренировка выполнена, начисляется XP. Работает только в день тренировки или в прошлые дни. На будущих днях вместо ✓ и ▶ стоит 🔒 — так задумано, чтобы ты не мог «нарисовать» себе прогресс заранее.</p>
-      <p>Кнопка ▶ запускает полноэкранный режим выполнения с таймером и пошаговым прохождением. В конце нажимаешь «Засчитать тренировку» — она автоматически отмечается выполненной и начисляет XP.</p>
-      <p>Снятие ✓ отнимает XP обратно. Но личные рекорды (PR) не откатываются — если ты однажды поднял 65 кг, ты это сделал, и это остаётся в истории.</p>
+      <h4>✅ Выполнение</h4>
+      <p>✓ — отметить сделанной, начисляется XP. Только сегодня и в прошлое. Будущее под замком 🔒.</p>
+      <p>▶ — запустить с таймером и пошаговым прохождением. В конце «Засчитать» — автоматически ставит ✓.</p>
+      <p>Снятие ✓ отнимает XP. Но PR не откатывается.</p>
     </div>
-
     <div class="info-block">
-      <h4>⭐ X-параметры — когда не знаешь заранее</h4>
-      <p>Бывает, что не хочется фиксировать «3 подхода по 10 повторов» — потому что не знаешь, сколько осилишь. Тогда в настройке дозировки введи вместо числа букву <b>X</b>.</p>
-      <p>Перед началом упражнения в режиме ▶ приложение спросит реальное значение. В карточке тренировки такой параметр показывается оранжевым цветом — чтобы ты сразу видел, где есть свобода.</p>
+      <h4>🎯 Зоны — главные и подзоны</h4>
+      <p>13 главных зон (Плечи, Спина, Грудь и т.д.) и подзоны внутри (Передняя дельта, Широчайшие, Верх груди...).</p>
+      <p><b>XP считается так:</b> уровень главной зоны = свой XP + сумма подзон. В детальной статистике видно, какая подзона отстаёт (⚠).</p>
+      <p><b>Создать подзону:</b> в фильтре «Зоны» раскрой группу → «+ подзона». Или «+ Своя зона» внизу.</p>
+      <p><b>Своя главная зона:</b> в модалке создания выбери «Сделать главной зоной».</p>
     </div>
-
     <div class="info-block">
-      <h4>💪 Упражнения — с душой</h4>
-      <p>Каждое упражнение можно тегировать сразу <b>несколькими зонами</b> (например, приседания — это и «Бедра», и «Ягодицы», и «Кор»), <b>снарядами</b> и <b>навыками</b>. Это влияет на то, какие прокачки получат XP.</p>
-      <p>К упражнению можно прикрепить <b>несколько фото, видео или ссылку на сайт</b> с техникой. Полезно, когда учишь новое движение или возвращаешься к забытому.</p>
-      <p>Три формата XP, которые определяют, как считать опыт:</p>
-      <p>⏱ <b>Время</b> — для планок, скакалки, растяжки. XP = секунды × 0.01</p>
-      <p>🏋️ <b>Вес × повторы</b> — для штанги, гири, гантелей. XP = (вес / масса тела) × 0.01 × повторы</p>
-      <p>💪 <b>Свой вес</b> — для отжиманий, подтягиваний, приседаний без веса. XP = повторы × 0.1</p>
+      <h4>⭐ X-параметры</h4>
+      <p>В дозировке упражнения введи <b>X</b> вместо числа. Перед началом спросит значение.</p>
     </div>
-
     <div class="info-block">
-      <h4>🔁 Комплексы — твой конструктор</h4>
-      <p>Комплекс — это сохранённый набор упражнений с дозировками. Сделал один раз — вставляешь в любую тренировку одним тапом. Полезно, если у тебя есть любимые связки (например, «Круг на всё тело» или «Растяжка перед сном»).</p>
-      <p>В комплексе видно каждое упражнение столбиком — с полной дозировкой. Ничего не спрятано.</p>
+      <h4>💪 Упражнения</h4>
+      <p>Мульти-теги: несколько зон/снарядов/навыков. Медиа: несколько фото + видео + ссылка.</p>
+      <p>⏱ Время: XP = сек × 0.01</p>
+      <p>🏋️ Вес: XP = (вес/масса) × 0.01 × повторы</p>
+      <p>💪 Свой: XP = повторы × 0.1</p>
     </div>
-
     <div class="info-block">
-      <h4>🎒 Зоны, снаряды, навыки</h4>
-      <p>Это три независимые прокачки. У каждой — своя шкала XP и свой уровень. Это и есть главная уникальность приложения: ты качаешь не только «общий уровень», но и каждый инструмент отдельно.</p>
-      <p><b>Зоны</b> — Кардио, Спина, Бедра, Грудь и т.д. Показывают, какие части тела ты тренируешь чаще, а какие забываешь.</p>
-      <p><b>Снаряды</b> — Скакалка, Гиря, Турник и т.д. Хочешь добавить свой (например, «Канат»)? Внутри фильтра «Снаряды» нажми «+ Свой снаряд».</p>
-      <p><b>Навыки</b> — Сила, Координация, Скорость. Прокачиваются отдельно, чтобы ты видел, что у тебя сильнее, а что проседает.</p>
+      <h4>📋 Комплексы</h4>
+      <p>Набор упражнений с дозировками. В тренировке: «+ Комплекс» вставляет весь набор.</p>
     </div>
-
-    <div class="info-block">
-      <h4>🧍 Твой персонаж</h4>
-      <p>В разделе XP сверху — интерактивный силуэт. Он отражает твой реальный прогресс.</p>
-      <p>Качаешь руки — руки становятся толще. Делаешь много кардио — мышцы становятся чётче. Развиваешь ноги — ноги растут. Игнорируешь зону — она бледнеет.</p>
-      <p>Это твой аватар в реальной прокачке. Открывай его, чтобы увидеть прогресс за месяцы без цифр.</p>
-    </div>
-
     <div class="info-block">
       <h4>🏆 Личные рекорды (PR)</h4>
-      <p>Каждый раз, когда отмечаешь тренировку ✓, приложение проверяет, побил ли ты свой личный рекорд. Если да — на экране появляется золотой баннер с поздравлением.</p>
-      <p>Три типа рекордов: <b>максимальный вес</b> (для силовых), <b>максимальные повторы</b>, <b>максимальное время</b> (для планок и выносливости).</p>
-      <p>Смотри все рекорды и графики прогресса в разделе XP → «📈 Прогресс упражнения».</p>
+      <p>При отметке ✓ проверяются рекорды. Побил — золотой баннер. Типы: макс вес / макс повторы / макс время.</p>
+      <p>Смотри все PR и графики в XP → «📈 Прогресс упражнения».</p>
     </div>
-
-    <div class="info-block">
-      <h4>📈 Прогресс упражнения</h4>
-      <p>В разделе XP выбери упражнение — увидишь его личные рекорды и график изменений за последние 20 записей.</p>
-      <p>Переключай метрику: <b>Вес</b> (сколько поднимаешь), <b>Объём</b> (вес × повторы × подходы — показывает общую нагрузку), <b>Повторы</b> (общее количество за тренировку) или <b>Время</b>.</p>
-      <p>Нужно минимум 2 отметки ✓, чтобы график построился.</p>
-    </div>
-
     <div class="info-block">
       <h4>⚖️ Журнал веса</h4>
-      <p>В профиле есть отдельный журнал веса. Записывай утром натощак или вечером — когда удобно. Данные автоматически используются в формуле XP для упражнений с весом.</p>
-      <p>График покажет динамику за недели и месяцы. Если вес меняется — ты увидишь, как это влияет на нагрузку.</p>
+      <p>Профиль → «Открыть журнал». Используется в формуле XP для упражнений с весом.</p>
     </div>
-
     <div class="info-block">
       <h4>⭐ XP и уровни</h4>
-      <p>Опыт копится в атлете, каждом снаряде, каждой зоне, каждом навыке — отдельно.</p>
-      <p>Уровень N → N+1 требует N опыта. С 1-го на 2-й — 1 XP, со 2-го на 3-й — 2 XP, с 3-го на 4-й — 3 XP, и так далее. Чем выше уровень — тем медленнее растёт, но тем круче ощущение.</p>
-      <p>8 рангов: Новичок (1–4) → Любитель (5–9) → Атлет (10–19) → Спортсмен (20–34) → Мастер (35–49) → Ветеран (50–74) → Чемпион (75–99) → Легенда (100+).</p>
+      <p>Уровень N → N+1 требует N XP. 8 рангов: Новичок → Легенда (100+).</p>
+      <p>4 прокачки: атлет + каждый снаряд + каждая зона (с подзонами) + каждый навык.</p>
     </div>
-
     <div class="info-block">
-      <h4>🌙 Распад опыта</h4>
-      <p>Если долго не тренировать снаряд, зону или навык — их опыт постепенно тает. Это не наказание, а мягкое напоминание вернуться к забытому.</p>
-      <p>7–13 дней без тренировки: −0.1% в день</p>
-      <p>14–29 дней: −0.25% в день</p>
-      <p>30–59 дней: −0.5% в день</p>
-      <p>60+ дней: −1% в день</p>
-      <p>Общий XP атлета тает медленнее: 7–13 дней −0.5/день, 14–29 −1/день, 30+ −2/день.</p>
-      <p>До 7 дней простоя ничего не теряется — можно спокойно отдыхать неделю.</p>
+      <h4>🌙 Распад</h4>
+      <p>7-13 дней: −0.1%/день · 14-29: −0.25% · 30-59: −0.5% · 60+: −1%.</p>
     </div>
-
     <div class="info-block">
-      <h4>🎨 Темы и день/ночь</h4>
-      <p>10 цветовых схем — от Neon и Ocean до Carbon и Блокнота. У каждой есть светлый и тёмный вариант, между которыми можно быстро переключаться тумблером ☀️/🌙 в шапке.</p>
-      <p>Выбор сохраняется автоматически. Темы не влияют на данные — просто делают приложение твоим.</p>
+      <h4>🎨 Темы</h4>
+      <p>10 тем, у каждой день/ночь. Тумблер ☀️/🌙 в шапке.</p>
     </div>
-
     <div class="info-block">
-      <h4>💾 Твои данные</h4>
-      <p>Всё хранится <b>локально в твоём браузере</b> (localStorage). Ничего не уходит в интернет. Приложение работает без интернета, как локальный файл.</p>
-      <p>В профиле есть «Обмен»: <b>Экспорт</b> скачивает файл .json со всем содержимым — это твоя страховка. <b>Импорт</b> восстанавливает из файла (спросит: добавить или заменить). <b>Поделиться</b> отправляет файл через системное меню телефона (Telegram, WhatsApp).</p>
-      <p><b>Совет:</b> делай экспорт раз в неделю-две. Если очистишь данные браузера — прогресс пропадёт, а резервная копия его вернёт.</p>
+      <h4>💾 Данные</h4>
+      <p>Всё в localStorage. Экспорт/импорт через профиль. Делай резервную копию.</p>
     </div>
-
-    <button class="close" onclick="closeModal('m-info')">Понятно, спасибо!</button>
+    <button class="close" onclick="closeModal('m-info')">Понятно</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 <script>
-/* ==================== КОНСТАНТЫ ==================== */
+/* ==================== ЗОНЫ С ПОДЗОНАМИ ==================== */
 const DEFAULT_ZONES = [
-  {id:'cardio',name:'Кардио',emoji:'🫁'},{id:'neck',name:'Шея',emoji:'🦒'},
-  {id:'shoulders',name:'Плечи',emoji:'💪'},{id:'back',name:'Спина',emoji:'🔙'},
-  {id:'chest',name:'Грудь',emoji:'🫀'},{id:'glutes',name:'Ягодицы',emoji:'🍑'},
-  {id:'hips',name:'Бедра',emoji:'🦵'},{id:'calves',name:'Голени',emoji:'🦿'},
-  {id:'feet',name:'Стопы',emoji:'🦶'},{id:'hands',name:'Кисти',emoji:'✋'},
-  {id:'abs',name:'Пресс',emoji:'🔥'},{id:'core',name:'Кор',emoji:'🎯'},
-  {id:'stretch',name:'Растяжка',emoji:'🧘'},
+  {id:'cardio', name:'Кардио', emoji:'🫁', isMain:true},
+  {id:'neck', name:'Шея', emoji:'🦒', isMain:true},
+  {id:'shoulders', name:'Плечи', emoji:'💪', isMain:true},
+  {id:'shoulders_front', name:'Передняя дельта', emoji:'💪', parent:'shoulders'},
+  {id:'shoulders_side', name:'Средняя дельта', emoji:'💪', parent:'shoulders'},
+  {id:'shoulders_rear', name:'Задняя дельта', emoji:'💪', parent:'shoulders'},
+  {id:'shoulders_tri', name:'Трицепс', emoji:'💪', parent:'shoulders'},
+  {id:'back', name:'Спина', emoji:'🔙', isMain:true},
+  {id:'back_lat', name:'Широчайшие', emoji:'🔙', parent:'back'},
+  {id:'back_trap', name:'Трапеция', emoji:'🔙', parent:'back'},
+  {id:'back_rhomb', name:'Ромбовидные', emoji:'🔙', parent:'back'},
+  {id:'back_lower', name:'Поясница', emoji:'🔙', parent:'back'},
+  {id:'chest', name:'Грудь', emoji:'🫀', isMain:true},
+  {id:'chest_upper', name:'Верх груди', emoji:'🫀', parent:'chest'},
+  {id:'chest_mid', name:'Середина груди', emoji:'🫀', parent:'chest'},
+  {id:'chest_lower', name:'Низ груди', emoji:'🫀', parent:'chest'},
+  {id:'glutes', name:'Ягодицы', emoji:'🍑', isMain:true},
+  {id:'glutes_max', name:'Большая ягодичная', emoji:'🍑', parent:'glutes'},
+  {id:'glutes_med', name:'Средняя ягодичная', emoji:'🍑', parent:'glutes'},
+  {id:'hips', name:'Бедра', emoji:'🦵', isMain:true},
+  {id:'hips_quad', name:'Квадрицепс', emoji:'🦵', parent:'hips'},
+  {id:'hips_ham', name:'Бицепс бедра', emoji:'🦵', parent:'hips'},
+  {id:'hips_add', name:'Приводящие', emoji:'🦵', parent:'hips'},
+  {id:'calves', name:'Голени', emoji:'🦿', isMain:true},
+  {id:'feet', name:'Стопы', emoji:'🦶', isMain:true},
+  {id:'hands', name:'Кисти', emoji:'✋', isMain:true},
+  {id:'hands_flex', name:'Сгибатели', emoji:'✋', parent:'hands'},
+  {id:'hands_ext', name:'Разгибатели', emoji:'✋', parent:'hands'},
+  {id:'abs', name:'Пресс', emoji:'🔥', isMain:true},
+  {id:'abs_upper', name:'Верхний пресс', emoji:'🔥', parent:'abs'},
+  {id:'abs_lower', name:'Нижний пресс', emoji:'🔥', parent:'abs'},
+  {id:'abs_oblique', name:'Косые', emoji:'🔥', parent:'abs'},
+  {id:'core', name:'Кор', emoji:'🎯', isMain:true},
+  {id:'stretch', name:'Растяжка', emoji:'🧘', isMain:true},
 ];
 const DEFAULT_GEARS = [
   {id:'none',name:'Без снаряда',emoji:'🙌'},{id:'rope',name:'Скакалка',emoji:'🪢'},
@@ -970,7 +969,6 @@ const RANKS = [
   {min:35,name:'Мастер'},{min:50,name:'Ветеран'},{min:75,name:'Чемпион'},{min:100,name:'Легенда'},
 ];
 
-/* ==================== XP ФОРМУЛЫ ==================== */
 function totalXpForLevel(n){ return Math.round(n*(n-1)/2); }
 function computeLevel(xp){
   xp = Math.max(0, xp);
@@ -982,13 +980,11 @@ function computeLevel(xp){
 }
 function rankForLevel(l){ let r = RANKS[0]; for(const x of RANKS) if(l >= x.min) r = x; return r; }
 
-/* ==================== STORE ==================== */
 const store = {
   get(k, d){ try{ const v = localStorage.getItem('as2_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem('as2_'+k, JSON.stringify(v)); }catch(e){ console.error(e); } }
 };
 
-/* ==================== ДАННЫЕ ==================== */
 let zones = store.get('zones', DEFAULT_ZONES);
 let gears = store.get('gears', DEFAULT_GEARS);
 let skills = store.get('skills', DEFAULT_SKILLS);
@@ -1016,7 +1012,6 @@ let editingExId = null, editingTrainId = null, editingCompId = null;
 let tempTrainEx = [], tempCompEx = [];
 let pickTarget = null, exConfigTarget = null;
 
-/* ==================== ДАТЫ ==================== */
 const TODAY = new Date();
 let viewMonth = TODAY.getMonth();
 let viewYear = TODAY.getFullYear();
@@ -1028,7 +1023,6 @@ function sameDay(a,b){ return a.getFullYear()===b.getFullYear()&&a.getMonth()===
 function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
-/* ==================== ТОСТЫ ==================== */
 let toastT;
 function toast(msg){
   const el = document.getElementById('toast'); if(!el) return;
@@ -1048,7 +1042,32 @@ function prFly(exName, display){
   setTimeout(()=>el.remove(), 2500);
 }
 
-/* ==================== XP РАСЧЁТ ==================== */
+/* ==================== ХЕЛПЕРЫ ЗОН ==================== */
+function getMainZones(){ return zones.filter(z => z.isMain); }
+function getSubZones(parentId){ return zones.filter(z => z.parent === parentId); }
+function getZoneById(id){ return zones.find(z => z.id === id); }
+function getZoneParentId(id){ 
+  const z = getZoneById(id); 
+  return z && z.parent ? z.parent : null;
+}
+function getAllDescendants(zoneId){ return zones.filter(z => z.parent === zoneId); }
+function zoneFullName(id){
+  const z = getZoneById(id);
+  if(!z) return id;
+  if(z.parent){
+    const p = getZoneById(z.parent);
+    return p ? p.name + ' › ' + z.name : z.name;
+  }
+  return z.name;
+}
+function getZoneTotalXp(id){
+  const own = (xpZones[id]?.xp || 0);
+  const children = getSubZones(id);
+  const childXp = children.reduce((sum, c) => sum + ((xpZones[c.id]?.xp) || 0), 0);
+  return own + childXp;
+}
+
+/* ==================== XP ФОРМУЛЫ ==================== */
 function xpFromTime(s){ return Math.round(s*0.01*100)/100; }
 function xpFromWeight(w,bw,r){ if(!bw||bw<=0) bw=70; return Math.round((w/bw)*0.01*r*100)/100; }
 function xpFromReps(r){ return Math.round(r*0.1*100)/100; }
@@ -1067,7 +1086,6 @@ function calcTrainXp(tr, override){
   return Math.round(total*100)/100;
 }
 
-/* ==================== XP СИСТЕМА ==================== */
 function ensureXpMaps(){
   if(!xpGears || typeof xpGears!=='object') xpGears = {};
   if(!xpZones || typeof xpZones!=='object') xpZones = {};
@@ -1120,7 +1138,6 @@ function removeXp(amount, label, tr){
   updateXpUI();
 }
 
-/* ==================== DECAY ==================== */
 const DECAY_TIERS = [{days:60,rate:0.01},{days:30,rate:0.005},{days:14,rate:0.0025},{days:7,rate:0.001}];
 function daysBetween(a,b){ return Math.floor((new Date(b)-new Date(a))/86400000); }
 function applyDecayOnLoad(){
@@ -1145,7 +1162,6 @@ function applyDecayOnLoad(){
   if(lost > 0) setTimeout(()=>toast('🌙 Распад: −'+lost.toFixed(2)+' XP'), 1500);
 }
 
-/* ==================== XP UI ==================== */
 function updateXpUI(){
   const info = computeLevel(totalXp);
   const rank = rankForLevel(info.level);
@@ -1170,7 +1186,6 @@ function renderXpLog(){
   }).join('');
 }
 
-/* ==================== ТЕМА ==================== */
 function applyTheme(){
   const theme = THEMES.find(t => t.id === themeId) || THEMES[0];
   let vars = themeMode === 'light' ? theme.day : theme.night;
@@ -1195,10 +1210,7 @@ function applyTheme(){
   renderThemes();
 }
 function setTheme(id){ themeId = id; applyTheme(); }
-function toggleDayNight(){
-  themeMode = themeMode === 'dark' ? 'light' : 'dark';
-  applyTheme();
-}
+function toggleDayNight(){ themeMode = themeMode === 'dark' ? 'light' : 'dark'; applyTheme(); }
 function renderThemes(){
   const el = document.getElementById('themesGrid'); if(!el) return;
   el.innerHTML = THEMES.map(t => {
@@ -1210,11 +1222,9 @@ function renderThemes(){
   }).join('');
 }
 
-/* ==================== FAB ==================== */
 function toggleFabMenu(){ const m=document.getElementById('fabMenu'); if(m) m.classList.toggle('on'); }
 function closeFabMenu(){ const m=document.getElementById('fabMenu'); if(m) m.classList.remove('on'); }
 
-/* ==================== АВАТАР ==================== */
 function loadAvatar(input){
   const file = input.files[0]; if(!file) return;
   const r = new FileReader();
@@ -1252,45 +1262,30 @@ function saveProfile(){
   store.set('profile', profile); applyAvatar(); toast('Сохранено');
 }
 
-/* ==================== МЕДИА УПРАЖНЕНИЯ ==================== */
 function loadExPhotos(input){
   const files = Array.from(input.files || []);
   files.forEach(file => {
     const isVideo = file.type.startsWith('video/');
     const r = new FileReader();
     r.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        if(isVideo){
-          currentExMedia.push({type:'video', data:e.target.result});
-          renderExMediaGrid();
-        } else {
+      if(isVideo){
+        currentExMedia.push({type:'video', data:e.target.result});
+        renderExMediaGrid();
+      } else {
+        const img = new Image();
+        img.onload = () => {
           const maxW = 800; const s = Math.min(1, maxW/img.width);
           const c = document.createElement('canvas'); c.width=img.width*s; c.height=img.height*s;
           c.getContext('2d').drawImage(img,0,0,c.width,c.height);
           currentExMedia.push({type:'image', data:c.toDataURL('image/jpeg', 0.82)});
           renderExMediaGrid();
-        }
-      };
-      if(isVideo){
-        currentExMedia.push({type:'video', data:e.target.result});
-        renderExMediaGrid();
-      } else {
+        };
         img.src = e.target.result;
       }
     };
     r.readAsDataURL(file);
   });
   input.value = '';
-}
-function loadExVideo(input){
-  const file = input.files[0]; if(!file) return;
-  const r = new FileReader();
-  r.onload = e => {
-    currentExMedia.push({type:'video', data:e.target.result});
-    renderExMediaGrid();
-  };
-  r.readAsDataURL(file); input.value = '';
 }
 function renderExMediaGrid(){
   const grid = document.getElementById('exMediaGrid'); if(!grid) return;
@@ -1321,7 +1316,6 @@ function openMediaViewer(idx){
   openModal('m-media');
 }
 
-/* ==================== NAV ==================== */
 function nav(el){
   document.querySelectorAll('nav.bottom button').forEach(b => b.classList.remove('on'));
   el.classList.add('on');
@@ -1334,11 +1328,9 @@ function nav(el){
 }
 function navTo(id){ const b = document.querySelector('nav.bottom button[data-v="'+id+'"]'); if(b) nav(b); }
 
-/* ==================== MODALS ==================== */
 function openModal(id){ const el = document.getElementById(id); if(el) el.classList.add('on'); }
 function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('on'); }
 
-/* ==================== КАЛЕНДАРЬ ==================== */
 function getISOWeek(d){
   const date = new Date(d); date.setHours(0,0,0,0);
   date.setDate(date.getDate()+3-((date.getDay()+6)%7));
@@ -1398,7 +1390,6 @@ function mdayHtml(date, other){
 }
 function shiftMonth(n){ viewMonth+=n; if(viewMonth<0){viewMonth=11;viewYear--} if(viewMonth>11){viewMonth=0;viewYear++} renderMonth(); }
 
-/* ==================== ТРЕНИРОВКИ ==================== */
 function getTrainsForDate(date){
   const dow = date.getDay(); const dIso = isoDate(date);
   return trainings.filter(t => {
@@ -1519,7 +1510,6 @@ function toggleTrain(trainId){
   renderTrainings(); renderWeek(); renderMonth(); renderStats();
 }
 
-/* ==================== РЕДАКТ ДНЯ ==================== */
 function editDayOverride(trainId, exIndex){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   const key = isoDate(selectedDate);
@@ -1556,12 +1546,11 @@ function addExToDay(trainId){
 }
 function editTrainFromDay(trainId){ openTrainModal(trainId); }
 
-/* ==================== УПРАЖНЕНИЯ РЕНДЕР ==================== */
 function renderEx(){
   const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
   let list = exercises.filter(e => e.name.toLowerCase().includes(q));
   if(filter==='zone'){
-    const a = [...document.querySelectorAll('#zones .chip.on')].map(c => c.dataset.val);
+    const a = [...document.querySelectorAll('#zones .chip.on, #zones .sub-chip.on')].map(c => c.dataset.val);
     if(a.length) list = list.filter(e => (e.zones||[]).some(z => a.includes(z)));
   }
   if(filter==='gear'){
@@ -1606,7 +1595,6 @@ function setFilter(el){
   el.classList.add('active'); filter = el.dataset.f; renderEx();
 }
 
-/* ==================== ФИЛЬТРЫ-ПИЛЮЛИ ==================== */
 function toggleFilterBody(id){
   const body = document.getElementById(id+'Body');
   const toggle = document.getElementById(id+'Toggle');
@@ -1614,26 +1602,64 @@ function toggleFilterBody(id){
   const isOpen = body.classList.toggle('on');
   toggle.classList.toggle('open', isOpen);
 }
+
 function renderChips(){
   const z = document.getElementById('zones');
-  if(z) z.innerHTML = zones.map(zn => {
-    const cnt = exercises.filter(e => (e.zones||[]).includes(zn.id)).length;
-    return '<div class="chip" data-val="'+zn.id+'" onclick="toggleChip(this)"><span class="emoji">'+zn.emoji+'</span>'+zn.name+' <span class="cnt">'+cnt+'</span></div>';
-  }).join('');
+  if(z){
+    const mainZones = getMainZones();
+    const activeIds = [...document.querySelectorAll('#zones .chip.on, #zones .sub-chip.on')].map(c => c.dataset.val);
+    z.innerHTML = mainZones.map(mz => {
+      const children = getSubZones(mz.id);
+      const ownCnt = exercises.filter(e => (e.zones||[]).includes(mz.id)).length;
+      const childCnt = children.reduce((sum, c) => sum + exercises.filter(e => (e.zones||[]).includes(c.id)).length, 0);
+      const isActive = activeIds.includes(mz.id);
+      const hasActiveChild = children.some(c => activeIds.includes(c.id));
+      
+      if(!children.length){
+        return '<div class="chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)"><span class="emoji">'+mz.emoji+'</span>'+mz.name+' <span class="cnt">'+ownCnt+'</span></div>';
+      }
+      
+      return '<div class="zone-tree-group'+(hasActiveChild?' open':'')+'" data-zonegroup="'+mz.id+'" style="width:100%">' +
+        '<div class="zone-tree-head" onclick="toggleZoneGroup(\''+mz.id+'\')">' +
+          '<div class="name"><span class="emoji">'+mz.emoji+'</span>'+mz.name+'</div>' +
+          '<div class="info"><span class="cnt">'+(ownCnt+childCnt)+'</span><span class="arrow">▼</span></div>' +
+        '</div>' +
+        '<div class="zone-tree-body">' +
+          '<div class="sub-chips">' +
+            '<div class="sub-chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)"><span class="emoji">'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
+            children.map(c => {
+              const cnt = exercises.filter(e => (e.zones||[]).includes(c.id)).length;
+              const active = activeIds.includes(c.id);
+              return '<div class="sub-chip '+(active?'on':'')+'" data-val="'+c.id+'" onclick="toggleChip(this)"><span class="emoji">'+c.emoji+'</span>'+c.name+' <span style="opacity:.6">'+cnt+'</span></div>';
+            }).join('') +
+            '<div class="sub-chip add-sub" onclick="addCustomZone(\''+mz.id+'\')">+ подзона</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('') +
+    '<button class="btn small full" style="margin-top:4px" onclick="addCustomZone()">+ Своя зона</button>';
+  }
+  
   const g = document.getElementById('gears');
   if(g) g.innerHTML = gears.map(gn => {
     const cnt = exercises.filter(e => (e.gears||[]).includes(gn.id)).length;
     return '<div class="chip" data-val="'+gn.id+'" onclick="toggleChip(this)"><span class="emoji">'+gn.emoji+'</span>'+gn.name+' <span class="cnt">'+cnt+'</span></div>';
   }).join('');
+
   const s = document.getElementById('skills');
   if(s) s.innerHTML = skills.map(sk => {
     const cnt = exercises.filter(e => (e.skills||[]).includes(sk.id)).length;
     return '<div class="chip" data-val="'+sk.id+'" onclick="toggleChip(this)"><span class="emoji">'+sk.emoji+'</span>'+sk.name+' <span class="cnt">'+cnt+'</span></div>';
   }).join('');
+  
   updateFilterCounters();
 }
+function toggleZoneGroup(zoneId){
+  const group = document.querySelector(`.zone-tree-group[data-zonegroup="${zoneId}"]`);
+  if(group) group.classList.toggle('open');
+}
 function updateFilterCounters(){
-  const z = document.querySelectorAll('#zones .chip.on').length;
+  const z = document.querySelectorAll('#zones .chip.on, #zones .sub-chip.on').length;
   const g = document.querySelectorAll('#gears .chip.on').length;
   const s = document.querySelectorAll('#skills .chip.on').length;
   const zc = document.getElementById('zonesCount'); if(zc) zc.textContent = z;
@@ -1642,7 +1668,97 @@ function updateFilterCounters(){
 }
 function toggleChip(el){ el.classList.toggle('on'); updateFilterCounters(); renderEx(); }
 
-/* ==================== УПРАЖНЕНИЕ МОДАЛКА ==================== */
+function renderZoneTree(selectedIds){
+  const el = document.getElementById('exZonesPick'); if(!el) return;
+  const mainZones = getMainZones();
+  
+  el.innerHTML = mainZones.map(mz => {
+    const children = getSubZones(mz.id);
+    const mainOn = selectedIds.includes(mz.id);
+    
+    if(!children.length){
+      return '<div class="chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span class="emoji">'+mz.emoji+'</span>'+mz.name+'</div>';
+    }
+    
+    const hasActiveChild = children.some(c => selectedIds.includes(c.id));
+    
+    return '<div class="zone-tree-group'+(hasActiveChild||mainOn?' open':'')+'" style="width:100%;margin-bottom:3px">' +
+      '<div class="zone-tree-head" onclick="this.parentElement.classList.toggle(\'open\')">' +
+        '<div class="name"><span class="emoji">'+mz.emoji+'</span>'+mz.name+'</div>' +
+        '<div class="info"><span class="arrow">▼</span></div>' +
+      '</div>' +
+      '<div class="zone-tree-body">' +
+        '<div class="sub-chips">' +
+          '<div class="sub-chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span class="emoji">'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
+          children.map(c => {
+            const on = selectedIds.includes(c.id);
+            return '<div class="sub-chip '+(on?'on':'')+'" data-id="'+c.id+'" onclick="this.classList.toggle(\'on\')"><span class="emoji">'+c.emoji+'</span>'+c.name+'</div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+function getZonePick(){
+  const el = document.getElementById('exZonesPick'); if(!el) return [];
+  return [...el.querySelectorAll('.sub-chip.on, .chip.on')].map(c => c.dataset.id);
+}
+
+function addCustomZone(parentId){
+  const mainZones = getMainZones();
+  const presetParent = parentId || '';
+  const parentOptions = mainZones.map(mz => 
+    '<option value="'+mz.id+'"'+(mz.id===presetParent?' selected':'')+'>'+mz.emoji+' '+mz.name+' (подзона)</option>'
+  ).join('');
+  
+  const modalBody = document.querySelector('#m-new-gear .modal');
+  if(modalBody){
+    modalBody.innerHTML = 
+      '<h3>Новая зона</h3>' +
+      '<div class="field"><label>Название</label><input id="ngName" placeholder="Например, Трицепс"></div>' +
+      '<div class="field"><label>Родительская зона</label>' +
+        '<select id="ngParent">' +
+          '<option value="">— Сделать главной зоной —</option>' +
+          parentOptions +
+        '</select>' +
+      '</div>' +
+      '<div class="field">' +
+        '<label>Значок</label>' +
+        '<input id="ngEmoji" maxlength="4" placeholder="💪" style="font-size:18px;text-align:center">' +
+        '<div class="emoji-picker" id="emojiPicker"></div>' +
+      '</div>' +
+      '<button class="btn primary full" onclick="saveCustomZone()">Добавить</button>' +
+      '<button class="close" onclick="closeModal(\'m-new-gear\')">Отмена</button>';
+  }
+  
+  const picker = document.getElementById('emojiPicker');
+  if(picker) picker.innerHTML = EMOJI_PRESETS.map(e => '<span onclick="pickEmoji(this,\''+e+'\')">'+e+'</span>').join('');
+  
+  openModal('m-new-gear');
+}
+function saveCustomZone(){
+  const name = document.getElementById('ngName').value.trim();
+  const emoji = document.getElementById('ngEmoji').value.trim() || '💪';
+  const parent = document.getElementById('ngParent').value || '';
+  
+  if(!name){ toast('Введи название'); return; }
+  
+  const id = 'custom_zone_' + uid();
+  const newZone = {id, name, emoji};
+  if(parent){
+    newZone.parent = parent;
+  } else {
+    newZone.isMain = true;
+  }
+  
+  zones.push(newZone);
+  store.set('zones', zones);
+  ensureXpMaps();
+  closeModal('m-new-gear');
+  renderChips(); renderStats(); renderSkillXp(); renderCharacter();
+  toast('Зона «'+name+'» добавлена');
+}
+
 function openExModal(exId){
   editingExId = exId || null;
   const el = (id) => document.getElementById(id);
@@ -1654,7 +1770,7 @@ function openExModal(exId){
   el('exLink').value = e ? (e.link||'') : '';
   currentExMedia = e && e.media ? JSON.parse(JSON.stringify(e.media)) : [];
   renderExMediaGrid();
-  renderMultiPick('exZonesPick', zones, e ? (e.zones||[]) : []);
+  renderZoneTree(e ? (e.zones||[]) : []);
   renderMultiPick('exGearsPick', gears, e ? (e.gears||[]) : []);
   renderMultiPick('exSkillsPick', skills, e ? (e.skills||[]) : []);
   openModal('m-ex');
@@ -1678,7 +1794,7 @@ function saveEx(){
     name,
     media: currentExMedia.slice(),
     link: document.getElementById('exLink').value.trim(),
-    zones: getMultiPick('exZonesPick'),
+    zones: getZonePick(),
     gears: getMultiPick('exGearsPick'),
     skills: getMultiPick('exSkillsPick'),
     format: document.getElementById('exFormat').value,
@@ -1695,7 +1811,6 @@ function saveEx(){
   editingExId = null;
 }
 
-/* ==================== ТРЕНИРОВКА МОДАЛКА ==================== */
 function openTrainModal(trainId){
   editingTrainId = trainId || null;
   const el = (id) => document.getElementById(id);
@@ -1762,7 +1877,6 @@ function saveTrain(){
   editingTrainId = null;
 }
 
-/* ==================== КОМПЛЕКС МОДАЛКА ==================== */
 function openCompModal(compId){
   editingCompId = compId || null;
   const el = (id) => document.getElementById(id);
@@ -1805,7 +1919,6 @@ function saveComp(){
   editingCompId = null;
 }
 
-/* ==================== ВЫБОР УПРАЖНЕНИЙ ==================== */
 function openPickEx(target){
   pickTarget = target;
   const el = document.getElementById('pickTitle');
@@ -1846,7 +1959,6 @@ function pickExercise(exId){
   else if(pickTarget === 'train') openExConfig('train', tempTrainEx.length-1);
 }
 
-/* ==================== НАСТРОЙКА ==================== */
 function openExConfig(target, index){
   const list = target === 'comp' ? tempCompEx : tempTrainEx;
   const e = list[index]; if(!e) return;
@@ -1897,7 +2009,6 @@ function saveExConfig(){
   closeModal('m-ex-config'); toast('Сохранено');
 }
 
-/* ==================== ВЫБОР КОМПЛЕКСА ==================== */
 function openPickComp(target){
   pickTarget = target;
   const el = document.getElementById('pickCompList'); if(!el) return;
@@ -1918,7 +2029,6 @@ function pickComplex(compId){
   closeModal('m-pick-comp'); toast('Добавлено');
 }
 
-/* ==================== ШАБЛОНЫ ==================== */
 function openTrainList(){ renderTrainTemplates(); openModal('m-train-list'); }
 function renderTrainTemplates(){
   const el = document.getElementById('trainTemplates'); if(!el) return;
@@ -1943,7 +2053,6 @@ function delTrain(id){
   toast('Удалено');
 }
 
-/* ==================== КОМПЛЕКСЫ С ПОЛНЫМ СПИСКОМ ==================== */
 function renderCompsTab(){
   const el = document.getElementById('compsList'); if(!el) return;
   const cnt = document.getElementById('compsCount'); if(cnt) cnt.textContent = complexes.length;
@@ -1991,7 +2100,6 @@ function delCompFromTab(id){
   renderCompsTab(); renderStats();
   toast('Удалено');
 }
-
 function escapeHtml(s){
   return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
@@ -2003,24 +2111,18 @@ function formatTimeSec(s){
   if(m === 0) return s + ' сек';
   return m + ' мин ' + (sec > 0 ? sec + ' с' : '');
 }
-
 function checkNewPRs(trainExercises, dateStr){
   const newPRs = [];
-  
   trainExercises.forEach(item => {
     const realEx = exercises.find(e => e.id === item.exId);
     if(!realEx) return;
-    
     const pr = prs[item.exId] || {};
     const isX = (v) => String(v).trim().toUpperCase() === 'X';
-    
     if(isX(item.weight) || isX(item.reps) || isX(item.time)) return;
-    
     if(realEx.format === 'weight'){
       const w = +item.weight || 0;
       const r = +item.reps || 0;
       if(w <= 0 && r <= 0) return;
-      
       if(w > (pr.weight?.value || 0)){
         pr.weight = { value: w, reps: r, date: dateStr };
         newPRs.push({ exName: realEx.name, display: w + ' кг × ' + r });
@@ -2041,50 +2143,35 @@ function checkNewPRs(trainExercises, dateStr){
         newPRs.push({ exName: realEx.name, display: r + ' повторов' });
       }
     }
-    
     prs[item.exId] = pr;
   });
-  
   store.set('prs', prs);
   return newPRs;
 }
 
 function getExerciseHistory(exId){
   const history = [];
-  
   Object.keys(completions).forEach(dateStr => {
     Object.keys(completions[dateStr]).forEach(trainId => {
       const comp = completions[dateStr][trainId];
       if(!comp.done || !comp.exercises) return;
-      
       const item = comp.exercises.find(e => e.exId === exId);
       if(!item) return;
-      
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
       if(isX(item.weight) || isX(item.reps) || isX(item.time)) return;
-      
       const w = +item.weight || 0;
       const r = +item.reps || 0;
       const s = +item.sets || 1;
       const t = +item.time || 0;
-      
       history.push({
-        date: dateStr,
-        weight: w,
-        reps: r,
-        sets: s,
-        time: t,
-        volume: w * r * s,
-        totalReps: r * s,
-        maxReps: r
+        date: dateStr, weight: w, reps: r, sets: s, time: t,
+        volume: w * r * s, totalReps: r * s, maxReps: r
       });
     });
   });
-  
   return history.sort((a,b) => a.date.localeCompare(b.date));
 }
 
-/* ==================== ГРАФИК ПРОГРЕССА ==================== */
 function setProgressMetric(metric){
   progressMetric = metric;
   document.querySelectorAll('#progress-metric-tabs .metric-tab').forEach(t => {
@@ -2092,11 +2179,9 @@ function setProgressMetric(metric){
   });
   renderProgressChart();
 }
-
 function populateProgressSelect(){
   const sel = document.getElementById('progress-ex-select');
   if(!sel) return;
-  
   const withHistory = new Set();
   Object.keys(completions).forEach(dateStr => {
     Object.keys(completions[dateStr]).forEach(trainId => {
@@ -2106,21 +2191,14 @@ function populateProgressSelect(){
       }
     });
   });
-  
   const currentVal = sel.value;
   const list = exercises.filter(e => withHistory.has(e.id));
-  
   sel.innerHTML = '<option value="">— выбери упражнение —</option>' +
     (list.length 
       ? list.map(e => '<option value="'+e.id+'">'+escapeHtml(e.name)+'</option>').join('')
-      : '<option disabled>Нет выполненных упражнений</option>'
-    );
-  
-  if(currentVal && list.find(e => e.id === currentVal)){
-    sel.value = currentVal;
-  }
+      : '<option disabled>Нет выполненных упражнений</option>');
+  if(currentVal && list.find(e => e.id === currentVal)) sel.value = currentVal;
 }
-
 function renderProgressChart(){
   const sel = document.getElementById('progress-ex-select');
   if(!sel) return;
@@ -2128,7 +2206,6 @@ function renderProgressChart(){
   const prsEl = document.getElementById('progress-prs');
   const infoEl = document.getElementById('progress-info');
   const canvas = document.getElementById('progress-chart');
-  
   if(!exId){
     if(prsEl) prsEl.innerHTML = '';
     if(infoEl) infoEl.textContent = 'Выбери упражнение из списка';
@@ -2144,32 +2221,24 @@ function renderProgressChart(){
     }
     return;
   }
-  
   const ex = exercises.find(e => e.id === exId);
   if(!ex) return;
-  
   const pr = prs[exId];
   if(prsEl){
     if(!pr || (!pr.weight && !pr.reps && !pr.time)){
-      prsEl.innerHTML = '<div class="progress-empty">Пока рекордов нет. Отметь тренировку с этим упражнением ✓</div>';
+      prsEl.innerHTML = '<div class="progress-empty">Пока рекордов нет</div>';
     } else {
       const items = [];
-      if(pr.weight){
-        items.push('<div class="pr-item"><div><div class="lbl">🏆 Макс. вес</div><div class="date">'+pr.weight.date+'</div></div><div class="val">'+pr.weight.value+' кг × '+pr.weight.reps+'</div></div>');
-      }
+      if(pr.weight) items.push('<div class="pr-item"><div><div class="lbl">🏆 Макс. вес</div><div class="date">'+pr.weight.date+'</div></div><div class="val">'+pr.weight.value+' кг × '+pr.weight.reps+'</div></div>');
       if(pr.reps){
         const disp = pr.reps.weight > 0 ? pr.reps.value+' × '+pr.reps.weight+' кг' : pr.reps.value+' повторов';
         items.push('<div class="pr-item"><div><div class="lbl">🏆 Макс. повторы</div><div class="date">'+pr.reps.date+'</div></div><div class="val">'+disp+'</div></div>');
       }
-      if(pr.time){
-        items.push('<div class="pr-item"><div><div class="lbl">🏆 Макс. время</div><div class="date">'+pr.time.date+'</div></div><div class="val">'+formatTimeSec(pr.time.value)+'</div></div>');
-      }
+      if(pr.time) items.push('<div class="pr-item"><div><div class="lbl">🏆 Макс. время</div><div class="date">'+pr.time.date+'</div></div><div class="val">'+formatTimeSec(pr.time.value)+'</div></div>');
       prsEl.innerHTML = '<div class="pr-list">'+items.join('')+'</div>';
     }
   }
-  
   const history = getExerciseHistory(exId);
-  
   if(infoEl){
     if(history.length < 2){
       infoEl.textContent = 'Нужно минимум 2 записи для графика. Сейчас: ' + history.length;
@@ -2177,11 +2246,9 @@ function renderProgressChart(){
       infoEl.textContent = '📊 Записей: ' + history.length + ' · ' + history[0].date + ' → ' + history[history.length-1].date;
     }
   }
-  
   if(!canvas) return;
   drawProgressChart(canvas, history, progressMetric, ex);
 }
-
 function drawProgressChart(canvas, history, metric, ex){
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
@@ -2191,9 +2258,7 @@ function drawProgressChart(canvas, history, metric, ex){
   const accColor = cs.getPropertyValue('--acc').trim() || '#f80';
   const acc2Color = cs.getPropertyValue('--acc2').trim() || '#fb0';
   const mutColor = cs.getPropertyValue('--mut').trim() || '#888';
-  
   ctx.clearRect(0,0,W,H);
-  
   if(history.length < 2){
     ctx.fillStyle = mutColor;
     ctx.font = '15px sans-serif';
@@ -2201,27 +2266,22 @@ function drawProgressChart(canvas, history, metric, ex){
     ctx.fillText('Нужно минимум 2 записи', W/2, H/2);
     return;
   }
-  
   let values, yLabel, formatVal;
   if(metric === 'weight'){ values = history.map(h => h.weight); yLabel = 'Вес, кг'; formatVal = v => v.toFixed(1) + ' кг'; }
   else if(metric === 'volume'){ values = history.map(h => h.volume); yLabel = 'Объём (кг × повт)'; formatVal = v => Math.round(v) + ' кг'; }
   else if(metric === 'reps'){ values = history.map(h => h.totalReps || h.maxReps); yLabel = 'Повторы'; formatVal = v => Math.round(v); }
   else if(metric === 'time'){ values = history.map(h => h.time); yLabel = 'Время, сек'; formatVal = v => Math.round(v) + ' с'; }
-  
   const maxPoints = 20;
   let points = history.map((h, i) => ({ date: h.date, value: values[i] }));
   if(points.length > maxPoints) points = points.slice(-maxPoints);
-  
   const padL = 55, padR = 20, padT = 20, padB = 35;
   const plotW = W - padL - padR;
   const plotH = H - padT - padB;
-  
   const vals = points.map(p => p.value);
   let minV = Math.min(...vals);
   let maxV = Math.max(...vals);
   if(minV === maxV){ minV -= 1; maxV += 1; }
   const rangeV = maxV - minV;
-  
   ctx.strokeStyle = lineColor;
   ctx.lineWidth = 1;
   ctx.fillStyle = mutColor;
@@ -2233,13 +2293,10 @@ function drawProgressChart(canvas, history, metric, ex){
     ctx.moveTo(padL, y);
     ctx.lineTo(W - padR, y);
     ctx.stroke();
-    const v = maxV - (rangeV/4) * i;
-    ctx.fillText(formatVal(v), padL - 6, y + 4);
+    ctx.fillText(formatVal(maxV - (rangeV/4) * i), padL - 6, y + 4);
   }
-  
   const xs = points.map((_, i) => points.length === 1 ? padL + plotW/2 : padL + (plotW / (points.length - 1)) * i);
   const ys = points.map(p => padT + plotH - ((p.value - minV) / rangeV) * plotH);
-  
   const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
   grad.addColorStop(0, accColor + '88');
   grad.addColorStop(1, accColor + '00');
@@ -2250,14 +2307,12 @@ function drawProgressChart(canvas, history, metric, ex){
   ctx.lineTo(xs[xs.length-1], padT + plotH);
   ctx.closePath();
   ctx.fill();
-  
   ctx.strokeStyle = accColor;
   ctx.lineWidth = 2.5;
   ctx.lineJoin = 'round';
   ctx.beginPath();
   xs.forEach((x, i) => { if(i === 0) ctx.moveTo(x, ys[i]); else ctx.lineTo(x, ys[i]); });
   ctx.stroke();
-  
   xs.forEach((x, i) => {
     ctx.beginPath();
     ctx.arc(x, ys[i], 4, 0, Math.PI*2);
@@ -2267,17 +2322,14 @@ function drawProgressChart(canvas, history, metric, ex){
     ctx.lineWidth = 2;
     ctx.stroke();
   });
-  
   ctx.fillStyle = mutColor;
   ctx.font = '10px sans-serif';
   ctx.textAlign = 'center';
   const labelIndices = points.length <= 3 ? points.map((_, i) => i) : [0, Math.floor(points.length/2), points.length-1];
   labelIndices.forEach(i => {
     const d = new Date(points[i].date);
-    const lbl = d.getDate() + '.' + String(d.getMonth()+1).padStart(2,'0');
-    ctx.fillText(lbl, xs[i], H - 12);
+    ctx.fillText(d.getDate() + '.' + String(d.getMonth()+1).padStart(2,'0'), xs[i], H - 12);
   });
-  
   ctx.save();
   ctx.translate(14, padT + plotH/2);
   ctx.rotate(-Math.PI/2);
@@ -2292,112 +2344,48 @@ function drawProgressChart(canvas, history, metric, ex){
 function renderCharacter(){
   const container = document.getElementById('charContainer');
   if(!container) return;
-  
-  // Уровни зон (нормализованные 0-100 для отрисовки)
   const getZoneLvl = (id) => {
-    const obj = xpZones[id];
-    if(!obj) return 0;
-    const lvl = computeLevel(obj.xp).level;
-    return Math.min(100, lvl * 5); // 20 уровней = максимум для персонажа
+    const totalXp = getZoneTotalXp(id);
+    const lvl = computeLevel(totalXp).level;
+    return Math.min(100, lvl * 5);
   };
-  
   const arms = (getZoneLvl('shoulders') + getZoneLvl('back')) / 2;
   const chest = getZoneLvl('chest');
   const legs = (getZoneLvl('hips') + getZoneLvl('glutes')) / 2;
   const core = getZoneLvl('abs');
   const cardio = getZoneLvl('cardio');
-  
-  // Размеры (базовые + модификаторы от прокачки)
   const baseArmW = 12;
-  const armW = baseArmW + (arms / 100) * 12; // 12-24
-  const legW = 18 + (legs / 100) * 14; // 18-32
-  const chestW = 40 + (chest / 100) * 20; // 40-60
+  const armW = baseArmW + (arms / 100) * 12;
+  const legW = 18 + (legs / 100) * 14;
+  const chestW = 40 + (chest / 100) * 20;
   const torsoW = 50 + (core / 100) * 15;
-  
-  // Чёткость (cardio) — более контрастные линии
   const strokeColor = 'var(--acc)';
   const lineOpacity = 0.3 + (cardio / 100) * 0.7;
-  
-  // Цвета по уровню
   const armColor = arms > 60 ? 'var(--acc)' : arms > 30 ? 'var(--acc2)' : 'var(--mut)';
   const legColor = legs > 60 ? 'var(--acc)' : legs > 30 ? 'var(--acc2)' : 'var(--mut)';
   const chestColor = chest > 60 ? 'var(--acc)' : chest > 30 ? 'var(--acc2)' : 'var(--mut)';
   const coreColor = core > 60 ? 'var(--acc)' : core > 30 ? 'var(--acc2)' : 'var(--mut)';
-  
   const svg = `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-    <!-- Голова -->
     <circle cx="100" cy="45" r="22" fill="${chestColor}" opacity="${lineOpacity}" stroke="${strokeColor}" stroke-width="2"/>
-    <!-- Глаза -->
     <circle cx="92" cy="42" r="2" fill="#fff" opacity="${0.5 + chest/200}"/>
     <circle cx="108" cy="42" r="2" fill="#fff" opacity="${0.5 + chest/200}"/>
-    
-    <!-- Шея -->
     <rect x="90" y="65" width="20" height="15" fill="${chestColor}" opacity="${lineOpacity * 0.7}"/>
-    
-    <!-- Торс / грудь -->
-    <path d="M 60 80 Q 100 70 140 80 L 145 140 Q 100 155 55 140 Z" 
-          fill="${chestColor}" opacity="${lineOpacity * 0.8}" 
-          stroke="${strokeColor}" stroke-width="2"/>
-    
-    <!-- Кор / пресс -->
-    <rect x="${100 - torsoW/2}" y="140" width="${torsoW}" height="50" 
-          fill="${coreColor}" opacity="${lineOpacity * 0.7}" 
-          stroke="${strokeColor}" stroke-width="1.5" rx="8"/>
-    <!-- Линии пресса -->
+    <path d="M 60 80 Q 100 70 140 80 L 145 140 Q 100 155 55 140 Z" fill="${chestColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
+    <rect x="${100 - torsoW/2}" y="140" width="${torsoW}" height="50" fill="${coreColor}" opacity="${lineOpacity * 0.7}" stroke="${strokeColor}" stroke-width="1.5" rx="8"/>
     <line x1="100" y1="145" x2="100" y2="185" stroke="${strokeColor}" stroke-width="1.5" opacity="${lineOpacity * 0.5}"/>
     <line x1="${100 - torsoW/2 + 8}" y1="155" x2="${100 + torsoW/2 - 8}" y2="155" stroke="${strokeColor}" stroke-width="1" opacity="${lineOpacity * 0.4}"/>
     <line x1="${100 - torsoW/2 + 8}" y1="170" x2="${100 + torsoW/2 - 8}" y2="170" stroke="${strokeColor}" stroke-width="1" opacity="${lineOpacity * 0.4}"/>
-    
-    <!-- Руки -->
-    <!-- Левая -->
-    <path d="M 60 85 Q 30 110 ${30 - (armW-12)/2} 160 L ${30 - (armW-12)/2 + armW} 165 Q 35 130 55 110 Z" 
-          fill="${armColor}" opacity="${lineOpacity * 0.8}" 
-          stroke="${strokeColor}" stroke-width="2"/>
-    <!-- Правая -->
-    <path d="M 140 85 Q 170 110 ${170 + (armW-12)/2} 160 L ${170 + (armW-12)/2 - armW} 165 Q 165 130 145 110 Z" 
-          fill="${armColor}" opacity="${lineOpacity * 0.8}" 
-          stroke="${strokeColor}" stroke-width="2"/>
-    
-    <!-- Бицепсы (доп. круги если руки прокачаны) -->
-    ${arms > 40 ? `
-      <ellipse cx="${24 + (armW-12)/2}" cy="140" rx="${armW/2}" ry="10" 
-               fill="${armColor}" opacity="${lineOpacity * 0.6}"/>
-      <ellipse cx="${176 - (armW-12)/2}" cy="140" rx="${armW/2}" ry="10" 
-               fill="${armColor}" opacity="${lineOpacity * 0.6}"/>
-    ` : ''}
-    
-    <!-- Ноги -->
-    <!-- Левая -->
-    <path d="M 75 190 L 65 270 L ${65 + legW - 18} 275 L ${75 + legW - 18} 195 Z" 
-          fill="${legColor}" opacity="${lineOpacity * 0.8}" 
-          stroke="${strokeColor}" stroke-width="2"/>
-    <!-- Правая -->
-    <path d="M 125 190 L 135 270 L ${135 - legW + 18} 275 L ${125 - legW + 18} 195 Z" 
-          fill="${legColor}" opacity="${lineOpacity * 0.8}" 
-          stroke="${strokeColor}" stroke-width="2"/>
-    
-    <!-- Квадрицепсы (доп.) -->
-    ${legs > 40 ? `
-      <ellipse cx="70" cy="225" rx="${legW/2.5}" ry="18" 
-               fill="${legColor}" opacity="${lineOpacity * 0.5}"/>
-      <ellipse cx="130" cy="225" rx="${legW/2.5}" ry="18" 
-               fill="${legColor}" opacity="${lineOpacity * 0.5}"/>
-    ` : ''}
-    
-    <!-- Ступни -->
+    <path d="M 60 85 Q 30 110 ${30 - (armW-12)/2} 160 L ${30 - (armW-12)/2 + armW} 165 Q 35 130 55 110 Z" fill="${armColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
+    <path d="M 140 85 Q 170 110 ${170 + (armW-12)/2} 160 L ${170 + (armW-12)/2 - armW} 165 Q 165 130 145 110 Z" fill="${armColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
+    ${arms > 40 ? `<ellipse cx="${24 + (armW-12)/2}" cy="140" rx="${armW/2}" ry="10" fill="${armColor}" opacity="${lineOpacity * 0.6}"/><ellipse cx="${176 - (armW-12)/2}" cy="140" rx="${armW/2}" ry="10" fill="${armColor}" opacity="${lineOpacity * 0.6}"/>` : ''}
+    <path d="M 75 190 L 65 270 L ${65 + legW - 18} 275 L ${75 + legW - 18} 195 Z" fill="${legColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
+    <path d="M 125 190 L 135 270 L ${135 - legW + 18} 275 L ${125 - legW + 18} 195 Z" fill="${legColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
+    ${legs > 40 ? `<ellipse cx="70" cy="225" rx="${legW/2.5}" ry="18" fill="${legColor}" opacity="${lineOpacity * 0.5}"/><ellipse cx="130" cy="225" rx="${legW/2.5}" ry="18" fill="${legColor}" opacity="${lineOpacity * 0.5}"/>` : ''}
     <ellipse cx="${65 + legW/2 - 9}" cy="278" rx="10" ry="4" fill="${legColor}" opacity="${lineOpacity * 0.6}"/>
     <ellipse cx="${135 - legW/2 + 9}" cy="278" rx="10" ry="4" fill="${legColor}" opacity="${lineOpacity * 0.6}"/>
-    
-    <!-- Аура кардио (пульсирующие кольца) -->
-    ${cardio > 30 ? `
-      <circle cx="100" cy="150" r="${80 + cardio/5}" 
-              fill="none" stroke="var(--acc)" stroke-width="1" opacity="${cardio/200}" stroke-dasharray="4,4"/>
-    ` : ''}
+    ${cardio > 30 ? `<circle cx="100" cy="150" r="${80 + cardio/5}" fill="none" stroke="var(--acc)" stroke-width="1" opacity="${cardio/200}" stroke-dasharray="4,4"/>` : ''}
   </svg>`;
-  
   container.innerHTML = svg;
-  
-  // Легенда
   const legend = document.getElementById('charLegend');
   if(legend){
     const items = [
@@ -2556,12 +2544,11 @@ function decayStatus(days){
   return {label:days+' дн · −1%', cls:'bad2'};
 }
 function renderSkillXp(){
-  const cfgs = [
+  const flatConfigs = [
     {containerId:'skillGears', map:xpGears, entities:gears},
-    {containerId:'skillZones', map:xpZones, entities:zones},
     {containerId:'skillSkills', map:xpSkills, entities:skills},
   ];
-  cfgs.forEach(cfg => {
+  flatConfigs.forEach(cfg => {
     const el = document.getElementById(cfg.containerId); if(!el) return;
     const items = Object.entries(cfg.map).map(([id, d]) => {
       const ent = cfg.entities.find(x => x.id === id);
@@ -2575,11 +2562,59 @@ function renderSkillXp(){
       return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span class="skill-icon">'+info.icon+'</span><span>'+item.name+'</span></div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.xp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div></div>';
     }).join('');
   });
+
+  const zEl = document.getElementById('skillZones');
+  if(!zEl) return;
+  const mainZones = getMainZones();
+  const items = mainZones.map(mz => {
+    const children = getSubZones(mz.id);
+    const ownXp = (xpZones[mz.id]?.xp || 0);
+    const childrenXp = children.reduce((sum, c) => sum + ((xpZones[c.id]?.xp) || 0), 0);
+    const totalXp = ownXp + childrenXp;
+    const lastTrained = [mz.id, ...children.map(c => c.id)].reduce((last, id) => {
+      const t = xpZones[id]?.lastTrained;
+      if(!t) return last;
+      if(!last) return t;
+      return new Date(t) > new Date(last) ? t : last;
+    }, null);
+    return {mz, children, ownXp, childrenXp, totalXp, lastTrained};
+  }).filter(i => i.totalXp > 0 || i.lastTrained)
+    .sort((a,b) => b.totalXp - a.totalXp);
+
+  if(!items.length){ zEl.innerHTML = '<div class="empty">Пока нет опыта</div>'; return; }
+  zEl.innerHTML = items.map(item => {
+    const info = skillRankInfo(item.totalXp);
+    const dec = decayStatus(daysSinceLast(item.lastTrained));
+    const pct = info.need > 0 ? Math.round(info.current/info.need*100) : 0;
+    let subHtml = '';
+    if(item.children.length){
+      const subItems = item.children.map(c => ({
+        id: c.id, name: c.emoji + ' ' + c.name,
+        xp: (xpZones[c.id]?.xp || 0)
+      })).filter(s => s.xp > 0);
+      if(subItems.length){
+        const maxSubXp = Math.max(...subItems.map(s => s.xp));
+        subHtml = '<div class="subzones">' + subItems.sort((a,b) => b.xp - a.xp).map(s => {
+          const sInfo = skillRankInfo(s.xp);
+          const isWeak = s.xp > 0 && s.xp < maxSubXp * 0.35;
+          return '<div class="subzone-row '+(isWeak?'weak':'')+'">' +
+            '<div class="sub-name">' + s.name + (isWeak ? ' <span class="warn">⚠</span>' : '') + '</div>' +
+            '<div class="sub-lvl">LVL ' + sInfo.lvl + ' · ' + s.xp.toFixed(1) + '</div>' +
+          '</div>';
+        }).join('') + '</div>';
+      }
+    }
+    return '<div class="skill-item">' +
+      '<div class="skill-head"><div class="skill-name"><span class="skill-icon">'+info.icon+'</span><span>'+item.mz.emoji+' '+item.mz.name+'</span></div><div class="skill-lvl">LVL '+info.lvl+'</div></div>' +
+      '<div class="skill-bar"><i style="width:'+pct+'%"></i></div>' +
+      '<div class="skill-meta"><span class="skill-xp">'+item.totalXp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div>' +
+      subHtml +
+    '</div>';
+  }).join('');
 }
 
 /* ==================== РЕЖИМ ВЫПОЛНЕНИЯ ==================== */
 let execState = null;
-
 function startTrainExecution(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку запустить нельзя'); return; }
@@ -2611,13 +2646,12 @@ function startTrainExecution(trainId){
   document.getElementById('execTitle').textContent = tr.name;
   renderExecScreen();
 }
-
 function closeExecScreen(){
   if(execState && execState.timer && execState.timer.int) clearInterval(execState.timer.int);
   const ex = document.getElementById('execScreen');
   if(ex) ex.classList.remove('on');
   if(execState && execState.completed && execState.completed.length){
-    if(!confirm('Закрыть тренировку? Прогресс не сохранится в XP.')) {
+    if(!confirm('Закрыть тренировку? Прогресс не сохранится.')) {
       document.getElementById('execScreen').classList.add('on');
       renderExecScreen();
       return;
@@ -2625,9 +2659,7 @@ function closeExecScreen(){
   }
   execState = null;
 }
-
 function isXValue(v){ return String(v).trim().toUpperCase() === 'X'; }
-
 function renderExecScreen(){
   if(!execState){ return; }
   const body = document.getElementById('execBody');
@@ -2638,9 +2670,7 @@ function renderExecScreen(){
   if(progressTxt) progressTxt.textContent = (cur+1)+'/'+total;
   const item = execState.exercises[cur];
   if(!item){ finishExecution(); return; }
-
   const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
-
   if(hasX && !item._xResolved){
     body.innerHTML =
       '<div class="exec-step"><div class="dot-step on">'+(cur+1)+'</div><div class="info"><div class="lbl">Упражнение '+(cur+1)+' из '+total+'</div><div class="nm">'+item.exName+'</div></div></div>'+
@@ -2662,7 +2692,6 @@ function renderExecScreen(){
     footer.innerHTML = '';
     return;
   }
-
   const dosage = [];
   if(item.sets) dosage.push('<div class="item"><div class="lbl">Подходы</div><div class="val">'+item.sets+'</div></div>');
   if(item.reps) dosage.push('<div class="item"><div class="lbl">Повторы</div><div class="val">'+item.reps+'</div></div>');
@@ -2769,15 +2798,10 @@ function execFinishSet(){
   if(execState.currentSet >= item.sets){
     execState.completed.push({
       exIdx: execState.currentIndex,
-      sets: +item.sets || 1,
-      reps: +item.reps || 0,
-      time: +item.time || 0,
-      weight: +item.weight || 0
+      sets: +item.sets || 1, reps: +item.reps || 0,
+      time: +item.time || 0, weight: +item.weight || 0
     });
-    if(execState.currentIndex >= execState.exercises.length - 1){
-      finishExecution();
-      return;
-    }
+    if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
     execState.currentIndex++;
     execState.currentSet = 1;
     execState.timer.phase = 'idle';
@@ -2807,10 +2831,7 @@ function execSkipExercise(){
   if(!item) return;
   if(!confirm('Пропустить упражнение?')) return;
   if(execState.timer.int) clearInterval(execState.timer.int);
-  if(execState.currentIndex >= execState.exercises.length - 1){
-    finishExecution();
-    return;
-  }
+  if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
   execState.currentIndex++;
   execState.currentSet = 1;
   execState.timer.phase = 'idle';
@@ -2868,7 +2889,6 @@ function confirmFinishExecution(xp){
   toast('Тренировка засчитана: +'+xp+' XP');
 }
 
-/* ==================== ТАЙМЕР (внутренний, для выполнения) ==================== */
 function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 let audioCtx = null;
 function beep(freq, dur){
@@ -2882,11 +2902,10 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'AS-Fit', version:9, exported:new Date().toISOString(),
+  return {app:'AS-Fit', version:10, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
-    starterInstalled,
-    profile:{...profile}};
+    starterInstalled, profile:{...profile}};
 }
 function exportDB(){
   const data = JSON.stringify(buildDB(), null, 2);
@@ -2961,7 +2980,24 @@ function resetAll(){ if(confirm('Сбросить всё?')){ localStorage.clear
 
 /* ==================== СВОИ СНАРЯДЫ ==================== */
 const EMOJI_PRESETS = ['🪢','🏋️','🎿','🏗️','⭕','🎗️','⚽','🏀','🏐','🎾','🥊','🥋','🎽','🦯','🪃','🛹','🛼','⛸️','🧘','🤸','🏃','🚴','🏊','⛹️','🤾','🏌️','🪝','🧱','🪜','🛞','🧗','🥌','🏑','🏒','🎯','🥏','🏓','🏸','🎳','🪀','🪁','⚙️','🔗','🧲','🪨','🪵','🧊','🟫','🟩','🟦','🟥','🟨','🟪','⬛','⬜'];
+
+function restoreGearModalForm(){
+  const modalBody = document.querySelector('#m-new-gear .modal');
+  if(!modalBody) return;
+  modalBody.innerHTML = 
+    '<h3>Новый снаряд</h3>' +
+    '<div class="field"><label>Название</label><input id="ngName" placeholder="Канат"></div>' +
+    '<div class="field">' +
+      '<label>Значок</label>' +
+      '<input id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:18px;text-align:center">' +
+      '<div class="emoji-picker" id="emojiPicker"></div>' +
+    '</div>' +
+    '<button class="btn primary full" onclick="saveCustomGear()">Добавить</button>' +
+    '<button class="close" onclick="closeModal(\'m-new-gear\')">Отмена</button>';
+}
+
 function addCustomGear(){
+  restoreGearModalForm();
   document.getElementById('ngName').value = '';
   document.getElementById('ngEmoji').value = '';
   const picker = document.getElementById('emojiPicker');
@@ -2990,32 +3026,19 @@ function installStarterPack(){
   if(starterInstalled && exercises.length > 0) return;
   
   const starterExercises = [
-    // КАРДИО
-    {name:'Прыжки на скакалке', zones:['cardio','calves'], gears:['rope'], skills:['endurance','coord'], format:'time', desc:'Базовые прыжки на скакалке. Держи локти близко, вращение кистями.'},
-    // ШЕЯ
-    {name:'Разминка шеи', zones:['neck'], gears:['none'], skills:['flex','coord'], format:'time', desc:'Медленные наклоны и вращения головой. Без резких движений.'},
-    // ПЛЕЧИ
-    {name:'Жим гири одной рукой', zones:['shoulders'], gears:['kb'], skills:['strength'], format:'weight', desc:'Гиря на плече, выжать вверх. Спина прямая.'},
-    // СПИНА
-    {name:'Подтягивания на турнике', zones:['back','shoulders'], gears:['pullup'], skills:['strength'], format:'reps', desc:'Прямой хват. Тянуть до подбородка над перекладиной.'},
-    // ГРУДЬ
-    {name:'Отжимания от пола', zones:['chest','shoulders'], gears:['none'], skills:['strength'], format:'reps', desc:'Ладони чуть шире плеч. Тело — прямая линия.'},
-    // ЯГОДИЦЫ
-    {name:'Ягодичный мост', zones:['glutes','hips'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, стопы у таза. Поднять таз, сжать ягодицы.'},
-    // БЕДРА
-    {name:'Приседания', zones:['hips','glutes'], gears:['none'], skills:['strength'], format:'reps', desc:'Ноги на ширине плеч. Опускаться до параллели бёдер.'},
-    // ГОЛЕНИ
-    {name:'Подъёмы на носки', zones:['calves'], gears:['none'], skills:['strength'], format:'reps', desc:'Стоя, подняться на носки, задержаться, опуститься.'},
-    // СТОПЫ
-    {name:'Перекаты стопы', zones:['feet','calves'], gears:['none'], skills:['balance'], format:'time', desc:'Сидя или стоя перекатывай стопу с пятки на носок.'},
-    // КИСТИ
-    {name:'Сжатие эспандера', zones:['hands'], gears:['band'], skills:['strength'], format:'reps', desc:'Сжимай эспандер до полного сжатия, держи 1 сек.'},
-    // ПРЕСС
-    {name:'Скручивания', zones:['abs'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, руки за головой. Поднять лопатки.'},
-    // КОР
-    {name:'Планка', zones:['core','abs'], gears:['mat'], skills:['strength','balance'], format:'time', desc:'Локти под плечами, тело — прямая линия. Не провисать.'},
-    // РАСТЯЖКА
-    {name:'Поза голубя', zones:['stretch','hips'], gears:['mat'], skills:['flex'], format:'time', desc:'Одна нога согнута впереди, другая вытянута назад. Наклон вперёд.'},
+    {name:'Прыжки на скакалке', zones:['cardio','calves'], gears:['rope'], skills:['endurance','coord'], format:'time', desc:'Базовые прыжки. Локти близко, вращение кистями.'},
+    {name:'Разминка шеи', zones:['neck'], gears:['none'], skills:['flex','coord'], format:'time', desc:'Медленные наклоны и вращения головой.'},
+    {name:'Жим гири одной рукой', zones:['shoulders','shoulders_side','shoulders_tri'], gears:['kb'], skills:['strength'], format:'weight', desc:'Гиря на плече, выжать вверх. Спина прямая.'},
+    {name:'Подтягивания на турнике', zones:['back','back_lat','shoulders_front'], gears:['pullup'], skills:['strength'], format:'reps', desc:'Прямой хват. Тянуть до подбородка над перекладиной.'},
+    {name:'Отжимания от пола', zones:['chest','chest_mid','shoulders_front','shoulders_tri'], gears:['none'], skills:['strength'], format:'reps', desc:'Ладони чуть шире плеч. Тело прямое.'},
+    {name:'Ягодичный мост', zones:['glutes','glutes_max','hips'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, стопы у таза. Поднять таз, сжать ягодицы.'},
+    {name:'Приседания', zones:['hips','hips_quad','glutes','glutes_max'], gears:['none'], skills:['strength'], format:'reps', desc:'Ноги на ширине плеч. Опускаться до параллели.'},
+    {name:'Подъёмы на носки', zones:['calves'], gears:['none'], skills:['strength'], format:'reps', desc:'Стоя, подняться на носки.'},
+    {name:'Перекаты стопы', zones:['feet','calves'], gears:['none'], skills:['balance'], format:'time', desc:'Перекатывай стопу с пятки на носок.'},
+    {name:'Сжатие эспандера', zones:['hands','hands_flex'], gears:['band'], skills:['strength'], format:'reps', desc:'Сжимай эспандер до полного сжатия.'},
+    {name:'Скручивания', zones:['abs','abs_upper'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, руки за головой. Поднять лопатки.'},
+    {name:'Планка', zones:['core','abs'], gears:['mat'], skills:['strength','balance'], format:'time', desc:'Локти под плечами, тело — прямая линия.'},
+    {name:'Поза голубя', zones:['stretch','hips'], gears:['mat'], skills:['flex'], format:'time', desc:'Одна нога согнута впереди, другая вытянута назад.'},
   ];
   
   const idsMap = {};
@@ -3033,7 +3056,6 @@ function installStarterPack(){
     }
   });
   
-  // Тренировки-шаблоны
   const starterTrains = [
     {
       name: '🔥 Полное тело (30 мин)',
