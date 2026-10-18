@@ -4,88 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
-<title>АС — Фитнес v2.5</title>
+<title>АС — Фитнес v2.6</title>
 <style>
 :root,[data-theme="neon"]{--bg:#0e1116;--bg2:#151a22;--card:#1a2029;--card2:#222a36;--line:#2a3340;--txt:#e8edf4;--mut:#8a97a8;--acc:#ff5b2e;--acc2:#ffb02e;--ok:#2ecc71;--blue:#3aa0ff;--grad:linear-gradient(135deg,var(--acc),var(--acc2))}
-[data-theme="ocean"]{--bg:#08131c;--bg2:#0d1f2d;--card:#102636;--card2:#153244;--line:#1d435b;--txt:#e0f4ff;--mut:#7ba9c7;--acc:#00d4ff;--acc2:#0088cc;--ok:#00e0b0;--grad:linear-gradient(135deg,#00d4ff,#0088cc)}
-[data-theme="matrix"]{--bg:#050d08;--bg2:#0a1810;--card:#0d2015;--card2:#112a1b;--line:#1a3a26;--txt:#d8ffe4;--mut:#6fb886;--acc:#00ff6a;--acc2:#00cc55;--ok:#00ff6a;--grad:linear-gradient(135deg,#00ff6a,#00aa44)}
-[data-theme="royal"]{--bg:#0d0818;--bg2:#16102a;--card:#1d1538;--card2:#261d47;--line:#342a5c;--txt:#ebe4ff;--mut:#9d8ec7;--acc:#a855f7;--acc2:#ec4899;--ok:#22d3ee;--grad:linear-gradient(135deg,#a855f7,#ec4899)}
-[data-theme="sunset"]{--bg:#1a0d0d;--bg2:#261312;--card:#2e1817;--card2:#3a1e1c;--line:#4d2926;--txt:#ffe9e0;--mut:#c48a7d;--acc:#ff6b3d;--acc2:#ffb800;--ok:#4ade80;--grad:linear-gradient(135deg,#ff6b3d,#ffb800)}
-[data-theme="mint"]{--bg:#f0fdf9;--bg2:#e6faf3;--card:#fff;--card2:#f5fffc;--line:#c5ebe0;--txt:#0a2a22;--mut:#5a8578;--acc:#10b981;--acc2:#059669;--ok:#10b981;--grad:linear-gradient(135deg,#10b981,#059669)}
-[data-theme="carbon"]{--bg:#0a0a0a;--bg2:#141414;--card:#1c1c1c;--card2:#242424;--line:#333;--txt:#f0f0f0;--mut:#888;--acc:#e5e5e5;--acc2:#a3a3a3;--ok:#22c55e;--grad:linear-gradient(135deg,#e5e5e5,#737373)}
-[data-theme="cyber"]{--bg:#0a0518;--bg2:#130a26;--card:#1a0f33;--card2:#231545;--line:#382264;--txt:#f0e8ff;--mut:#9d7dd6;--acc:#00e5ff;--acc2:#ff00e5;--ok:#00ff88;--grad:linear-gradient(135deg,#00e5ff,#ff00e5)}
-[data-theme="sand"]{--bg:#f5f1e8;--bg2:#ebe4d6;--card:#fff;--card2:#f9f6ee;--line:#d6cdb8;--txt:#2a2419;--mut:#8a7d63;--acc:#b45309;--acc2:#78350f;--ok:#16a34a;--grad:linear-gradient(135deg,#b45309,#78350f)}
-/* ===== ТЕМА "БЛОКНОТ" — 3 варианта ===== */
-[data-theme="notebook-light"]{
-  --bg:#f5f5f0;--bg2:#ebeae0;--card:#fffef8;--card2:#f7f6ec;
-  --line:#dcd7c5;--txt:#2a2a24;--mut:#7a7568;
-  --acc:#c9913e;--acc2:#8a6b3a;--ok:#5a9e5a;--blue:#5a86b8;
-  --grad:linear-gradient(135deg,#c9913e,#8a6b3a);
-}
-[data-theme="notebook-dark"]{
-  --bg:#1a1a15;--bg2:#252420;--card:#2a2925;--card2:#33322c;
-  --line:#43413a;--txt:#e8e3d3;--mut:#9a9584;
-  --acc:#e0a84c;--acc2:#c9913e;--ok:#6cc76c;--blue:#6c9dd6;
-  --grad:linear-gradient(135deg,#e0a84c,#c9913e);
-}
-[data-theme="notebook-sepia"]{
-  --bg:#ede4d0;--bg2:#e2d7bd;--card:#f5eed8;--card2:#ebe2c8;
-  --line:#d0c4a5;--txt:#3d3425;--mut:#857a63;
-  --acc:#9b7a3a;--acc2:#6b5220;--ok:#5a8a3a;--blue:#5a7a9a;
-  --grad:linear-gradient(135deg,#9b7a3a,#6b5220);
-}
+[data-theme="notebook-light"]{--bg:#f5f5f0;--bg2:#ebeae0;--card:#fffef8;--card2:#f7f6ec;--line:#dcd7c5;--txt:#2a2a24;--mut:#7a7568;--acc:#c9913e;--acc2:#8a6b3a;--ok:#5a9e5a;--blue:#5a86b8;--grad:linear-gradient(135deg,#c9913e,#8a6b3a)}
+[data-theme="notebook-dark"]{--bg:#1a1a15;--bg2:#252420;--card:#2a2925;--card2:#33322c;--line:#43413a;--txt:#e8e3d3;--mut:#9a9584;--acc:#e0a84c;--acc2:#c9913e;--ok:#6cc76c;--blue:#6c9dd6;--grad:linear-gradient(135deg,#e0a84c,#c9913e)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;-webkit-font-smoothing:antialiased}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;padding-bottom:100px;transition:background .3s,color .3s}
-/* Стилизация под блокнот для тем */
-[data-theme^="notebook"] body{
-  background-image:
-    linear-gradient(to right, transparent 0, transparent 28px, rgba(200,80,80,.15) 28px, rgba(200,80,80,.15) 30px, transparent 30px),
-    repeating-linear-gradient(to bottom, transparent 0, transparent 27px, var(--line) 27px, var(--line) 28px);
-  background-attachment: fixed;
-}
-[data-theme="notebook-dark"] body{
-  background-image:
-    linear-gradient(to right, transparent 0, transparent 28px, rgba(200,80,80,.2) 28px, rgba(200,80,80,.2) 30px, transparent 30px),
-    repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgba(120,110,90,.15) 27px, rgba(120,110,90,.15) 28px);
-}
-[data-theme^="notebook"] .card{
-  border-radius:4px;
-  box-shadow:2px 2px 0 rgba(0,0,0,.06);
-  border-width:1px 1px 1px 3px;
-  border-left-color:var(--acc);
-}
-[data-theme^="notebook"] .card h2{
-  font-family:"Georgia","Courier New",serif;
-  letter-spacing:0;
-  text-transform:none;
-  font-size:12px;
-  font-weight:700;
-}
-[data-theme^="notebook"] .btn.primary{
-  border-radius:4px;
-}
-[data-theme^="notebook"] .chip{
-  border-radius:8px;
-}
-[data-theme^="notebook"] .modal{
-  border-radius:8px 8px 0 0;
-}
+[data-theme^="notebook"] body{background-image:linear-gradient(to right,transparent 0,transparent 28px,rgba(200,80,80,.15) 28px,rgba(200,80,80,.15) 30px,transparent 30px),repeating-linear-gradient(to bottom,transparent 0,transparent 27px,var(--line) 27px,var(--line) 28px);background-attachment:fixed}
+[data-theme="notebook-dark"] body{background-image:linear-gradient(to right,transparent 0,transparent 28px,rgba(200,80,80,.2) 28px,rgba(200,80,80,.2) 30px,transparent 30px),repeating-linear-gradient(to bottom,transparent 0,transparent 27px,rgba(120,110,90,.15) 27px,rgba(120,110,90,.15) 28px)}
+[data-theme^="notebook"] .card{border-radius:4px;box-shadow:2px 2px 0 rgba(0,0,0,.06);border-width:1px 1px 1px 3px;border-left-color:var(--acc)}
+[data-theme^="notebook"] .card h2{font-family:"Georgia","Courier New",serif;letter-spacing:0;text-transform:none;font-size:12px;font-weight:700}
+[data-theme^="notebook"] .btn.primary{border-radius:4px}
+[data-theme^="notebook"] .chip{border-radius:8px}
+[data-theme^="notebook"] .modal{border-radius:8px 8px 0 0}
 .app{max-width:560px;margin:0 auto;padding:8px 8px 100px}
 header.top{display:flex;align-items:center;justify-content:space-between;padding:4px 2px;position:sticky;top:0;z-index:30;background:var(--bg);margin:-8px -8px 4px;padding-left:12px;padding-right:12px;padding-top:10px}
 .logo{font-weight:800;font-size:15px;letter-spacing:.6px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .logo span{color:var(--mut);font-size:8px;display:block;letter-spacing:1.8px;font-weight:600;-webkit-text-fill-color:var(--mut)}
-/* Переключатель день/ночь */
 .theme-switch{width:52px;height:26px;border-radius:20px;background:var(--card2);border:1px solid var(--line);position:relative;cursor:pointer;display:flex;align-items:center;padding:0 3px;justify-content:space-between;font-size:13px;transition:.2s;flex:0 0 auto}
 .theme-switch .icon{opacity:.35;transition:.2s;font-size:12px;line-height:1}
-.theme-switch[data-mode="dark"]{background:var(--card)}
-.theme-switch[data-mode="light"]{background:rgba(255,200,80,.2)}
 .theme-switch .slider{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--grad);top:2px;left:2px;transition:.3s cubic-bezier(.5,.9,.3,1.2);box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .theme-switch[data-mode="dark"] .slider{left:calc(100% - 22px)}
-.theme-switch[data-mode="dark"] .icon.sun{opacity:.35}
-.theme-switch[data-mode="dark"] .icon.moon{opacity:1}
-.theme-switch[data-mode="light"] .icon.sun{opacity:1}
-.theme-switch[data-mode="light"] .icon.moon{opacity:.35}
+.theme-switch[data-mode="dark"] .icon.moon,.theme-switch[data-mode="light"] .icon.sun{opacity:1}
 .xp-head{display:flex;align-items:center;gap:5px;flex:1;max-width:150px;cursor:pointer}
 .xp-lvl{width:28px;height:28px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:var(--bg);flex:0 0 auto}
 .xp-info{flex:1;min-width:0}
@@ -155,11 +97,10 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .ex-item .ex-name{font-weight:700;font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ex-item .ex-badge{font-size:8.5px;padding:1px 5px;border-radius:16px;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap}
 .ex-item .row2{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;font-size:9px;color:var(--mut)}
-.ex-item .chip-mini{padding:0px 5px;background:var(--card2);border:1px solid var(--line);border-radius:16px;color:var(--mut);font-size:8.5px}
+.ex-item .chip-mini{padding:0 5px;background:var(--card2);border:1px solid var(--line);border-radius:16px;color:var(--mut);font-size:8.5px}
 .ex-item .x-mark{color:var(--acc2);font-weight:900;font-size:10px}
 .train-actions{display:flex;gap:4px;margin-top:4px}
 .train-actions button{flex:1;padding:4px;border-radius:6px;font-size:9.5px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer}
-.train-actions button:active{transform:scale(.97)}
 .profile{display:flex;align-items:center;gap:8px}
 .avatar-wrap{position:relative;width:52px;height:52px;flex:0 0 auto}
 .avatar{width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:var(--bg);background-size:cover;background-position:center;overflow:hidden}
@@ -190,15 +131,12 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .chip.on{background:var(--grad);color:var(--bg);border-color:transparent}
 .chip .cnt{font-size:8px;opacity:.7;font-weight:700}
 .chip.on .cnt{opacity:.9}
-.chip.add{color:var(--acc2);border-style:dashed;border-color:var(--acc2)}
 .chip .emoji{font-size:10px}
 .sec-title{font-size:9px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.7px;margin:6px 0 3px;display:flex;align-items:center;gap:4px}
 .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
 .filter-row{display:flex;gap:4px;margin-bottom:4px;align-items:center}
 .filter-toggle{flex:1;display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:var(--card);border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:var(--txt);transition:.2s}
-.filter-toggle:active{transform:scale(.99)}
 .filter-toggle .lbl{display:flex;align-items:center;gap:5px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;font-size:9.5px}
-.filter-toggle .lbl .em{font-size:12px}
 .filter-toggle .counter{font-size:9.5px;font-weight:800;color:var(--acc2);background:rgba(255,176,46,.12);padding:2px 7px;border-radius:12px}
 .filter-toggle .arrow{font-size:10px;color:var(--mut);transition:.2s}
 .filter-toggle.open .arrow{transform:rotate(180deg)}
@@ -209,7 +147,6 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .weight-chart{width:100%;height:180px;background:var(--card2);border:1px solid var(--line);border-radius:8px;margin-bottom:8px;display:block}
 .weight-input-row{display:flex;gap:5px;margin-bottom:8px}
 .weight-input-row input{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:13px;outline:none;font-family:inherit}
-.weight-input-row input:focus{border-color:var(--acc)}
 .weight-input-row button{padding:8px 12px;border-radius:8px;border:none;background:var(--grad);color:var(--bg);font-size:12px;font-weight:800;cursor:pointer}
 .weight-list{display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto}
 .weight-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:var(--card);border-radius:6px;font-size:11.5px}
@@ -297,7 +234,6 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .field input,.field select,.field textarea{width:100%;padding:8px 9px;border-radius:7px;background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:12px;outline:none;font-family:inherit}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
 .field textarea{resize:vertical;min-height:44px}
-.field input.x-input{border-color:var(--acc2);color:var(--acc2);font-weight:700}
 .row{display:flex;gap:5px}
 .row .field{flex:1}
 .days{display:flex;gap:3px;margin-top:2px}
@@ -316,11 +252,10 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .time-editor{display:flex;flex-direction:column;gap:5px;margin-bottom:9px}
 .time-row{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;background:var(--card2);padding:6px 8px;border-radius:7px;border:1px solid var(--line)}
 .time-row .lbl{font-size:10px;font-weight:700}
-.time-row .lbl small{display:block;font-size:8.5px;color:var(--mut);font-weight:500;margin-top:0}
+.time-row .lbl small{display:block;font-size:8.5px;color:var(--mut);font-weight:500}
 .time-controls{display:flex;align-items:center;gap:3px}
 .time-controls button{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:12px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .time-controls input{width:52px;padding:5px 3px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--acc2);font-size:12px;font-weight:900;text-align:center;outline:none;font-family:inherit}
-.time-controls input:focus{border-color:var(--acc)}
 .timer-display{text-align:center;font-size:42px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:3px 0 2px;line-height:1}
 .timer-phase{text-align:center;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
 .timer-phase.prep{color:var(--blue)}
@@ -331,7 +266,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .timer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}
 .tcell{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:5px;text-align:center}
 .tcell .lbl{font-size:8px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
-.tcell .v{font-size:12px;font-weight:800;margin-top:0}
+.tcell .v{font-size:12px;font-weight:800}
 .comp-ex-item{display:flex;gap:5px;align-items:center;padding:6px 8px;background:var(--card);border:1px solid var(--line);border-radius:7px;margin-bottom:4px}
 .comp-ex-item .info{flex:1;min-width:0}
 .comp-ex-item .nm{font-size:10.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -360,20 +295,16 @@ nav.bottom button.on{color:var(--acc)}
 .info-block p b{color:var(--txt);font-weight:700}
 .emoji-picker{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px;max-height:110px;overflow-y:auto;padding:4px;background:var(--card2);border-radius:7px;border:1px solid var(--line)}
 .emoji-picker span{width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border-radius:6px;transition:.15s;border:1px solid transparent}
-.emoji-picker span:hover{background:var(--card);border-color:var(--line)}
 .emoji-picker span.on{background:var(--grad);border-color:transparent}
-/* ===== КОМПЛЕКСЫ (вкладка) ===== */
-.comps-list{padding:0}
-.comps-empty{text-align:center;padding:30px 16px;color:var(--mut);font-size:12px;line-height:1.6}
-.comps-empty .emoji{font-size:42px;display:block;margin-bottom:10px}
 .comp-card{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 10px;margin-bottom:6px}
 .comp-card .cc-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px}
 .comp-card .cc-name{font-size:12.5px;font-weight:800;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .comp-card .cc-badge{font-size:9px;padding:2px 7px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--mut);white-space:nowrap;flex:0 0 auto;font-weight:700}
-.comp-card .cc-preview{font-size:10px;color:var(--mut);line-height:1.4;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.comp-card .cc-preview{font-size:10px;color:var(--mut);line-height:1.4;margin-bottom:7px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .comp-card .cc-actions{display:flex;gap:5px}
 .comp-card .cc-actions button{flex:1;padding:5px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:10px;font-weight:700;cursor:pointer}
-.comp-card .cc-actions button:active{transform:scale(.97)}
+.comps-empty{text-align:center;padding:30px 16px;color:var(--mut);font-size:12px;line-height:1.6}
+.comps-empty .emoji{font-size:42px;display:block;margin-bottom:10px}
 .weight-empty{text-align:center;padding:20px 12px;color:var(--mut);font-size:11px;line-height:1.5}
 .exec-screen{position:fixed;inset:0;background:var(--bg);z-index:150;display:none;flex-direction:column;overflow-y:auto}
 .exec-screen.on{display:flex}
@@ -406,13 +337,204 @@ nav.bottom button.on{color:var(--acc)}
 .exec-controls .btn{flex:1;padding:12px;font-size:12px}
 .exec-footer{padding:10px 12px;background:var(--bg2);border-top:1px solid var(--line);max-width:560px;margin:0 auto;width:100%}
 .exec-footer .finish-btn{width:100%;padding:13px;border-radius:10px;border:none;background:var(--grad);color:var(--bg);font-size:14px;font-weight:900;cursor:pointer}
+
+/* ================= iOS-СЛОЙ (переопределяет размеры, формы, шапку, вкладки) ================= */
+:root{--r-card:20px;--r-ctl:14px;--sys-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,sans-serif;--shadow-1:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.10);--ease:cubic-bezier(.32,.72,0,1)}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sys-font);font-size:17px;line-height:1.3;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font-family:inherit}
+.app{padding:0 16px calc(110px + env(safe-area-inset-bottom))}
+header.top{margin:0 -16px 8px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid color-mix(in srgb,var(--line) 70%,transparent);gap:12px}
+.logo{font-size:20px;font-weight:800;letter-spacing:-.02em;background:none;color:var(--txt);-webkit-text-fill-color:var(--txt)}
+.logo span{font-size:11px;letter-spacing:0;font-weight:500;margin-top:1px}
+.xp-head{max-width:none;gap:10px;justify-content:center}
+.xp-lvl{width:34px;height:34px;font-size:15px}
+.xp-rank{font-size:13px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--txt)}
+.xp-bar{height:5px;margin-top:4px}
+.theme-switch{width:58px;height:34px;padding:0 6px;border-radius:17px}
+.theme-switch .icon{font-size:13px}
+.theme-switch .slider{width:28px;height:28px;top:2px;left:2px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.theme-switch[data-mode="dark"] .slider{left:calc(100% - 30px)}
+.card{border:none;border-radius:var(--r-card);padding:16px;margin-bottom:14px;box-shadow:var(--shadow-1)}
+.card h2{margin:0 0 12px;font-size:20px;font-weight:700;letter-spacing:-.02em;text-transform:none;color:var(--txt)}
+.card h2 .dot{display:none}
+.card h2 .cnt-badge{font-size:13px;padding:2px 10px;border-radius:12px}
+.empty{font-size:15px;padding:18px 8px;line-height:1.4}
+.sec-title{font-size:13px;letter-spacing:0;text-transform:none;font-weight:600;margin:14px 4px 8px}
+.prog-row{gap:10px;margin-bottom:14px}
+.prog{border:none;border-radius:var(--r-card);padding:12px 14px;box-shadow:var(--shadow-1)}
+.prog .lbl{font-size:12px;letter-spacing:0;text-transform:none}
+.prog .val{font-size:19px;font-weight:700;margin-top:2px}
+.prog .bar{height:4px;margin-top:8px}
+.cal-head{margin-bottom:12px}
+.cal-head .title{font-size:17px;font-weight:700}
+.cal-nav{gap:8px}
+.cal-nav button{width:36px;height:36px;border:none;border-radius:50%;font-size:18px;background:var(--card2)}
+.week{gap:6px}
+.day{border:none;border-radius:16px;padding:8px 0 10px;min-height:68px;background:transparent}
+.day .wd{font-size:12px;font-weight:500;text-transform:none}
+.day .num{font-size:19px;font-weight:600;margin-top:4px}
+.day.today{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.day.selected{background:var(--grad);box-shadow:none}
+.day-dots{margin-top:5px;min-height:6px}
+.day-dot{width:5px;height:5px}
+.month-grid{gap:4px}
+.month-grid .mhead{font-size:12px;text-transform:none;font-weight:500;padding:4px 0}
+.mday{border-radius:50%;font-size:16px;font-weight:500;background:transparent}
+.mday .mday-dot{width:4px;height:4px}
+.mday.today{border-color:transparent;box-shadow:inset 0 0 0 1.5px var(--acc)}
+.train{border:none;border-radius:16px;margin-bottom:10px}
+.train-head{gap:12px;padding:14px}
+.train-head .time{font-size:15px;min-width:48px}
+.train-head .name{font-size:17px;font-weight:600}
+.train-head .meta{font-size:13px;margin-top:2px}
+.train-head .actions{gap:10px;align-items:center}
+.train-head .chk,.train-head .lock{width:30px;height:30px;border-radius:50%;border-width:2px}
+.train-head .chk.on::after{font-size:15px}
+.train-head .run{width:30px;height:30px;border-radius:50%;font-size:12px;background:color-mix(in srgb,var(--acc) 16%,transparent)}
+.train-body{padding:0 14px 14px;border-top:.5px solid var(--line)}
+.ex-item{padding:12px;border-radius:12px;margin-top:8px;font-size:15px}
+.ex-item .ex-name{font-size:15px;font-weight:600}
+.ex-item .ex-badge{font-size:12px;padding:3px 9px}
+.ex-item .row2{font-size:12px;gap:4px;margin-top:6px}
+.ex-item .chip-mini{font-size:12px;padding:2px 8px}
+.train-actions{gap:8px;margin-top:8px}
+.train-actions button{padding:10px;border:none;border-radius:12px;font-size:14px;font-weight:600;background:var(--card2)}
+.btn{min-height:50px;padding:12px 16px;border:none;border-radius:var(--r-ctl);font-size:17px;font-weight:600;background:var(--card2)}
+.btn:active{transform:scale(.97);opacity:.85}
+.btn.small{min-height:40px;padding:8px 14px;font-size:15px;border-radius:12px}
+.btn.primary{box-shadow:0 4px 14px color-mix(in srgb,var(--acc) 35%,transparent)}
+.btn-row{gap:10px}
+.card .btn-row{margin-top:10px}
+.close{padding:14px;border-radius:var(--r-ctl);font-size:17px;font-weight:600;background:var(--card2);margin-top:10px}
+.avatar-wrap,.avatar{width:68px;height:68px}
+.avatar{font-size:26px}
+.avatar-edit{width:28px;height:28px;font-size:13px}
+.profile{gap:14px}
+.profile .pname{font-size:22px;font-weight:700}
+.profile .pmeta{font-size:15px}
+.note{font-size:14px;line-height:1.45;padding:10px 12px;border-radius:12px}
+.themes-grid{gap:10px}
+.theme-tile{border-width:2px;border-radius:14px}
+.theme-tile .swatch{height:44px}
+.theme-tile .name{font-size:12px;padding:6px 2px;text-transform:none;letter-spacing:0}
+.theme-tile .check{width:20px;height:20px;font-size:12px}
+.search{padding:10px 14px;border:none;border-radius:12px;background:var(--card2);margin-bottom:12px}
+.search input{font-size:17px}
+.search svg{width:18px;height:18px}
+.tabs{gap:0;padding:2px;border-radius:12px;background:var(--card2);margin-bottom:12px;overflow:hidden}
+.tab{flex:1;text-align:center;border:none;border-radius:10px;padding:8px 4px;font-size:14px;font-weight:600;background:transparent}
+.tab.active{background:var(--card);color:var(--txt);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.filter-toggle{padding:14px 16px;border:none;border-radius:14px;font-size:17px}
+.filter-toggle .lbl{font-size:16px;letter-spacing:0;text-transform:none;color:var(--txt)}
+.filter-toggle .counter{font-size:13px}
+.filter-body{padding:12px;border:none;border-radius:14px}
+.chip{padding:8px 14px;border:none;border-radius:20px;font-size:15px}
+.chip .cnt{font-size:12px}
+.ex{padding:12px;border:none;border-radius:16px;margin-bottom:8px;gap:12px}
+.ex .thumb{width:52px;height:52px;border-radius:12px;border:none;font-size:22px}
+.ex .txt{font-size:17px;font-weight:600}
+.ex .txt .sub{font-size:13px}
+.ex .del{width:32px;height:32px;border:none;border-radius:50%;background:var(--card2);font-size:13px}
+.comp-card{padding:14px;border:none;border-radius:16px}
+.comp-card .cc-name{font-size:17px}
+.comp-card .cc-badge{font-size:12px;border:none}
+.comp-card .cc-preview{font-size:14px}
+.comp-card .cc-actions button{padding:10px;border:none;border-radius:12px;font-size:15px;background:var(--card)}
+.comp-item,.comp-ex-item{padding:12px 14px;border:none;border-radius:14px}
+.comp-item .nm,.comp-ex-item .nm{font-size:16px}
+.comp-item .meta,.comp-ex-item .ds{font-size:13px}
+.xp-level-big{width:72px;height:72px}
+.xp-level-big .num{font-size:28px}
+.xp-level-big .lbl{font-size:9px}
+.xp-meta .rank{font-size:20px}
+.xp-meta .total{font-size:14px}
+.xp-meta .bar{height:8px}
+.xp-formula{font-size:13px;padding:10px 12px;border-radius:12px}
+.stat-top{font-size:15px}
+.stat-bar{height:6px}
+.mini-stat{padding:14px;border:none;border-radius:16px}
+.mini-stat .v{font-size:28px}
+.mini-stat .l{font-size:13px;text-transform:none;letter-spacing:0}
+.stats-grid{gap:10px}
+.skill-item{padding:12px 14px;border:none;border-radius:14px}
+.skill-name{font-size:16px}
+.skill-lvl{font-size:13px}
+.skill-bar{height:6px}
+.skill-meta{font-size:13px}
+.log-item{padding:10px 12px;border-radius:12px;font-size:15px}
+.field{margin-bottom:14px}
+.field label{font-size:13px;letter-spacing:0;text-transform:none;font-weight:600;margin:0 4px 6px}
+.field input,.field select,.field textarea{font-size:16px;padding:13px 14px;border:none;border-radius:12px;background:var(--card2)}
+.field input:focus,.field select:focus,.field textarea:focus{box-shadow:0 0 0 2px var(--acc)}
+.days{gap:6px}
+.days .d{padding:12px 0;border:none;border-radius:12px;font-size:14px;background:var(--card2)}
+.weight-input-row input{font-size:16px;padding:12px 14px;border:none;border-radius:12px;background:var(--card2)}
+.weight-input-row button{min-width:50px;border-radius:12px;font-size:20px}
+.weight-chart,.weight-stat{border:none;border-radius:16px}
+.weight-stat .v{font-size:22px}
+.weight-stat .l{font-size:12px;text-transform:none;letter-spacing:0}
+.weight-item{padding:12px 14px;border-radius:12px;font-size:16px}
+.time-row{padding:12px 14px;border:none;border-radius:14px}
+.time-row .lbl{font-size:16px}
+.time-row .lbl small{font-size:13px}
+.time-controls{gap:8px}
+.time-controls button{width:36px;height:36px;border:none;border-radius:50%;font-size:18px;background:var(--card)}
+.time-controls input{width:62px;padding:8px 4px;font-size:17px;border:none;border-radius:10px}
+.timer-preset{padding:8px 14px;border:none;border-radius:18px;font-size:14px}
+.modal-bg{background:rgba(0,0,0,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.modal{border:none;border-radius:28px 28px 0 0;padding:12px 16px calc(20px + env(safe-area-inset-bottom));max-height:92dvh}
+.modal::before{width:40px;height:5px;margin:0 auto 14px}
+.modal h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:16px;background:none;color:var(--txt);-webkit-text-fill-color:var(--txt)}
+.modal-bg.on .modal{animation:sheet .38s var(--ease)}
+@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
+.info-block{padding:14px;border:none;border-radius:16px;margin-bottom:10px}
+.info-block h4{font-size:17px}
+.info-block p{font-size:15px;line-height:1.5}
+.timer-display{font-size:72px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.timer-phase{font-size:13px;letter-spacing:.04em}
+.tcell{border:none;border-radius:14px;padding:10px}
+.tcell .lbl{font-size:12px;text-transform:none;letter-spacing:0}
+.tcell .v{font-size:17px}
+.emoji-picker span{width:40px;height:40px;font-size:22px}
+.photo-zone{border-radius:14px;min-height:96px}
+nav.bottom{background:color-mix(in srgb,var(--bg2) 82%,transparent);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);border-top:.5px solid color-mix(in srgb,var(--line) 80%,transparent);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+nav.bottom button{font-size:10px;font-weight:500;gap:3px;max-width:none;padding:4px 0}
+nav.bottom button svg{width:26px;height:26px}
+nav.bottom button.on{color:var(--acc)}
+.fab{width:56px;height:56px;bottom:calc(76px + env(safe-area-inset-bottom));right:16px;font-size:30px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.fab-menu{bottom:calc(142px + env(safe-area-inset-bottom));right:16px;gap:8px}
+.fab-menu.on{animation:pop .22s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
+.fab-menu button{padding:14px 18px;border:none;border-radius:16px;font-size:16px;background:var(--card);box-shadow:var(--shadow-1)}
+.toast{bottom:calc(92px + env(safe-area-inset-bottom));padding:12px 18px;border-radius:22px;font-size:15px;background:color-mix(in srgb,var(--txt) 90%,transparent);color:var(--bg);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.xp-fly{top:calc(70px + env(safe-area-inset-top));font-size:20px;border-radius:24px}
+.exec-header{padding:calc(12px + env(safe-area-inset-top)) 16px 12px;border-bottom:.5px solid var(--line);background:color-mix(in srgb,var(--bg2) 85%,transparent);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.exec-header .close-x{width:36px;height:36px;border:none;border-radius:50%;background:var(--card2)}
+.exec-header .title{font-size:17px}
+.exec-header .progress-txt{font-size:15px}
+.exec-body{padding:20px 20px 12px}
+.exec-ex-name{font-size:30px;letter-spacing:-.02em;margin:14px 0 8px}
+.exec-ex-tags .tag{font-size:13px;padding:4px 10px}
+.exec-timer{font-size:92px;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:14px 0}
+.exec-phase{font-size:14px;letter-spacing:.04em}
+.exec-progress{height:8px}
+.exec-dosage{padding:16px;border:none;border-radius:20px}
+.exec-dosage .item .lbl{font-size:12px;text-transform:none;letter-spacing:0}
+.exec-dosage .item .val{font-size:24px}
+.exec-footer{padding:12px 20px calc(16px + env(safe-area-inset-bottom));border-top:none;background:transparent}
+.exec-controls .btn{padding:14px}
+.exec-footer .finish-btn{min-height:56px;border-radius:16px;font-size:18px}
+button:focus-visible,.chip:focus-visible,.day:focus-visible,.mday:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:600px){.app{padding-left:0;padding-right:0}header.top{margin-left:0;margin-right:0}}
 </style>
 </head>
 <body>
 
 <div class="app">
   <header class="top">
-    <div class="logo">АС <span>FIT v2.5</span></div>
+    <div class="logo">АС <span>FIT v2.6</span></div>
     <div class="xp-head" onclick="navTo('v-stat')">
       <div class="xp-lvl" id="headLvl">1</div>
       <div class="xp-info">
@@ -429,7 +551,7 @@ nav.bottom button.on{color:var(--acc)}
 
   <section class="view on" id="v-main">
     <div class="prog-row">
-      <div class="prog"><div class="lbl">Неделя</div><div class="val" id="weekNum">1<span style="color:var(--mut);font-size:9px">/52</span></div><div class="bar"><i style="width:0%"></i></div></div>
+      <div class="prog"><div class="lbl">Неделя</div><div class="val" id="weekNum">1</div><div class="bar"><i style="width:0%"></i></div></div>
       <div class="prog"><div class="lbl">Месяц</div><div class="val" id="monthLabel">—</div><div class="bar"><i style="width:0%"></i></div></div>
       <div class="prog"><div class="lbl">XP</div><div class="val" id="xpTopVal">0</div><div class="bar"><i id="xpTopBar" style="width:0%"></i></div></div>
     </div>
@@ -482,54 +604,41 @@ nav.bottom button.on{color:var(--acc)}
     <div class="filter-row">
       <div class="filter-toggle" id="zonesToggle" onclick="toggleFilterBody('zones')">
         <div class="lbl"><span class="em">🎯</span>Зоны</div>
-        <div style="display:flex;align-items:center;gap:5px">
-          <span class="counter" id="zonesCount">0</span>
-          <span class="arrow">▼</span>
-        </div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="counter" id="zonesCount">0</span><span class="arrow">▼</span></div>
       </div>
     </div>
     <div class="filter-body" id="zonesBody"><div class="pills-scroll" id="zones"></div></div>
     <div class="filter-row">
       <div class="filter-toggle" id="gearsToggle" onclick="toggleFilterBody('gears')">
         <div class="lbl"><span class="em">🎒</span>Снаряды</div>
-        <div style="display:flex;align-items:center;gap:5px">
-          <span class="counter" id="gearsCount">0</span>
-          <span class="arrow">▼</span>
-        </div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="counter" id="gearsCount">0</span><span class="arrow">▼</span></div>
       </div>
     </div>
     <div class="filter-body" id="gearsBody">
       <div class="pills-scroll" id="gears"></div>
-      <button class="btn small full" style="margin-top:4px" onclick="addCustomGear()">+ Свой снаряд</button>
+      <button class="btn small full" style="margin-top:8px" onclick="addCustomGear()">+ Свой снаряд</button>
     </div>
     <div class="filter-row">
       <div class="filter-toggle" id="skillsToggle" onclick="toggleFilterBody('skills')">
         <div class="lbl"><span class="em">⭐</span>Навыки</div>
-        <div style="display:flex;align-items:center;gap:5px">
-          <span class="counter" id="skillsCount">0</span>
-          <span class="arrow">▼</span>
-        </div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="counter" id="skillsCount">0</span><span class="arrow">▼</span></div>
       </div>
     </div>
     <div class="filter-body" id="skillsBody"><div class="pills-scroll" id="skills"></div></div>
     <div class="sec-title">Упражнения (<span id="exCount">0</span>)</div>
     <div id="exList"></div>
-    <div class="btn-row" style="margin-top:6px">
+    <div class="btn-row" style="margin-top:10px">
       <button class="btn primary" onclick="openExModal()">+ Упражнение</button>
       <button class="btn" onclick="openCompModal()">+ Комплекс</button>
     </div>
-    <div class="btn-row" style="margin-top:4px">
+    <div class="btn-row" style="margin-top:10px">
       <button class="btn danger full" onclick="clearAllEx()">🗑 Очистить все</button>
     </div>
   </section>
 
-  <!-- ===== КОМПЛЕКСЫ — ОБЫЧНАЯ ВКЛАДКА ===== -->
   <section class="view" id="v-comps">
     <div class="card">
-      <h2>
-        <span class="lft"><span class="dot"></span>Мои комплексы</span>
-        <span class="cnt-badge" id="compsCount">0</span>
-      </h2>
+      <h2><span class="lft"><span class="dot"></span>Мои комплексы</span><span class="cnt-badge" id="compsCount">0</span></h2>
       <button class="btn primary full" onclick="openCompModal()">+ Новый комплекс</button>
     </div>
     <div id="compsList" class="comps-list"></div>
@@ -549,22 +658,10 @@ nav.bottom button.on{color:var(--acc)}
         <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
       </div>
     </div>
-    <div class="card">
-      <h2><span class="lft"><span class="dot"></span>🎒 Снаряды</span></h2>
-      <div id="skillGears" class="stat-list"></div>
-    </div>
-    <div class="card">
-      <h2><span class="lft"><span class="dot"></span>💪 Зоны</span></h2>
-      <div id="skillZones" class="stat-list"></div>
-    </div>
-    <div class="card">
-      <h2><span class="lft"><span class="dot"></span>🎯 Навыки</span></h2>
-      <div id="skillSkills" class="stat-list"></div>
-    </div>
-    <div class="card">
-      <h2><span class="lft"><span class="dot"></span>XP Лог</span></h2>
-      <div id="xpLog"></div>
-    </div>
+    <div class="card"><h2><span class="lft"><span class="dot"></span>🎒 Снаряды</span></h2><div id="skillGears" class="stat-list"></div></div>
+    <div class="card"><h2><span class="lft"><span class="dot"></span>💪 Зоны</span></h2><div id="skillZones" class="stat-list"></div></div>
+    <div class="card"><h2><span class="lft"><span class="dot"></span>🎯 Навыки</span></h2><div id="skillSkills" class="stat-list"></div></div>
+    <div class="card"><h2><span class="lft"><span class="dot"></span>XP Лог</span></h2><div id="xpLog"></div></div>
     <div class="card">
       <h2><span class="lft"><span class="dot"></span>Сводка</span></h2>
       <div class="stats-grid">
@@ -574,18 +671,9 @@ nav.bottom button.on{color:var(--acc)}
         <div class="mini-stat"><div class="v" id="stGears">0</div><div class="l">Снарядов</div></div>
       </div>
     </div>
-    <div class="card">
-      <h2><span class="lft"><span class="dot"></span>Снаряды (топ)</span></h2>
-      <div class="stat-list" id="statGears"></div>
-    </div>
-    <div class="card">
-      <h2><span class="lft"><span class="dot"></span>Зоны (топ)</span></h2>
-      <div class="stat-list" id="statZones"></div>
-    </div>
-    <div class="card">
-      <h2><span class="lft"><span class="dot"></span>Навыки (топ)</span></h2>
-      <div class="stat-list" id="statSkills"></div>
-    </div>
+    <div class="card"><h2><span class="lft"><span class="dot"></span>Снаряды (топ)</span></h2><div class="stat-list" id="statGears"></div></div>
+    <div class="card"><h2><span class="lft"><span class="dot"></span>Зоны (топ)</span></h2><div class="stat-list" id="statZones"></div></div>
+    <div class="card"><h2><span class="lft"><span class="dot"></span>Навыки (топ)</span></h2><div class="stat-list" id="statSkills"></div></div>
   </section>
 
   <section class="view" id="v-prof">
@@ -601,7 +689,7 @@ nav.bottom button.on{color:var(--acc)}
           <div class="pmeta">Возраст: <b id="pAge">34</b> · Масса: <b id="pWeight">78</b> кг</div>
         </div>
       </div>
-      <div class="btn-row" style="margin-top:6px">
+      <div class="btn-row">
         <button class="btn small" onclick="document.getElementById('avatarInput').click()">📷 Аватар</button>
         <button class="btn small danger" onclick="removeAvatar()">Убрать</button>
       </div>
@@ -610,8 +698,8 @@ nav.bottom button.on{color:var(--acc)}
       <h2><span class="lft"><span class="dot"></span>Профиль</span></h2>
       <div class="field"><label>Имя</label><input id="inName"></div>
       <div class="row">
-        <div class="field"><label>Возраст</label><input id="inAge" type="number"></div>
-        <div class="field"><label>Масса, кг</label><input id="inWeight" type="number"></div>
+        <div class="field"><label>Возраст</label><input id="inAge" type="number" inputmode="numeric"></div>
+        <div class="field"><label>Масса, кг</label><input id="inWeight" type="number" inputmode="decimal"></div>
       </div>
       <button class="btn primary full" onclick="saveProfile()">Сохранить</button>
     </div>
@@ -626,20 +714,20 @@ nav.bottom button.on{color:var(--acc)}
       <div class="time-editor" id="timeEditor"></div>
       <div class="btn-row">
         <button class="btn primary" onclick="openModal('m-timer')">▶ Открыть</button>
-        <button class="btn" onclick="saveTimerConfig()">💾</button>
+        <button class="btn" onclick="saveTimerConfig()">💾 Сохранить</button>
       </div>
-      <button class="btn full small" style="margin-top:4px" onclick="resetTimerConfig()">⟳ Сброс</button>
+      <button class="btn full small" style="margin-top:10px" onclick="resetTimerConfig()">⟳ Сброс</button>
     </div>
     <div class="card">
       <h2><span class="lft"><span class="dot"></span>🎨 Выбор темы</span></h2>
       <div class="themes-grid" id="themesGrid"></div>
-      <div class="note" style="margin-top:6px">Кнопка ☀️/🌙 в шапке переключает светлый/тёмный вариант выбранной темы.</div>
+      <div class="note">Кнопка ☀️/🌙 в шапке переключает светлый/тёмный вариант выбранной темы.</div>
     </div>
     <div class="card">
       <h2><span class="lft"><span class="dot"></span>Обмен</span></h2>
-      <button class="btn blue full" style="margin-bottom:4px" onclick="exportDB()">📤 Экспорт</button>
-      <button class="btn green full" style="margin-bottom:4px" onclick="document.getElementById('importInput').click()">📥 Импорт</button>
-      <button class="btn full" style="margin-bottom:4px" onclick="shareDB()">🔗 Поделиться</button>
+      <button class="btn blue full" style="margin-bottom:10px" onclick="exportDB()">📤 Экспорт</button>
+      <button class="btn green full" style="margin-bottom:10px" onclick="document.getElementById('importInput').click()">📥 Импорт</button>
+      <button class="btn full" style="margin-bottom:10px" onclick="shareDB()">🔗 Поделиться</button>
       <button class="btn full" onclick="copyDB()">📋 В буфер</button>
       <input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="importDB(this)">
     </div>
@@ -663,9 +751,9 @@ nav.bottom button.on{color:var(--acc)}
 
 <nav class="bottom">
   <button class="on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>Календарь</button>
-  <button data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>Упр.</button>
+  <button data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>Упражнения</button>
   <button data-v="v-comps" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>Комплексы</button>
-  <button data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>XP</button>
+  <button data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>Опыт</button>
   <button data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>Профиль</button>
 </nav>
 
@@ -690,7 +778,7 @@ nav.bottom button.on{color:var(--acc)}
     <canvas class="weight-chart" id="weightChart" width="600" height="360"></canvas>
     <div class="weight-input-row">
       <input type="date" id="wDate">
-      <input type="number" step="0.1" placeholder="Вес, кг" id="wValue">
+      <input type="number" step="0.1" inputmode="decimal" placeholder="Вес, кг" id="wValue">
       <button onclick="addWeightEntry()">+</button>
     </div>
     <div class="weight-list" id="weightList"></div>
@@ -734,7 +822,7 @@ nav.bottom button.on{color:var(--acc)}
       <div class="field"><label>С</label><input type="date" id="tStartDate"></div>
       <div class="field"><label>По</label><input type="date" id="tEndDate"></div>
     </div>
-    <div class="note" style="margin-bottom:7px">📅 Пусто = бессрочно</div>
+    <div class="note" style="margin-bottom:14px">📅 Пусто = бессрочно</div>
     <div class="field">
       <label>Дни недели</label>
       <div class="days" id="daysRow">
@@ -749,15 +837,15 @@ nav.bottom button.on{color:var(--acc)}
     </div>
     <div class="row">
       <div class="field"><label>Время</label><input type="time" id="tTime" value="16:00"></div>
-      <div class="field"><label>Длит., мин</label><input type="number" id="tDuration" value="30"></div>
+      <div class="field"><label>Длит., мин</label><input type="number" inputmode="numeric" id="tDuration" value="30"></div>
     </div>
     <div class="sec-title">Упражнения</div>
-    <div id="tExList"><div class="empty" style="padding:6px">Пока пусто</div></div>
-    <div class="btn-row" style="margin-top:4px">
+    <div id="tExList"><div class="empty">Пока пусто</div></div>
+    <div class="btn-row" style="margin-top:8px">
       <button class="btn small" onclick="openPickEx('train')">+ Упражнение</button>
       <button class="btn small" onclick="openPickComp('train')">+ Комплекс</button>
     </div>
-    <button class="btn primary full" style="margin-top:8px" onclick="saveTrain()">Сохранить</button>
+    <button class="btn primary full" style="margin-top:14px" onclick="saveTrain()">Сохранить</button>
     <button class="close" onclick="closeModal('m-train')">Отмена</button>
   </div>
 </div>
@@ -775,9 +863,9 @@ nav.bottom button.on{color:var(--acc)}
     <h3 id="compModalTitle">Новый комплекс</h3>
     <div class="field"><label>Название *</label><input id="cName"></div>
     <div class="sec-title">Упражнения</div>
-    <div id="cExList"><div class="empty" style="padding:6px">Пока пусто</div></div>
-    <button class="btn full small" style="margin-top:4px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
-    <button class="btn primary full" style="margin-top:8px" onclick="saveComp()">Сохранить</button>
+    <div id="cExList"><div class="empty">Пока пусто</div></div>
+    <button class="btn full small" style="margin-top:8px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
+    <button class="btn primary full" style="margin-top:14px" onclick="saveComp()">Сохранить</button>
     <button class="close" onclick="closeModal('m-comp')">Отмена</button>
   </div>
 </div>
@@ -805,8 +893,8 @@ nav.bottom button.on{color:var(--acc)}
 <div class="modal-bg" id="m-ex-config" onclick="if(event.target===this)closeModal('m-ex-config')">
   <div class="modal">
     <h3 id="exCfgTitle">Настройка</h3>
-    <div class="field"><label>Упражнение</label><div id="exCfgName" style="font-size:12px;font-weight:700;padding:7px 9px;background:var(--card);border-radius:7px"></div></div>
-    <div class="note" style="margin-bottom:7px">💡 Введи <b>X</b> → спросим во время тренировки</div>
+    <div class="field"><label>Упражнение</label><div id="exCfgName" style="font-size:17px;font-weight:600;padding:13px 14px;background:var(--card2);border-radius:12px"></div></div>
+    <div class="note" style="margin-bottom:14px">💡 Введи <b>X</b> → спросим во время тренировки</div>
     <div class="row">
       <div class="field"><label>Подходы</label><input type="text" id="exCfgSets" value="3"></div>
       <div class="field"><label>Повторы</label><input type="text" id="exCfgReps" value="10"></div>
@@ -847,7 +935,7 @@ nav.bottom button.on{color:var(--acc)}
     <div class="field"><label>Название</label><input id="ngName" placeholder="Канат"></div>
     <div class="field">
       <label>Значок</label>
-      <input id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:18px;text-align:center">
+      <input id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:22px;text-align:center">
       <div class="emoji-picker" id="emojiPicker"></div>
     </div>
     <button class="btn primary full" onclick="saveCustomGear()">Добавить</button>
@@ -860,86 +948,33 @@ nav.bottom button.on{color:var(--acc)}
     <h3>📖 Как пользоваться</h3>
     <div class="info-block">
       <h4>🏋️ Тренировки</h4>
-      <p><b>Создать:</b> главный экран → «+ Тренировка». Заполни название, выбери <b>период</b> (с какого по какое число), отметь <b>дни недели</b> и время.</p>
-      <p><b>Пример:</b> «Скакалка», с 1 по 30 ноября, Пн/Ср/Пт, 18:00. Тренировка появится в календаре только на эти даты. Если период пустой — действует бессрочно, пока не удалишь.</p>
-      <p><b>Внутри тренировки:</b> «+ Упражнение» (готовое) или «+ Комплекс» (набор). У каждого упражнения задаёшь подходы, повторы, время, отдых, вес.</p>
-      <p><b>Редактировать день:</b> если в конкретный день нужна другая дозировка (не во всех днях), открой тренировку в этот день → у упражнения «✏️». Правки сохранятся <b>только для этого дня</b>.</p>
+      <p><b>Создать:</b> главный экран → «+ Тренировка». Укажи название, <b>период</b> (с какого по какое число), <b>дни недели</b> и время. Пустой период — бессрочно.</p>
+      <p><b>Внутри:</b> «+ Упражнение» или «+ Комплекс». Для каждого задаются подходы, повторы, время, отдых и вес.</p>
+      <p><b>Правка одного дня:</b> открой тренировку в нужный день → «✏️» у упражнения. Изменения сохранятся только для этого дня.</p>
     </div>
     <div class="info-block">
-      <h4>✅ Выполнение тренировки</h4>
-      <p><b>Отметить ✓</b> — начисляется XP. Работает только в день тренировки или в прошлые дни. На будущих днях заблокировано 🔒.</p>
-      <p><b>▶ Запустить с таймером</b> — кнопка рядом с галочкой. Полноэкранный режим: таймер, отдых, переходы между упражнениями. В конце — «Засчитать тренировку» (автоматически ставит ✓ и начисляет XP).</p>
+      <h4>✅ Выполнение</h4>
+      <p><b>Галочка</b> начисляет XP. Работает в день тренировки и в прошлые дни, будущие дни заблокированы 🔒.</p>
+      <p><b>▶</b> запускает полноэкранный режим с таймером и отдыхом. В конце — «Засчитать тренировку».</p>
     </div>
     <div class="info-block">
       <h4>⭐ X-параметры</h4>
-      <p>При создании тренировки в дозировке упражнения можно ввести <b>X</b> вместо числа (подходы / повторы / время / вес / отдых).</p>
-      <p><b>Что даёт:</b> перед началом упражнения в режиме выполнения приложение спросит, какое значение ты реально сделаешь. Например, «Подходы: X» — спросит «сколько подходов?».</p>
-      <p>Удобно, когда не знаешь заранее, сколько осилишь, или когда работаешь «до отказа».</p>
+      <p>Вместо числа в дозировке можно ввести <b>X</b>. Перед упражнением приложение спросит, какое значение ты реально выполнишь.</p>
     </div>
     <div class="info-block">
-      <h4>💪 Упражнения</h4>
-      <p>У каждого упражнения может быть <b>несколько зон, снарядов и навыков</b> одновременно. Например, «Прыжки на скакалке» — зона Кардио, снаряд Скакалка, навык Координация.</p>
-      <p><b>Формат XP определяет, как начисляется опыт:</b></p>
-      <p>⏱ <b>Время</b> — XP = секунды × 0.01 (планка 60 сек = 0.6 XP)</p>
+      <h4>💪 Упражнения и XP</h4>
+      <p>⏱ <b>Время</b> — XP = секунды × 0.01</p>
       <p>🏋️ <b>Вес × повторы</b> — XP = (вес / масса тела) × 0.01 × повторы</p>
       <p>💪 <b>Свой вес</b> — XP = повторы × 0.1</p>
-      <p><b>Фото:</b> нажми 🖼 в модалке — выбери картинку с телефона, сжимается автоматически.</p>
-    </div>
-    <div class="info-block">
-      <h4>📋 Комплексы</h4>
-      <p>Комплекс — сохранённый набор упражнений с дозировками. Создаёшь один раз, потом вставляешь в любую тренировку одним тапом.</p>
-      <p><b>Где:</b> вкладка «📋 Комплексы» в нижнем баре.</p>
-      <p><b>Что можно:</b> создать (+), отредактировать (✏️), удалить (🗑).</p>
-      <p><b>В тренировке:</b> при создании/редактировании нажми «+ Комплекс» → выбери нужный — все упражнения добавятся с сохранёнными дозировками.</p>
-    </div>
-    <div class="info-block">
-      <h4>🎒 Зоны / Снаряды / Навыки</h4>
-      <p>Три категории для тегирования и фильтрации упражнений. Упражнение может иметь несколько тегов из каждой.</p>
-      <p><b>Компактный вид:</b> на экране «Упр.» три свёрнутых блока — Зоны, Снаряды, Навыки. Нажми на блок — раскроется со списком пилюль. Активные фильтры подсвечены, в бейдже счётчик.</p>
-      <p><b>Свой снаряд:</b> внутри блока «Снаряды» — кнопка «+ Свой снаряд». Введи название, выбери эмодзи — снаряд появится в списке.</p>
-    </div>
-    <div class="info-block">
-      <h4>⚖️ Журнал веса</h4>
-      <p>Профиль → «⚖️ Журнал веса» → «Открыть журнал».</p>
-      <p><b>Что там:</b> текущий вес / минимум / максимум, график изменений и список всех записей.</p>
-      <p><b>Как добавить:</b> выбери дату, введи вес, нажми «+». Если на эту дату уже есть запись — заменится новой.</p>
-      <p>Данные веса используются в формуле XP для упражнений с отягощением.</p>
-    </div>
-    <div class="info-block">
-      <h4>⭐ Опыт (XP) и уровни</h4>
-      <p>Три независимые прокачки:</p>
-      <p>🧍 <b>Общий XP атлета</b> — уровень N → N+1 требует N XP (1→2 = 1 XP, 2→3 = 2 XP, 3→4 = 3 XP…).</p>
-      <p>🎒 <b>XP каждого снаряда</b> — Скакалка, Гиря, Турник — у каждого своя прокачка.</p>
-      <p>💪 <b>XP каждой зоны</b> — Спина, Бедра, Грудь и т.д. качаются отдельно.</p>
-      <p>🎯 <b>XP каждого навыка</b> — Координация, Сила, Скорость и т.д.</p>
-      <p><b>8 рангов:</b> Новичок (1–4) → Любитель (5–9) → Атлет (10–19) → Спортсмен (20–34) → Мастер (35–49) → Ветеран (50–74) → Чемпион (75–99) → Легенда (100+).</p>
+      <p>Уровень N → N+1 требует N XP. Ранги: Новичок (1–4), Любитель (5–9), Атлет (10–19), Спортсмен (20–34), Мастер (35–49), Ветеран (50–74), Чемпион (75–99), Легенда (100+).</p>
     </div>
     <div class="info-block">
       <h4>🌙 Распад опыта</h4>
-      <p>Если долго не тренировать снаряд, зону или навык — их XP постепенно снижается.</p>
-      <p>• 7–13 дней: −0.1% в день</p>
-      <p>• 14–29 дней: −0.25% в день</p>
-      <p>• 30–59 дней: −0.5% в день</p>
-      <p>• 60+ дней: −1% в день</p>
-      <p>До 7 дней — ничего не теряется. Общий XP атлета тает медленнее (−0.5…−2 XP/день).</p>
-    </div>
-    <div class="info-block">
-      <h4>⏱ Таймер</h4>
-      <p>Профиль → блок «Таймер». Шесть параметров + 6 пресетов (Табата, HIIT, EMOM, Силовой, Растяжка, Круги). Все поля можно вводить цифрами с клавиатуры.</p>
-    </div>
-    <div class="info-block">
-      <h4>🎨 Темы и день/ночь</h4>
-      <p>Профиль → «🎨 Выбор темы». Доступны: Neon, Ocean, Matrix, Royal, Sunset, Mint, Carbon, Cyber, Sand, а также 3 варианта <b>«Блокнот»</b> (светлая, тёмная, сепия).</p>
-      <p>Переключатель ☀️/🌙 в шапке меняет светлый/тёмный вариант текущей темы одним нажатием.</p>
+      <p>Снаряды, зоны и навыки, которые не тренируешь, теряют XP: 7–13 дней −0.1% в день, 14–29 дней −0.25%, 30–59 дней −0.5%, 60+ дней −1%. До 7 дней ничего не теряется.</p>
     </div>
     <div class="info-block">
       <h4>💾 Экспорт / Импорт</h4>
-      <p>Профиль → «Обмен».</p>
-      <p>📤 <b>Экспорт</b> — файл .json со всем содержимым.</p>
-      <p>📥 <b>Импорт</b> — спросит: «добавить к текущим» или «заменить».</p>
-      <p>🔗 <b>Поделиться</b> — системное меню (Telegram, WhatsApp, AirDrop).</p>
-      <p>📋 <b>В буфер</b> — копирует JSON в буфер обмена.</p>
-      <p>Всё хранится локально в браузере. Делай экспорт раз в неделю-две на случай очистки.</p>
+      <p>Профиль → «Обмен». Данные хранятся локально в браузере, поэтому делай экспорт раз в неделю-две. При импорте можно добавить данные к текущим или заменить их.</p>
     </div>
     <button class="close" onclick="closeModal('m-info')">Понятно</button>
   </div>
@@ -947,6 +982,10 @@ nav.bottom button.on{color:var(--acc)}
 
 <div class="toast" id="toast"></div>
 <script>
+/* ==================== УТИЛИТЫ ==================== */
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function parseISO(s){ const p = String(s).split('-').map(Number); return new Date(p[0], (p[1]||1)-1, p[2]||1); }
+
 /* ==================== КОНСТАНТЫ ==================== */
 const DEFAULT_ZONES = [
   {id:'cardio',name:'Кардио',emoji:'🫁'},{id:'neck',name:'Шея',emoji:'🦒'},
@@ -971,7 +1010,6 @@ const DEFAULT_SKILLS = [
   {id:'flex',name:'Гибкость',emoji:'🧘'},{id:'power',name:'Мощность',emoji:'🚀'},
   {id:'balance',name:'Баланс',emoji:'⚖️'},{id:'agility',name:'Ловкость',emoji:'🐆'},
 ];
-/* ===== ТЕМЫ С ПАРАМИ ДЕНЬ/НОЧЬ ===== */
 const THEMES = [
   {id:'neon', name:'Neon', night:{bg:'#0e1116',bg2:'#151a22',card:'#1a2029',card2:'#222a36',line:'#2a3340',txt:'#e8edf4',mut:'#8a97a8',acc:'#ff5b2e',acc2:'#ffb02e'}, day:{bg:'#fff7ed',bg2:'#ffedd5',card:'#ffffff',card2:'#fff',line:'#ffd6b8',txt:'#1c1410',mut:'#8a7568',acc:'#c2410c',acc2:'#ea580c'}},
   {id:'ocean', name:'Ocean', night:{bg:'#08131c',bg2:'#0d1f2d',card:'#102636',card2:'#153244',line:'#1d435b',txt:'#e0f4ff',mut:'#7ba9c7',acc:'#00d4ff',acc2:'#0088cc'}, day:{bg:'#eff8ff',bg2:'#dbeafe',card:'#fff',card2:'#eff6ff',line:'#bfdbfe',txt:'#0c1f2e',mut:'#5b7a99',acc:'#0284c7',acc2:'#0369a1'}},
@@ -982,7 +1020,7 @@ const THEMES = [
   {id:'carbon', name:'Carbon', night:{bg:'#0a0a0a',bg2:'#141414',card:'#1c1c1c',card2:'#242424',line:'#333',txt:'#f0f0f0',mut:'#888',acc:'#e5e5e5',acc2:'#a3a3a3'}, day:{bg:'#fafafa',bg2:'#f5f5f5',card:'#fff',card2:'#f8f8f8',line:'#e5e5e5',txt:'#0a0a0a',mut:'#737373',acc:'#404040',acc2:'#262626'}},
   {id:'cyber', name:'Cyber', night:{bg:'#0a0518',bg2:'#130a26',card:'#1a0f33',card2:'#231545',line:'#382264',txt:'#f0e8ff',mut:'#9d7dd6',acc:'#00e5ff',acc2:'#ff00e5'}, day:{bg:'#faf5ff',bg2:'#f3e8ff',card:'#fff',card2:'#faf5ff',line:'#e9d5ff',txt:'#1e1b4b',mut:'#7c5ea8',acc:'#0891b2',acc2:'#c026d3'}},
   {id:'sand', name:'Sand', night:{bg:'#2a2419',bg2:'#332c1f',card:'#3b3225',card2:'#453a2a',line:'#5c4f3a',txt:'#f0e6d0',mut:'#a89880',acc:'#d4a05a',acc2:'#a87640'}, day:{bg:'#f5f1e8',bg2:'#ebe4d6',card:'#fff',card2:'#f9f6ee',line:'#d6cdb8',txt:'#2a2419',mut:'#8a7d63',acc:'#b45309',acc2:'#78350f'}},
-  {id:'notebook', name:'Блокнот', isNotebook:true, night:{bg:'#1a1a15',bg2:'#252420',card:'#2a2925',card2:'#33322c',line:'#43413a',txt:'#e8e3d3',mut:'#9a9584',acc:'#e0a84c',acc2:'#c9913e'}, day:{bg:'#f5f5f0',bg2:'#ebeae0',card:'#fffef8',card2:'#f7f6ec',line:'#dcd7c5',txt:'#2a2a24',mut:'#7a7568',acc:'#c9913e',acc2:'#8a6b3a'}, sepia:{bg:'#ede4d0',bg2:'#e2d7bd',card:'#f5eed8',card2:'#ebe2c8',line:'#d0c4a5',txt:'#3d3425',mut:'#857a63',acc:'#9b7a3a',acc2:'#6b5220'}}
+  {id:'notebook', name:'Блокнот', isNotebook:true, night:{bg:'#1a1a15',bg2:'#252420',card:'#2a2925',card2:'#33322c',line:'#43413a',txt:'#e8e3d3',mut:'#9a9584',acc:'#e0a84c',acc2:'#c9913e'}, day:{bg:'#f5f5f0',bg2:'#ebeae0',card:'#fffef8',card2:'#f7f6ec',line:'#dcd7c5',txt:'#2a2a24',mut:'#7a7568',acc:'#c9913e',acc2:'#8a6b3a'}}
 ];
 const MONTHS_RU = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const MONTHS_RU_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
@@ -1008,7 +1046,10 @@ function rankForLevel(l){ let r = RANKS[0]; for(const x of RANKS) if(l >= x.min)
 /* ==================== STORE ==================== */
 const store = {
   get(k, d){ try{ const v = localStorage.getItem('as2_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
-  set(k, v){ try{ localStorage.setItem('as2_'+k, JSON.stringify(v)); }catch(e){ console.error(e); } }
+  set(k, v){
+    try{ localStorage.setItem('as2_'+k, JSON.stringify(v)); }
+    catch(e){ console.error(e); if(typeof toast==='function') toast('Память заполнена: удали фото или сделай экспорт'); }
+  }
 };
 
 /* ==================== ДАННЫЕ ==================== */
@@ -1169,7 +1210,7 @@ function updateXpUI(){
   setT('xpLevel',info.level); setT('xpRank',rank.name); setT('xpTotal',Math.round(totalXp));
   setT('xpToNext',Math.round(info.need-info.current)); setW('xpBar',pct);
   const top = document.getElementById('xpTopVal');
-  if(top){ top.innerHTML = Math.round(totalXp)+'<span style="color:var(--mut);font-size:9px"> XP</span>'; setW('xpTopBar',pct); }
+  if(top){ top.innerHTML = Math.round(totalXp)+'<span style="color:var(--mut);font-size:12px;font-weight:500"> XP</span>'; setW('xpTopBar',pct); }
   renderXpLog();
 }
 function renderXpLog(){
@@ -1178,64 +1219,35 @@ function renderXpLog(){
   el.innerHTML = xpLog.slice(0,10).map(l => {
     const d = new Date(l.date);
     const dt = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
-    return '<div class="log-item"><div class="l">'+dt+' · '+l.name+'</div><div class="v">'+(l.xp>=0?'+':'')+l.xp+'</div></div>';
+    return '<div class="log-item"><div class="l">'+dt+' · '+esc(l.name)+'</div><div class="v">'+(l.xp>=0?'+':'')+l.xp+'</div></div>';
   }).join('');
 }
 
 /* ==================== ТЕМА (день/ночь) ==================== */
 function applyTheme(){
   const theme = THEMES.find(t => t.id === themeId) || THEMES[0];
-  let vars = theme.night;
-  if(themeMode === 'light') vars = theme.day;
-  if(themeMode === 'sepia' && theme.sepia) vars = theme.sepia;
-
+  const vars = themeMode === 'light' ? theme.day : theme.night;
   const root = document.documentElement;
-  root.setAttribute('data-theme', themeId + '-' + themeMode);
+  root.setAttribute('data-theme', themeId + '-' + (themeMode==='light'?'light':'dark'));
   root.setAttribute('data-notebook', theme.isNotebook ? 'true' : 'false');
-
-  // Применяем CSS-переменные напрямую
-  root.style.setProperty('--bg', vars.bg);
-  root.style.setProperty('--bg2', vars.bg2);
-  root.style.setProperty('--card', vars.card);
-  root.style.setProperty('--card2', vars.card2);
-  root.style.setProperty('--line', vars.line);
-  root.style.setProperty('--txt', vars.txt);
-  root.style.setProperty('--mut', vars.mut);
-  root.style.setProperty('--acc', vars.acc);
-  root.style.setProperty('--acc2', vars.acc2);
+  ['bg','bg2','card','card2','line','txt','mut','acc','acc2'].forEach(k => root.style.setProperty('--'+k, vars[k]));
   root.style.setProperty('--grad', 'linear-gradient(135deg,'+vars.acc+','+vars.acc2+')');
-
-  // Meta theme-color
   const meta = document.querySelector('meta[name="theme-color"]');
   if(meta) meta.setAttribute('content', vars.bg);
-
-  // Тумблер в шапке
   const sw = document.getElementById('themeSwitch');
-  if(sw){
-    sw.setAttribute('data-mode', themeMode === 'dark' ? 'dark' : 'light');
-  }
-
-  // Стили блокнота
+  if(sw) sw.setAttribute('data-mode', themeMode === 'light' ? 'light' : 'dark');
   document.body.classList.toggle('notebook-on', !!theme.isNotebook);
-
   store.set('themeId', themeId);
   store.set('themeMode', themeMode);
   renderThemes();
 }
 function setTheme(id){ themeId = id; applyTheme(); }
-function setThemeMode(mode){ themeMode = mode; applyTheme(); }
-function toggleDayNight(){
-  // Переключаем между light/dark. Если тема sepia — остаёмся в sepia (только кнопка будет означать dark)
-  if(themeMode === 'dark') themeMode = 'light';
-  else themeMode = 'dark';
-  applyTheme();
-}
+function toggleDayNight(){ themeMode = themeMode === 'dark' ? 'light' : 'dark'; applyTheme(); }
 function renderThemes(){
   const el = document.getElementById('themesGrid'); if(!el) return;
   el.innerHTML = THEMES.map(t => {
     const v = t.night;
-    const on = t.id === themeId;
-    return '<div class="theme-tile '+(on?'on':'')+'" onclick="setTheme(\''+t.id+'\')">'+
+    return '<div class="theme-tile '+(t.id===themeId?'on':'')+'" onclick="setTheme(\''+t.id+'\')">'+
       '<div class="swatch"><div style="background:'+v.bg+'"></div><div style="background:'+v.acc+'"></div><div style="background:'+v.acc2+'"></div></div>'+
       '<div class="name">'+t.name+'</div><div class="check">✓</div></div>';
   }).join('');
@@ -1337,8 +1349,7 @@ function renderWeek(){
     ? weekStart.getDate()+'–'+end.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]
     : weekStart.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]+' – '+end.getDate()+' '+MONTHS_RU_GEN[end.getMonth()];
   const rr = document.getElementById('weekRange'); if(rr) rr.textContent = range;
-  const wn = document.getElementById('weekNum');
-  if(wn) wn.innerHTML = getISOWeek(weekStart)+'<span style="color:var(--mut);font-size:9px">/52</span>';
+  const wn = document.getElementById('weekNum'); if(wn) wn.textContent = getISOWeek(weekStart);
   let html = '';
   for(let i=0;i<7;i++){
     const d = addDays(weekStart, i);
@@ -1371,13 +1382,11 @@ function renderMonth(){
   const el = document.getElementById('monthGrid'); if(el) el.innerHTML = html;
 }
 function mdayHtml(date, other){
-  const isToday = sameDay(date, TODAY);
-  const isSel = sameDay(date, selectedDate);
   const trains = getTrainsForDate(date);
   let cls = 'mday';
   if(other) cls += ' other';
-  if(isToday) cls += ' today';
-  if(isSel) cls += ' selected';
+  if(sameDay(date, TODAY)) cls += ' today';
+  if(sameDay(date, selectedDate)) cls += ' selected';
   const dots = trains.slice(0,5).map(t => '<span class="mday-dot '+(isTrainDone(date,t)?'on':'')+'"></span>').join('');
   return '<div class="'+cls+'" onclick="selectDate(new Date('+date.getFullYear()+','+date.getMonth()+','+date.getDate()+'))">'+
     '<div>'+date.getDate()+'</div><div class="mday-dots">'+dots+'</div></div>';
@@ -1412,6 +1421,9 @@ function setTrainDone(date, trId, done, xpAwarded){
   else { delete completions[key][trId]; if(!Object.keys(completions[key]).length) delete completions[key]; }
   store.set('completions', completions);
 }
+function tagList(ids, list){
+  return (ids||[]).map(id => { const x = list.find(y => y.id===id); return x ? x.emoji+esc(x.name) : ''; }).filter(Boolean).join(' ');
+}
 function renderTrainings(){
   const dLabel = selectedDate.getDate()+' '+MONTHS_RU_GEN[selectedDate.getMonth()]+' '+selectedDate.getFullYear();
   const sdl = document.getElementById('selectedDateLabel'); if(sdl) sdl.textContent = dLabel;
@@ -1425,13 +1437,11 @@ function renderTrainings(){
     const done = isTrainDone(selectedDate, tr);
     const xp = calcTrainXp(tr, eff);
     const exs = eff.exercises || [];
+    const isX = (v) => String(v).trim().toUpperCase() === 'X';
     const exListHtml = exs.map((e, idx) => {
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
-      const isX = (v) => String(v).trim().toUpperCase() === 'X';
-      const zE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji+z.name : ''; }).filter(Boolean).join(' ');
-      const gE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji+g.name : ''; }).filter(Boolean).join(' ');
-      const sE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? s.emoji+s.name : ''; }).filter(Boolean).join(' ');
+      const zE = tagList(ex.zones, zones), gE = tagList(ex.gears, gears), sE = tagList(ex.skills, skills);
       const dosage = [];
       if(e.sets) dosage.push(isX(e.sets)?'<span class="x-mark">X</span>×':e.sets+'×');
       if(e.reps) dosage.push(isX(e.reps)?'<span class="x-mark">X</span> повт':e.reps+' повт');
@@ -1439,9 +1449,9 @@ function renderTrainings(){
       if(e.weight) dosage.push(isX(e.weight)?'<span class="x-mark">X</span> кг':e.weight+' кг');
       if(e.rest) dosage.push(isX(e.rest)?'отдых <span class="x-mark">X</span>':e.rest+'с');
       return '<div class="ex-item">'+
-        '<div class="row1"><div class="ex-name">'+ex.name+'</div><div class="ex-badge">'+dosage.join(' ')+'</div></div>'+
+        '<div class="row1"><div class="ex-name">'+esc(ex.name)+'</div><div class="ex-badge">'+dosage.join(' ')+'</div></div>'+
         '<div class="row2">'+(zE?'<span class="chip-mini">'+zE+'</span>':'')+(gE?'<span class="chip-mini">'+gE+'</span>':'')+(sE?'<span class="chip-mini">'+sE+'</span>':'')+'</div>'+
-        (isFuture ? '' : '<div class="train-actions"><button onclick="editDayOverride(\''+tr.id+'\','+idx+')">✏️</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑</button></div>')+
+        (isFuture ? '' : '<div class="train-actions"><button onclick="editDayOverride(\''+tr.id+'\','+idx+')">✏️ Изменить</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑 Убрать</button></div>')+
       '</div>';
     }).join('');
     let actionsHtml;
@@ -1452,23 +1462,19 @@ function renderTrainings(){
                     '<div class="chk '+(done?'on':'')+'" onclick="event.stopPropagation();toggleTrain(\''+tr.id+'\')"></div>';
     }
     const periodInfo = (tr.startDate || tr.endDate)
-      ? '<div class="meta" style="font-size:8.5px;color:var(--acc2);margin-top:0">📅 '+(tr.startDate||'…')+'→'+(tr.endDate||'…')+'</div>'
-      : '';
+      ? '<div class="meta" style="color:var(--acc2)">📅 '+(tr.startDate||'…')+' → '+(tr.endDate||'…')+'</div>' : '';
     return '<div class="train">'+
       '<div class="train-head" onclick="toggleTrainBody(this)">'+
         '<div class="time">'+eff.time+'</div>'+
-        '<div class="info"><div class="name">'+tr.name+'</div><div class="meta">'+exs.length+' упр · '+Math.round(xp*100)/100+' XP</div>'+periodInfo+'</div>'+
+        '<div class="info"><div class="name">'+esc(tr.name)+'</div><div class="meta">'+exs.length+' упр · '+Math.round(xp*100)/100+' XP</div>'+periodInfo+'</div>'+
         '<div class="actions">'+actionsHtml+'</div>'+
       '</div>'+
-      '<div class="train-body">'+(exListHtml||'<div class="empty" style="padding:4px;font-size:10px">Нет упражнений</div>')+
-        (isFuture ? '' : '<div class="train-actions"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упр</button></div>')+
+      '<div class="train-body">'+(exListHtml||'<div class="empty">Нет упражнений</div>')+
+        (isFuture ? '' : '<div class="train-actions"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️ Тренировка</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упражнение</button></div>')+
       '</div></div>';
   }).join('');
 }
-function toggleTrainBody(head){
-  const body = head.nextElementSibling;
-  if(body) body.classList.toggle('on');
-}
+function toggleTrainBody(head){ const body = head.nextElementSibling; if(body) body.classList.toggle('on'); }
 function toggleTrain(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку отметить нельзя'); return; }
@@ -1489,11 +1495,14 @@ function toggleTrain(trainId){
 }
 
 /* ==================== РЕДАКТ ДНЯ ==================== */
+function ensureOverride(tr, key){
+  if(!tr.dayOverrides) tr.dayOverrides = {};
+  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+}
 function editDayOverride(trainId, exIndex){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   const key = isoDate(selectedDate);
-  if(!tr.dayOverrides) tr.dayOverrides = {};
-  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+  ensureOverride(tr, key);
   const e = tr.dayOverrides[key].exercises[exIndex]; if(!e) return;
   const ex = exercises.find(x => x.id === e.exId);
   exConfigTarget = {type:'override', trainId, dayKey:key, index:exIndex};
@@ -1509,16 +1518,14 @@ function removeExFromDay(trainId, exIndex){
   if(!confirm('Убрать из этого дня?')) return;
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   const key = isoDate(selectedDate);
-  if(!tr.dayOverrides) tr.dayOverrides = {};
-  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+  ensureOverride(tr, key);
   tr.dayOverrides[key].exercises.splice(exIndex, 1);
   store.set('trainings', trainings); renderTrainings(); toast('Убрано');
 }
 function addExToDay(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   const key = isoDate(selectedDate);
-  if(!tr.dayOverrides) tr.dayOverrides = {};
-  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+  ensureOverride(tr, key);
   pickTarget = 'day';
   exConfigTarget = {type:'newInDay', trainId, dayKey:key};
   openModal('m-pick-ex'); renderPickEx();
@@ -1529,18 +1536,10 @@ function editTrainFromDay(trainId){ openTrainModal(trainId); }
 function renderEx(){
   const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
   let list = exercises.filter(e => e.name.toLowerCase().includes(q));
-  if(filter==='zone'){
-    const a = [...document.querySelectorAll('#zones .chip.on')].map(c => c.dataset.val);
-    if(a.length) list = list.filter(e => (e.zones||[]).some(z => a.includes(z)));
-  }
-  if(filter==='gear'){
-    const a = [...document.querySelectorAll('#gears .chip.on')].map(c => c.dataset.val);
-    if(a.length) list = list.filter(e => (e.gears||[]).some(g => a.includes(g)));
-  }
-  if(filter==='skill'){
-    const a = [...document.querySelectorAll('#skills .chip.on')].map(c => c.dataset.val);
-    if(a.length) list = list.filter(e => (e.skills||[]).some(s => a.includes(s)));
-  }
+  const active = (sel) => [...document.querySelectorAll(sel+' .chip.on')].map(c => c.dataset.val);
+  if(filter==='zone'){ const a = active('#zones'); if(a.length) list = list.filter(e => (e.zones||[]).some(z => a.includes(z))); }
+  if(filter==='gear'){ const a = active('#gears'); if(a.length) list = list.filter(e => (e.gears||[]).some(g => a.includes(g))); }
+  if(filter==='skill'){ const a = active('#skills'); if(a.length) list = list.filter(e => (e.skills||[]).some(s => a.includes(s))); }
   const ec = document.getElementById('exCount'); if(ec) ec.textContent = list.length;
   const box = document.getElementById('exList'); if(!box) return;
   if(!list.length){ box.innerHTML = '<div class="empty">Список пуст</div>'; return; }
@@ -1549,8 +1548,8 @@ function renderEx(){
     const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).join('');
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).join('');
     return '<div class="ex" onclick="openExModal(\''+e.id+'\')">'+thumb+
-      '<div class="txt">'+e.name+(e.desc?'<div class="sub">'+e.desc+'</div>':'')+'</div>'+
-      '<div style="font-size:11px">'+zB+' '+gB+'</div>'+
+      '<div class="txt">'+esc(e.name)+(e.desc?'<div class="sub">'+esc(e.desc)+'</div>':'')+'</div>'+
+      '<div style="font-size:15px">'+zB+' '+gB+'</div>'+
       '<button class="del" onclick="event.stopPropagation();delEx(\''+e.id+'\')">✕</button></div>';
   }).join('');
 }
@@ -1579,30 +1578,20 @@ function toggleFilterBody(id){
   toggle.classList.toggle('open', isOpen);
 }
 function renderChips(){
-  const z = document.getElementById('zones');
-  if(z) z.innerHTML = zones.map(zn => {
-    const cnt = exercises.filter(e => (e.zones||[]).includes(zn.id)).length;
-    return '<div class="chip" data-val="'+zn.id+'" onclick="toggleChip(this)"><span class="emoji">'+zn.emoji+'</span>'+zn.name+' <span class="cnt">'+cnt+'</span></div>';
-  }).join('');
-  const g = document.getElementById('gears');
-  if(g) g.innerHTML = gears.map(gn => {
-    const cnt = exercises.filter(e => (e.gears||[]).includes(gn.id)).length;
-    return '<div class="chip" data-val="'+gn.id+'" onclick="toggleChip(this)"><span class="emoji">'+gn.emoji+'</span>'+gn.name+' <span class="cnt">'+cnt+'</span></div>';
-  }).join('');
-  const s = document.getElementById('skills');
-  if(s) s.innerHTML = skills.map(sk => {
-    const cnt = exercises.filter(e => (e.skills||[]).includes(sk.id)).length;
-    return '<div class="chip" data-val="'+sk.id+'" onclick="toggleChip(this)"><span class="emoji">'+sk.emoji+'</span>'+sk.name+' <span class="cnt">'+cnt+'</span></div>';
-  }).join('');
+  const build = (cid, list, key) => {
+    const el = document.getElementById(cid); if(!el) return;
+    const prev = new Set([...el.querySelectorAll('.chip.on')].map(c => c.dataset.val));
+    el.innerHTML = list.map(it => {
+      const cnt = exercises.filter(e => (e[key]||[]).includes(it.id)).length;
+      return '<div class="chip '+(prev.has(it.id)?'on':'')+'" data-val="'+it.id+'" onclick="toggleChip(this)"><span class="emoji">'+it.emoji+'</span>'+esc(it.name)+' <span class="cnt">'+cnt+'</span></div>';
+    }).join('');
+  };
+  build('zones', zones, 'zones'); build('gears', gears, 'gears'); build('skills', skills, 'skills');
   updateFilterCounters();
 }
 function updateFilterCounters(){
-  const z = document.querySelectorAll('#zones .chip.on').length;
-  const g = document.querySelectorAll('#gears .chip.on').length;
-  const s = document.querySelectorAll('#skills .chip.on').length;
-  const zc = document.getElementById('zonesCount'); if(zc) zc.textContent = z;
-  const gc = document.getElementById('gearsCount'); if(gc) gc.textContent = g;
-  const sc = document.getElementById('skillsCount'); if(sc) sc.textContent = s;
+  const set = (id, sel) => { const e = document.getElementById(id); if(e) e.textContent = document.querySelectorAll(sel+' .chip.on').length; };
+  set('zonesCount','#zones'); set('gearsCount','#gears'); set('skillsCount','#skills');
 }
 function toggleChip(el){ el.classList.toggle('on'); updateFilterCounters(); renderEx(); }
 
@@ -1626,7 +1615,7 @@ function renderMultiPick(cid, items, selectedIds){
   const el = document.getElementById(cid); if(!el) return;
   el.innerHTML = items.map(it => {
     const on = selectedIds.includes(it.id) ? 'on' : '';
-    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')"><span class="emoji">'+it.emoji+'</span>'+it.name+'</div>';
+    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')"><span class="emoji">'+it.emoji+'</span>'+esc(it.name)+'</div>';
   }).join('');
 }
 function getMultiPick(cid){
@@ -1637,22 +1626,18 @@ function saveEx(){
   const name = document.getElementById('exName').value.trim();
   if(!name){ toast('Введи название'); return; }
   const exData = {
-    id: editingExId || uid(),
-    name, photo: currentExPhoto,
-    zones: getMultiPick('exZonesPick'),
-    gears: getMultiPick('exGearsPick'),
-    skills: getMultiPick('exSkillsPick'),
+    id: editingExId || uid(), name, photo: currentExPhoto,
+    zones: getMultiPick('exZonesPick'), gears: getMultiPick('exGearsPick'), skills: getMultiPick('exSkillsPick'),
     format: document.getElementById('exFormat').value,
     desc: document.getElementById('exDesc').value.trim()
   };
-  if(editingExId){
-    const i = exercises.findIndex(x => x.id === editingExId);
-    if(i >= 0) exercises[i] = exData;
-  } else exercises.push(exData);
+  const wasEditing = !!editingExId;
+  if(wasEditing){ const i = exercises.findIndex(x => x.id === editingExId); if(i >= 0) exercises[i] = exData; }
+  else exercises.push(exData);
   store.set('exercises', exercises);
   closeModal('m-ex');
   renderEx(); renderChips(); renderStats();
-  toast(editingExId ? 'Обновлено' : 'Добавлено');
+  toast(wasEditing ? 'Обновлено' : 'Добавлено');
   editingExId = null;
 }
 
@@ -1668,30 +1653,34 @@ function openTrainModal(trainId){
   el('tStartDate').value = tr ? (tr.startDate||'') : '';
   el('tEndDate').value = tr ? (tr.endDate||'') : '';
   document.querySelectorAll('#daysRow .d').forEach(d => {
-    const day = +d.dataset.d;
-    d.classList.toggle('on', tr ? (tr.days||[]).includes(day) : false);
+    d.classList.toggle('on', tr ? (tr.days||[]).includes(+d.dataset.d) : false);
   });
   tempTrainEx = tr ? JSON.parse(JSON.stringify(tr.exercises||[])) : [];
   renderTempTrainEx();
   openModal('m-train');
 }
-function renderTempTrainEx(){
-  const el = document.getElementById('tExList'); if(!el) return;
-  if(!tempTrainEx.length){ el.innerHTML = '<div class="empty" style="padding:6px">Пока пусто</div>'; return; }
-  el.innerHTML = tempTrainEx.map((e, idx) => {
+function dosageText(e, full){
+  const isX = (v) => String(v).trim().toUpperCase() === 'X';
+  const d = [];
+  if(e.sets) d.push(isX(e.sets)?'X×':e.sets+'×');
+  if(e.reps) d.push(isX(e.reps)?'X повт':e.reps+' повт');
+  if(e.time) d.push(isX(e.time)?'Xс':e.time+'с');
+  if(full && e.weight) d.push(isX(e.weight)?'X кг':e.weight+' кг');
+  return d.join(' ');
+}
+function renderTempList(elId, list, target, withWeight){
+  const el = document.getElementById(elId); if(!el) return;
+  if(!list.length){ el.innerHTML = '<div class="empty">Пока пусто</div>'; return; }
+  el.innerHTML = list.map((e, idx) => {
     const ex = exercises.find(x => x.id === e.exId);
-    const isX = (v) => String(v).trim().toUpperCase() === 'X';
-    const dosage = [];
-    if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+'×');
-    if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
-    if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
-    if(e.weight) dosage.push(isX(e.weight)?'X кг':e.weight+' кг');
     return '<div class="comp-ex-item">'+
-      '<div class="info"><div class="nm">'+(ex?ex.name:'?')+'</div><div class="ds">'+dosage.join(' ')+'</div></div>'+
-      '<button class="btn small" onclick="openExConfig(\'train\','+idx+')">✏️</button>'+
-      '<button class="rm" onclick="removeTempEx(\'train\','+idx+')">✕</button></div>';
+      '<div class="info"><div class="nm">'+(ex?esc(ex.name):'?')+'</div><div class="ds">'+dosageText(e, withWeight)+'</div></div>'+
+      '<button class="btn small" onclick="openExConfig(\''+target+'\','+idx+')">✏️</button>'+
+      '<button class="btn small danger" onclick="removeTempEx(\''+target+'\','+idx+')">✕</button></div>';
   }).join('');
 }
+function renderTempTrainEx(){ renderTempList('tExList', tempTrainEx, 'train', true); }
+function renderTempCompEx(){ renderTempList('cExList', tempCompEx, 'comp', false); }
 function removeTempEx(t, i){
   if(t==='train'){ tempTrainEx.splice(i,1); renderTempTrainEx(); }
   else { tempCompEx.splice(i,1); renderTempCompEx(); }
@@ -1705,21 +1694,19 @@ function saveTrain(){
   const duration = +document.getElementById('tDuration').value || 30;
   const startDate = document.getElementById('tStartDate').value || '';
   const endDate = document.getElementById('tEndDate').value || '';
-  if(startDate && endDate && startDate > endDate){ toast('С позже По'); return; }
+  if(startDate && endDate && startDate > endDate){ toast('Дата «С» позже даты «По»'); return; }
   const trData = {
-    id: editingTrainId || uid(),
-    name, days, time, duration, startDate, endDate,
+    id: editingTrainId || uid(), name, days, time, duration, startDate, endDate,
     exercises: JSON.parse(JSON.stringify(tempTrainEx)),
     dayOverrides: editingTrainId ? (trainings.find(t=>t.id===editingTrainId)?.dayOverrides || {}) : {}
   };
-  if(editingTrainId){
-    const i = trainings.findIndex(t => t.id === editingTrainId);
-    if(i >= 0) trainings[i] = trData;
-  } else trainings.push(trData);
+  const wasEditing = !!editingTrainId;
+  if(wasEditing){ const i = trainings.findIndex(t => t.id === editingTrainId); if(i >= 0) trainings[i] = trData; }
+  else trainings.push(trData);
   store.set('trainings', trainings);
   closeModal('m-train');
   renderTrainings(); renderWeek(); renderMonth(); renderStats();
-  toast(editingTrainId ? 'Обновлено' : 'Добавлено');
+  toast(wasEditing ? 'Обновлено' : 'Добавлено');
   editingTrainId = null;
 }
 
@@ -1734,35 +1721,17 @@ function openCompModal(compId){
   renderTempCompEx();
   openModal('m-comp');
 }
-function renderTempCompEx(){
-  const el = document.getElementById('cExList'); if(!el) return;
-  if(!tempCompEx.length){ el.innerHTML = '<div class="empty" style="padding:6px">Пока пусто</div>'; return; }
-  el.innerHTML = tempCompEx.map((e, idx) => {
-    const ex = exercises.find(x => x.id === e.exId);
-    const isX = (v) => String(v).trim().toUpperCase() === 'X';
-    const dosage = [];
-    if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+'×');
-    if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
-    if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
-    return '<div class="comp-ex-item">'+
-      '<div class="info"><div class="nm">'+(ex?ex.name:'?')+'</div><div class="ds">'+dosage.join(' ')+'</div></div>'+
-      '<button class="btn small" onclick="openExConfig(\'comp\','+idx+')">✏️</button>'+
-      '<button class="rm" onclick="removeTempEx(\'comp\','+idx+')">✕</button></div>';
-  }).join('');
-}
 function saveComp(){
   const name = document.getElementById('cName').value.trim();
   if(!name){ toast('Введи название'); return; }
-  const cData = {id: editingCompId || uid(), name,
-    exercises: JSON.parse(JSON.stringify(tempCompEx))};
-  if(editingCompId){
-    const i = complexes.findIndex(c => c.id === editingCompId);
-    if(i >= 0) complexes[i] = cData;
-  } else complexes.push(cData);
+  const cData = {id: editingCompId || uid(), name, exercises: JSON.parse(JSON.stringify(tempCompEx))};
+  const wasEditing = !!editingCompId;
+  if(wasEditing){ const i = complexes.findIndex(c => c.id === editingCompId); if(i >= 0) complexes[i] = cData; }
+  else complexes.push(cData);
   store.set('complexes', complexes);
   closeModal('m-comp');
   renderStats(); renderCompsTab();
-  toast(editingCompId ? 'Обновлено' : 'Создано');
+  toast(wasEditing ? 'Обновлено' : 'Создано');
   editingCompId = null;
 }
 
@@ -1784,8 +1753,8 @@ function renderPickEx(){
     const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji:''; }).join('');
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji:''; }).join('');
     return '<div class="comp-ex-item" onclick="pickExercise(\''+e.id+'\')">'+
-      '<div class="info"><div class="nm">'+e.name+'</div><div class="ds">'+zB+' '+gB+'</div></div>'+
-      '<div style="font-size:14px;color:var(--acc)">+</div></div>';
+      '<div class="info"><div class="nm">'+esc(e.name)+'</div><div class="ds">'+zB+' '+gB+'</div></div>'+
+      '<div style="font-size:20px;color:var(--acc)">+</div></div>';
   }).join('');
 }
 function pickExercise(exId){
@@ -1794,11 +1763,9 @@ function pickExercise(exId){
   if(pickTarget === 'comp'){ tempCompEx.push(newEntry); renderTempCompEx(); }
   else if(pickTarget === 'train'){ tempTrainEx.push(newEntry); renderTempTrainEx(); }
   else if(pickTarget === 'day'){
-    const cfg = exConfigTarget;
-    if(!cfg) return;
+    const cfg = exConfigTarget; if(!cfg) return;
     const tr = trainings.find(t => t.id === cfg.trainId); if(!tr) return;
-    if(!tr.dayOverrides) tr.dayOverrides = {};
-    if(!tr.dayOverrides[cfg.dayKey]) tr.dayOverrides[cfg.dayKey] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+    ensureOverride(tr, cfg.dayKey);
     tr.dayOverrides[cfg.dayKey].exercises.push(newEntry);
     store.set('trainings', trainings); renderTrainings(); toast('Добавлено');
   }
@@ -1823,7 +1790,7 @@ function openExConfig(target, index){
 }
 function parseDosageValue(v){
   if(String(v).trim().toUpperCase() === 'X') return 'X';
-  return +v || 0;
+  return +String(v).replace(',','.') || 0;
 }
 function saveExConfig(){
   const cfg = exConfigTarget; if(!cfg){ closeModal('m-ex-config'); return; }
@@ -1865,8 +1832,8 @@ function openPickComp(target){
   if(!complexes.length){ el.innerHTML = '<div class="empty">Комплексов нет</div>'; }
   else {
     el.innerHTML = complexes.map(c => '<div class="comp-ex-item" onclick="pickComplex(\''+c.id+'\')">'+
-      '<div class="info"><div class="nm">'+c.name+'</div><div class="ds">'+c.exercises.length+' упр</div></div>'+
-      '<div style="font-size:14px;color:var(--acc)">+</div></div>').join('');
+      '<div class="info"><div class="nm">'+esc(c.name)+'</div><div class="ds">'+c.exercises.length+' упр</div></div>'+
+      '<div style="font-size:20px;color:var(--acc)">+</div></div>').join('');
   }
   openModal('m-pick-comp');
 }
@@ -1886,11 +1853,11 @@ function renderTrainTemplates(){
   if(!trainings.length){ el.innerHTML = '<div class="empty">Шаблонов нет</div>'; return; }
   el.innerHTML = trainings.map(tr => {
     const days = (tr.days||[]).map(d => WD_SHORT[WD_ISO.indexOf(d)]).join(' ');
-    const period = (tr.startDate||tr.endDate) ? ' · 📅 '+(tr.startDate||'…')+'→'+(tr.endDate||'…') : '';
-    return '<div class="comp-item">'+
-      '<div class="nm">'+tr.name+'</div>'+
+    const period = (tr.startDate||tr.endDate) ? ' · 📅 '+(tr.startDate||'…')+' → '+(tr.endDate||'…') : '';
+    return '<div class="comp-item" style="margin-bottom:10px">'+
+      '<div class="nm">'+esc(tr.name)+'</div>'+
       '<div class="meta"><span>📅 '+days+'</span><span>⏰ '+tr.time+'</span><span>'+tr.exercises.length+' упр'+period+'</span></div>'+
-      '<div class="train-actions" style="margin-top:4px">'+
+      '<div class="train-actions">'+
         '<button onclick="openTrainModal(\''+tr.id+'\');closeModal(\'m-train-list\')">✏️ Изменить</button>'+
         '<button onclick="delTrain(\''+tr.id+'\')">🗑 Удалить</button>'+
       '</div></div>';
@@ -1909,37 +1876,31 @@ function renderCompsTab(){
   const el = document.getElementById('compsList'); if(!el) return;
   const cnt = document.getElementById('compsCount'); if(cnt) cnt.textContent = complexes.length;
   if(!complexes.length){
-    el.innerHTML = '<div class="card"><div class="comps-empty">'+
-      '<span class="emoji">📋</span>'+
-      '<div style="font-size:13px;font-weight:800;color:var(--txt);margin-bottom:6px">Комплексов пока нет</div>'+
-      '<div>Создай первый комплекс — набор упражнений с дозировками.<br>Потом вставляй в любую тренировку одним тапом.</div>'+
-    '</div></div>';
+    el.innerHTML = '<div class="card"><div class="comps-empty"><span class="emoji">📋</span>'+
+      '<div style="font-size:17px;font-weight:700;color:var(--txt);margin-bottom:6px">Комплексов пока нет</div>'+
+      '<div>Создай первый комплекс — набор упражнений с дозировками. Потом добавляй его в любую тренировку одним нажатием.</div></div></div>';
     return;
   }
   el.innerHTML = complexes.map(c => {
     const exCount = c.exercises.length;
+    const isX = (v) => String(v).trim().toUpperCase() === 'X';
     const preview = c.exercises.slice(0, 2).map(e => {
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
-      const isX = (v) => String(v).trim().toUpperCase() === 'X';
       const d = [];
       if(e.sets) d.push(isX(e.sets)?'X':e.sets);
       if(e.reps) d.push(isX(e.reps)?'X':e.reps);
       if(e.time) d.push(isX(e.time)?'X':e.time+'с');
-      return ex.name + (d.length ? ' · ' + d.join('×') : '');
+      return esc(ex.name) + (d.length ? ' · ' + d.join('×') : '');
     }).filter(Boolean).join(', ');
     const more = exCount > 2 ? ' +'+(exCount-2) : '';
-    return '<div class="comp-card">'+
-      '<div class="cc-head">'+
-        '<div class="cc-name">'+c.name+'</div>'+
-        '<div class="cc-badge">'+exCount+' упр</div>'+
-      '</div>'+
+    return '<div class="comp-card" style="margin-bottom:10px">'+
+      '<div class="cc-head"><div class="cc-name">'+esc(c.name)+'</div><div class="cc-badge">'+exCount+' упр</div></div>'+
       '<div class="cc-preview">'+(preview || 'Пусто')+more+'</div>'+
       '<div class="cc-actions">'+
         '<button onclick="openCompModal(\''+c.id+'\')">✏️ Изменить</button>'+
         '<button onclick="delCompFromTab(\''+c.id+'\')">🗑 Удалить</button>'+
-      '</div>'+
-    '</div>';
+      '</div></div>';
   }).join('');
 }
 function delCompFromTab(id){
@@ -1964,47 +1925,33 @@ function addWeightEntry(){
   if(!date){ toast('Выбери дату'); return; }
   if(!val || val < 20 || val > 300){ toast('Введи корректный вес'); return; }
   const existing = weightLog.findIndex(w => w.date === date);
-  if(existing >= 0){ weightLog[existing].value = val; }
-  else { weightLog.push({date, value: val}); }
+  if(existing >= 0) weightLog[existing].value = val; else weightLog.push({date, value: val});
   weightLog.sort((a,b) => a.date.localeCompare(b.date));
   store.set('weightLog', weightLog);
   document.getElementById('wValue').value = '';
-  renderWeightLog();
-  drawWeightChart();
-  toast('Вес записан');
+  renderWeightLog(); drawWeightChart(); toast('Вес записан');
 }
 function delWeightEntry(date){
   weightLog = weightLog.filter(w => w.date !== date);
   store.set('weightLog', weightLog);
-  renderWeightLog();
-  drawWeightChart();
-  toast('Удалено');
+  renderWeightLog(); drawWeightChart(); toast('Удалено');
 }
 function renderWeightLog(){
-  const wCur = document.getElementById('wCurrent');
-  const wMin = document.getElementById('wMin');
-  const wMax = document.getElementById('wMax');
-  if(!weightLog.length){
-    if(wCur) wCur.textContent = '—';
-    if(wMin) wMin.textContent = '—';
-    if(wMax) wMax.textContent = '—';
-  } else {
+  const wCur = document.getElementById('wCurrent'), wMin = document.getElementById('wMin'), wMax = document.getElementById('wMax');
+  if(!weightLog.length){ [wCur,wMin,wMax].forEach(e => { if(e) e.textContent = '—'; }); }
+  else {
     const vals = weightLog.map(w => w.value);
     if(wCur) wCur.textContent = weightLog[weightLog.length-1].value.toFixed(1);
     if(wMin) wMin.textContent = Math.min(...vals).toFixed(1);
     if(wMax) wMax.textContent = Math.max(...vals).toFixed(1);
   }
   const el = document.getElementById('weightList'); if(!el) return;
-  if(!weightLog.length){
-    el.innerHTML = '<div class="weight-empty">Записей нет.<br>Введи первый вес выше ☝️</div>';
-    return;
-  }
-  const sorted = [...weightLog].reverse();
-  el.innerHTML = sorted.map(w => {
-    const d = new Date(w.date);
+  if(!weightLog.length){ el.innerHTML = '<div class="weight-empty">Записей нет.<br>Введи первый вес выше</div>'; return; }
+  el.innerHTML = [...weightLog].reverse().map(w => {
+    const d = parseISO(w.date);
     const dt = d.getDate()+' '+MONTHS_RU_GEN[d.getMonth()]+' '+d.getFullYear();
     return '<div class="weight-item"><div><span class="date">'+dt+'</span></div>'+
-      '<div style="display:flex;align-items:center;gap:4px"><span class="val">'+w.value.toFixed(1)+' кг</span>'+
+      '<div style="display:flex;align-items:center;gap:8px"><span class="val">'+w.value.toFixed(1)+' кг</span>'+
       '<button class="del" onclick="delWeightEntry(\''+w.date+'\')">✕</button></div></div>';
   }).join('');
 }
@@ -2020,23 +1967,21 @@ function drawWeightChart(){
   const mutColor = cs.getPropertyValue('--mut').trim() || '#8a97a8';
   ctx.clearRect(0,0,W,H);
   if(weightLog.length < 2){
-    ctx.fillStyle = mutColor; ctx.font = '18px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText(weightLog.length === 0 ? 'Введи хотя бы 2 записи' : 'Добавь ещё одну запись', W/2, H/2);
+    ctx.fillStyle = mutColor; ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(weightLog.length === 0 ? 'Нужно хотя бы 2 записи' : 'Добавь ещё одну запись', W/2, H/2);
     return;
   }
-  const padL = 50, padR = 20, padT = 20, padB = 30;
-  const plotW = W - padL - padR;
-  const plotH = H - padT - padB;
+  const padL = 56, padR = 20, padT = 20, padB = 34;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
   const vals = weightLog.map(w => w.value);
-  const minV = Math.min(...vals) - 0.5;
-  const maxV = Math.max(...vals) + 0.5;
+  const minV = Math.min(...vals) - 0.5, maxV = Math.max(...vals) + 0.5;
   const rangeV = maxV - minV || 1;
   ctx.strokeStyle = lineColor; ctx.lineWidth = 1;
-  ctx.fillStyle = mutColor; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+  ctx.fillStyle = mutColor; ctx.font = '14px sans-serif'; ctx.textAlign = 'right';
   for(let i=0; i<=4; i++){
     const y = padT + (plotH / 4) * i;
     ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
-    ctx.fillText((maxV - (rangeV/4) * i).toFixed(1), padL - 5, y + 4);
+    ctx.fillText((maxV - (rangeV/4) * i).toFixed(1), padL - 6, y + 5);
   }
   const xs = weightLog.map((_, i) => padL + (plotW / (weightLog.length - 1)) * i);
   const ys = weightLog.map(w => padT + plotH - ((w.value - minV) / rangeV) * plotH);
@@ -2046,21 +1991,21 @@ function drawWeightChart(){
   ctx.beginPath(); ctx.moveTo(xs[0], padT + plotH);
   xs.forEach((x, i) => ctx.lineTo(x, ys[i]));
   ctx.lineTo(xs[xs.length-1], padT + plotH); ctx.closePath(); ctx.fill();
-  ctx.strokeStyle = accColor; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+  ctx.strokeStyle = accColor; ctx.lineWidth = 3; ctx.lineJoin = 'round';
   ctx.beginPath();
   xs.forEach((x, i) => { if(i === 0) ctx.moveTo(x, ys[i]); else ctx.lineTo(x, ys[i]); });
   ctx.stroke();
   xs.forEach((x, i) => {
-    ctx.beginPath(); ctx.arc(x, ys[i], 4, 0, Math.PI*2);
+    ctx.beginPath(); ctx.arc(x, ys[i], 5, 0, Math.PI*2);
     ctx.fillStyle = acc2Color; ctx.fill();
     ctx.strokeStyle = bgCard; ctx.lineWidth = 2; ctx.stroke();
   });
-  ctx.fillStyle = mutColor; ctx.font = '10px sans-serif';
+  ctx.fillStyle = mutColor; ctx.font = '13px sans-serif';
   ctx.textAlign = 'left';
-  const d1 = new Date(weightLog[0].date);
+  const d1 = parseISO(weightLog[0].date);
   ctx.fillText(d1.getDate()+'.'+String(d1.getMonth()+1).padStart(2,'0'), padL, H - 10);
   ctx.textAlign = 'right';
-  const d2 = new Date(weightLog[weightLog.length-1].date);
+  const d2 = parseISO(weightLog[weightLog.length-1].date);
   ctx.fillText(d2.getDate()+'.'+String(d2.getMonth()+1).padStart(2,'0'), W - padR, H - 10);
 }
 
@@ -2079,38 +2024,32 @@ const TIMER_FIELDS = [
   {key:'rest', label:'Отдых', hint:'между подходами', step:5, min:0},
   {key:'sets', label:'Подходов', hint:'в круге', step:1, min:1},
   {key:'rounds', label:'Кругов', hint:'циклов', step:1, min:1},
-  {key:'roundRest', label:'Отдых кругами', hint:'доп. пауза', step:10, min:0},
+  {key:'roundRest', label:'Отдых между кругами', hint:'доп. пауза', step:10, min:0},
 ];
 function renderTimerEditor(){
   const el = document.getElementById('timeEditor'); if(!el) return;
-  el.innerHTML = TIMER_FIELDS.map(f => {
-    const v = timerConfig[f.key];
-    return '<div class="time-row">'+
+  el.innerHTML = TIMER_FIELDS.map(f => '<div class="time-row">'+
       '<div class="lbl">'+f.label+'<small>'+f.hint+'</small></div>'+
       '<div class="time-controls">'+
         '<button onclick="adjTimer(\''+f.key+'\','+(-f.step)+')">−</button>'+
-        '<input type="number" min="'+f.min+'" value="'+v+'" onchange="setTimerValue(\''+f.key+'\', this.value)">'+
+        '<input type="number" inputmode="numeric" min="'+f.min+'" value="'+timerConfig[f.key]+'" onchange="setTimerValue(\''+f.key+'\', this.value)">'+
         '<button onclick="adjTimer(\''+f.key+'\','+f.step+')">+</button>'+
-      '</div></div>';
-  }).join('');
+      '</div></div>').join('');
 }
 function adjTimer(key, delta){
   timerConfig[key] = Math.max(0, (timerConfig[key]||0) + delta);
-  if(key === 'sets') timerConfig[key] = Math.max(1, timerConfig[key]);
-  if(key === 'rounds') timerConfig[key] = Math.max(1, timerConfig[key]);
+  if(key === 'sets' || key === 'rounds') timerConfig[key] = Math.max(1, timerConfig[key]);
   renderTimerEditor();
 }
 function setTimerValue(key, val){
   let v = parseInt(val,10) || 0;
-  if(key === 'sets' || key === 'rounds') v = Math.max(1,v);
-  else v = Math.max(0,v);
-  timerConfig[key] = v;
-  renderTimerEditor();
+  v = (key === 'sets' || key === 'rounds') ? Math.max(1,v) : Math.max(0,v);
+  timerConfig[key] = v; renderTimerEditor();
 }
 function saveTimerConfig(silent){
   store.set('timerConfig', timerConfig);
   if(!silent) toast('Сохранено');
-  updateTimerUI();
+  resetTimer();
 }
 function resetTimerConfig(){
   timerConfig = {prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60};
@@ -2126,16 +2065,16 @@ function applyTimerPreset(i){
 }
 
 let tState = {phase:'prep', remaining:0, set:1, round:1, running:false, int:null, totalPhase:0};
-function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function fmt(s){ s = Math.max(0, Math.round(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 function updateTimerUI(){
   if(!tState.totalPhase) tState.totalPhase = 1;
   const pct = Math.max(0, Math.min(100, (1 - tState.remaining/tState.totalPhase)*100));
-  const d = document.getElementById('tDisp'); if(d) d.textContent = fmt(Math.max(0, tState.remaining));
+  const d = document.getElementById('tDisp'); if(d) d.textContent = fmt(tState.remaining);
   const p = document.getElementById('tProgress'); if(p) p.style.width = pct+'%';
   const ph = document.getElementById('tPhase');
   if(ph){
     ph.className = 'timer-phase ' + (tState.phase==='prep'?'prep':tState.phase==='work'?'work':'rest');
-    const labels = {prep:'Подготовка', work:'Работа', rest:'Отдых', roundRest:'Отдых', done:'Готово'};
+    const labels = {prep:'Подготовка', work:'Работа', rest:'Отдых', roundRest:'Отдых между кругами', done:'Готово'};
     ph.textContent = labels[tState.phase] || '';
   }
   const r = document.getElementById('tRoundCur'); if(r) r.textContent = tState.round+'/'+timerConfig.rounds;
@@ -2150,6 +2089,7 @@ function resetTimer(){
 }
 function toggleTimer(){
   const btn = document.getElementById('tBtn');
+  if(tState.phase === 'done') resetTimer();
   if(tState.running){ clearInterval(tState.int); tState.running=false; if(btn) btn.textContent='▶ Продолжить'; return; }
   tState.running = true; if(btn) btn.textContent = '⏸ Пауза';
   tState.int = setInterval(() => {
@@ -2158,11 +2098,12 @@ function toggleTimer(){
   }, 1000);
   updateTimerUI();
 }
+function setPhase(phase, sec){ tState.phase = phase; tState.remaining = sec; tState.totalPhase = sec || 1; }
 function nextPhase(){
-  if(tState.phase === 'prep'){ tState.phase='work'; tState.remaining=timerConfig.work; tState.totalPhase=timerConfig.work||1; }
+  if(tState.phase === 'prep') setPhase('work', timerConfig.work);
   else if(tState.phase === 'work'){
-    if(tState.set < timerConfig.sets){ tState.phase='rest'; tState.remaining=timerConfig.rest; tState.totalPhase=timerConfig.rest||1; }
-    else if(tState.round < timerConfig.rounds){ tState.phase='roundRest'; tState.remaining=timerConfig.roundRest; tState.totalPhase=timerConfig.roundRest||1; }
+    if(tState.set < timerConfig.sets) setPhase('rest', timerConfig.rest);
+    else if(tState.round < timerConfig.rounds) setPhase('roundRest', timerConfig.roundRest);
     else {
       tState.phase='done'; tState.remaining=0;
       clearInterval(tState.int); tState.running=false;
@@ -2171,8 +2112,8 @@ function nextPhase(){
       beep(880,.3); setTimeout(()=>beep(1320,.4), 400);
     }
   }
-  else if(tState.phase === 'rest'){ tState.set++; tState.phase='work'; tState.remaining=timerConfig.work; tState.totalPhase=timerConfig.work||1; }
-  else if(tState.phase === 'roundRest'){ tState.round++; tState.set=1; tState.phase='work'; tState.remaining=timerConfig.work; tState.totalPhase=timerConfig.work||1; }
+  else if(tState.phase === 'rest'){ tState.set++; setPhase('work', timerConfig.work); }
+  else if(tState.phase === 'roundRest'){ tState.round++; tState.set=1; setPhase('work', timerConfig.work); }
   if(tState.phase !== 'done'){ beep(660,.15); if(navigator.vibrate) navigator.vibrate(80); }
   updateTimerUI();
 }
@@ -2185,7 +2126,6 @@ function beep(freq, dur){
     o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + dur);
   }catch(e){}
 }
-function openTimerQuick(){ openModal('m-timer'); resetTimer(); }
 
 /* ==================== СТАТИСТИКА ==================== */
 function renderStats(){
@@ -2209,10 +2149,8 @@ function countFlat(cid, arr, entities){
   const max = Math.max(...entries.map(e => e[1]));
   el.innerHTML = entries.map(([id, v]) => {
     const ent = entities.find(e => e.id === id);
-    const nm = ent ? ent.emoji+' '+ent.name : id;
-    const pct = Math.round(v/total*100);
-    const w = Math.round(v/max*100);
-    return '<div class="stat-item"><div class="stat-top"><span class="lbl">'+nm+'</span><span class="val">'+v+' <b>· '+pct+'%</b></span></div><div class="stat-bar"><i style="width:'+w+'%"></i></div></div>';
+    const nm = ent ? ent.emoji+' '+esc(ent.name) : esc(id);
+    return '<div class="stat-item"><div class="stat-top"><span class="lbl">'+nm+'</span><span class="val">'+v+' <b>· '+Math.round(v/total*100)+'%</b></span></div><div class="stat-bar"><i style="width:'+Math.round(v/max*100)+'%"></i></div></div>';
   }).join('');
 }
 function skillRankInfo(xp){
@@ -2233,16 +2171,13 @@ function decayStatus(days){
   return {label:days+' дн · −1%', cls:'bad2'};
 }
 function renderSkillXp(){
-  const cfgs = [
-    {containerId:'skillGears', map:xpGears, entities:gears},
-    {containerId:'skillZones', map:xpZones, entities:zones},
-    {containerId:'skillSkills', map:xpSkills, entities:skills},
-  ];
-  cfgs.forEach(cfg => {
+  [{containerId:'skillGears', map:xpGears, entities:gears},
+   {containerId:'skillZones', map:xpZones, entities:zones},
+   {containerId:'skillSkills', map:xpSkills, entities:skills}].forEach(cfg => {
     const el = document.getElementById(cfg.containerId); if(!el) return;
     const items = Object.entries(cfg.map).map(([id, d]) => {
       const ent = cfg.entities.find(x => x.id === id);
-      return {id, name: ent?ent.emoji+' '+ent.name:id, xp: d.xp||0, lastTrained: d.lastTrained};
+      return {id, name: ent?ent.emoji+' '+esc(ent.name):esc(id), xp: d.xp||0, lastTrained: d.lastTrained};
     }).sort((a,b) => b.xp - a.xp);
     if(!items.length || items.every(i => !i.xp)){ el.innerHTML = '<div class="empty">Пока нет опыта</div>'; return; }
     el.innerHTML = items.filter(i => i.xp > 0 || i.lastTrained).map(item => {
@@ -2256,14 +2191,12 @@ function renderSkillXp(){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'AS-Fit', version:7, exported:new Date().toISOString(),
+  return {app:'AS-Fit', version:8, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog,
-    themeId, themeMode, timerConfig, totalXp, xpLog, xpGears, xpZones, xpSkills,
-    profile:{...profile}};
+    themeId, themeMode, timerConfig, totalXp, xpLog, xpGears, xpZones, xpSkills, profile:{...profile}};
 }
 function exportDB(){
-  const data = JSON.stringify(buildDB(), null, 2);
-  const blob = new Blob([data], {type:'application/json'});
+  const blob = new Blob([JSON.stringify(buildDB(), null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'as-fit-'+new Date().toISOString().slice(0,10)+'.json';
@@ -2271,57 +2204,64 @@ function exportDB(){
   setTimeout(()=>URL.revokeObjectURL(url), 1000);
   toast('Файл скачан');
 }
+function mergeById(cur, add){
+  const ids = new Set(cur.map(x => x.id));
+  return cur.concat((add||[]).filter(x => x && !ids.has(x.id)));
+}
 function importDB(input){
   const file = input.files[0]; if(!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     try {
       const data = JSON.parse(e.target.result);
-      const merge = confirm('OK — добавить\nОтмена — заменить');
+      const merge = confirm('OK — добавить к текущим данным\nОтмена — заменить всё');
       if(merge){
-        if(Array.isArray(data.exercises)) exercises = exercises.concat(data.exercises);
-        if(Array.isArray(data.complexes)) complexes = complexes.concat(data.complexes);
-        if(Array.isArray(data.trainings)) trainings = trainings.concat(data.trainings);
-        if(Array.isArray(data.weightLog)) weightLog = weightLog.concat(data.weightLog);
-        if(Array.isArray(data.zones)) data.zones.forEach(z => { if(!zones.find(x => x.id === z.id)) zones.push(z); });
-        if(Array.isArray(data.gears)) data.gears.forEach(g => { if(!gears.find(x => x.id === g.id)) gears.push(g); });
-        if(Array.isArray(data.skills)) data.skills.forEach(s => { if(!skills.find(x => x.id === s.id)) skills.push(s); });
+        if(Array.isArray(data.exercises)) exercises = mergeById(exercises, data.exercises);
+        if(Array.isArray(data.complexes)) complexes = mergeById(complexes, data.complexes);
+        if(Array.isArray(data.trainings)) trainings = mergeById(trainings, data.trainings);
+        if(Array.isArray(data.zones)) zones = mergeById(zones, data.zones);
+        if(Array.isArray(data.gears)) gears = mergeById(gears, data.gears);
+        if(Array.isArray(data.skills)) skills = mergeById(skills, data.skills);
+        if(Array.isArray(data.weightLog)){
+          data.weightLog.forEach(w => { if(w && w.date && !weightLog.find(x => x.date === w.date)) weightLog.push(w); });
+          weightLog.sort((a,b) => a.date.localeCompare(b.date));
+        }
       } else {
         zones = data.zones||zones; gears = data.gears||gears; skills = data.skills||skills;
         exercises = data.exercises||[]; complexes = data.complexes||[];
         trainings = data.trainings||[]; completions = data.completions||{};
         weightLog = data.weightLog||[];
         if(data.themeId) themeId = data.themeId;
-        if(data.themeMode) themeMode = data.themeMode;
+        if(data.themeMode) themeMode = data.themeMode === 'light' ? 'light' : 'dark';
+        if(data.timerConfig) timerConfig = data.timerConfig;
+        if(data.profile) profile = {...profile, ...data.profile};
         totalXp = typeof data.totalXp === 'number' ? data.totalXp : 0;
         xpLog = data.xpLog||[]; xpGears = data.xpGears||{}; xpZones = data.xpZones||{}; xpSkills = data.xpSkills||{};
       }
       store.set('zones', zones); store.set('gears', gears); store.set('skills', skills);
       store.set('exercises', exercises); store.set('complexes', complexes);
       store.set('trainings', trainings); store.set('completions', completions);
-      store.set('weightLog', weightLog);
+      store.set('weightLog', weightLog); store.set('profile', profile); store.set('timerConfig', timerConfig);
       store.set('themeId', themeId); store.set('themeMode', themeMode);
       store.set('totalXp', totalXp); store.set('xpLog', xpLog);
       store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
-      ensureXpMaps(); applyTheme(); renderAll(); toast('Импорт готов');
+      ensureXpMaps(); renderAll(); toast('Импорт готов');
     } catch(err){ toast('Ошибка: '+err.message); }
   };
   reader.readAsText(file); input.value = '';
 }
 async function shareDB(){
-  const data = JSON.stringify(buildDB(), null, 2);
-  const file = new File([data], 'as-fit.json', {type:'application/json'});
+  const file = new File([JSON.stringify(buildDB(), null, 2)], 'as-fit.json', {type:'application/json'});
   if(navigator.canShare && navigator.canShare({files:[file]})){
     try { await navigator.share({files:[file], title:'База АС'}); toast('Отправлено'); }
     catch(e){ if(e.name !== 'AbortError') toast('Ошибка'); }
   } else if(navigator.share){
     try { await navigator.share({title:'База АС', text: exercises.length+' упражнений'}); toast('Отправлено'); }
     catch(e){ if(e.name !== 'AbortError') toast('Ошибка'); }
-  } else toast('Share недоступен');
+  } else toast('Поделиться недоступно');
 }
 async function copyDB(){
-  const data = JSON.stringify(buildDB());
-  try { await navigator.clipboard.writeText(data); toast('Скопировано'); }
+  try { await navigator.clipboard.writeText(JSON.stringify(buildDB())); toast('Скопировано'); }
   catch(e){ toast('Не удалось'); }
 }
 function resetAll(){ if(confirm('Сбросить всё?')){ localStorage.clear(); location.reload(); } }
@@ -2348,7 +2288,7 @@ function saveCustomGear(){
   store.set('gears', gears);
   ensureXpMaps();
   closeModal('m-new-gear');
-  renderChips(); renderStats(); renderSkillXp();
+  renderChips(); renderStats();
   toast('Снаряд «'+name+'» добавлен');
 }
 
@@ -2356,7 +2296,7 @@ function saveCustomGear(){
 function renderAll(){
   renderWeek(); renderMonth(); renderTrainings();
   renderEx(); renderChips();
-  renderStats(); updateXpUI(); renderSkillXp();
+  renderStats(); updateXpUI();
   applyTheme(); applyAvatar(); renderTimerPresets(); renderTimerEditor();
   renderCompsTab();
   if(document.getElementById('m-train-list')?.classList.contains('on')) renderTrainTemplates();
@@ -2364,6 +2304,7 @@ function renderAll(){
 
 /* ==================== РЕЖИМ ВЫПОЛНЕНИЯ ТРЕНИРОВКИ ==================== */
 let execState = null;
+function isXValue(v){ return String(v).trim().toUpperCase() === 'X'; }
 
 function startTrainExecution(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
@@ -2382,14 +2323,9 @@ function startTrainExecution(trainId){
     };
   });
   execState = {
-    trainId,
-    dateKey: isoDate(selectedDate),
-    trainName: tr.name,
+    trainId, dateKey: isoDate(selectedDate), trainName: tr.name,
     exercises: JSON.parse(JSON.stringify(exs)),
-    currentIndex: 0,
-    currentSet: 1,
-    completed: [],
-    phase: 'exercise',
+    currentIndex: 0, currentSet: 1, completed: [], phase: 'exercise',
     timer: {phase:'idle', remaining:0, total:0, running:false, int:null}
   };
   document.getElementById('execScreen').classList.add('on');
@@ -2398,23 +2334,17 @@ function startTrainExecution(trainId){
 }
 
 function closeExecScreen(){
+  if(execState && execState.completed && execState.completed.length && execState.phase !== 'finished'){
+    if(!confirm('Закрыть тренировку? Прогресс не сохранится в XP.')) return;
+  }
   if(execState && execState.timer && execState.timer.int) clearInterval(execState.timer.int);
   const ex = document.getElementById('execScreen');
   if(ex) ex.classList.remove('on');
-  if(execState && execState.completed && execState.completed.length){
-    if(!confirm('Закрыть тренировку? Прогресс не сохранится в XP.')) {
-      document.getElementById('execScreen').classList.add('on');
-      renderExecScreen();
-      return;
-    }
-  }
   execState = null;
 }
 
-function isXValue(v){ return String(v).trim().toUpperCase() === 'X'; }
-
 function renderExecScreen(){
-  if(!execState){ return; }
+  if(!execState) return;
   const body = document.getElementById('execBody');
   const footer = document.getElementById('execFooter');
   const progressTxt = document.getElementById('execProgressTxt');
@@ -2425,13 +2355,11 @@ function renderExecScreen(){
   if(!item){ finishExecution(); return; }
 
   const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
-
   if(hasX && !item._xResolved){
     body.innerHTML =
-      '<div class="exec-step"><div class="dot-step on">'+(cur+1)+'</div><div class="info"><div class="lbl">Упражнение '+(cur+1)+' из '+total+'</div><div class="nm">'+item.exName+'</div></div></div>'+
+      '<div class="exec-step"><div class="dot-step on">'+(cur+1)+'</div><div class="info"><div class="lbl">Упражнение '+(cur+1)+' из '+total+'</div><div class="nm">'+esc(item.exName)+'</div></div></div>'+
       '<div style="text-align:center;font-size:44px;margin:16px 0">✏️</div>'+
-      '<div class="exec-ex-name">'+item.exName+'</div>'+
-      '<div class="note" style="text-align:center;margin-bottom:12px">Задай параметры, помеченные <b>X</b></div>'+
+      '<div class="note" style="text-align:center;margin-bottom:14px">Задай параметры, помеченные <b>X</b></div>'+
       '<div id="xFormContainer"></div>';
     const form = document.getElementById('xFormContainer');
     const fields = [];
@@ -2441,10 +2369,9 @@ function renderExecScreen(){
     if(isXValue(item.weight)) fields.push({key:'weight', label:'Вес, кг', placeholder:'16'});
     if(isXValue(item.rest)) fields.push({key:'rest', label:'Отдых, сек', placeholder:'60'});
     form.innerHTML = fields.map(f =>
-      '<div class="field"><label>'+f.label+'</label><input type="number" id="xInput_'+f.key+'" placeholder="'+f.placeholder+'"></div>'
-    ).join('') +
-    '<button class="btn primary full" style="margin-top:8px;padding:11px" onclick="applyXForm()">▶ Начать упражнение</button>';
-    footer.innerHTML = '';
+      '<div class="field"><label>'+f.label+'</label><input type="number" inputmode="decimal" id="xInput_'+f.key+'" placeholder="'+f.placeholder+'"></div>'
+    ).join('');
+    footer.innerHTML = '<button class="btn primary finish-btn" onclick="applyXForm()">▶ Далее</button>';
     return;
   }
 
@@ -2452,53 +2379,42 @@ function renderExecScreen(){
   if(item.sets) dosage.push('<div class="item"><div class="lbl">Подходы</div><div class="val">'+item.sets+'</div></div>');
   if(item.reps) dosage.push('<div class="item"><div class="lbl">Повторы</div><div class="val">'+item.reps+'</div></div>');
   if(item.time) dosage.push('<div class="item"><div class="lbl">Время</div><div class="val">'+item.time+'с</div></div>');
-  if(item.weight) dosage.push('<div class="item"><div class="lbl">Вес</div><div class="val">'+item.weight+'кг</div></div>');
+  if(item.weight) dosage.push('<div class="item"><div class="lbl">Вес</div><div class="val">'+item.weight+' кг</div></div>');
   if(item.rest) dosage.push('<div class="item"><div class="lbl">Отдых</div><div class="val">'+item.rest+'с</div></div>');
-  const tags = [
-    ...item.exZones.map(t => '<span class="tag">'+t+'</span>'),
-    ...item.exGears.map(t => '<span class="tag">'+t+'</span>'),
-    ...item.exSkills.map(t => '<span class="tag">'+t+'</span>')
-  ].join('');
+  const tags = [...item.exZones, ...item.exGears, ...item.exSkills].map(t => '<span class="tag">'+esc(t)+'</span>').join('');
   let phaseLabel = 'Готов', phaseClass = '', timerDisplay = '00:00', progPct = 0;
-  if(execState.timer.phase === 'work'){
-    phaseLabel = 'Работа · подход '+execState.currentSet+'/'+item.sets;
-    phaseClass = 'work';
-    timerDisplay = fmt(Math.max(0, execState.timer.remaining));
-    progPct = execState.timer.total > 0 ? Math.max(0, Math.min(100, (1 - execState.timer.remaining/execState.timer.total)*100)) : 0;
-  } else if(execState.timer.phase === 'rest'){
-    phaseLabel = 'Отдых перед подходом '+(execState.currentSet+1)+'/'+item.sets;
-    phaseClass = 'rest';
-    timerDisplay = fmt(Math.max(0, execState.timer.remaining));
-    progPct = execState.timer.total > 0 ? Math.max(0, Math.min(100, (1 - execState.timer.remaining/execState.timer.total)*100)) : 0;
+  const T = execState.timer;
+  if(T.phase === 'work' || T.phase === 'rest'){
+    phaseLabel = T.phase === 'work' ? 'Работа · подход '+execState.currentSet+' из '+item.sets
+                                    : 'Отдых перед подходом '+(execState.currentSet+1)+' из '+item.sets;
+    phaseClass = T.phase;
+    timerDisplay = fmt(T.remaining);
+    progPct = T.total > 0 ? Math.max(0, Math.min(100, (1 - T.remaining/T.total)*100)) : 0;
   }
   body.innerHTML =
-    '<div class="exec-step"><div class="dot-step on">'+(cur+1)+'</div><div class="info"><div class="lbl">Упражнение '+(cur+1)+' из '+total+'</div><div class="nm">'+item.exName+'</div></div></div>'+
-    '<div class="exec-ex-name">'+item.exName+'</div>'+
+    '<div class="exec-step"><div class="dot-step on">'+(cur+1)+'</div><div class="info"><div class="lbl">Упражнение '+(cur+1)+' из '+total+'</div><div class="nm">'+esc(item.exName)+'</div></div></div>'+
+    '<div class="exec-ex-name">'+esc(item.exName)+'</div>'+
     (tags ? '<div class="exec-ex-tags">'+tags+'</div>' : '')+
     '<div class="exec-phase '+phaseClass+'">'+phaseLabel+'</div>'+
     '<div class="exec-timer">'+timerDisplay+'</div>'+
     '<div class="exec-progress"><i style="width:'+progPct+'%"></i></div>'+
     '<div class="exec-dosage"><div class="row">'+dosage.join('')+'</div></div>'+
-    (item.note ? '<div class="note" style="text-align:center">'+item.note+'</div>' : '');
-  if(execState.timer.phase === 'work'){
+    (item.note ? '<div class="note" style="text-align:center">'+esc(item.note)+'</div>' : '');
+  if(T.phase === 'work'){
     footer.innerHTML =
       '<div class="exec-controls">'+
-        '<button class="btn" onclick="execSkipRest()">Пропустить отдых</button>'+
+        '<button class="btn" onclick="toggleExecTimer()">'+(T.running?'⏸ Пауза':'▶ Таймер')+'</button>'+
         '<button class="btn primary" onclick="execFinishSet()">'+(execState.currentSet >= item.sets ? 'Завершить' : 'Подход готов')+'</button>'+
       '</div>'+
-      '<div class="exec-controls" style="margin-top:5px">'+
-        '<button class="btn" onclick="toggleExecTimer()">'+(execState.timer.running?'⏸ Пауза':'▶ Таймер')+'</button>'+
-        '<button class="btn" onclick="execSkipExercise()">Пропустить</button>'+
-      '</div>';
-  } else if(execState.timer.phase === 'rest'){
+      '<div class="exec-controls" style="margin-top:10px"><button class="btn" onclick="execSkipExercise()">Пропустить упражнение</button></div>';
+  } else if(T.phase === 'rest'){
     footer.innerHTML =
       '<div class="exec-controls">'+
-        '<button class="btn primary" onclick="execStartNextSet()">▶ Следующий подход</button>'+
-        '<button class="btn" onclick="execSkipRest()">Пропустить</button>'+
+        '<button class="btn" onclick="toggleExecTimer()">'+(T.running?'⏸ Пауза':'▶ Продолжить')+'</button>'+
+        '<button class="btn primary" onclick="execStartNextSet()">Следующий подход</button>'+
       '</div>';
   } else {
-    footer.innerHTML =
-      '<button class="btn primary finish-btn" onclick="execStartWork()">▶ Начать упражнение</button>';
+    footer.innerHTML = '<button class="btn primary finish-btn" onclick="execStartWork()">▶ Начать упражнение</button>';
   }
 }
 function applyXForm(){
@@ -2506,106 +2422,79 @@ function applyXForm(){
   ['sets','reps','time','weight','rest'].forEach(f => {
     if(isXValue(item[f])){
       const inp = document.getElementById('xInput_'+f);
-      if(inp && inp.value) item[f] = +inp.value || 0;
+      item[f] = inp && inp.value ? (+inp.value || 0) : 0;
     }
   });
+  if(!(+item.sets > 0)) item.sets = 1;
   item._xResolved = true;
   renderExecScreen();
 }
 function execStartWork(){
-  const item = execState.exercises[execState.currentIndex];
-  if(!item) return;
+  const item = execState.exercises[execState.currentIndex]; if(!item) return;
   execState.currentSet = 1;
   startExecPhase('work', +item.time || 0);
 }
 function startExecPhase(phase, seconds){
-  if(execState.timer.int) clearInterval(execState.timer.int);
-  execState.timer.phase = phase;
-  execState.timer.remaining = seconds;
-  execState.timer.total = seconds || 1;
-  execState.timer.running = seconds > 0;
+  const T = execState.timer;
+  if(T.int) clearInterval(T.int);
+  T.phase = phase; T.remaining = seconds; T.total = seconds || 1; T.running = seconds > 0;
   if(seconds > 0){
-    execState.timer.int = setInterval(() => {
-      if(execState.timer.remaining > 0){
-        execState.timer.remaining--;
-        const disp = document.querySelector('.exec-timer');
-        if(disp) disp.textContent = fmt(execState.timer.remaining);
+    T.int = setInterval(() => {
+      if(!execState) return;
+      if(T.remaining > 0){
+        T.remaining--;
+        const disp = document.querySelector('.exec-timer'); if(disp) disp.textContent = fmt(T.remaining);
         const prog = document.querySelector('.exec-progress i');
-        if(prog) prog.style.width = Math.max(0, Math.min(100, (1 - execState.timer.remaining/execState.timer.total)*100)) + '%';
+        if(prog) prog.style.width = Math.max(0, Math.min(100, (1 - T.remaining/T.total)*100)) + '%';
       } else {
-        clearInterval(execState.timer.int);
-        execState.timer.running = false;
-        if(execState.timer.phase === 'work'){ beep(880,.3); if(navigator.vibrate) navigator.vibrate(200); }
-        else if(execState.timer.phase === 'rest'){ beep(660,.25); }
+        clearInterval(T.int); T.running = false;
+        if(T.phase === 'work'){ beep(880,.3); if(navigator.vibrate) navigator.vibrate(200); }
+        else if(T.phase === 'rest'){ beep(660,.25); if(navigator.vibrate) navigator.vibrate(120); }
+        renderExecScreen();
       }
     }, 1000);
   }
   renderExecScreen();
 }
 function toggleExecTimer(){
-  if(execState.timer.running){ clearInterval(execState.timer.int); execState.timer.running = false; }
-  else { startExecPhase(execState.timer.phase, execState.timer.remaining); return; }
-  renderExecScreen();
+  const T = execState.timer;
+  if(T.running){ clearInterval(T.int); T.running = false; renderExecScreen(); }
+  else if(T.remaining > 0){ startExecPhase(T.phase, T.remaining); }
+  else renderExecScreen();
+}
+function resetExecTimer(){
+  const T = execState.timer;
+  if(T.int) clearInterval(T.int);
+  T.phase = 'idle'; T.remaining = 0; T.total = 1; T.running = false;
 }
 function execFinishSet(){
-  const item = execState.exercises[execState.currentIndex];
-  if(!item) return;
+  const item = execState.exercises[execState.currentIndex]; if(!item) return;
   if(execState.timer.int) clearInterval(execState.timer.int);
   if(execState.currentSet >= item.sets){
-    execState.completed.push({
-      exIdx: execState.currentIndex,
-      sets: +item.sets || 1,
-      reps: +item.reps || 0,
-      time: +item.time || 0,
-      weight: +item.weight || 0
-    });
-    if(execState.currentIndex >= execState.exercises.length - 1){
-      finishExecution();
-      return;
-    }
-    execState.currentIndex++;
-    execState.currentSet = 1;
-    execState.timer.phase = 'idle';
-    execState.timer.remaining = 0;
-    execState.timer.total = 1;
-    execState.timer.running = false;
-    renderExecScreen();
+    execState.completed.push({exIdx: execState.currentIndex, sets: +item.sets || 1, reps: +item.reps || 0, time: +item.time || 0, weight: +item.weight || 0});
+    if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
+    execState.currentIndex++; execState.currentSet = 1;
+    resetExecTimer(); renderExecScreen();
   } else {
     execState.currentSet++;
-    if(item.rest && +item.rest > 0){ startExecPhase('rest', +item.rest); }
-    else { startExecPhase('work', +item.time || 0); }
+    if(+item.rest > 0) startExecPhase('rest', +item.rest);
+    else startExecPhase('work', +item.time || 0);
   }
 }
-function execSkipRest(){
-  if(execState.timer.int) clearInterval(execState.timer.int);
-  const item = execState.exercises[execState.currentIndex];
-  if(!item) return;
-  startExecPhase('work', +item.time || 0);
-}
 function execStartNextSet(){
-  const item = execState.exercises[execState.currentIndex];
-  if(!item) return;
+  const item = execState.exercises[execState.currentIndex]; if(!item) return;
   startExecPhase('work', +item.time || 0);
 }
 function execSkipExercise(){
-  const item = execState.exercises[execState.currentIndex];
-  if(!item) return;
+  const item = execState.exercises[execState.currentIndex]; if(!item) return;
   if(!confirm('Пропустить упражнение?')) return;
-  if(execState.timer.int) clearInterval(execState.timer.int);
-  if(execState.currentIndex >= execState.exercises.length - 1){
-    finishExecution();
-    return;
-  }
-  execState.currentIndex++;
-  execState.currentSet = 1;
-  execState.timer.phase = 'idle';
-  execState.timer.remaining = 0;
-  execState.timer.total = 1;
-  execState.timer.running = false;
-  renderExecScreen();
+  if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
+  execState.currentIndex++; execState.currentSet = 1;
+  resetExecTimer(); renderExecScreen();
 }
 function finishExecution(){
-  if(execState.timer.int) clearInterval(execState.timer.int);
+  resetExecTimer();
+  execState.phase = 'finished';
   const body = document.getElementById('execBody');
   const footer = document.getElementById('execFooter');
   const progressTxt = document.getElementById('execProgressTxt');
@@ -2620,32 +2509,34 @@ function finishExecution(){
   xp = Math.round(xp * 100) / 100;
   if(progressTxt) progressTxt.textContent = '✓';
   body.innerHTML =
-    '<div style="text-align:center;padding:20px 0">'+
-      '<div style="font-size:52px;margin-bottom:8px">🎉</div>'+
-      '<div style="font-size:18px;font-weight:900;margin-bottom:6px">Тренировка завершена!</div>'+
-      '<div style="font-size:13px;color:var(--mut);margin-bottom:16px">Выполнено: '+execState.completed.length+' из '+execState.exercises.length+'</div>'+
-      '<div style="font-size:30px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">+'+xp+' XP</div>'+
+    '<div style="text-align:center;padding:24px 0">'+
+      '<div style="font-size:64px;margin-bottom:8px">🎉</div>'+
+      '<div style="font-size:26px;font-weight:800;margin-bottom:6px;letter-spacing:-.02em">Тренировка завершена</div>'+
+      '<div style="font-size:17px;color:var(--mut);margin-bottom:20px">Выполнено упражнений: '+execState.completed.length+' из '+execState.exercises.length+'</div>'+
+      '<div style="font-size:44px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">+'+xp+' XP</div>'+
     '</div>';
   footer.innerHTML =
     '<button class="btn primary finish-btn" onclick="confirmFinishExecution('+xp+')">✓ Засчитать тренировку</button>'+
-    '<button class="btn full" style="margin-top:5px;padding:8px" onclick="closeExecScreen();execState=null;">Отмена</button>';
+    '<button class="btn full" style="margin-top:10px" onclick="closeExecScreen()">Закрыть без начисления</button>';
 }
 function confirmFinishExecution(xp){
   if(!execState) return;
   const tr = trainings.find(t => t.id === execState.trainId);
   if(!tr){ closeExecScreen(); return; }
-  const dateKey = execState.dateKey;
-  const date = new Date(dateKey);
+  const date = parseISO(execState.dateKey);
+  if(isTrainDone(date, tr)){
+    closeExecScreen();
+    toast('Эта тренировка уже засчитана');
+    return;
+  }
   setTrainDone(date, tr.id, true, xp);
-  addXp(xp, tr.name, tr);
+  if(xp > 0) addXp(xp, tr.name, tr);
   renderWeek(); renderMonth(); renderTrainings(); renderStats();
   closeExecScreen();
-  execState = null;
   toast('Тренировка засчитана: +'+xp+' XP');
 }
 
 /* ==================== СТАРТ ==================== */
-applyTheme();
 ensureXpMaps();
 applyDecayOnLoad();
 renderAll();
@@ -2655,24 +2546,9 @@ document.addEventListener('click', e => {
   if(!e.target.closest('#fabBtn') && !e.target.closest('#fabMenu')) closeFabMenu();
 });
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){
-    document.querySelectorAll('.modal-bg.on').forEach(m => m.classList.remove('on'));
-  }
+  if(e.key === 'Escape') document.querySelectorAll('.modal-bg.on').forEach(m => m.classList.remove('on'));
 });
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
