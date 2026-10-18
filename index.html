@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
-<title>АС — Фитнес v2.2</title>
+<title>АС — Фитнес v2.3</title>
 <style>
 :root,[data-theme="neon"]{--bg:#0e1116;--bg2:#151a22;--card:#1a2029;--card2:#222a36;--line:#2a3340;--txt:#e8edf4;--mut:#8a97a8;--acc:#ff5b2e;--acc2:#ffb02e;--ok:#2ecc71;--blue:#3aa0ff;--grad:linear-gradient(135deg,var(--acc),var(--acc2))}
 [data-theme="ocean"]{--bg:#08131c;--bg2:#0d1f2d;--card:#102636;--card2:#153244;--line:#1d435b;--txt:#e0f4ff;--mut:#7ba9c7;--acc:#00d4ff;--acc2:#0088cc;--ok:#00e0b0;--grad:linear-gradient(135deg,#00d4ff,#0088cc)}
@@ -17,174 +17,202 @@
 [data-theme="sand"]{--bg:#f5f1e8;--bg2:#ebe4d6;--card:#fff;--card2:#f9f6ee;--line:#d6cdb8;--txt:#2a2419;--mut:#8a7d63;--acc:#b45309;--acc2:#78350f;--ok:#16a34a;--grad:linear-gradient(135deg,#b45309,#78350f)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;-webkit-font-smoothing:antialiased}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;padding-bottom:110px;transition:background .3s,color .3s}
-.app{max-width:560px;margin:0 auto;padding:10px 10px 110px}
-header.top{display:flex;align-items:center;justify-content:space-between;padding:6px 2px;position:sticky;top:0;z-index:30;background:var(--bg);margin:-10px -10px 6px;padding-left:14px;padding-right:14px;padding-top:12px}
-.logo{font-weight:800;font-size:17px;letter-spacing:.8px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.logo span{color:var(--mut);font-size:9px;display:block;letter-spacing:2px;font-weight:600;-webkit-text-fill-color:var(--mut)}
-.head-actions{display:flex;gap:6px}
-.icon-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.2s}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;padding-bottom:100px;transition:background .3s,color .3s}
+.app{max-width:560px;margin:0 auto;padding:8px 8px 100px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:4px 2px;position:sticky;top:0;z-index:30;background:var(--bg);margin:-8px -8px 4px;padding-left:12px;padding-right:12px;padding-top:10px}
+.logo{font-weight:800;font-size:15px;letter-spacing:.6px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo span{color:var(--mut);font-size:8px;display:block;letter-spacing:1.8px;font-weight:600;-webkit-text-fill-color:var(--mut)}
+.head-actions{display:flex;gap:4px}
+.icon-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
 .icon-btn:active{transform:scale(.92)}
-.xp-head{display:flex;align-items:center;gap:6px;flex:1;max-width:160px;cursor:pointer}
-.xp-lvl{width:32px;height:32px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:var(--bg);flex:0 0 auto}
+.xp-head{display:flex;align-items:center;gap:5px;flex:1;max-width:150px;cursor:pointer}
+.xp-lvl{width:28px;height:28px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:var(--bg);flex:0 0 auto}
 .xp-info{flex:1;min-width:0}
-.xp-rank{font-size:9px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.xp-bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:2px}
-.xp-bar i{display:block;height:100%;background:var(--grad);border-radius:4px;transition:width .6s}
-.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:11px;margin-bottom:9px}
-.card h2{margin:0 0 7px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mut);display:flex;align-items:center;gap:6px;justify-content:space-between}
-.card h2 .lft{display:flex;align-items:center;gap:6px}
-.card h2 .dot{width:5px;height:5px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc)}
-.card h2 .cnt-badge{font-size:10px;background:var(--grad);color:var(--bg);padding:2px 7px;border-radius:20px;font-weight:800;-webkit-text-fill-color:var(--bg)}
-.prog-row{display:flex;gap:6px;margin-bottom:9px}
-.prog{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
-.prog .lbl{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px}
-.prog .val{font-size:13px;font-weight:800;margin-top:1px}
-.prog .bar{height:3px;background:var(--line);border-radius:3px;margin-top:4px;overflow:hidden}
-.prog .bar i{display:block;height:100%;background:var(--grad);border-radius:3px;transition:width .4s}
-.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.cal-head .title{font-size:12.5px;font-weight:800}
+.xp-rank{font-size:8px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xp-bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:2px}
+.xp-bar i{display:block;height:100%;background:var(--grad);border-radius:3px;transition:width .6s}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:7px}
+.card h2{margin:0 0 5px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--mut);display:flex;align-items:center;gap:5px;justify-content:space-between}
+.card h2 .lft{display:flex;align-items:center;gap:5px}
+.card h2 .dot{width:4px;height:4px;border-radius:50%;background:var(--acc);box-shadow:0 0 6px var(--acc)}
+.card h2 .cnt-badge{font-size:9px;background:var(--grad);color:var(--bg);padding:1px 6px;border-radius:20px;font-weight:800;-webkit-text-fill-color:var(--bg)}
+.prog-row{display:flex;gap:4px;margin-bottom:7px}
+.prog{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.prog .lbl{font-size:8px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.prog .val{font-size:11.5px;font-weight:800;margin-top:1px}
+.prog .bar{height:2px;background:var(--line);border-radius:2px;margin-top:3px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.cal-head .title{font-size:11.5px;font-weight:800}
 .cal-head .title b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.cal-nav{display:flex;gap:4px}
-.cal-nav button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--txt);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.cal-nav{display:flex;gap:3px}
+.cal-nav button{width:24px;height:24px;border-radius:7px;border:1px solid var(--line);background:var(--card2);color:var(--txt);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
 .cal-nav button:active{transform:scale(.92)}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:3px}
-.day{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:6px 2px 8px;text-align:center;cursor:pointer;transition:.2s;position:relative;min-height:48px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:2px}
+.day{background:var(--card2);border:1px solid var(--line);border-radius:7px;padding:4px 1px 6px;text-align:center;cursor:pointer;transition:.2s;position:relative;min-height:42px}
 .day:active{transform:scale(.95)}
-.day .wd{font-size:8.5px;color:var(--mut);text-transform:uppercase;font-weight:600}
-.day .num{font-size:13px;font-weight:700;margin-top:1px}
+.day .wd{font-size:7.5px;color:var(--mut);text-transform:uppercase;font-weight:600}
+.day .num{font-size:11.5px;font-weight:700;margin-top:0}
 .day.today{border-color:var(--acc)}
 .day.today .num{color:var(--acc)}
 .day.selected{background:var(--grad);border-color:transparent;color:var(--bg)}
 .day.selected .wd,.day.selected .num{color:var(--bg)}
-.day-dots{display:flex;gap:2px;justify-content:center;margin-top:3px;min-height:5px;flex-wrap:wrap;max-width:100%}
-.day-dot{width:4px;height:4px;border-radius:50%;background:var(--mut);opacity:.4}
-.day-dot.on{background:var(--ok);opacity:1;box-shadow:0 0 4px var(--ok)}
+.day-dots{display:flex;gap:1.5px;justify-content:center;margin-top:2px;min-height:4px;flex-wrap:wrap}
+.day-dot{width:3px;height:3px;border-radius:50%;background:var(--mut);opacity:.4}
+.day-dot.on{background:var(--ok);opacity:1;box-shadow:0 0 3px var(--ok)}
 .day.selected .day-dot{background:rgba(0,0,0,.3);opacity:1}
-.day.selected .day-dot.on{background:#fff;box-shadow:0 0 4px #fff}
-.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.month-grid .mhead{text-align:center;font-size:9.5px;color:var(--mut);text-transform:uppercase;font-weight:700;padding:3px 0}
-.mday{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:var(--card2);border:1px solid transparent;transition:.15s;position:relative;padding:2px 1px 4px}
+.day.selected .day-dot.on{background:#fff}
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.month-grid .mhead{text-align:center;font-size:8.5px;color:var(--mut);text-transform:uppercase;font-weight:700;padding:2px 0}
+.mday{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;font-size:10.5px;font-weight:600;cursor:pointer;background:var(--card2);border:1px solid transparent;transition:.15s;position:relative;padding:1px 0 3px}
 .mday:active{transform:scale(.92)}
 .mday.other{color:var(--mut);opacity:.35;background:transparent}
 .mday.today{border-color:var(--acc);color:var(--acc);font-weight:800}
 .mday.selected{background:var(--grad);color:var(--bg);font-weight:800}
-.mday .mday-dots{display:flex;gap:1.5px;justify-content:center;margin-top:1px;min-height:3px}
-.mday .mday-dot{width:3px;height:3px;border-radius:50%;background:var(--acc2);opacity:.7}
+.mday .mday-dots{display:flex;gap:1px;justify-content:center;margin-top:0;min-height:2px}
+.mday .mday-dot{width:2px;height:2px;border-radius:50%;background:var(--acc2);opacity:.7}
 .mday .mday-dot.on{background:var(--ok);opacity:1}
 .mday.selected .mday-dot{background:rgba(0,0,0,.3);opacity:1}
 .mday.selected .mday-dot.on{background:#fff}
-.train{background:var(--card2);border:1px solid var(--line);border-radius:10px;margin-bottom:6px;overflow:hidden}
-.train-head{display:flex;gap:8px;align-items:center;padding:9px 10px;cursor:pointer}
-.train-head .time{font-weight:800;font-size:12.5px;color:var(--acc2);min-width:44px;font-variant-numeric:tabular-nums}
+.train{background:var(--card2);border:1px solid var(--line);border-radius:8px;margin-bottom:5px;overflow:hidden}
+.train-head{display:flex;gap:6px;align-items:center;padding:7px 8px;cursor:pointer}
+.train-head .time{font-weight:800;font-size:11px;color:var(--acc2);min-width:38px;font-variant-numeric:tabular-nums}
 .train-head .info{flex:1;min-width:0}
-.train-head .name{font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.train-head .meta{font-size:10.5px;color:var(--mut);margin-top:1px}
-.train-head .actions{display:flex;gap:4px;flex:0 0 auto}
-.train-head .chk{width:26px;height:26px;border-radius:7px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:12px}
+.train-head .name{font-weight:700;font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.train-head .meta{font-size:9.5px;color:var(--mut);margin-top:0}
+.train-head .actions{display:flex;gap:3px;flex:0 0 auto}
+.train-head .chk{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:10px}
 .train-head .chk.on{background:var(--ok);border-color:var(--ok)}
-.train-head .chk.on::after{content:"✓";color:var(--bg);font-weight:900;font-size:13px}
-.train-head .run{width:26px;height:26px;border-radius:7px;border:2px solid var(--acc);background:rgba(255,91,46,.12);color:var(--acc);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:11px;font-weight:900}
+.train-head .chk.on::after{content:"✓";color:var(--bg);font-weight:900;font-size:11px}
+.train-head .run{width:22px;height:22px;border-radius:6px;border:2px solid var(--acc);background:rgba(255,91,46,.12);color:var(--acc);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:9px;font-weight:900}
 .train-head .run:active{transform:scale(.9)}
-.train-head .lock{width:26px;height:26px;border-radius:7px;border:2px solid var(--line);opacity:.4;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:not-allowed}
-.train-body{padding:0 10px 9px;border-top:1px solid var(--line);display:none}
+.train-head .lock{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);opacity:.4;display:flex;align-items:center;justify-content:center;font-size:10px;cursor:not-allowed}
+.train-body{padding:0 8px 7px;border-top:1px solid var(--line);display:none}
 .train-body.on{display:block}
-.ex-item{padding:8px;background:var(--card);border-radius:8px;margin-top:6px;font-size:12px}
-.ex-item .row1{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:3px}
-.ex-item .ex-name{font-weight:700;font-size:12px;flex:1}
-.ex-item .ex-badge{font-size:9.5px;padding:2px 6px;border-radius:20px;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap}
-.ex-item .row2{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px;font-size:10px;color:var(--mut)}
-.ex-item .chip-mini{padding:1px 6px;background:var(--card2);border:1px solid var(--line);border-radius:20px;color:var(--mut);font-size:9.5px}
-.ex-item .x-mark{color:var(--acc2);font-weight:900;font-size:11px}
-.train-actions{display:flex;gap:5px;margin-top:6px}
-.train-actions button{flex:1;padding:6px;border-radius:7px;font-size:10.5px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer}
+.ex-item{padding:6px;background:var(--card);border-radius:6px;margin-top:4px;font-size:11px}
+.ex-item .row1{display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px}
+.ex-item .ex-name{font-weight:700;font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ex-item .ex-badge{font-size:8.5px;padding:1px 5px;border-radius:16px;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.ex-item .row2{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;font-size:9px;color:var(--mut)}
+.ex-item .chip-mini{padding:0px 5px;background:var(--card2);border:1px solid var(--line);border-radius:16px;color:var(--mut);font-size:8.5px}
+.ex-item .x-mark{color:var(--acc2);font-weight:900;font-size:10px}
+.train-actions{display:flex;gap:4px;margin-top:4px}
+.train-actions button{flex:1;padding:4px;border-radius:6px;font-size:9.5px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer}
 .train-actions button:active{transform:scale(.97)}
-.profile{display:flex;align-items:center;gap:10px}
-.avatar-wrap{position:relative;width:60px;height:60px;flex:0 0 auto}
-.avatar{width:60px;height:60px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:var(--bg);background-size:cover;background-position:center;overflow:hidden}
+.profile{display:flex;align-items:center;gap:8px}
+.avatar-wrap{position:relative;width:52px;height:52px;flex:0 0 auto}
+.avatar{width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:var(--bg);background-size:cover;background-position:center;overflow:hidden}
 .avatar.has-img{color:transparent}
-.avatar-edit{position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;border-radius:50%;background:var(--card2);border:2px solid var(--line);color:var(--acc);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px}
+.avatar-edit{position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:var(--card2);border:2px solid var(--line);color:var(--acc);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px}
 .profile .pinfo{flex:1;min-width:0}
-.profile .pname{font-size:15px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.profile .pmeta{font-size:11px;color:var(--mut);margin-top:2px}
+.profile .pname{font-size:13px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.profile .pmeta{font-size:10px;color:var(--mut);margin-top:1px}
 .profile .pmeta b{color:var(--txt);font-weight:700}
-.search{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin-bottom:8px}
-.search input{flex:1;background:none;border:none;color:var(--txt);font-size:13px;outline:none;min-width:0}
+.search{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px;margin-bottom:6px}
+.search input{flex:1;background:none;border:none;color:var(--txt);font-size:12px;outline:none;min-width:0}
 .search input::placeholder{color:var(--mut)}
-.search svg{width:14px;height:14px;fill:var(--mut);flex:0 0 auto}
-.tabs{display:flex;gap:4px;margin-bottom:8px;overflow-x:auto;padding-bottom:1px;scrollbar-width:none}
+.search svg{width:12px;height:12px;fill:var(--mut);flex:0 0 auto}
+.tabs{display:flex;gap:3px;margin-bottom:6px;overflow-x:auto;padding-bottom:1px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{padding:6px 11px;border-radius:8px;font-size:11px;font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.2s;flex:0 0 auto}
+.tab{padding:4px 9px;border-radius:6px;font-size:10px;font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.2s;flex:0 0 auto}
 .tab.active{background:var(--grad);color:var(--bg);border-color:transparent}
-.ex{padding:8px;border-radius:10px;background:var(--card);border:1px solid var(--line);margin-bottom:5px;display:flex;gap:8px;align-items:center}
-.ex .thumb{width:44px;height:44px;border-radius:8px;flex:0 0 auto;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:17px;overflow:hidden}
+.ex{padding:6px;border-radius:8px;background:var(--card);border:1px solid var(--line);margin-bottom:4px;display:flex;gap:6px;align-items:center}
+.ex .thumb{width:36px;height:36px;border-radius:7px;flex:0 0 auto;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:14px;overflow:hidden}
 .ex .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.ex .txt{font-size:12px;line-height:1.3;font-weight:600;flex:1;min-width:0;overflow:hidden}
-.ex .txt .sub{font-size:10px;color:var(--mut);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}
-.ex .del{width:24px;height:24px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--mut);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.empty{color:var(--mut);text-align:center;padding:14px 8px;font-size:12px;line-height:1.45}
+.ex .txt{font-size:11px;line-height:1.25;font-weight:600;flex:1;min-width:0;overflow:hidden}
+.ex .txt .sub{font-size:9px;color:var(--mut);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}
+.ex .del{width:20px;height:20px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--mut);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.empty{color:var(--mut);text-align:center;padding:10px 6px;font-size:11px;line-height:1.35}
 .empty b{color:var(--acc2)}
-.chips{display:flex;flex-wrap:wrap;gap:4px}
-.chip{padding:5px 9px;border-radius:16px;font-size:10.5px;font-weight:600;background:var(--card2);border:1px solid var(--line);color:var(--mut);cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:3px}
+.chips{display:flex;flex-wrap:wrap;gap:3px}
+.chip{padding:4px 8px;border-radius:14px;font-size:9.5px;font-weight:600;background:var(--card2);border:1px solid var(--line);color:var(--mut);cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:2px}
 .chip.on{background:var(--grad);color:var(--bg);border-color:transparent}
-.chip .cnt{font-size:9px;opacity:.7;font-weight:700}
+.chip .cnt{font-size:8px;opacity:.7;font-weight:700}
 .chip.on .cnt{opacity:.9}
 .chip.add{color:var(--acc2);border-style:dashed;border-color:var(--acc2)}
-.chip .emoji{font-size:11.5px}
-.sec-title{font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.9px;margin:9px 0 5px;display:flex;align-items:center;gap:6px}
+.chip .emoji{font-size:10px}
+.sec-title{font-size:9px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.7px;margin:6px 0 3px;display:flex;align-items:center;gap:4px}
 .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
-.btn{padding:9px 12px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:.15s;background:var(--card);color:var(--txt);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;gap:5px}
+/* ========== КОМПАКТНЫЕ ПИЛЮЛИ ЗОН/СНАРЯДОВ/НАВЫКОВ ========== */
+.filter-row{display:flex;gap:4px;margin-bottom:4px;align-items:center}
+.filter-toggle{flex:1;display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:var(--card);border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:var(--txt);transition:.2s}
+.filter-toggle:active{transform:scale(.99)}
+.filter-toggle .lbl{display:flex;align-items:center;gap:5px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;font-size:9.5px}
+.filter-toggle .lbl .em{font-size:12px}
+.filter-toggle .counter{font-size:9.5px;font-weight:800;color:var(--acc2);background:rgba(255,176,46,.12);padding:2px 7px;border-radius:12px}
+.filter-toggle .arrow{font-size:10px;color:var(--mut);transition:.2s}
+.filter-toggle.open .arrow{transform:rotate(180deg)}
+.filter-toggle.open{border-color:var(--acc)}
+.filter-body{display:none;padding:5px;background:var(--card2);border:1px solid var(--line);border-radius:8px;margin-bottom:4px}
+.filter-body.on{display:block}
+.pills-scroll{display:flex;flex-wrap:wrap;gap:3px}
+/* ========== ЖУРНАЛ ВЕСА ========== */
+.weight-chart{width:100%;height:180px;background:var(--card2);border:1px solid var(--line);border-radius:8px;margin-bottom:8px;display:block}
+.weight-input-row{display:flex;gap:5px;margin-bottom:8px}
+.weight-input-row input{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:13px;outline:none;font-family:inherit}
+.weight-input-row input:focus{border-color:var(--acc)}
+.weight-input-row button{padding:8px 12px;border-radius:8px;border:none;background:var(--grad);color:var(--bg);font-size:12px;font-weight:800;cursor:pointer}
+.weight-list{display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto}
+.weight-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:var(--card);border-radius:6px;font-size:11.5px}
+.weight-item .date{color:var(--mut);font-size:10.5px}
+.weight-item .val{font-weight:800;color:var(--acc2);font-variant-numeric:tabular-nums}
+.weight-item .del{width:20px;height:20px;border-radius:5px;border:1px solid var(--line);background:transparent;color:var(--mut);font-size:10px;cursor:pointer;margin-left:6px}
+.weight-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}
+.weight-stat{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:6px;text-align:center}
+.weight-stat .l{font-size:8.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+.weight-stat .v{font-size:14px;font-weight:900;color:var(--acc2);margin-top:1px}
+.btn{padding:8px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;transition:.15s;background:var(--card);color:var(--txt);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;gap:4px}
 .btn:active{transform:scale(.97)}
 .btn.primary{background:var(--grad);color:var(--bg);border-color:transparent}
 .btn.danger{background:rgba(255,91,46,.12);color:var(--acc);border-color:rgba(255,91,46,.3)}
 .btn.blue{background:rgba(58,160,255,.12);color:var(--blue);border-color:rgba(58,160,255,.3)}
 .btn.green{background:rgba(46,204,113,.12);color:var(--ok);border-color:rgba(46,204,113,.3)}
-.btn.small{padding:6px 10px;font-size:10.5px}
+.btn.small{padding:5px 8px;font-size:9.5px}
 .btn.full{width:100%}
-.btn-row{display:flex;gap:6px;flex-wrap:wrap}
+.btn-row{display:flex;gap:4px;flex-wrap:wrap}
 .btn-row .btn{flex:1;min-width:0}
-.fab{position:fixed;bottom:88px;right:14px;width:48px;height:48px;border-radius:50%;background:var(--grad);border:none;color:var(--bg);font-size:22px;font-weight:300;cursor:pointer;z-index:40;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.4);transition:.2s;line-height:1}
+.fab{position:fixed;bottom:80px;right:12px;width:44px;height:44px;border-radius:50%;background:var(--grad);border:none;color:var(--bg);font-size:20px;font-weight:300;cursor:pointer;z-index:40;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 18px rgba(0,0,0,.4);transition:.2s;line-height:1}
 .fab:active{transform:scale(.9)}
-.fab-menu{position:fixed;bottom:142px;right:14px;z-index:41;display:none;flex-direction:column;gap:6px;align-items:flex-end}
+.fab-menu{position:fixed;bottom:130px;right:12px;z-index:41;display:none;flex-direction:column;gap:5px;align-items:flex-end}
 .fab-menu.on{display:flex}
-.fab-menu button{background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:11px;padding:9px 13px;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);white-space:nowrap;display:flex;align-items:center;gap:7px}
-.fab-menu button .emoji{font-size:14px}
-.stat-list{display:flex;flex-direction:column;gap:6px}
-.stat-item{display:flex;flex-direction:column;gap:4px}
-.stat-top{display:flex;justify-content:space-between;font-size:11.5px;font-weight:600}
+.fab-menu button{background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 5px 16px rgba(0,0,0,.25);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.fab-menu button .emoji{font-size:13px}
+.stat-list{display:flex;flex-direction:column;gap:5px}
+.stat-item{display:flex;flex-direction:column;gap:3px}
+.stat-top{display:flex;justify-content:space-between;font-size:10.5px;font-weight:600}
 .stat-top .lbl{color:var(--txt)}
 .stat-top .val{color:var(--mut);font-variant-numeric:tabular-nums}
 .stat-top .val b{color:var(--acc2);font-weight:800}
-.stat-bar{height:5px;background:var(--line);border-radius:5px;overflow:hidden}
-.stat-bar i{display:block;height:100%;background:var(--grad);border-radius:5px;transition:width .4s}
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-.mini-stat{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:8px;text-align:center}
-.mini-stat .v{font-size:18px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.mini-stat .l{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+.stat-bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+.stat-bar i{display:block;height:100%;background:var(--grad);border-radius:4px;transition:width .4s}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px}
+.mini-stat{background:var(--card2);border:1px solid var(--line);border-radius:7px;padding:6px;text-align:center}
+.mini-stat .v{font-size:15px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mini-stat .l{font-size:8px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
 .xp-card{background:linear-gradient(135deg,rgba(255,91,46,.15),var(--card));border:1px solid rgba(255,91,46,.3)}
-.xp-main{display:flex;align-items:center;gap:10px;margin-bottom:9px}
-.xp-level-big{width:60px;height:60px;border-radius:50%;background:var(--grad);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--bg);flex:0 0 auto}
-.xp-level-big .num{font-size:22px;font-weight:900;line-height:1}
-.xp-level-big .lbl{font-size:7px;font-weight:800;letter-spacing:1px;margin-top:1px;opacity:.8}
+.xp-main{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.xp-level-big{width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--bg);flex:0 0 auto}
+.xp-level-big .num{font-size:19px;font-weight:900;line-height:1}
+.xp-level-big .lbl{font-size:6.5px;font-weight:800;letter-spacing:.8px;margin-top:1px;opacity:.8}
 .xp-meta{flex:1;min-width:0}
-.xp-meta .rank{font-size:13px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.xp-meta .total{font-size:10.5px;color:var(--mut);margin-top:2px}
-.xp-meta .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:6px}
-.xp-meta .bar i{display:block;height:100%;background:var(--grad);border-radius:6px;transition:width .6s}
-.xp-formula{font-size:10.5px;color:var(--mut);line-height:1.6;background:var(--card2);padding:8px 10px;border-radius:8px;border-left:2px solid var(--acc2);margin-top:6px}
+.xp-meta .rank{font-size:11.5px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.xp-meta .total{font-size:9.5px;color:var(--mut);margin-top:1px}
+.xp-meta .bar{height:5px;background:var(--line);border-radius:5px;overflow:hidden;margin-top:4px}
+.xp-meta .bar i{display:block;height:100%;background:var(--grad);border-radius:5px;transition:width .6s}
+.xp-formula{font-size:9.5px;color:var(--mut);line-height:1.5;background:var(--card2);padding:6px 8px;border-radius:6px;border-left:2px solid var(--acc2);margin-top:4px}
 .xp-formula code{color:var(--acc2);font-weight:700}
 .xp-formula b{color:var(--txt)}
-.log-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:var(--card2);border-radius:7px;font-size:11px;margin-bottom:4px}
+.log-item{display:flex;justify-content:space-between;align-items:center;padding:5px 7px;background:var(--card2);border-radius:5px;font-size:10.5px;margin-bottom:3px}
 .log-item .l{color:var(--mut);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .log-item .v{color:var(--ok);font-weight:800}
-.skill-item{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin-bottom:6px}
-.skill-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;gap:6px}
-.skill-name{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.skill-icon{font-size:13px;flex:0 0 auto}
-.skill-lvl{font-size:10px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;flex:0 0 auto}
-.skill-bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:4px}
-.skill-bar i{display:block;height:100%;background:var(--grad);border-radius:4px;transition:width .4s}
-.skill-meta{display:flex;justify-content:space-between;font-size:10px;gap:5px}
+.skill-item{background:var(--card2);border:1px solid var(--line);border-radius:7px;padding:6px 8px;margin-bottom:5px}
+.skill-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:5px}
+.skill-name{display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.skill-icon{font-size:12px;flex:0 0 auto}
+.skill-lvl{font-size:9px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;flex:0 0 auto}
+.skill-bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:3px}
+.skill-bar i{display:block;height:100%;background:var(--grad);border-radius:3px;transition:width .4s}
+.skill-meta{display:flex;justify-content:space-between;font-size:9px;gap:4px}
 .skill-xp{color:var(--acc2);font-weight:800}
 .decay-fresh{color:var(--ok);font-weight:600}
 .decay-warn{color:var(--acc2);font-weight:600}
@@ -192,134 +220,154 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .decay-bad{color:#ff4444;font-weight:700}
 .decay-bad2{color:#cc0000;font-weight:800}
 .decay-cold{color:var(--mut);font-weight:500;font-style:italic}
-.themes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.theme-tile{border-radius:9px;border:2px solid var(--line);overflow:hidden;cursor:pointer;transition:.2s;position:relative}
+.themes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.theme-tile{border-radius:8px;border:2px solid var(--line);overflow:hidden;cursor:pointer;transition:.2s;position:relative}
 .theme-tile.on{border-color:var(--acc)}
-.theme-tile .swatch{height:40px;display:flex}
+.theme-tile .swatch{height:34px;display:flex}
 .theme-tile .swatch div{flex:1}
-.theme-tile .name{font-size:9px;text-align:center;padding:4px 2px;background:var(--card2);color:var(--txt);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
-.theme-tile .check{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--acc);color:var(--bg);display:none;align-items:center;justify-content:center;font-size:10px;font-weight:900}
+.theme-tile .name{font-size:8.5px;text-align:center;padding:3px 2px;background:var(--card2);color:var(--txt);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.theme-tile .check{position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:var(--acc);color:var(--bg);display:none;align-items:center;justify-content:center;font-size:9px;font-weight:900}
 .theme-tile.on .check{display:flex}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:flex-end;justify-content:center;z-index:100;padding:0}
 .modal-bg.on{display:flex}
-.modal{background:var(--bg2);width:100%;max-width:560px;border-radius:20px 20px 0 0;padding:14px 12px 20px;border-top:1px solid var(--line);max-height:92vh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
-.modal::before{content:"";display:block;width:36px;height:3px;border-radius:3px;background:var(--line);margin:-4px auto 10px}
-.modal h3{margin:0 0 11px;font-size:15px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.field{margin-bottom:9px}
-.field label{display:block;font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.9px;margin-bottom:4px;font-weight:600}
-.field input,.field select,.field textarea{width:100%;padding:9px 10px;border-radius:8px;background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:13px;outline:none;font-family:inherit}
+.modal{background:var(--bg2);width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:12px 10px 18px;border-top:1px solid var(--line);max-height:92vh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.modal::before{content:"";display:block;width:32px;height:3px;border-radius:3px;background:var(--line);margin:-4px auto 8px}
+.modal h3{margin:0 0 9px;font-size:14px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.field{margin-bottom:7px}
+.field label{display:block;font-size:9.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;font-weight:600}
+.field input,.field select,.field textarea{width:100%;padding:8px 9px;border-radius:7px;background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:12px;outline:none;font-family:inherit}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
-.field textarea{resize:vertical;min-height:50px}
+.field textarea{resize:vertical;min-height:44px}
 .field input.x-input{border-color:var(--acc2);color:var(--acc2);font-weight:700}
-.row{display:flex;gap:6px}
+.row{display:flex;gap:5px}
 .row .field{flex:1}
-.days{display:flex;gap:3px;margin-top:3px}
-.days .d{flex:1;padding:7px 0;border-radius:7px;text-align:center;font-size:10.5px;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;transition:.15s}
+.days{display:flex;gap:3px;margin-top:2px}
+.days .d{flex:1;padding:6px 0;border-radius:6px;text-align:center;font-size:10px;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;transition:.15s}
 .days .d.on{background:var(--grad);color:var(--bg);border-color:transparent}
-.close{width:100%;padding:11px;border-radius:9px;border:none;background:var(--card);color:var(--mut);font-weight:700;margin-top:5px;cursor:pointer;font-size:12px}
-.photo-zone{position:relative;border:2px dashed var(--line);border-radius:9px;padding:12px;text-align:center;cursor:pointer;background:var(--card);min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-.photo-zone.has-img{padding:0;border-style:solid;overflow:hidden;min-height:130px}
-.photo-zone img{width:100%;max-height:200px;object-fit:cover;display:block}
-.photo-zone .ico{font-size:22px;opacity:.5}
-.photo-zone .hint{font-size:10.5px;color:var(--mut)}
-.photo-zone .clear-img{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.7);color:#fff;border:none;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:12px}
-.timer-presets{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
-.timer-preset{padding:6px 10px;border-radius:8px;font-size:10.5px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--mut);cursor:pointer}
+.close{width:100%;padding:10px;border-radius:8px;border:none;background:var(--card);color:var(--mut);font-weight:700;margin-top:4px;cursor:pointer;font-size:11.5px}
+.photo-zone{position:relative;border:2px dashed var(--line);border-radius:7px;padding:10px;text-align:center;cursor:pointer;background:var(--card);min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.photo-zone.has-img{padding:0;border-style:solid;overflow:hidden;min-height:110px}
+.photo-zone img{width:100%;max-height:180px;object-fit:cover;display:block}
+.photo-zone .ico{font-size:20px;opacity:.5}
+.photo-zone .hint{font-size:9.5px;color:var(--mut)}
+.photo-zone .clear-img{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.7);color:#fff;border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:10px}
+.timer-presets{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:7px}
+.timer-preset{padding:4px 9px;border-radius:6px;font-size:9.5px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--mut);cursor:pointer}
 .timer-preset:active{transform:scale(.95)}
-.time-editor{display:flex;flex-direction:column;gap:6px;margin-bottom:11px}
-.time-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;background:var(--card2);padding:8px 10px;border-radius:9px;border:1px solid var(--line)}
-.time-row .lbl{font-size:11px;font-weight:700}
-.time-row .lbl small{display:block;font-size:9px;color:var(--mut);font-weight:500;margin-top:1px}
-.time-controls{display:flex;align-items:center;gap:4px}
-.time-controls button{width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.time-controls input{width:60px;padding:6px 4px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--acc2);font-size:13px;font-weight:900;text-align:center;outline:none;font-family:inherit}
+.time-editor{display:flex;flex-direction:column;gap:5px;margin-bottom:9px}
+.time-row{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;background:var(--card2);padding:6px 8px;border-radius:7px;border:1px solid var(--line)}
+.time-row .lbl{font-size:10px;font-weight:700}
+.time-row .lbl small{display:block;font-size:8.5px;color:var(--mut);font-weight:500;margin-top:0}
+.time-controls{display:flex;align-items:center;gap:3px}
+.time-controls button{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:12px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.time-controls input{width:52px;padding:5px 3px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--acc2);font-size:12px;font-weight:900;text-align:center;outline:none;font-family:inherit}
 .time-controls input:focus{border-color:var(--acc)}
-.timer-display{text-align:center;font-size:48px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:4px 0 3px;line-height:1}
-.timer-phase{text-align:center;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.timer-display{text-align:center;font-size:42px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:3px 0 2px;line-height:1}
+.timer-phase{text-align:center;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
 .timer-phase.prep{color:var(--blue)}
 .timer-phase.work{color:var(--acc)}
 .timer-phase.rest{color:var(--ok)}
-.timer-progress{height:5px;background:var(--line);border-radius:5px;overflow:hidden;margin:0 auto 10px;max-width:400px}
+.timer-progress{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin:0 auto 8px;max-width:400px}
 .timer-progress i{display:block;height:100%;background:var(--grad);transition:width .3s linear}
-.timer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
-.tcell{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:7px;text-align:center}
-.tcell .lbl{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px}
-.tcell .v{font-size:14px;font-weight:800;margin-top:1px}
-.comp-ex-item{display:flex;gap:6px;align-items:center;padding:7px 9px;background:var(--card);border:1px solid var(--line);border-radius:8px;margin-bottom:5px}
+.timer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}
+.tcell{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:5px;text-align:center}
+.tcell .lbl{font-size:8px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.tcell .v{font-size:12px;font-weight:800;margin-top:0}
+.comp-ex-item{display:flex;gap:5px;align-items:center;padding:6px 8px;background:var(--card);border:1px solid var(--line);border-radius:7px;margin-bottom:4px}
 .comp-ex-item .info{flex:1;min-width:0}
-.comp-ex-item .nm{font-size:11.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.comp-ex-item .ds{font-size:10px;color:var(--mut);margin-top:1px}
-.comp-ex-item .rm{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;font-size:11px}
-.comp-item{padding:10px;background:var(--card2);border:1px solid var(--line);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:.2s}
+.comp-ex-item .nm{font-size:10.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.comp-ex-item .ds{font-size:9px;color:var(--mut);margin-top:1px}
+.comp-ex-item .rm{width:20px;height:20px;border-radius:5px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;font-size:10px}
+.comp-item{padding:8px;background:var(--card2);border:1px solid var(--line);border-radius:8px;margin-bottom:5px;cursor:pointer;transition:.2s}
 .comp-item:active{transform:scale(.98)}
-.comp-item .nm{font-size:13px;font-weight:800;margin-bottom:3px}
-.comp-item .meta{font-size:10.5px;color:var(--mut);display:flex;gap:6px;flex-wrap:wrap}
-nav.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 2px 8px;z-index:50;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
-nav.bottom button{background:none;border:none;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;cursor:pointer;padding:3px 4px;transition:.2s;flex:1;max-width:70px}
-nav.bottom button svg{width:20px;height:20px;fill:currentColor}
+.comp-item .nm{font-size:11.5px;font-weight:800;margin-bottom:2px}
+.comp-item .meta{font-size:9.5px;color:var(--mut);display:flex;gap:5px;flex-wrap:wrap}
+nav.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:5px 1px 6px;z-index:50;padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+nav.bottom button{background:none;border:none;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:1px;font-size:8px;font-weight:600;cursor:pointer;padding:3px 3px;transition:.2s;flex:1;max-width:65px}
+nav.bottom button svg{width:18px;height:18px;fill:currentColor}
 nav.bottom button.on{color:var(--acc)}
 .view{display:none}
 .view.on{display:block}
-.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--grad);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:700;font-size:12px;opacity:0;pointer-events:none;transition:.3s;z-index:200;max-width:90%;text-align:center}
+.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--grad);color:var(--bg);padding:8px 14px;border-radius:9px;font-weight:700;font-size:11px;opacity:0;pointer-events:none;transition:.3s;z-index:200;max-width:90%;text-align:center}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-.xp-fly{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--grad);color:var(--bg);font-weight:900;font-size:17px;padding:10px 20px;border-radius:11px;z-index:300;pointer-events:none;animation:xpfly 1.6s ease;opacity:0}
+.xp-fly{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--grad);color:var(--bg);font-weight:900;font-size:15px;padding:8px 18px;border-radius:10px;z-index:300;pointer-events:none;animation:xpfly 1.6s ease;opacity:0}
 @keyframes xpfly{0%{opacity:0;transform:translateX(-50%) translateY(20px) scale(.6)}20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.15)}60%{opacity:1;transform:translateX(-50%) translateY(-10px) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-60px) scale(.9)}}
-.note{font-size:10.5px;color:var(--mut);margin-top:6px;line-height:1.45;padding:7px 10px;background:var(--card2);border-radius:8px;border-left:2px solid var(--acc2)}
+.note{font-size:9.5px;color:var(--mut);margin-top:5px;line-height:1.4;padding:6px 8px;background:var(--card2);border-radius:6px;border-left:2px solid var(--acc2)}
 .note b{color:var(--acc2)}
-.info-block{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-bottom:8px}
-.info-block h4{margin:0 0 6px;font-size:12.5px;font-weight:800;color:var(--txt);display:flex;align-items:center;gap:5px}
-.info-block p{margin:0 0 5px;font-size:11.5px;line-height:1.5;color:var(--mut)}
+.info-block{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px}
+.info-block h4{margin:0 0 5px;font-size:11px;font-weight:800;color:var(--txt);display:flex;align-items:center;gap:4px}
+.info-block p{margin:0 0 4px;font-size:10.5px;line-height:1.45;color:var(--mut)}
 .info-block p:last-child{margin-bottom:0}
 .info-block p b{color:var(--txt);font-weight:700}
-.emoji-picker{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;max-height:120px;overflow-y:auto;padding:5px;background:var(--card2);border-radius:8px;border:1px solid var(--line)}
-.emoji-picker span{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border-radius:7px;transition:.15s;border:1px solid transparent}
+.emoji-picker{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px;max-height:110px;overflow-y:auto;padding:4px;background:var(--card2);border-radius:7px;border:1px solid var(--line)}
+.emoji-picker span{width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border-radius:6px;transition:.15s;border:1px solid transparent}
 .emoji-picker span:hover{background:var(--card);border-color:var(--line)}
 .emoji-picker span.on{background:var(--grad);border-color:transparent}
 
-/* ========== РЕЖИМ ВЫПОЛНЕНИЯ ТРЕНИРОВКИ ========== */
-.exec-screen{position:fixed;inset:0;background:var(--bg);z-index:150;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* ========== ЭКРАН КОМПЛЕКСОВ ========== */
+.comps-screen{position:fixed;inset:0;background:var(--bg);z-index:120;display:none;flex-direction:column;overflow-y:auto}
+.comps-screen.on{display:flex}
+.comps-header{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;z-index:5}
+.comps-header .back{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.comps-header .title{flex:1;font-size:15px;font-weight:800}
+.comps-header .add-btn{width:32px;height:32px;border-radius:9px;border:none;background:var(--grad);color:var(--bg);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:300}
+.comps-body{padding:10px;max-width:560px;margin:0 auto;width:100%}
+.comps-empty{text-align:center;padding:40px 16px;color:var(--mut);font-size:13px;line-height:1.6}
+.comps-empty .emoji{font-size:48px;display:block;margin-bottom:12px}
+.comp-card{background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:11px;margin-bottom:8px}
+.comp-card .cc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px}
+.comp-card .cc-name{font-size:14px;font-weight:800;flex:1;line-height:1.25}
+.comp-card .cc-badge{font-size:9.5px;padding:2px 8px;border-radius:20px;background:var(--card);border:1px solid var(--line);color:var(--mut);white-space:nowrap;flex:0 0 auto}
+.comp-card .cc-badge.closed{color:var(--acc);border-color:rgba(255,91,46,.4)}
+.comp-card .cc-ex{background:var(--card);border-radius:7px;padding:6px 8px;margin-bottom:4px;font-size:11px}
+.comp-card .cc-ex .ex-title{font-weight:700;font-size:11px;margin-bottom:2px}
+.comp-card .cc-ex .ex-dosage{font-size:9.5px;color:var(--mut);display:flex;gap:6px;flex-wrap:wrap}
+.comp-card .cc-ex .ex-dosage .x{color:var(--acc2);font-weight:900}
+.comp-card .cc-actions{display:flex;gap:5px;margin-top:8px}
+.comp-card .cc-actions button{flex:1;padding:6px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:10px;font-weight:700;cursor:pointer}
+
+/* ========== ЖУРНАЛ ВЕСА (модалка) ========== */
+.weight-empty{text-align:center;padding:20px 12px;color:var(--mut);font-size:11px;line-height:1.5}
+
+/* ========== РЕЖИМ ВЫПОЛНЕНИЯ ========== */
+.exec-screen{position:fixed;inset:0;background:var(--bg);z-index:150;display:none;flex-direction:column;overflow-y:auto}
 .exec-screen.on{display:flex}
-.exec-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;z-index:5}
-.exec-header .close-x{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.exec-header .title{flex:1;font-size:14px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.exec-header .progress-txt{font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
-.exec-body{padding:14px;flex:1;max-width:560px;margin:0 auto;width:100%}
-.exec-step{display:flex;gap:8px;margin-bottom:12px}
-.exec-step .dot-step{width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--mut);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex:0 0 auto}
+.exec-header{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;z-index:5}
+.exec-header .close-x{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.exec-header .title{flex:1;font-size:13px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.exec-header .progress-txt{font-size:10px;color:var(--mut);font-variant-numeric:tabular-nums}
+.exec-body{padding:12px;flex:1;max-width:560px;margin:0 auto;width:100%}
+.exec-step{display:flex;gap:6px;margin-bottom:10px}
+.exec-step .dot-step{width:24px;height:24px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--mut);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex:0 0 auto}
 .exec-step .dot-step.on{background:var(--grad);color:var(--bg);border-color:transparent}
-.exec-step .dot-step.done{background:var(--ok);color:var(--bg);border-color:transparent}
 .exec-step .info{flex:1;padding-top:2px}
-.exec-step .info .lbl{font-size:9.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
-.exec-step .info .nm{font-size:14px;font-weight:800;margin-top:1px}
-.exec-ex-name{font-size:20px;font-weight:900;text-align:center;margin:8px 0 4px}
-.exec-ex-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:14px}
-.exec-ex-tags .tag{font-size:10px;padding:3px 8px;border-radius:16px;background:var(--card2);border:1px solid var(--line);color:var(--mut)}
-.exec-timer{text-align:center;font-size:66px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;margin:8px 0}
-.exec-phase{text-align:center;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin-bottom:12px}
-.exec-progress{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:0 auto 16px;max-width:400px}
+.exec-step .info .lbl{font-size:8.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+.exec-step .info .nm{font-size:13px;font-weight:800;margin-top:1px}
+.exec-ex-name{font-size:18px;font-weight:900;text-align:center;margin:6px 0 3px}
+.exec-ex-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-bottom:12px}
+.exec-ex-tags .tag{font-size:9px;padding:2px 7px;border-radius:14px;background:var(--card2);border:1px solid var(--line);color:var(--mut)}
+.exec-timer{text-align:center;font-size:58px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;margin:6px 0}
+.exec-phase{text-align:center;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.exec-phase.work{color:var(--acc)}
+.exec-phase.rest{color:var(--ok)}
+.exec-progress{height:5px;background:var(--line);border-radius:5px;overflow:hidden;margin:0 auto 14px;max-width:400px}
 .exec-progress i{display:block;height:100%;background:var(--grad);transition:width .3s linear}
-.exec-dosage{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:14px;text-align:center}
-.exec-dosage .row{display:flex;justify-content:space-around;flex-wrap:wrap;gap:10px}
+.exec-dosage{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:12px;text-align:center}
+.exec-dosage .row{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px}
 .exec-dosage .item{display:flex;flex-direction:column;align-items:center}
-.exec-dosage .item .lbl{font-size:9.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px}
-.exec-dosage .item .val{font-size:18px;font-weight:900;color:var(--acc2);margin-top:2px}
-.exec-ask{background:var(--card2);border:1px solid var(--acc2);border-radius:12px;padding:12px;margin-bottom:12px}
-.exec-ask .lbl{font-size:11px;color:var(--acc2);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.exec-ask input{width:100%;padding:11px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:16px;font-weight:700;text-align:center;outline:none}
-.exec-ask input:focus{border-color:var(--acc2)}
-.exec-controls{display:flex;gap:8px;margin-top:14px}
-.exec-controls .btn{flex:1;padding:14px;font-size:13px}
-.exec-controls .btn.primary{font-size:14px}
-.exec-footer{padding:12px 14px;background:var(--bg2);border-top:1px solid var(--line);max-width:560px;margin:0 auto;width:100%}
-.exec-footer .finish-btn{width:100%;padding:15px;border-radius:12px;border:none;background:var(--grad);color:var(--bg);font-size:15px;font-weight:900;cursor:pointer}
-.exec-footer .finish-btn:active{transform:scale(.98)}
+.exec-dosage .item .lbl{font-size:8.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.exec-dosage .item .val{font-size:16px;font-weight:900;color:var(--acc2);margin-top:1px}
+.exec-controls{display:flex;gap:6px;margin-top:12px}
+.exec-controls .btn{flex:1;padding:12px;font-size:12px}
+.exec-footer{padding:10px 12px;background:var(--bg2);border-top:1px solid var(--line);max-width:560px;margin:0 auto;width:100%}
+.exec-footer .finish-btn{width:100%;padding:13px;border-radius:10px;border:none;background:var(--grad);color:var(--bg);font-size:14px;font-weight:900;cursor:pointer}
 </style>
 </head>
 <body>
 
 <div class="app">
   <header class="top">
-    <div class="logo">АС <span>FIT SYSTEM v2.2</span></div>
+    <div class="logo">АС <span>FIT v2.3</span></div>
     <div class="xp-head" onclick="navTo('v-stat')">
       <div class="xp-lvl" id="headLvl">1</div>
       <div class="xp-info">
@@ -335,7 +383,7 @@ nav.bottom button.on{color:var(--acc)}
 
   <section class="view on" id="v-main">
     <div class="prog-row">
-      <div class="prog"><div class="lbl">Неделя</div><div class="val" id="weekNum">1<span style="color:var(--mut);font-size:10px">/52</span></div><div class="bar"><i style="width:0%"></i></div></div>
+      <div class="prog"><div class="lbl">Неделя</div><div class="val" id="weekNum">1<span style="color:var(--mut);font-size:9px">/52</span></div><div class="bar"><i style="width:0%"></i></div></div>
       <div class="prog"><div class="lbl">Месяц</div><div class="val" id="monthLabel">—</div><div class="bar"><i style="width:0%"></i></div></div>
       <div class="prog"><div class="lbl">XP</div><div class="val" id="xpTopVal">0</div><div class="bar"><i id="xpTopBar" style="width:0%"></i></div></div>
     </div>
@@ -370,7 +418,7 @@ nav.bottom button.on{color:var(--acc)}
     </div>
     <div class="btn-row">
       <button class="btn primary" onclick="openTrainModal()">+ Тренировка</button>
-      <button class="btn" onclick="openTrainList()">📋 Все шаблоны</button>
+      <button class="btn" onclick="openTrainList()">📋 Шаблоны</button>
     </div>
   </section>
 
@@ -385,22 +433,54 @@ nav.bottom button.on{color:var(--acc)}
       <div class="tab" data-f="gear" onclick="setFilter(this)">Снаряды</div>
       <div class="tab" data-f="skill" onclick="setFilter(this)">Навыки</div>
     </div>
-    <div class="sec-title">Зоны</div>
-    <div class="chips" id="zones"></div>
-    <div class="sec-title">Снаряды</div>
-    <div class="chips" id="gears"></div>
-    <div class="btn-row" style="margin-top:6px">
-      <button class="btn small full" onclick="addCustomGear()">+ Свой снаряд</button>
+
+    <div class="filter-row">
+      <div class="filter-toggle" id="zonesToggle" onclick="toggleFilterBody('zones')">
+        <div class="lbl"><span class="em">🎯</span>Зоны</div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="counter" id="zonesCount">0</span>
+          <span class="arrow">▼</span>
+        </div>
+      </div>
     </div>
-    <div class="sec-title">Навыки</div>
-    <div class="chips" id="skills"></div>
+    <div class="filter-body" id="zonesBody">
+      <div class="pills-scroll" id="zones"></div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-toggle" id="gearsToggle" onclick="toggleFilterBody('gears')">
+        <div class="lbl"><span class="em">🎒</span>Снаряды</div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="counter" id="gearsCount">0</span>
+          <span class="arrow">▼</span>
+        </div>
+      </div>
+    </div>
+    <div class="filter-body" id="gearsBody">
+      <div class="pills-scroll" id="gears"></div>
+      <button class="btn small full" style="margin-top:4px" onclick="addCustomGear()">+ Свой снаряд</button>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-toggle" id="skillsToggle" onclick="toggleFilterBody('skills')">
+        <div class="lbl"><span class="em">⭐</span>Навыки</div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="counter" id="skillsCount">0</span>
+          <span class="arrow">▼</span>
+        </div>
+      </div>
+    </div>
+    <div class="filter-body" id="skillsBody">
+      <div class="pills-scroll" id="skills"></div>
+    </div>
+
     <div class="sec-title">Упражнения (<span id="exCount">0</span>)</div>
     <div id="exList"></div>
-    <div class="btn-row" style="margin-top:8px">
+    <div class="btn-row" style="margin-top:6px">
       <button class="btn primary" onclick="openExModal()">+ Упражнение</button>
       <button class="btn" onclick="openCompModal()">+ Комплекс</button>
     </div>
-    <div class="btn-row" style="margin-top:6px">
+    <div class="btn-row" style="margin-top:4px">
       <button class="btn danger full" onclick="clearAllEx()">🗑 Очистить все</button>
     </div>
   </section>
@@ -411,12 +491,12 @@ nav.bottom button.on{color:var(--acc)}
         <div class="xp-level-big"><div class="num" id="xpLevel">1</div><div class="lbl">LEVEL</div></div>
         <div class="xp-meta">
           <div class="rank" id="xpRank">Новичок</div>
-          <div class="total"><b id="xpTotal">0</b> XP · до след. <b id="xpToNext">1</b></div>
+          <div class="total"><b id="xpTotal">0</b> XP · до <b id="xpToNext">1</b></div>
           <div class="bar"><i id="xpBar" style="width:0%"></i></div>
         </div>
       </div>
       <div class="xp-formula">
-        <b>📐 XP:</b> Время <code>сек×0.01</code> · Вес <code>(вес/масса)×0.01×повт</code> · Свой <code>повт×0.1</code>
+        <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
       </div>
     </div>
     <div class="card">
@@ -471,7 +551,7 @@ nav.bottom button.on{color:var(--acc)}
           <div class="pmeta">Возраст: <b id="pAge">34</b> · Масса: <b id="pWeight">78</b> кг</div>
         </div>
       </div>
-      <div class="btn-row" style="margin-top:8px">
+      <div class="btn-row" style="margin-top:6px">
         <button class="btn small" onclick="document.getElementById('avatarInput').click()">📷 Аватар</button>
         <button class="btn small danger" onclick="removeAvatar()">Убрать</button>
       </div>
@@ -486,24 +566,29 @@ nav.bottom button.on{color:var(--acc)}
       <button class="btn primary full" onclick="saveProfile()">Сохранить</button>
     </div>
     <div class="card">
+      <h2><span class="lft"><span class="dot"></span>⚖️ Журнал веса</span></h2>
+      <button class="btn primary full" onclick="openWeightLog()">📊 Открыть журнал</button>
+      <div class="note">Записывай вес в любой день — увидишь график изменений.</div>
+    </div>
+    <div class="card">
       <h2><span class="lft"><span class="dot"></span>⏱ Таймер</span></h2>
       <div class="timer-presets" id="timerPresets"></div>
       <div class="time-editor" id="timeEditor"></div>
       <div class="btn-row">
         <button class="btn primary" onclick="openModal('m-timer')">▶ Открыть</button>
-        <button class="btn" onclick="saveTimerConfig()">💾 Сохранить</button>
+        <button class="btn" onclick="saveTimerConfig()">💾</button>
       </div>
-      <button class="btn full small" style="margin-top:6px" onclick="resetTimerConfig()">⟳ Сброс</button>
+      <button class="btn full small" style="margin-top:4px" onclick="resetTimerConfig()">⟳ Сброс</button>
     </div>
     <div class="card">
       <h2><span class="lft"><span class="dot"></span>🎨 Темы</span></h2>
       <div class="themes-grid" id="themesGrid"></div>
     </div>
     <div class="card">
-      <h2><span class="lft"><span class="dot"></span>Обмен базами</span></h2>
-      <button class="btn blue full" style="margin-bottom:6px" onclick="exportDB()">📤 Экспорт</button>
-      <button class="btn green full" style="margin-bottom:6px" onclick="document.getElementById('importInput').click()">📥 Импорт</button>
-      <button class="btn full" style="margin-bottom:6px" onclick="shareDB()">🔗 Поделиться</button>
+      <h2><span class="lft"><span class="dot"></span>Обмен</span></h2>
+      <button class="btn blue full" style="margin-bottom:4px" onclick="exportDB()">📤 Экспорт</button>
+      <button class="btn green full" style="margin-bottom:4px" onclick="document.getElementById('importInput').click()">📥 Импорт</button>
+      <button class="btn full" style="margin-bottom:4px" onclick="shareDB()">🔗 Поделиться</button>
       <button class="btn full" onclick="copyDB()">📋 В буфер</button>
       <input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="importDB(this)">
     </div>
@@ -528,12 +613,22 @@ nav.bottom button.on{color:var(--acc)}
 <nav class="bottom">
   <button class="on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>Календарь</button>
   <button data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>Упр.</button>
-  <button onclick="openCompList()"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>Комплексы</button>
+  <button onclick="openCompsScreen()"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>Комплексы</button>
   <button data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>XP</button>
   <button data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>Профиль</button>
 </nav>
 
-<!-- ========== РЕЖИМ ВЫПОЛНЕНИЯ ТРЕНИРОВКИ ========== -->
+<!-- ========== ЭКРАН КОМПЛЕКСОВ ========== -->
+<div class="comps-screen" id="compsScreen">
+  <div class="comps-header">
+    <button class="back" onclick="closeCompsScreen()">←</button>
+    <div class="title">📋 Мои комплексы</div>
+    <button class="add-btn" onclick="openCompModal()">+</button>
+  </div>
+  <div class="comps-body" id="compsBody"></div>
+</div>
+
+<!-- ========== ЭКРАН ВЫПОЛНЕНИЯ ========== -->
 <div class="exec-screen" id="execScreen">
   <div class="exec-header">
     <button class="close-x" onclick="closeExecScreen()">✕</button>
@@ -542,6 +637,26 @@ nav.bottom button.on{color:var(--acc)}
   </div>
   <div class="exec-body" id="execBody"></div>
   <div class="exec-footer" id="execFooter"></div>
+</div>
+
+<!-- ========== MODAL: ЖУРНАЛ ВЕСА ========== -->
+<div class="modal-bg" id="m-weight" onclick="if(event.target===this)closeModal('m-weight')">
+  <div class="modal">
+    <h3>⚖️ Журнал веса</h3>
+    <div class="weight-stats">
+      <div class="weight-stat"><div class="l">Сейчас</div><div class="v" id="wCurrent">—</div></div>
+      <div class="weight-stat"><div class="l">Мин</div><div class="v" id="wMin">—</div></div>
+      <div class="weight-stat"><div class="l">Макс</div><div class="v" id="wMax">—</div></div>
+    </div>
+    <canvas class="weight-chart" id="weightChart" width="600" height="360"></canvas>
+    <div class="weight-input-row">
+      <input type="date" id="wDate">
+      <input type="number" step="0.1" placeholder="Вес, кг" id="wValue">
+      <button onclick="addWeightEntry()">+</button>
+    </div>
+    <div class="weight-list" id="weightList"></div>
+    <button class="close" onclick="closeModal('m-weight')">Закрыть</button>
+  </div>
 </div>
 
 <!-- ========== MODAL: УПРАЖНЕНИЕ ========== -->
@@ -582,7 +697,7 @@ nav.bottom button.on{color:var(--acc)}
       <div class="field"><label>С</label><input type="date" id="tStartDate"></div>
       <div class="field"><label>По</label><input type="date" id="tEndDate"></div>
     </div>
-    <div class="note" style="margin-bottom:9px">📅 Пусто = бессрочно</div>
+    <div class="note" style="margin-bottom:7px">📅 Пусто = бессрочно</div>
     <div class="field">
       <label>Дни недели</label>
       <div class="days" id="daysRow">
@@ -600,17 +715,17 @@ nav.bottom button.on{color:var(--acc)}
       <div class="field"><label>Длит., мин</label><input type="number" id="tDuration" value="30"></div>
     </div>
     <div class="sec-title">Упражнения</div>
-    <div id="tExList"><div class="empty" style="padding:8px">Пока пусто</div></div>
-    <div class="btn-row" style="margin-top:6px">
+    <div id="tExList"><div class="empty" style="padding:6px">Пока пусто</div></div>
+    <div class="btn-row" style="margin-top:4px">
       <button class="btn small" onclick="openPickEx('train')">+ Упражнение</button>
       <button class="btn small" onclick="openPickComp('train')">+ Комплекс</button>
     </div>
-    <button class="btn primary full" style="margin-top:10px" onclick="saveTrain()">Сохранить</button>
+    <button class="btn primary full" style="margin-top:8px" onclick="saveTrain()">Сохранить</button>
     <button class="close" onclick="closeModal('m-train')">Отмена</button>
   </div>
 </div>
 
-<!-- ========== MODAL: ВСЕ ШАБЛОНЫ ========== -->
+<!-- ========== MODAL: ШАБЛОНЫ ========== -->
 <div class="modal-bg" id="m-train-list" onclick="if(event.target===this)closeModal('m-train-list')">
   <div class="modal">
     <h3>Шаблоны тренировок</h3>
@@ -625,9 +740,9 @@ nav.bottom button.on{color:var(--acc)}
     <h3 id="compModalTitle">Новый комплекс</h3>
     <div class="field"><label>Название *</label><input id="cName"></div>
     <div class="sec-title">Упражнения</div>
-    <div id="cExList"><div class="empty" style="padding:8px">Пока пусто</div></div>
-    <button class="btn full small" style="margin-top:6px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
-    <div class="field" style="margin-top:9px">
+    <div id="cExList"><div class="empty" style="padding:6px">Пока пусто</div></div>
+    <button class="btn full small" style="margin-top:4px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
+    <div class="field" style="margin-top:7px">
       <label>Тип</label>
       <div class="chips" id="compType">
         <div class="chip on" onclick="pickCompType(this)">Открытый</div>
@@ -636,15 +751,6 @@ nav.bottom button.on{color:var(--acc)}
     </div>
     <button class="btn primary full" onclick="saveComp()">Сохранить</button>
     <button class="close" onclick="closeModal('m-comp')">Отмена</button>
-  </div>
-</div>
-
-<!-- ========== MODAL: СПИСОК КОМПЛЕКСОВ ========== -->
-<div class="modal-bg" id="m-comp-list" onclick="if(event.target===this)closeModal('m-comp-list')">
-  <div class="modal">
-    <h3>📋 Мои комплексы</h3>
-    <div id="compList"></div>
-    <button class="close" onclick="closeModal('m-comp-list')">Закрыть</button>
   </div>
 </div>
 
@@ -670,22 +776,22 @@ nav.bottom button.on{color:var(--acc)}
   </div>
 </div>
 
-<!-- ========== MODAL: НАСТРОЙКА ДОЗИРОВКИ ========== -->
+<!-- ========== MODAL: НАСТРОЙКА ========== -->
 <div class="modal-bg" id="m-ex-config" onclick="if(event.target===this)closeModal('m-ex-config')">
   <div class="modal">
     <h3 id="exCfgTitle">Настройка</h3>
-    <div class="field"><label>Упражнение</label><div id="exCfgName" style="font-size:13px;font-weight:700;padding:9px 10px;background:var(--card);border-radius:8px"></div></div>
-    <div class="note" style="margin-bottom:9px">💡 Введи <b>X</b> в любое поле → значение спросим во время тренировки</div>
+    <div class="field"><label>Упражнение</label><div id="exCfgName" style="font-size:12px;font-weight:700;padding:7px 9px;background:var(--card);border-radius:7px"></div></div>
+    <div class="note" style="margin-bottom:7px">💡 Введи <b>X</b> → спросим во время тренировки</div>
     <div class="row">
       <div class="field"><label>Подходы</label><input type="text" id="exCfgSets" value="3"></div>
       <div class="field"><label>Повторы</label><input type="text" id="exCfgReps" value="10"></div>
     </div>
     <div class="row">
-      <div class="field"><label>Время, сек</label><input type="text" id="exCfgTime" value="0"></div>
-      <div class="field"><label>Отдых, сек</label><input type="text" id="exCfgRest" value="60"></div>
+      <div class="field"><label>Время, с</label><input type="text" id="exCfgTime" value="0"></div>
+      <div class="field"><label>Отдых, с</label><input type="text" id="exCfgRest" value="60"></div>
     </div>
     <div class="field"><label>Вес, кг</label><input type="text" id="exCfgWeight" value="0"></div>
-    <div class="field"><label>Заметка</label><input id="exCfgNote" placeholder="напр. разминка"></div>
+    <div class="field"><label>Заметка</label><input id="exCfgNote"></div>
     <button class="btn primary full" onclick="saveExConfig()">ОК</button>
     <button class="close" onclick="closeModal('m-ex-config')">Отмена</button>
   </div>
@@ -718,7 +824,7 @@ nav.bottom button.on{color:var(--acc)}
     <div class="field"><label>Название</label><input id="ngName" placeholder="Канат"></div>
     <div class="field">
       <label>Значок</label>
-      <input id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:20px;text-align:center">
+      <input id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:18px;text-align:center">
       <div class="emoji-picker" id="emojiPicker"></div>
     </div>
     <button class="btn primary full" onclick="saveCustomGear()">Добавить</button>
@@ -732,40 +838,33 @@ nav.bottom button.on{color:var(--acc)}
     <h3>📖 Как пользоваться</h3>
     <div class="info-block">
       <h4>🏋️ Тренировки</h4>
-      <p><b>Создать:</b> «+ Тренировка» → название, период (с — по), дни недели, время. Появится в календаре только в этом периоде.</p>
-      <p><b>Пусто в периоде</b> = бессрочно.</p>
-      <p><b>Упражнения:</b> «+ Упражнение» (готовое) или «+ Комплекс» (набор).</p>
-      <p><b>▶ Запуск:</b> рядом с карточкой тренировки кнопка ▶ открывает режим выполнения с таймером.</p>
-      <p><b>✓ Отметить:</b> только сегодня и прошлое. <b>Будущее заблокировано</b>.</p>
+      <p><b>Создать:</b> «+ Тренировка» → название, период, дни, время. Появится только в этом периоде.</p>
+      <p><b>▶ Запуск:</b> кнопка ▶ на карточке → режим выполнения с таймером.</p>
+      <p><b>✓ Отметить:</b> сегодня и прошлое. Будущее заблокировано.</p>
     </div>
     <div class="info-block">
       <h4>⭐ X-параметры</h4>
-      <p>В дозировке упражнения можно вписать <b>X</b> вместо цифры. Тогда при запуске тренировки приложение спросит значение перед началом упражнения. Например: «подходы: X» → спросит «сколько подходов сделал?».</p>
+      <p>В дозировке можно вписать <b>X</b> → спросим значение во время тренировки.</p>
     </div>
     <div class="info-block">
-      <h4>💪 Упражнения</h4>
-      <p>У каждого — несколько зон, снарядов, навыков.</p>
-      <p><b>Формат XP:</b> ⏱ Время (сек×0.01), 🏋️ Вес (вес/масса×0.01×повт), 💪 Свой вес (повт×0.1).</p>
+      <h4>📋 Комплексы</h4>
+      <p>Отдельный экран в нижнем баре. Создание, редактирование, удаление. В тренировке: «+ Комплекс».</p>
     </div>
     <div class="info-block">
-      <h4>🔁 Комплексы</h4>
-      <p>Наборы упражнений. Кнопка «📋 Комплексы» в нижнем баре — просмотр, редактирование, удаление. В тренировке: «+ Комплекс» добавит весь набор.</p>
+      <h4>⚖️ Журнал веса</h4>
+      <p>Профиль → «Открыть журнал». Ввод в любой день. График динамики + мин/макс/текущий.</p>
     </div>
     <div class="info-block">
-      <h4>🎒 Свои снаряды</h4>
-      <p>«+ Свой снаряд» под чипсами снарядов → название + эмодзи из сетки.</p>
+      <h4>🎒 Зоны / Снаряды / Навыки</h4>
+      <p>Сворачиваемые блоки в Упражнениях. Нажми «Зоны/Снаряды/Навыки» → раскроется список пилюль.</p>
     </div>
     <div class="info-block">
       <h4>⭐ XP</h4>
-      <p>Уровень N → N+1 = N XP. 8 рангов: Новичок → Легенда.</p>
-    </div>
-    <div class="info-block">
-      <h4>🌙 Распад</h4>
-      <p>Если снаряд/зона/навык не тренируется 7+ дней — XP падает (−0.1…−1%/день).</p>
+      <p>Уровень N → N+1 = N XP. 8 рангов: Новичок → Легенда. Распад после 7 дней простоя.</p>
     </div>
     <div class="info-block">
       <h4>💾 Данные</h4>
-      <p>Всё в localStorage. Периодически экспортируй базу (Профиль → 📤).</p>
+      <p>Локально в браузере. Экспорт → Профиль.</p>
     </div>
     <button class="close" onclick="closeModal('m-info')">Понятно</button>
   </div>
@@ -773,45 +872,29 @@ nav.bottom button.on{color:var(--acc)}
 
 <div class="toast" id="toast"></div>
 <script>
-/* ==================== ЗОНЫ / СНАРЯДЫ / НАВЫКИ ==================== */
+/* ==================== КОНСТАНТЫ ==================== */
 const DEFAULT_ZONES = [
-  {id:'cardio',   name:'Кардио',    emoji:'🫁'},
-  {id:'neck',     name:'Шея',       emoji:'🦒'},
-  {id:'shoulders',name:'Плечи',     emoji:'💪'},
-  {id:'back',     name:'Спина',     emoji:'🔙'},
-  {id:'chest',    name:'Грудь',     emoji:'🫀'},
-  {id:'glutes',   name:'Ягодицы',   emoji:'🍑'},
-  {id:'hips',     name:'Бедра',     emoji:'🦵'},
-  {id:'calves',   name:'Голени',    emoji:'🦿'},
-  {id:'feet',     name:'Стопы',     emoji:'🦶'},
-  {id:'hands',    name:'Кисти',     emoji:'✋'},
-  {id:'abs',      name:'Пресс',     emoji:'🔥'},
-  {id:'core',     name:'Кор',       emoji:'🎯'},
-  {id:'stretch',  name:'Растяжка',  emoji:'🧘'},
+  {id:'cardio',name:'Кардио',emoji:'🫁'},{id:'neck',name:'Шея',emoji:'🦒'},
+  {id:'shoulders',name:'Плечи',emoji:'💪'},{id:'back',name:'Спина',emoji:'🔙'},
+  {id:'chest',name:'Грудь',emoji:'🫀'},{id:'glutes',name:'Ягодицы',emoji:'🍑'},
+  {id:'hips',name:'Бедра',emoji:'🦵'},{id:'calves',name:'Голени',emoji:'🦿'},
+  {id:'feet',name:'Стопы',emoji:'🦶'},{id:'hands',name:'Кисти',emoji:'✋'},
+  {id:'abs',name:'Пресс',emoji:'🔥'},{id:'core',name:'Кор',emoji:'🎯'},
+  {id:'stretch',name:'Растяжка',emoji:'🧘'},
 ];
 const DEFAULT_GEARS = [
-  {id:'none',     name:'Без снаряда', emoji:'🙌'},
-  {id:'rope',     name:'Скакалка',    emoji:'🪢'},
-  {id:'kb',       name:'Гиря',        emoji:'🏋️'},
-  {id:'pullup',   name:'Турник',      emoji:'🎿'},
-  {id:'bars',     name:'Брусья',      emoji:'🏗️'},
-  {id:'rings',    name:'Кольца',      emoji:'⭕'},
-  {id:'trx',      name:'TRX',         emoji:'🪢'},
-  {id:'band',     name:'Эспандер',    emoji:'🎗️'},
-  {id:'db',       name:'Гантели',     emoji:'🏋️'},
-  {id:'bb',       name:'Штанга',      emoji:'🏋️'},
-  {id:'ball',     name:'Мяч',         emoji:'⚽'},
-  {id:'mat',      name:'Коврик',      emoji:'🟦'},
+  {id:'none',name:'Без снаряда',emoji:'🙌'},{id:'rope',name:'Скакалка',emoji:'🪢'},
+  {id:'kb',name:'Гиря',emoji:'🏋️'},{id:'pullup',name:'Турник',emoji:'🎿'},
+  {id:'bars',name:'Брусья',emoji:'🏗️'},{id:'rings',name:'Кольца',emoji:'⭕'},
+  {id:'trx',name:'TRX',emoji:'🪢'},{id:'band',name:'Эспандер',emoji:'🎗️'},
+  {id:'db',name:'Гантели',emoji:'🏋️'},{id:'bb',name:'Штанга',emoji:'🏋️'},
+  {id:'ball',name:'Мяч',emoji:'⚽'},{id:'mat',name:'Коврик',emoji:'🟦'},
 ];
 const DEFAULT_SKILLS = [
-  {id:'coord',    name:'Координация',  emoji:'🎯'},
-  {id:'strength', name:'Сила',         emoji:'💪'},
-  {id:'speed',    name:'Скорость',     emoji:'⚡'},
-  {id:'endurance',name:'Выносливость', emoji:'🔋'},
-  {id:'flex',     name:'Гибкость',     emoji:'🧘'},
-  {id:'power',    name:'Мощность',     emoji:'🚀'},
-  {id:'balance',  name:'Баланс',       emoji:'⚖️'},
-  {id:'agility',  name:'Ловкость',     emoji:'🐆'},
+  {id:'coord',name:'Координация',emoji:'🎯'},{id:'strength',name:'Сила',emoji:'💪'},
+  {id:'speed',name:'Скорость',emoji:'⚡'},{id:'endurance',name:'Выносливость',emoji:'🔋'},
+  {id:'flex',name:'Гибкость',emoji:'🧘'},{id:'power',name:'Мощность',emoji:'🚀'},
+  {id:'balance',name:'Баланс',emoji:'⚖️'},{id:'agility',name:'Ловкость',emoji:'🐆'},
 ];
 const THEMES = [
   {id:'neon',name:'Neon',c1:'#ff5b2e',c2:'#ffb02e',bg:'#0e1116'},
@@ -827,7 +910,7 @@ const THEMES = [
 const MONTHS_RU = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const MONTHS_RU_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const WD_SHORT = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-const WD_ISO   = [1,2,3,4,5,6,0];
+const WD_ISO = [1,2,3,4,5,6,0];
 const RANKS = [
   {min:1,name:'Новичок'},{min:5,name:'Любитель'},{min:10,name:'Атлет'},{min:20,name:'Спортсмен'},
   {min:35,name:'Мастер'},{min:50,name:'Ветеран'},{min:75,name:'Чемпион'},{min:100,name:'Легенда'},
@@ -841,7 +924,7 @@ function computeLevel(xp){
   if(lvl < 1) lvl = 1;
   while(totalXpForLevel(lvl+1) <= xp) lvl++;
   while(lvl > 1 && totalXpForLevel(lvl) > xp) lvl--;
-  return {level: lvl, current: xp - totalXpForLevel(lvl), need: lvl};
+  return {level:lvl, current: xp-totalXpForLevel(lvl), need: lvl};
 }
 function rankForLevel(l){ let r = RANKS[0]; for(const x of RANKS) if(l >= x.min) r = x; return r; }
 
@@ -851,8 +934,9 @@ const store = {
   set(k, v){ try{ localStorage.setItem('as2_'+k, JSON.stringify(v)); }catch(e){ console.error(e); } }
 };
 
-let zones  = store.get('zones',  DEFAULT_ZONES);
-let gears  = store.get('gears',  DEFAULT_GEARS);
+/* ==================== ДАННЫЕ ==================== */
+let zones = store.get('zones', DEFAULT_ZONES);
+let gears = store.get('gears', DEFAULT_GEARS);
 let skills = store.get('skills', DEFAULT_SKILLS);
 let exercises = store.get('exercises', []);
 let complexes = store.get('complexes', []);
@@ -868,6 +952,7 @@ let xpGears = store.get('xpGears', {});
 let xpZones = store.get('xpZones', {});
 let xpSkills = store.get('xpSkills', {});
 let timerConfig = store.get('timerConfig', {prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60});
+let weightLog = store.get('weightLog', []); // [{date:'YYYY-MM-DD', value:78.5}]
 
 let editingExId = null, editingTrainId = null, editingCompId = null;
 let tempTrainEx = [], tempCompEx = [];
@@ -898,7 +983,7 @@ function xpFly(amt){
   document.body.appendChild(el); setTimeout(()=>el.remove(), 1700);
 }
 
-/* ==================== XP РАСЧЁТЫ ==================== */
+/* ==================== XP РАСЧЁТ ==================== */
 function xpFromTime(s){ return Math.round(s*0.01*100)/100; }
 function xpFromWeight(w,bw,r){ if(!bw||bw<=0) bw=70; return Math.round((w/bw)*0.01*r*100)/100; }
 function xpFromReps(r){ return Math.round(r*0.1*100)/100; }
@@ -909,18 +994,15 @@ function calcTrainXp(tr, override){
   exs.forEach(e => {
     const ex = exercises.find(x => x.id === e.exId);
     if(!ex) return;
-    const sets = +e.sets || 1;
-    const reps = +e.reps || 0;
-    const time = +e.time || 0;
-    const weight = +e.weight || 0;
-    if(ex.format === 'time')        total += xpFromTime(time) * sets;
-    else if(ex.format === 'weight') total += xpFromWeight(weight, profile.weight||70, reps) * sets;
-    else                            total += xpFromReps(reps) * sets;
+    const sets = +e.sets || 1, reps = +e.reps || 0, time = +e.time || 0, weight = +e.weight || 0;
+    if(ex.format === 'time') total += xpFromTime(time)*sets;
+    else if(ex.format === 'weight') total += xpFromWeight(weight, profile.weight||70, reps)*sets;
+    else total += xpFromReps(reps)*sets;
   });
-  return Math.round(total * 100) / 100;
+  return Math.round(total*100)/100;
 }
 
-/* ==================== XP НАЧИСЛЕНИЕ ==================== */
+/* ==================== XP СИСТЕМА ==================== */
 function ensureXpMaps(){
   if(!xpGears || typeof xpGears!=='object') xpGears = {};
   if(!xpZones || typeof xpZones!=='object') xpZones = {};
@@ -938,20 +1020,20 @@ function addSkillXpTo(mapKey, id, amount){
 }
 function distributeXpToSkills(tr, xp){
   if(!tr || !tr.exercises || !xp) return;
-  const gSet = new Set(), zSet = new Set(), sSet = new Set();
+  const gS = new Set(), zS = new Set(), sS = new Set();
   tr.exercises.forEach(e => {
     const ex = exercises.find(x => x.id === e.exId);
     if(!ex) return;
-    (ex.gears||[]).forEach(g => gSet.add(g));
-    (ex.zones||[]).forEach(z => zSet.add(z));
-    (ex.skills||[]).forEach(s => sSet.add(s));
+    (ex.gears||[]).forEach(g => gS.add(g));
+    (ex.zones||[]).forEach(z => zS.add(z));
+    (ex.skills||[]).forEach(s => sS.add(s));
   });
-  const tot = gSet.size + zSet.size + sSet.size;
+  const tot = gS.size + zS.size + sS.size;
   if(tot === 0) return;
   const per = xp/tot;
-  gSet.forEach(g => addSkillXpTo('gears', g, per));
-  zSet.forEach(z => addSkillXpTo('zones', z, per));
-  sSet.forEach(s => addSkillXpTo('skills', s, per));
+  gS.forEach(g => addSkillXpTo('gears', g, per));
+  zS.forEach(z => addSkillXpTo('zones', z, per));
+  sS.forEach(s => addSkillXpTo('skills', s, per));
   store.set('xpGears',xpGears); store.set('xpZones',xpZones); store.set('xpSkills',xpSkills);
 }
 function addXp(amount, label, tr){
@@ -961,8 +1043,7 @@ function addXp(amount, label, tr){
   if(xpLog.length > 50) xpLog = xpLog.slice(0,50);
   store.set('xpLog', xpLog);
   if(tr) distributeXpToSkills(tr, amount);
-  xpFly(Math.round(amount*100)/100);
-  updateXpUI();
+  xpFly(Math.round(amount*100)/100); updateXpUI();
 }
 function removeXp(amount, label, tr){
   if(amount <= 0) return;
@@ -1010,7 +1091,7 @@ function updateXpUI(){
   setT('xpLevel',info.level); setT('xpRank',rank.name); setT('xpTotal',Math.round(totalXp));
   setT('xpToNext',Math.round(info.need-info.current)); setW('xpBar',pct);
   const top = document.getElementById('xpTopVal');
-  if(top){ top.innerHTML = Math.round(totalXp)+'<span style="color:var(--mut);font-size:10px"> XP</span>'; setW('xpTopBar',pct); }
+  if(top){ top.innerHTML = Math.round(totalXp)+'<span style="color:var(--mut);font-size:9px"> XP</span>'; setW('xpTopBar',pct); }
   renderXpLog();
 }
 function renderXpLog(){
@@ -1025,10 +1106,8 @@ function renderXpLog(){
 
 /* ==================== ТЕМА ==================== */
 function applyTheme(id){
-  theme = id;
-  document.documentElement.setAttribute('data-theme', id);
-  store.set('theme', id);
-  renderThemes();
+  theme = id; document.documentElement.setAttribute('data-theme', id);
+  store.set('theme', id); renderThemes();
 }
 function renderThemes(){
   const el = document.getElementById('themesGrid'); if(!el) return;
@@ -1052,7 +1131,7 @@ function loadAvatar(input){
     img.onload = () => {
       const s = 300;
       const c = document.createElement('canvas'); c.width=s; c.height=s;
-      const ctx = c.getContext('2d'); const m = Math.min(img.width,img.height);
+      const ctx = c.getContext('2d'); const m = Math.min(img.width, img.height);
       ctx.drawImage(img, (img.width-m)/2, (img.height-m)/2, m, m, 0, 0, s, s);
       profile.avatar = c.toDataURL('image/jpeg', 0.85);
       store.set('profile', profile); applyAvatar(); toast('Аватар загружен');
@@ -1129,14 +1208,13 @@ function getISOWeek(d){
   return 1 + Math.round(((date-w1)/86400000-3+((w1.getDay()+6)%7))/7);
 }
 function renderWeek(){
-  const end = addDays(weekStart, 6);
+  const end = addDays(weekStart,6);
   const range = weekStart.getMonth()===end.getMonth()
     ? weekStart.getDate()+'–'+end.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]
     : weekStart.getDate()+' '+MONTHS_RU_GEN[weekStart.getMonth()]+' – '+end.getDate()+' '+MONTHS_RU_GEN[end.getMonth()];
   const rr = document.getElementById('weekRange'); if(rr) rr.textContent = range;
   const wn = document.getElementById('weekNum');
-  if(wn) wn.innerHTML = getISOWeek(weekStart)+'<span style="color:var(--mut);font-size:10px">/52</span>';
-
+  if(wn) wn.innerHTML = getISOWeek(weekStart)+'<span style="color:var(--mut);font-size:9px">/52</span>';
   let html = '';
   for(let i=0;i<7;i++){
     const d = addDays(weekStart, i);
@@ -1184,8 +1262,7 @@ function shiftMonth(n){ viewMonth+=n; if(viewMonth<0){viewMonth=11;viewYear--} i
 
 /* ==================== ТРЕНИРОВКИ ==================== */
 function getTrainsForDate(date){
-  const dow = date.getDay();
-  const dIso = isoDate(date);
+  const dow = date.getDay(); const dIso = isoDate(date);
   return trainings.filter(t => {
     if(!Array.isArray(t.days) || !t.days.includes(dow)) return false;
     if(t.startDate && dIso < t.startDate) return false;
@@ -1197,12 +1274,8 @@ function getEffectiveTrain(tr, date){
   if(!tr) return null;
   const key = isoDate(date);
   const over = tr.dayOverrides && tr.dayOverrides[key] ? tr.dayOverrides[key] : null;
-  return {
-    ...tr,
-    time: over && over.time ? over.time : tr.time,
-    exercises: over && over.exercises ? over.exercises : tr.exercises,
-    _override: !!over
-  };
+  return {...tr, time: over && over.time ? over.time : tr.time,
+    exercises: over && over.exercises ? over.exercises : tr.exercises, _override: !!over};
 }
 function isTrainDone(date, tr){
   const key = isoDate(date);
@@ -1212,41 +1285,30 @@ function setTrainDone(date, trId, done, xpAwarded){
   const key = isoDate(date);
   if(!completions[key]) completions[key] = {};
   if(done){ completions[key][trId] = {done:true, xpAwarded: xpAwarded||0}; }
-  else {
-    delete completions[key][trId];
-    if(!Object.keys(completions[key]).length) delete completions[key];
-  }
+  else { delete completions[key][trId]; if(!Object.keys(completions[key]).length) delete completions[key]; }
   store.set('completions', completions);
 }
-
-/* ==================== РЕНДЕР ТРЕНИРОВОК ==================== */
 function renderTrainings(){
   const dLabel = selectedDate.getDate()+' '+MONTHS_RU_GEN[selectedDate.getMonth()]+' '+selectedDate.getFullYear();
   const sdl = document.getElementById('selectedDateLabel'); if(sdl) sdl.textContent = dLabel;
-
   const list = getTrainsForDate(selectedDate).sort((a,b) => a.time.localeCompare(b.time));
   const tc = document.getElementById('trainsCount'); if(tc) tc.textContent = list.length;
   const isFuture = isoDate(selectedDate) > isoDate(TODAY);
-
   const box = document.getElementById('trainList'); if(!box) return;
-  if(!list.length){
-    box.innerHTML = '<div class="empty">На <b>'+dLabel+'</b> тренировок нет</div>';
-    return;
-  }
+  if(!list.length){ box.innerHTML = '<div class="empty">На <b>'+dLabel+'</b> тренировок нет</div>'; return; }
   box.innerHTML = list.map(tr => {
     const eff = getEffectiveTrain(tr, selectedDate);
     const done = isTrainDone(selectedDate, tr);
     const xp = calcTrainXp(tr, eff);
     const exs = eff.exercises || [];
-
     const exListHtml = exs.map((e, idx) => {
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
-      const zonesE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji+z.name : ''; }).filter(Boolean).join(' ');
-      const gearsE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji+g.name : ''; }).filter(Boolean).join(' ');
-      const skillsE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? s.emoji+s.name : ''; }).filter(Boolean).join(' ');
+      const isX = (v) => String(v).trim().toUpperCase() === 'X';
+      const zE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji+z.name : ''; }).filter(Boolean).join(' ');
+      const gE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji+g.name : ''; }).filter(Boolean).join(' ');
+      const sE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? s.emoji+s.name : ''; }).filter(Boolean).join(' ');
       const dosage = [];
-      const isX = (v) => v === 'X' || v === 'x' || v === 'х' || v === 'Х';
       if(e.sets) dosage.push(isX(e.sets)?'<span class="x-mark">X</span>×':e.sets+'×');
       if(e.reps) dosage.push(isX(e.reps)?'<span class="x-mark">X</span> повт':e.reps+' повт');
       if(e.time) dosage.push(isX(e.time)?'<span class="x-mark">X</span>с':e.time+'с');
@@ -1254,33 +1316,29 @@ function renderTrainings(){
       if(e.rest) dosage.push(isX(e.rest)?'отдых <span class="x-mark">X</span>':e.rest+'с');
       return '<div class="ex-item">'+
         '<div class="row1"><div class="ex-name">'+ex.name+'</div><div class="ex-badge">'+dosage.join(' ')+'</div></div>'+
-        '<div class="row2">'+(zonesE?'<span class="chip-mini">'+zonesE+'</span>':'')+(gearsE?'<span class="chip-mini">'+gearsE+'</span>':'')+(skillsE?'<span class="chip-mini">'+skillsE+'</span>':'')+'</div>'+
-        (isFuture ? '' : '<div class="train-actions"><button onclick="editDayOverride(\''+tr.id+'\', '+idx+')">✏️</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑</button></div>')+
+        '<div class="row2">'+(zE?'<span class="chip-mini">'+zE+'</span>':'')+(gE?'<span class="chip-mini">'+gE+'</span>':'')+(sE?'<span class="chip-mini">'+sE+'</span>':'')+'</div>'+
+        (isFuture ? '' : '<div class="train-actions"><button onclick="editDayOverride(\''+tr.id+'\','+idx+')">✏️</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑</button></div>')+
       '</div>';
     }).join('');
-
     let actionsHtml;
     if(isFuture){
-      actionsHtml = '<div class="lock" title="Будущую тренировку отметить нельзя" onclick="event.stopPropagation();toast(\'🔒 Будущую тренировку отметить нельзя\')">🔒</div>';
+      actionsHtml = '<div class="lock" onclick="event.stopPropagation();toast(\'🔒 Будущую тренировку отметить нельзя\')">🔒</div>';
     } else {
-      actionsHtml = '<div class="run" title="Запустить тренировку" onclick="event.stopPropagation();startTrainExecution(\''+tr.id+'\')">▶</div>'+
+      actionsHtml = '<div class="run" onclick="event.stopPropagation();startTrainExecution(\''+tr.id+'\')">▶</div>'+
                     '<div class="chk '+(done?'on':'')+'" onclick="event.stopPropagation();toggleTrain(\''+tr.id+'\')"></div>';
     }
-
     const periodInfo = (tr.startDate || tr.endDate)
-      ? '<div class="meta" style="font-size:9.5px;color:var(--acc2);margin-top:1px">📅 '+(tr.startDate||'…')+'→'+(tr.endDate||'…')+'</div>'
+      ? '<div class="meta" style="font-size:8.5px;color:var(--acc2);margin-top:0">📅 '+(tr.startDate||'…')+'→'+(tr.endDate||'…')+'</div>'
       : '';
-
     return '<div class="train">'+
       '<div class="train-head" onclick="toggleTrainBody(this)">'+
         '<div class="time">'+eff.time+'</div>'+
         '<div class="info"><div class="name">'+tr.name+'</div><div class="meta">'+exs.length+' упр · '+Math.round(xp*100)/100+' XP</div>'+periodInfo+'</div>'+
         '<div class="actions">'+actionsHtml+'</div>'+
       '</div>'+
-      '<div class="train-body">'+(exListHtml||'<div class="empty" style="padding:6px;font-size:11px">Нет упражнений</div>')+
-        (isFuture ? '' : '<div class="train-actions"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️ Настроить</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упражнение</button></div>')+
-      '</div>'+
-    '</div>';
+      '<div class="train-body">'+(exListHtml||'<div class="empty" style="padding:4px;font-size:10px">Нет упражнений</div>')+
+        (isFuture ? '' : '<div class="train-actions"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упр</button></div>')+
+      '</div></div>';
   }).join('');
 }
 function toggleTrainBody(head){
@@ -1306,36 +1364,31 @@ function toggleTrain(trainId){
   renderTrainings(); renderWeek(); renderMonth(); renderStats();
 }
 
-/* ==================== РЕДАКТИРОВАНИЕ ДНЯ ==================== */
+/* ==================== РЕДАКТ ДНЯ ==================== */
 function editDayOverride(trainId, exIndex){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   const key = isoDate(selectedDate);
   if(!tr.dayOverrides) tr.dayOverrides = {};
   if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
-  const list = tr.dayOverrides[key].exercises;
-  const e = list[exIndex]; if(!e) return;
+  const e = tr.dayOverrides[key].exercises[exIndex]; if(!e) return;
   const ex = exercises.find(x => x.id === e.exId);
   exConfigTarget = {type:'override', trainId, dayKey:key, index:exIndex};
   const el = (id) => document.getElementById(id);
   el('exCfgTitle').textContent = 'Изменить (этот день)';
   el('exCfgName').textContent = ex ? ex.name : '';
-  el('exCfgSets').value = e.sets||1;
-  el('exCfgReps').value = e.reps||0;
-  el('exCfgTime').value = e.time||0;
-  el('exCfgRest').value = e.rest||0;
-  el('exCfgWeight').value = e.weight||0;
-  el('exCfgNote').value = e.note||'';
+  el('exCfgSets').value = e.sets||1; el('exCfgReps').value = e.reps||0;
+  el('exCfgTime').value = e.time||0; el('exCfgRest').value = e.rest||0;
+  el('exCfgWeight').value = e.weight||0; el('exCfgNote').value = e.note||'';
   openModal('m-ex-config');
 }
 function removeExFromDay(trainId, exIndex){
-  if(!confirm('Убрать упражнение из этого дня?')) return;
+  if(!confirm('Убрать из этого дня?')) return;
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   const key = isoDate(selectedDate);
   if(!tr.dayOverrides) tr.dayOverrides = {};
   if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
   tr.dayOverrides[key].exercises.splice(exIndex, 1);
-  store.set('trainings', trainings);
-  renderTrainings(); toast('Убрано');
+  store.set('trainings', trainings); renderTrainings(); toast('Убрано');
 }
 function addExToDay(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
@@ -1348,7 +1401,7 @@ function addExToDay(trainId){
 }
 function editTrainFromDay(trainId){ openTrainModal(trainId); }
 
-/* ==================== РЕНДЕР УПРАЖНЕНИЙ ==================== */
+/* ==================== УПРАЖНЕНИЯ РЕНДЕР ==================== */
 function renderEx(){
   const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
   let list = exercises.filter(e => e.name.toLowerCase().includes(q));
@@ -1373,7 +1426,7 @@ function renderEx(){
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).join('');
     return '<div class="ex" onclick="openExModal(\''+e.id+'\')">'+thumb+
       '<div class="txt">'+e.name+(e.desc?'<div class="sub">'+e.desc+'</div>':'')+'</div>'+
-      '<div style="font-size:14px">'+zB+' '+gB+'</div>'+
+      '<div style="font-size:11px">'+zB+' '+gB+'</div>'+
       '<button class="del" onclick="event.stopPropagation();delEx(\''+e.id+'\')">✕</button></div>';
   }).join('');
 }
@@ -1385,7 +1438,7 @@ function delEx(id){
   renderEx(); renderChips(); renderStats(); toast('Удалено');
 }
 function clearAllEx(){
-  if(!exercises.length){ toast('Список пуст'); return; }
+  if(!exercises.length){ toast('Пусто'); return; }
   if(confirm('Удалить все упражнения?')){ exercises = []; store.set('exercises', exercises); renderEx(); renderChips(); renderStats(); toast('Очищено'); }
 }
 function setFilter(el){
@@ -1393,7 +1446,14 @@ function setFilter(el){
   el.classList.add('active'); filter = el.dataset.f; renderEx();
 }
 
-/* ==================== ЧИПСЫ ==================== */
+/* ==================== КОМПАКТНЫЕ ПИЛЮЛИ ==================== */
+function toggleFilterBody(id){
+  const body = document.getElementById(id+'Body');
+  const toggle = document.getElementById(id+'Toggle');
+  if(!body || !toggle) return;
+  const isOpen = body.classList.toggle('on');
+  toggle.classList.toggle('open', isOpen);
+}
 function renderChips(){
   const z = document.getElementById('zones');
   if(z) z.innerHTML = zones.map(zn => {
@@ -1410,8 +1470,18 @@ function renderChips(){
     const cnt = exercises.filter(e => (e.skills||[]).includes(sk.id)).length;
     return '<div class="chip" data-val="'+sk.id+'" onclick="toggleChip(this)"><span class="emoji">'+sk.emoji+'</span>'+sk.name+' <span class="cnt">'+cnt+'</span></div>';
   }).join('');
+  // Счётчики активных фильтров
+  updateFilterCounters();
 }
-function toggleChip(el){ el.classList.toggle('on'); renderEx(); }
+function updateFilterCounters(){
+  const z = document.querySelectorAll('#zones .chip.on').length;
+  const g = document.querySelectorAll('#gears .chip.on').length;
+  const s = document.querySelectorAll('#skills .chip.on').length;
+  const zc = document.getElementById('zonesCount'); if(zc) zc.textContent = z;
+  const gc = document.getElementById('gearsCount'); if(gc) gc.textContent = g;
+  const sc = document.getElementById('skillsCount'); if(sc) sc.textContent = s;
+}
+function toggleChip(el){ el.classList.toggle('on'); updateFilterCounters(); renderEx(); }
 
 /* ==================== УПРАЖНЕНИЕ МОДАЛКА ==================== */
 function openExModal(exId){
@@ -1445,8 +1515,7 @@ function saveEx(){
   if(!name){ toast('Введи название'); return; }
   const exData = {
     id: editingExId || uid(),
-    name,
-    photo: currentExPhoto,
+    name, photo: currentExPhoto,
     zones: getMultiPick('exZonesPick'),
     gears: getMultiPick('exGearsPick'),
     skills: getMultiPick('exSkillsPick'),
@@ -1485,10 +1554,10 @@ function openTrainModal(trainId){
 }
 function renderTempTrainEx(){
   const el = document.getElementById('tExList'); if(!el) return;
-  if(!tempTrainEx.length){ el.innerHTML = '<div class="empty" style="padding:8px">Пока пусто</div>'; return; }
+  if(!tempTrainEx.length){ el.innerHTML = '<div class="empty" style="padding:6px">Пока пусто</div>'; return; }
   el.innerHTML = tempTrainEx.map((e, idx) => {
     const ex = exercises.find(x => x.id === e.exId);
-    const isX = (v) => v === 'X' || v === 'x' || v === 'х' || v === 'Х';
+    const isX = (v) => String(v).trim().toUpperCase() === 'X';
     const dosage = [];
     if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+'×');
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
@@ -1497,8 +1566,7 @@ function renderTempTrainEx(){
     return '<div class="comp-ex-item">'+
       '<div class="info"><div class="nm">'+(ex?ex.name:'?')+'</div><div class="ds">'+dosage.join(' ')+'</div></div>'+
       '<button class="btn small" onclick="openExConfig(\'train\','+idx+')">✏️</button>'+
-      '<button class="rm" onclick="removeTempEx(\'train\','+idx+')">✕</button>'+
-    '</div>';
+      '<button class="rm" onclick="removeTempEx(\'train\','+idx+')">✕</button></div>';
   }).join('');
 }
 function removeTempEx(t, i){
@@ -1549,10 +1617,10 @@ function openCompModal(compId){
 }
 function renderTempCompEx(){
   const el = document.getElementById('cExList'); if(!el) return;
-  if(!tempCompEx.length){ el.innerHTML = '<div class="empty" style="padding:8px">Пока пусто</div>'; return; }
+  if(!tempCompEx.length){ el.innerHTML = '<div class="empty" style="padding:6px">Пока пусто</div>'; return; }
   el.innerHTML = tempCompEx.map((e, idx) => {
     const ex = exercises.find(x => x.id === e.exId);
-    const isX = (v) => v === 'X' || v === 'x' || v === 'х' || v === 'Х';
+    const isX = (v) => String(v).trim().toUpperCase() === 'X';
     const dosage = [];
     if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+'×');
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
@@ -1560,8 +1628,7 @@ function renderTempCompEx(){
     return '<div class="comp-ex-item">'+
       '<div class="info"><div class="nm">'+(ex?ex.name:'?')+'</div><div class="ds">'+dosage.join(' ')+'</div></div>'+
       '<button class="btn small" onclick="openExConfig(\'comp\','+idx+')">✏️</button>'+
-      '<button class="rm" onclick="removeTempEx(\'comp\','+idx+')">✕</button>'+
-    '</div>';
+      '<button class="rm" onclick="removeTempEx(\'comp\','+idx+')">✕</button></div>';
   }).join('');
 }
 function pickCompType(el){
@@ -1572,18 +1639,16 @@ function saveComp(){
   const name = document.getElementById('cName').value.trim();
   if(!name){ toast('Введи название'); return; }
   const type = document.querySelector('#compType .chip.on')?.textContent.trim() === 'Закрытый' ? 'closed' : 'open';
-  const cData = {
-    id: editingCompId || uid(),
-    name, type,
-    exercises: JSON.parse(JSON.stringify(tempCompEx))
-  };
+  const cData = {id: editingCompId || uid(), name, type,
+    exercises: JSON.parse(JSON.stringify(tempCompEx))};
   if(editingCompId){
     const i = complexes.findIndex(c => c.id === editingCompId);
     if(i >= 0) complexes[i] = cData;
   } else complexes.push(cData);
   store.set('complexes', complexes);
   closeModal('m-comp');
-  renderStats(); toast(editingCompId ? 'Обновлено' : 'Создано');
+  renderStats(); renderCompsScreen();
+  toast(editingCompId ? 'Обновлено' : 'Создано');
   editingCompId = null;
 }
 
@@ -1591,7 +1656,7 @@ function saveComp(){
 function openPickEx(target){
   pickTarget = target;
   const el = document.getElementById('pickTitle');
-  if(el) el.textContent = target==='comp' ? 'Добавить в комплекс' : target==='day' ? 'Добавить в этот день' : 'Добавить в тренировку';
+  if(el) el.textContent = target==='comp' ? 'В комплекс' : target==='day' ? 'В этот день' : 'В тренировку';
   const s = document.getElementById('pickSearch'); if(s) s.value = '';
   renderPickEx();
   openModal('m-pick-ex');
@@ -1606,7 +1671,7 @@ function renderPickEx(){
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji:''; }).join('');
     return '<div class="comp-ex-item" onclick="pickExercise(\''+e.id+'\')">'+
       '<div class="info"><div class="nm">'+e.name+'</div><div class="ds">'+zB+' '+gB+'</div></div>'+
-      '<div style="font-size:16px;color:var(--acc)">+</div></div>';
+      '<div style="font-size:14px;color:var(--acc)">+</div></div>';
   }).join('');
 }
 function pickExercise(exId){
@@ -1621,15 +1686,14 @@ function pickExercise(exId){
     if(!tr.dayOverrides) tr.dayOverrides = {};
     if(!tr.dayOverrides[cfg.dayKey]) tr.dayOverrides[cfg.dayKey] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
     tr.dayOverrides[cfg.dayKey].exercises.push(newEntry);
-    store.set('trainings', trainings);
-    renderTrainings(); toast('Добавлено');
+    store.set('trainings', trainings); renderTrainings(); toast('Добавлено');
   }
   closeModal('m-pick-ex');
   if(pickTarget === 'comp') openExConfig('comp', tempCompEx.length-1);
   else if(pickTarget === 'train') openExConfig('train', tempTrainEx.length-1);
 }
 
-/* ==================== НАСТРОЙКА ДОЗИРОВКИ ==================== */
+/* ==================== НАСТРОЙКА ==================== */
 function openExConfig(target, index){
   const list = target === 'comp' ? tempCompEx : tempTrainEx;
   const e = list[index]; if(!e) return;
@@ -1638,16 +1702,12 @@ function openExConfig(target, index){
   const el = (id) => document.getElementById(id);
   el('exCfgTitle').textContent = 'Настройка';
   el('exCfgName').textContent = ex ? ex.name : '';
-  el('exCfgSets').value = e.sets||1;
-  el('exCfgReps').value = e.reps||0;
-  el('exCfgTime').value = e.time||0;
-  el('exCfgRest').value = e.rest||0;
-  el('exCfgWeight').value = e.weight||0;
-  el('exCfgNote').value = e.note||'';
+  el('exCfgSets').value = e.sets||1; el('exCfgReps').value = e.reps||0;
+  el('exCfgTime').value = e.time||0; el('exCfgRest').value = e.rest||0;
+  el('exCfgWeight').value = e.weight||0; el('exCfgNote').value = e.note||'';
   openModal('m-ex-config');
 }
 function parseDosageValue(v){
-  if(v === 'X' || v === 'x' || v === 'х' || v === 'Х' || v === 'X ' ) return 'X';
   if(String(v).trim().toUpperCase() === 'X') return 'X';
   return +v || 0;
 }
@@ -1692,7 +1752,7 @@ function openPickComp(target){
   else {
     el.innerHTML = complexes.map(c => '<div class="comp-ex-item" onclick="pickComplex(\''+c.id+'\')">'+
       '<div class="info"><div class="nm">'+c.name+'</div><div class="ds">'+c.exercises.length+' упр · '+(c.type==='closed'?'закрытый':'открытый')+'</div></div>'+
-      '<div style="font-size:16px;color:var(--acc)">+</div></div>').join('');
+      '<div style="font-size:14px;color:var(--acc)">+</div></div>').join('');
   }
   openModal('m-pick-comp');
 }
@@ -1705,7 +1765,7 @@ function pickComplex(compId){
   closeModal('m-pick-comp'); toast('Добавлено');
 }
 
-/* ==================== СПИСОК ШАБЛОНОВ ==================== */
+/* ==================== ШАБЛОНЫ ==================== */
 function openTrainList(){ renderTrainTemplates(); openModal('m-train-list'); }
 function renderTrainTemplates(){
   const el = document.getElementById('trainTemplates'); if(!el) return;
@@ -1716,7 +1776,7 @@ function renderTrainTemplates(){
     return '<div class="comp-item">'+
       '<div class="nm">'+tr.name+'</div>'+
       '<div class="meta"><span>📅 '+days+'</span><span>⏰ '+tr.time+'</span><span>'+tr.exercises.length+' упр'+period+'</span></div>'+
-      '<div class="train-actions" style="margin-top:6px">'+
+      '<div class="train-actions" style="margin-top:4px">'+
         '<button onclick="openTrainModal(\''+tr.id+'\');closeModal(\'m-train-list\')">✏️ Изменить</button>'+
         '<button onclick="delTrain(\''+tr.id+'\')">🗑 Удалить</button>'+
       '</div></div>';
@@ -1740,12 +1800,12 @@ const TIMER_PRESETS = [
   {name:'Круги', cfg:{prep:10, work:30, rest:30, sets:3, rounds:5, roundRest:60}},
 ];
 const TIMER_FIELDS = [
-  {key:'prep',      label:'Подготовка',    hint:'перед стартом',   step:5,  min:0},
-  {key:'work',      label:'Работа',        hint:'фаза нагрузки',   step:5,  min:0},
-  {key:'rest',      label:'Отдых',         hint:'между подходами', step:5,  min:0},
-  {key:'sets',      label:'Подходов',      hint:'в круге',         step:1,  min:1},
-  {key:'rounds',    label:'Кругов',        hint:'циклов',          step:1,  min:1},
-  {key:'roundRest', label:'Отдых кругами', hint:'доп. пауза',      step:10, min:0},
+  {key:'prep', label:'Подготовка', hint:'перед стартом', step:5, min:0},
+  {key:'work', label:'Работа', hint:'фаза нагрузки', step:5, min:0},
+  {key:'rest', label:'Отдых', hint:'между подходами', step:5, min:0},
+  {key:'sets', label:'Подходов', hint:'в круге', step:1, min:1},
+  {key:'rounds', label:'Кругов', hint:'циклов', step:1, min:1},
+  {key:'roundRest', label:'Отдых кругами', hint:'доп. пауза', step:10, min:0},
 ];
 function renderTimerEditor(){
   const el = document.getElementById('timeEditor'); if(!el) return;
@@ -1801,7 +1861,7 @@ function updateTimerUI(){
   const ph = document.getElementById('tPhase');
   if(ph){
     ph.className = 'timer-phase ' + (tState.phase==='prep'?'prep':tState.phase==='work'?'work':'rest');
-    const labels = {prep:'Подготовка', work:'Работа', rest:'Отдых', roundRest:'Отдых', done:'Готово!'};
+    const labels = {prep:'Подготовка', work:'Работа', rest:'Отдых', roundRest:'Отдых', done:'Готово'};
     ph.textContent = labels[tState.phase] || '';
   }
   const r = document.getElementById('tRoundCur'); if(r) r.textContent = tState.round+'/'+timerConfig.rounds;
@@ -1892,7 +1952,7 @@ function skillRankInfo(xp){
 function daysSinceLast(iso){ if(!iso) return null; return Math.floor((Date.now()-new Date(iso).getTime())/86400000); }
 function decayStatus(days){
   if(days === null) return {label:'не тренировался', cls:'cold'};
-  if(days < 7) return {label:days+' дн. назад', cls:'fresh'};
+  if(days < 7) return {label:days+' дн назад', cls:'fresh'};
   if(days < 14) return {label:days+' дн · −0.1%', cls:'warn'};
   if(days < 30) return {label:days+' дн · −0.25%', cls:'warn2'};
   if(days < 60) return {label:days+' дн · −0.5%', cls:'bad'};
@@ -1900,8 +1960,8 @@ function decayStatus(days){
 }
 function renderSkillXp(){
   const cfgs = [
-    {containerId:'skillGears',  map:xpGears,  entities:gears},
-    {containerId:'skillZones',  map:xpZones,  entities:zones},
+    {containerId:'skillGears', map:xpGears, entities:gears},
+    {containerId:'skillZones', map:xpZones, entities:zones},
     {containerId:'skillSkills', map:xpSkills, entities:skills},
   ];
   cfgs.forEach(cfg => {
@@ -1910,10 +1970,7 @@ function renderSkillXp(){
       const ent = cfg.entities.find(x => x.id === id);
       return {id, name: ent?ent.emoji+' '+ent.name:id, xp: d.xp||0, lastTrained: d.lastTrained};
     }).sort((a,b) => b.xp - a.xp);
-    if(!items.length || items.every(i => !i.xp)){
-      el.innerHTML = '<div class="empty">Пока нет опыта</div>';
-      return;
-    }
+    if(!items.length || items.every(i => !i.xp)){ el.innerHTML = '<div class="empty">Пока нет опыта</div>'; return; }
     el.innerHTML = items.filter(i => i.xp > 0 || i.lastTrained).map(item => {
       const info = skillRankInfo(item.xp);
       const dec = decayStatus(daysSinceLast(item.lastTrained));
@@ -1925,8 +1982,8 @@ function renderSkillXp(){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'AS-Fit', version:4, exported:new Date().toISOString(),
-    zones, gears, skills, exercises, complexes, trainings, completions,
+  return {app:'AS-Fit', version:5, exported:new Date().toISOString(),
+    zones, gears, skills, exercises, complexes, trainings, completions, weightLog,
     theme, timerConfig, totalXp, xpLog, xpGears, xpZones, xpSkills,
     profile:{...profile}};
 }
@@ -1951,6 +2008,7 @@ function importDB(input){
         if(Array.isArray(data.exercises)) exercises = exercises.concat(data.exercises);
         if(Array.isArray(data.complexes)) complexes = complexes.concat(data.complexes);
         if(Array.isArray(data.trainings)) trainings = trainings.concat(data.trainings);
+        if(Array.isArray(data.weightLog)) weightLog = weightLog.concat(data.weightLog);
         if(Array.isArray(data.zones)) data.zones.forEach(z => { if(!zones.find(x => x.id === z.id)) zones.push(z); });
         if(Array.isArray(data.gears)) data.gears.forEach(g => { if(!gears.find(x => x.id === g.id)) gears.push(g); });
         if(Array.isArray(data.skills)) data.skills.forEach(s => { if(!skills.find(x => x.id === s.id)) skills.push(s); });
@@ -1958,12 +2016,14 @@ function importDB(input){
         zones = data.zones||zones; gears = data.gears||gears; skills = data.skills||skills;
         exercises = data.exercises||[]; complexes = data.complexes||[];
         trainings = data.trainings||[]; completions = data.completions||{};
+        weightLog = data.weightLog||[];
         totalXp = typeof data.totalXp === 'number' ? data.totalXp : 0;
         xpLog = data.xpLog||[]; xpGears = data.xpGears||{}; xpZones = data.xpZones||{}; xpSkills = data.xpSkills||{};
       }
       store.set('zones', zones); store.set('gears', gears); store.set('skills', skills);
       store.set('exercises', exercises); store.set('complexes', complexes);
       store.set('trainings', trainings); store.set('completions', completions);
+      store.set('weightLog', weightLog);
       store.set('totalXp', totalXp); store.set('xpLog', xpLog);
       store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
       ensureXpMaps(); renderAll(); toast('Импорт готов');
@@ -2015,38 +2075,6 @@ function saveCustomGear(){
   toast('Снаряд «'+name+'» добавлен');
 }
 
-/* ==================== МЕНЮ КОМПЛЕКСОВ ==================== */
-function openCompList(){ renderCompList(); openModal('m-comp-list'); }
-function renderCompList(){
-  const el = document.getElementById('compList'); if(!el) return;
-  if(!complexes.length){
-    el.innerHTML = '<div class="empty">Комплексов нет.<br>Создай через <b>+ Комплекс</b></div>';
-    return;
-  }
-  el.innerHTML = complexes.map(c => {
-    const exList = c.exercises.slice(0,3).map(e => {
-      const ex = exercises.find(x => x.id === e.exId);
-      return ex ? ex.name : '?';
-    }).join(', ') + (c.exercises.length > 3 ? ' +'+(c.exercises.length-3) : '');
-    return '<div class="comp-item">'+
-      '<div class="nm">'+c.name+'</div>'+
-      '<div class="meta"><span>'+(c.type==='closed'?'🔒':'🔓')+'</span><span>'+c.exercises.length+' упр</span></div>'+
-      '<div class="meta" style="margin-top:4px;font-size:10px;opacity:.7">'+(exList||'—')+'</div>'+
-      '<div class="train-actions" style="margin-top:6px">'+
-        '<button onclick="editCompFromList(\''+c.id+'\')">✏️ Редактировать</button>'+
-        '<button onclick="delComp(\''+c.id+'\')">🗑 Удалить</button>'+
-      '</div></div>';
-  }).join('');
-}
-function editCompFromList(id){ closeModal('m-comp-list'); setTimeout(()=>openCompModal(id), 150); }
-function delComp(id){
-  if(!confirm('Удалить комплекс?')) return;
-  complexes = complexes.filter(c => c.id !== id);
-  store.set('complexes', complexes);
-  renderCompList(); renderStats();
-  toast('Удалено');
-}
-
 /* ==================== РЕНДЕР ВСЕГО ==================== */
 function renderAll(){
   renderWeek(); renderMonth(); renderTrainings();
@@ -2054,31 +2082,238 @@ function renderAll(){
   renderStats(); updateXpUI(); renderSkillXp();
   renderThemes(); applyAvatar(); renderTimerPresets(); renderTimerEditor();
   if(document.getElementById('m-train-list')?.classList.contains('on')) renderTrainTemplates();
-  if(document.getElementById('m-comp-list')?.classList.contains('on')) renderCompList();
+  renderCompsScreen();
+}
+
+/* ==================== ЭКРАН КОМПЛЕКСОВ ==================== */
+function openCompsScreen(){
+  renderCompsScreen();
+  document.getElementById('compsScreen').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeCompsScreen(){
+  document.getElementById('compsScreen').classList.remove('on');
+  document.body.style.overflow = '';
+}
+function renderCompsScreen(){
+  const el = document.getElementById('compsBody'); if(!el) return;
+  if(!complexes.length){
+    el.innerHTML = '<div class="comps-empty">'+
+      '<span class="emoji">📋</span>'+
+      '<div style="font-size:15px;font-weight:800;color:var(--txt);margin-bottom:6px">Комплексов пока нет</div>'+
+      '<div>Создай первый комплекс — набор упражнений с дозировками.<br>Потом вставляй в любую тренировку одним тапом.</div>'+
+      '<button class="btn primary" style="margin-top:14px;padding:10px 18px" onclick="openCompModal()">+ Новый комплекс</button>'+
+    '</div>';
+    return;
+  }
+  el.innerHTML = complexes.map(c => {
+    const exCount = c.exercises.length;
+    const exHtml = c.exercises.map(e => {
+      const ex = exercises.find(x => x.id === e.exId);
+      if(!ex) return '';
+      const isX = (v) => String(v).trim().toUpperCase() === 'X';
+      const dosage = [];
+      if(e.sets) dosage.push(isX(e.sets)?'<span class="x">X</span>×':e.sets+'×');
+      if(e.reps) dosage.push(isX(e.reps)?'<span class="x">X</span> повт':e.reps+' повт');
+      if(e.time) dosage.push(isX(e.time)?'<span class="x">X</span>с':e.time+'с');
+      if(e.weight) dosage.push(isX(e.weight)?'<span class="x">X</span> кг':e.weight+' кг');
+      if(e.rest) dosage.push(isX(e.rest)?'отдых <span class="x">X</span>':e.rest+'с');
+      return '<div class="cc-ex">'+
+        '<div class="ex-title">'+ex.name+'</div>'+
+        '<div class="ex-dosage">'+dosage.join(' ')+'</div>'+
+      '</div>';
+    }).join('');
+    return '<div class="comp-card">'+
+      '<div class="cc-head">'+
+        '<div class="cc-name">'+c.name+'</div>'+
+        '<div class="cc-badge '+(c.type==='closed'?'closed':'')+'">'+(c.type==='closed'?'🔒 Закрытый':'🔓 Открытый')+'</div>'+
+      '</div>'+
+      '<div style="font-size:10px;color:var(--mut);margin-bottom:6px">'+exCount+' упражнений</div>'+
+      (exHtml || '<div style="font-size:11px;color:var(--mut);padding:6px">Пусто</div>')+
+      '<div class="cc-actions">'+
+        '<button onclick="openCompModal(\''+c.id+'\')">✏️ Редактировать</button>'+
+        '<button onclick="delCompFromScreen(\''+c.id+'\')">🗑 Удалить</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+function delCompFromScreen(id){
+  if(!confirm('Удалить комплекс?')) return;
+  complexes = complexes.filter(c => c.id !== id);
+  store.set('complexes', complexes);
+  renderCompsScreen(); renderStats();
+  toast('Удалено');
+}
+
+/* ==================== ЖУРНАЛ ВЕСА ==================== */
+function openWeightLog(){
+  document.getElementById('wDate').value = isoDate(TODAY);
+  document.getElementById('wValue').value = '';
+  renderWeightLog();
+  openModal('m-weight');
+  setTimeout(drawWeightChart, 100); // после рендера DOM
+}
+function addWeightEntry(){
+  const date = document.getElementById('wDate').value;
+  const val = parseFloat(document.getElementById('wValue').value);
+  if(!date){ toast('Выбери дату'); return; }
+  if(!val || val < 20 || val > 300){ toast('Введи корректный вес'); return; }
+  // Если на эту дату уже есть — заменим
+  const existing = weightLog.findIndex(w => w.date === date);
+  if(existing >= 0){
+    weightLog[existing].value = val;
+  } else {
+    weightLog.push({date, value: val});
+  }
+  weightLog.sort((a,b) => a.date.localeCompare(b.date));
+  store.set('weightLog', weightLog);
+  document.getElementById('wValue').value = '';
+  renderWeightLog();
+  drawWeightChart();
+  toast('Вес записан');
+}
+function delWeightEntry(date){
+  weightLog = weightLog.filter(w => w.date !== date);
+  store.set('weightLog', weightLog);
+  renderWeightLog();
+  drawWeightChart();
+  toast('Удалено');
+}
+function renderWeightLog(){
+  // Статистика
+  const wCur = document.getElementById('wCurrent');
+  const wMin = document.getElementById('wMin');
+  const wMax = document.getElementById('wMax');
+  if(!weightLog.length){
+    if(wCur) wCur.textContent = '—';
+    if(wMin) wMin.textContent = '—';
+    if(wMax) wMax.textContent = '—';
+  } else {
+    const vals = weightLog.map(w => w.value);
+    if(wCur) wCur.textContent = weightLog[weightLog.length-1].value.toFixed(1);
+    if(wMin) wMin.textContent = Math.min(...vals).toFixed(1);
+    if(wMax) wMax.textContent = Math.max(...vals).toFixed(1);
+  }
+  // Список (последние сверху)
+  const el = document.getElementById('weightList'); if(!el) return;
+  if(!weightLog.length){
+    el.innerHTML = '<div class="weight-empty">Записей нет.<br>Введи первый вес выше ☝️</div>';
+    return;
+  }
+  const sorted = [...weightLog].reverse();
+  el.innerHTML = sorted.map(w => {
+    const d = new Date(w.date);
+    const dt = d.getDate()+' '+MONTHS_RU_GEN[d.getMonth()]+' '+d.getFullYear();
+    return '<div class="weight-item"><div><span class="date">'+dt+'</span></div>'+
+      '<div style="display:flex;align-items:center;gap:4px"><span class="val">'+w.value.toFixed(1)+' кг</span>'+
+      '<button class="del" onclick="delWeightEntry(\''+w.date+'\')">✕</button></div></div>';
+  }).join('');
+}
+function drawWeightChart(){
+  const canvas = document.getElementById('weightChart'); if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Фон
+  const cs = getComputedStyle(document.documentElement);
+  const bgCard = cs.getPropertyValue('--card2').trim() || '#222a36';
+  const lineColor = cs.getPropertyValue('--line').trim() || '#2a3340';
+  const accColor = cs.getPropertyValue('--acc').trim() || '#ff5b2e';
+  const acc2Color = cs.getPropertyValue('--acc2').trim() || '#ffb02e';
+  const mutColor = cs.getPropertyValue('--mut').trim() || '#8a97a8';
+
+  ctx.clearRect(0,0,W,H);
+
+  if(weightLog.length < 2){
+    ctx.fillStyle = mutColor;
+    ctx.font = '18px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(weightLog.length === 0 ? 'Введи хотя бы 2 записи' : 'Добавь ещё одну запись', W/2, H/2);
+    return;
+  }
+
+  const padL = 50, padR = 20, padT = 20, padB = 30;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+
+  const vals = weightLog.map(w => w.value);
+  const minV = Math.min(...vals) - 0.5;
+  const maxV = Math.max(...vals) + 0.5;
+  const rangeV = maxV - minV || 1;
+
+  // Y-grid (4 линии)
+  ctx.strokeStyle = lineColor;
+  ctx.lineWidth = 1;
+  ctx.fillStyle = mutColor;
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'right';
+  for(let i=0; i<=4; i++){
+    const y = padT + (plotH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(W - padR, y);
+    ctx.stroke();
+    const v = maxV - (rangeV/4) * i;
+    ctx.fillText(v.toFixed(1), padL - 5, y + 4);
+  }
+
+  // X-coordinates
+  const xs = weightLog.map((_, i) => padL + (plotW / (weightLog.length - 1)) * i);
+  const ys = weightLog.map(w => padT + plotH - ((w.value - minV) / rangeV) * plotH);
+
+  // Градиентная заливка под линией
+  const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
+  grad.addColorStop(0, accColor + '88');
+  grad.addColorStop(1, accColor + '00');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(xs[0], padT + plotH);
+  xs.forEach((x, i) => ctx.lineTo(x, ys[i]));
+  ctx.lineTo(xs[xs.length-1], padT + plotH);
+  ctx.closePath();
+  ctx.fill();
+
+  // Линия
+  ctx.strokeStyle = accColor;
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  xs.forEach((x, i) => {
+    if(i === 0) ctx.moveTo(x, ys[i]);
+    else ctx.lineTo(x, ys[i]);
+  });
+  ctx.stroke();
+
+  // Точки
+  xs.forEach((x, i) => {
+    ctx.beginPath();
+    ctx.arc(x, ys[i], 4, 0, Math.PI*2);
+    ctx.fillStyle = acc2Color;
+    ctx.fill();
+    ctx.strokeStyle = bgCard;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // X-labels (первая и последняя дата)
+  ctx.fillStyle = mutColor;
+  ctx.font = '10px sans-serif';
+  ctx.textAlign = 'left';
+  const d1 = new Date(weightLog[0].date);
+  ctx.fillText(d1.getDate()+'.'+String(d1.getMonth()+1).padStart(2,'0'), padL, H - 10);
+  ctx.textAlign = 'right';
+  const d2 = new Date(weightLog[weightLog.length-1].date);
+  ctx.fillText(d2.getDate()+'.'+String(d2.getMonth()+1).padStart(2,'0'), W - padR, H - 10);
 }
 
 /* ==================== РЕЖИМ ВЫПОЛНЕНИЯ ТРЕНИРОВКИ ==================== */
-/*
-  Состояние:
-  execState = {
-    trainId, dateKey, trainName,
-    exercises: [{exId, sets, reps, time, rest, weight, note, ex: {...}}, ...],
-    currentIndex: 0,       // какое упражнение
-    currentSet: 1,         // текущий подход
-    completed: [],         // [{exIdx, sets, reps, time, weight}]
-    phase: 'exercise',     // exercise | rest | done
-    timer: {phase, remaining, total, running, int}
-    askingX: null,         // {field:'sets'|'reps'|'time'|'weight'|'rest', value:null}
-  }
-*/
 let execState = null;
 
 function startTrainExecution(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку запустить нельзя'); return; }
   const eff = getEffectiveTrain(tr, selectedDate);
   if(!eff.exercises || !eff.exercises.length){ toast('Нет упражнений'); return; }
-
-  // Копия упражнений с раскрытыми данными
   const exs = eff.exercises.map(e => {
     const ex = exercises.find(x => x.id === e.exId);
     return {
@@ -2090,20 +2325,18 @@ function startTrainExecution(trainId){
       exSkills: ex ? (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s?s.emoji+s.name:''; }).filter(Boolean) : [],
     };
   });
-
   execState = {
     trainId,
     dateKey: isoDate(selectedDate),
     trainName: tr.name,
-    exercises: exs,
+    exercises: JSON.parse(JSON.stringify(exs)),
+    originalExercises: JSON.parse(JSON.stringify(exs)),
     currentIndex: 0,
     currentSet: 1,
     completed: [],
     phase: 'exercise',
-    timer: {phase:'work', remaining:0, total:0, running:false, int:null},
-    askingX: null
+    timer: {phase:'idle', remaining:0, total:0, running:false, int:null}
   };
-
   document.getElementById('execScreen').classList.add('on');
   document.getElementById('execTitle').textContent = tr.name;
   renderExecScreen();
@@ -2114,55 +2347,16 @@ function closeExecScreen(){
   const ex = document.getElementById('execScreen');
   if(ex) ex.classList.remove('on');
   if(execState && execState.completed && execState.completed.length){
-    // Если что-то сделали — спросим
-    if(confirm('Закрыть тренировку? Прогресс выполнения не сохранится в XP.')){
-      execState = null;
-    } else {
-      // возвращаем экран
+    if(!confirm('Закрыть тренировку? Прогресс не сохранится в XP.')) {
       document.getElementById('execScreen').classList.add('on');
       renderExecScreen();
       return;
     }
-  } else execState = null;
-}
-
-function isXValue(v){
-  if(v === null || v === undefined) return false;
-  return String(v).trim().toUpperCase() === 'X';
-}
-
-// Спросить X-параметр через input
-function requestXValue(field, cb){
-  const fieldNames = {
-    sets:'Подходы', reps:'Повторы', time:'Время (сек)', weight:'Вес (кг)', rest:'Отдых (сек)'
-  };
-  const val = prompt(fieldNames[field] + ' (X) — введи значение:');
-  if(val === null || val === '' || isNaN(+val)){
-    toast('Введи число');
-    return requestXValue(field, cb);
   }
-  cb(+val);
+  execState = null;
 }
 
-function resolveXValues(exItem, cb){
-  // Проверим какие поля = X, спросим их последовательно
-  const fields = ['sets','reps','time','weight','rest'];
-  const pending = fields.filter(f => isXValue(exItem[f]));
-  if(!pending.length){ cb(exItem); return; }
-
-  let resolved = {...exItem};
-  let idx = 0;
-  function step(){
-    if(idx >= pending.length){ cb(resolved); return; }
-    const f = pending[idx];
-    requestXValue(f, (v) => {
-      resolved[f] = v;
-      idx++;
-      step();
-    });
-  }
-  step();
-}
+function isXValue(v){ return String(v).trim().toUpperCase() === 'X'; }
 
 function renderExecScreen(){
   if(!execState){ return; }
@@ -2174,37 +2368,38 @@ function renderExecScreen(){
 
   if(progressTxt) progressTxt.textContent = (cur+1)+'/'+total;
 
-  // Если X-параметры не разрешены — сначала спрашиваем
   const item = execState.exercises[cur];
   if(!item){ finishExecution(); return; }
 
-  if(isXValue(item.sets) || isXValue(item.reps) || isXValue(item.time) || isXValue(item.weight) || isXValue(item.rest)){
-    // Открываем форму «запроса X»
+  // Если есть X-поля — показываем форму
+  const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
+  const xFilled = ['sets','reps','time','weight','rest'].every(f => !isXValue(item[f]));
+
+  if(hasX && !item._xResolved){
     body.innerHTML =
       '<div class="exec-step"><div class="dot-step on">'+(cur+1)+'</div><div class="info"><div class="lbl">Упражнение '+(cur+1)+' из '+total+'</div><div class="nm">'+item.exName+'</div></div></div>'+
-      '<div style="text-align:center;font-size:48px;margin:20px 0">✏️</div>'+
+      '<div style="text-align:center;font-size:44px;margin:16px 0">✏️</div>'+
       '<div class="exec-ex-name">'+item.exName+'</div>'+
-      '<div class="note" style="text-align:center;margin-bottom:14px">Перед началом нужно задать параметры, помеченные <b>X</b></div>'+
+      '<div class="note" style="text-align:center;margin-bottom:12px">Задай параметры, помеченные <b>X</b></div>'+
       '<div id="xFormContainer"></div>';
 
     const form = document.getElementById('xFormContainer');
     const fields = [];
-    if(isXValue(item.sets)) fields.push({key:'sets', label:'Подходы', placeholder:'напр. 3', value:''});
-    if(isXValue(item.reps)) fields.push({key:'reps', label:'Повторы', placeholder:'напр. 10', value:''});
-    if(isXValue(item.time)) fields.push({key:'time', label:'Время, сек', placeholder:'напр. 60', value:''});
-    if(isXValue(item.weight)) fields.push({key:'weight', label:'Вес, кг', placeholder:'напр. 16', value:''});
-    if(isXValue(item.rest)) fields.push({key:'rest', label:'Отдых, сек', placeholder:'напр. 60', value:''});
+    if(isXValue(item.sets)) fields.push({key:'sets', label:'Подходы', placeholder:'3'});
+    if(isXValue(item.reps)) fields.push({key:'reps', label:'Повторы', placeholder:'10'});
+    if(isXValue(item.time)) fields.push({key:'time', label:'Время, сек', placeholder:'60'});
+    if(isXValue(item.weight)) fields.push({key:'weight', label:'Вес, кг', placeholder:'16'});
+    if(isXValue(item.rest)) fields.push({key:'rest', label:'Отдых, сек', placeholder:'60'});
 
     form.innerHTML = fields.map(f =>
       '<div class="field"><label>'+f.label+'</label><input type="number" id="xInput_'+f.key+'" placeholder="'+f.placeholder+'"></div>'
     ).join('') +
-    '<button class="btn primary full" style="margin-top:8px" onclick="applyXForm()">▶ Начать упражнение</button>';
-
+    '<button class="btn primary full" style="margin-top:8px;padding:11px" onclick="applyXForm()">▶ Начать упражнение</button>';
     footer.innerHTML = '';
     return;
   }
 
-  // Обычный рендер упражнения
+  // Обычный рендер
   const dosage = [];
   if(item.sets) dosage.push('<div class="item"><div class="lbl">Подходы</div><div class="val">'+item.sets+'</div></div>');
   if(item.reps) dosage.push('<div class="item"><div class="lbl">Повторы</div><div class="val">'+item.reps+'</div></div>');
@@ -2218,37 +2413,48 @@ function renderExecScreen(){
     ...item.exSkills.map(t => '<span class="tag">'+t+'</span>')
   ].join('');
 
-  const phaseLabel = execState.timer.phase === 'work' ? 'Работа' : execState.timer.phase === 'rest' ? 'Отдых' : 'Готов';
-  const phaseClass = execState.timer.phase === 'work' ? 'work' : execState.timer.phase === 'rest' ? 'rest' : '';
-  const totalPh = execState.timer.total || 1;
-  const progPct = Math.max(0, Math.min(100, (1 - execState.timer.remaining/totalPh)*100));
+  let phaseLabel = 'Готов';
+  let phaseClass = '';
+  let timerDisplay = '00:00';
+  let progPct = 0;
+  if(execState.timer.phase === 'work'){
+    phaseLabel = 'Работа · подход '+execState.currentSet+'/'+item.sets;
+    phaseClass = 'work';
+    timerDisplay = fmt(Math.max(0, execState.timer.remaining));
+    progPct = execState.timer.total > 0 ? Math.max(0, Math.min(100, (1 - execState.timer.remaining/execState.timer.total)*100)) : 0;
+  } else if(execState.timer.phase === 'rest'){
+    phaseLabel = 'Отдых перед подходом '+(execState.currentSet+1)+'/'+item.sets;
+    phaseClass = 'rest';
+    timerDisplay = fmt(Math.max(0, execState.timer.remaining));
+    progPct = execState.timer.total > 0 ? Math.max(0, Math.min(100, (1 - execState.timer.remaining/execState.timer.total)*100)) : 0;
+  }
 
   body.innerHTML =
     '<div class="exec-step"><div class="dot-step on">'+(cur+1)+'</div><div class="info"><div class="lbl">Упражнение '+(cur+1)+' из '+total+'</div><div class="nm">'+item.exName+'</div></div></div>'+
     '<div class="exec-ex-name">'+item.exName+'</div>'+
     (tags ? '<div class="exec-ex-tags">'+tags+'</div>' : '')+
-    '<div class="exec-phase '+phaseClass+'">'+phaseLabel+(execState.timer.phase==='work'?' · подход '+execState.currentSet+'/'+item.sets:'')+'</div>'+
-    '<div class="exec-timer">'+fmt(Math.max(0, execState.timer.remaining))+'</div>'+
+    '<div class="exec-phase '+phaseClass+'">'+phaseLabel+'</div>'+
+    '<div class="exec-timer">'+timerDisplay+'</div>'+
     '<div class="exec-progress"><i style="width:'+progPct+'%"></i></div>'+
     '<div class="exec-dosage"><div class="row">'+dosage.join('')+'</div></div>'+
     (item.note ? '<div class="note" style="text-align:center">'+item.note+'</div>' : '');
 
-  // Кнопки управления
+  // Кнопки
   if(execState.timer.phase === 'work'){
     footer.innerHTML =
       '<div class="exec-controls">'+
         '<button class="btn" onclick="execSkipRest()">Пропустить отдых</button>'+
-        '<button class="btn primary" onclick="execFinishSet()">'+(execState.currentSet >= item.sets ? 'Завершить упражнение' : 'Подход готов')+'</button>'+
+        '<button class="btn primary" onclick="execFinishSet()">'+(execState.currentSet >= item.sets ? 'Завершить' : 'Подход готов')+'</button>'+
       '</div>'+
-      '<div class="exec-controls" style="margin-top:6px">'+
-        '<button class="btn" onclick="toggleExecTimer()" id="execTimerBtn">'+(execState.timer.running?'⏸ Пауза':'▶ Таймер')+'</button>'+
-        '<button class="btn" onclick="execSkipExercise()">Пропустить упражнение</button>'+
+      '<div class="exec-controls" style="margin-top:5px">'+
+        '<button class="btn" onclick="toggleExecTimer()">'+(execState.timer.running?'⏸ Пауза':'▶ Таймер')+'</button>'+
+        '<button class="btn" onclick="execSkipExercise()">Пропустить</button>'+
       '</div>';
   } else if(execState.timer.phase === 'rest'){
     footer.innerHTML =
       '<div class="exec-controls">'+
         '<button class="btn primary" onclick="execStartNextSet()">▶ Следующий подход</button>'+
-        '<button class="btn" onclick="execSkipRest()">Пропустить отдых</button>'+
+        '<button class="btn" onclick="execSkipRest()">Пропустить</button>'+
       '</div>';
   } else {
     footer.innerHTML =
@@ -2264,13 +2470,13 @@ function applyXForm(){
       if(inp && inp.value) item[f] = +inp.value || 0;
     }
   });
+  item._xResolved = true;
   renderExecScreen();
 }
 
 function execStartWork(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
-  execState.phase = 'exercise';
   execState.currentSet = 1;
   startExecPhase('work', +item.time || 0);
 }
@@ -2292,12 +2498,8 @@ function startExecPhase(phase, seconds){
       } else {
         clearInterval(execState.timer.int);
         execState.timer.running = false;
-        if(execState.timer.phase === 'work'){
-          beep(880,.3);
-          if(navigator.vibrate) navigator.vibrate(200);
-        } else if(execState.timer.phase === 'rest'){
-          beep(660,.25);
-        }
+        if(execState.timer.phase === 'work'){ beep(880,.3); if(navigator.vibrate) navigator.vibrate(200); }
+        else if(execState.timer.phase === 'rest'){ beep(660,.25); }
       }
     }, 1000);
   }
@@ -2305,12 +2507,8 @@ function startExecPhase(phase, seconds){
 }
 
 function toggleExecTimer(){
-  if(execState.timer.running){
-    clearInterval(execState.timer.int);
-    execState.timer.running = false;
-  } else {
-    startExecPhase(execState.timer.phase, execState.timer.remaining);
-  }
+  if(execState.timer.running){ clearInterval(execState.timer.int); execState.timer.running = false; }
+  else { startExecPhase(execState.timer.phase, execState.timer.remaining); return; }
   renderExecScreen();
 }
 
@@ -2323,30 +2521,27 @@ function execFinishSet(){
     // Упражнение завершено
     execState.completed.push({
       exIdx: execState.currentIndex,
-      sets: item.sets,
-      reps: item.reps || 0,
-      time: item.time || 0,
-      weight: item.weight || 0
+      sets: +item.sets || 1,
+      reps: +item.reps || 0,
+      time: +item.time || 0,
+      weight: +item.weight || 0
     });
-    // Переход к следующему упражнению
     if(execState.currentIndex >= execState.exercises.length - 1){
       finishExecution();
       return;
     }
     execState.currentIndex++;
     execState.currentSet = 1;
-    execState.timer.phase = 'work';
+    execState.timer.phase = 'idle';
     execState.timer.remaining = 0;
     execState.timer.total = 1;
     execState.timer.running = false;
     renderExecScreen();
   } else {
-    // Отдых перед следующим подходом
     execState.currentSet++;
     if(item.rest && +item.rest > 0){
       startExecPhase('rest', +item.rest);
     } else {
-      // Без отдыха — сразу следующий подход
       startExecPhase('work', +item.time || 0);
     }
   }
@@ -2376,7 +2571,7 @@ function execSkipExercise(){
   }
   execState.currentIndex++;
   execState.currentSet = 1;
-  execState.timer.phase = 'work';
+  execState.timer.phase = 'idle';
   execState.timer.remaining = 0;
   execState.timer.total = 1;
   execState.timer.running = false;
@@ -2386,19 +2581,17 @@ function execSkipExercise(){
 function finishExecution(){
   if(execState.timer.int) clearInterval(execState.timer.int);
 
-  const tr = trainings.find(t => t.id === execState.trainId);
   const body = document.getElementById('execBody');
   const footer = document.getElementById('execFooter');
   const progressTxt = document.getElementById('execProgressTxt');
 
-  // Считаем XP на основе факта
   let xp = 0;
   execState.completed.forEach(c => {
     const ex = exercises.find(x => x.id === execState.exercises[c.exIdx].exId);
     if(!ex) return;
-    if(ex.format === 'time') xp += xpFromTime(c.time || 0) * (c.sets || 1);
-    else if(ex.format === 'weight') xp += xpFromWeight(c.weight || 0, profile.weight||70, c.reps || 0) * (c.sets || 1);
-    else xp += xpFromReps(c.reps || 0) * (c.sets || 1);
+    if(ex.format === 'time') xp += xpFromTime(c.time) * (c.sets || 1);
+    else if(ex.format === 'weight') xp += xpFromWeight(c.weight, profile.weight||70, c.reps) * (c.sets || 1);
+    else xp += xpFromReps(c.reps) * (c.sets || 1);
   });
   xp = Math.round(xp * 100) / 100;
 
@@ -2406,31 +2599,24 @@ function finishExecution(){
 
   body.innerHTML =
     '<div style="text-align:center;padding:20px 0">'+
-      '<div style="font-size:56px;margin-bottom:8px">🎉</div>'+
-      '<div style="font-size:20px;font-weight:900;margin-bottom:6px">Тренировка завершена!</div>'+
-      '<div style="font-size:14px;color:var(--mut);margin-bottom:16px">Выполнено: '+execState.completed.length+' из '+execState.exercises.length+' упр.</div>'+
-      '<div style="font-size:32px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">+'+xp+' XP</div>'+
+      '<div style="font-size:52px;margin-bottom:8px">🎉</div>'+
+      '<div style="font-size:18px;font-weight:900;margin-bottom:6px">Тренировка завершена!</div>'+
+      '<div style="font-size:13px;color:var(--mut);margin-bottom:16px">Выполнено: '+execState.completed.length+' из '+execState.exercises.length+'</div>'+
+      '<div style="font-size:30px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">+'+xp+' XP</div>'+
     '</div>';
-
   footer.innerHTML =
     '<button class="btn primary finish-btn" onclick="confirmFinishExecution('+xp+')">✓ Засчитать тренировку</button>'+
-    '<button class="btn full" style="margin-top:6px" onclick="closeExecScreen();execState=null;">Отмена</button>';
-
-  // Уже зачлось? Нет, только по кнопке
+    '<button class="btn full" style="margin-top:5px;padding:8px" onclick="closeExecScreen();execState=null;">Отмена</button>';
 }
 
 function confirmFinishExecution(xp){
   if(!execState) return;
   const tr = trainings.find(t => t.id === execState.trainId);
   if(!tr){ closeExecScreen(); return; }
-
-  // Отмечаем тренировку выполненной
   const dateKey = execState.dateKey;
   const date = new Date(dateKey);
   setTrainDone(date, tr.id, true, xp);
   addXp(xp, tr.name, tr);
-
-  // Обновляем
   renderWeek(); renderMonth(); renderTrainings(); renderStats();
   closeExecScreen();
   execState = null;
@@ -2448,15 +2634,11 @@ document.addEventListener('click', e => {
   if(!e.target.closest('#fabBtn') && !e.target.closest('#fabMenu')) closeFabMenu();
 });
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') document.querySelectorAll('.modal-bg.on').forEach(m => m.classList.remove('on'));
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.modal-bg.on').forEach(m => m.classList.remove('on'));
+    if(document.getElementById('compsScreen')?.classList.contains('on')) closeCompsScreen();
+  }
 });
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
