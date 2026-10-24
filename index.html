@@ -200,6 +200,14 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .xp-hero-bar{height:6px;background:var(--line);border-radius:var(--radius-full);overflow:hidden;margin-top:var(--space-3);max-width:300px;margin-left:auto;margin-right:auto;}
 .xp-hero-bar i{display:block;height:100%;background:var(--grad);border-radius:var(--radius-full);transition:width .5s;}
 
+/* Character */
+.character-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-3);text-align:center;}
+.character-svg{width:100%;max-width:220px;margin:0 auto;display:block;}
+.character-svg svg{width:100%;height:auto;display:block}
+.character-legend{display:flex;gap:var(--space-2);justify-content:center;font-size:var(--font-xs);color:var(--mut);margin-top:var(--space-3);flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:4px;}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;}
+
 /* Transparent Stats Lists */
 .stats-list-container{display:flex;flex-direction:column;}
 .stat-row{display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) 0;border-bottom:1px solid var(--line-soft);}
@@ -213,7 +221,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .stat-row-bar{height:2px;background:var(--line);border-radius:2px;margin-top:6px;overflow:hidden;}
 .stat-row-bar i{display:block;height:100%;background:var(--acc);border-radius:2px;}
 
-/* Subzones inside Stat Row */
 .stat-subzones{display:flex;flex-direction:column;gap:2px;margin-top:var(--space-2);padding-left:var(--space-4);}
 .stat-sub-row{display:flex;justify-content:space-between;font-size:var(--font-xs);color:var(--mut);}
 .stat-sub-row.weak{color:var(--acc2);}
@@ -421,7 +428,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   </section>
 
   <section class="view" id="v-stat">
-    <!-- НОВЫЙ XP HERO -->
+    <!-- XP HERO -->
     <div class="xp-hero">
       <div class="xp-hero-level">
         <div class="num" id="xpLevel">1</div>
@@ -430,6 +437,12 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <div class="xp-hero-rank" id="xpRank">Новичок</div>
       <div class="xp-hero-total"><b id="xpTotal">0</b> XP · до следующего <b id="xpToNext">1</b></div>
       <div class="xp-hero-bar"><i id="xpBar" style="width:0%"></i></div>
+    </div>
+
+    <!-- ПЕРСОНАЖ -->
+    <div class="character-card">
+      <div class="character-svg" id="charContainer"></div>
+      <div class="character-legend" id="charLegend"></div>
     </div>
 
     <!-- ПРОГРЕСС УПРАЖНЕНИЯ -->
@@ -591,7 +604,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     <div class="field-group"><label class="field-label">Снаряды</label><div class="chip-row" id="exGearsPick"></div></div>
     <div class="field-group"><label class="field-label">Навыки</label><div class="chip-row" id="exSkillsPick"></div></div>
     
-    <!-- НОВОЕ: Двустороннее упражнение -->
+    <!-- ДВУСТОРОННЕЕ УПРАЖНЕНИЕ -->
     <div class="field-group" style="display:flex;align-items:center;gap:8px;background:var(--card2);padding:10px;border-radius:8px">
       <input type="checkbox" id="exTwoSided" style="width:18px;height:18px;accent-color:var(--acc)">
       <label for="exTwoSided" style="font-size:12px;font-weight:700;cursor:pointer">На две стороны (левая / правая)</label>
@@ -727,13 +740,16 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     </div>
     <div class="info-block" style="background:var(--card);padding:12px;border-radius:8px;margin-bottom:8px;border-left:2px solid var(--acc2)">
       <h4 style="font-size:12px;font-weight:800;margin-bottom:6px">Двусторонние упражнения</h4>
-      <p style="font-size:11px;color:var(--mut);line-height:1.5">Если упражнение выполняется на левую и правую сторону (например, жим гири одной рукой), отметь галочку в настройках. В режиме тренировки приложение будет вести счет на обе стороны.</p>
+      <p style="font-size:11px;color:var(--mut);line-height:1.5">Если упражнение выполняется на левую и правую сторону, отметь галочку в настройках. В режиме тренировки приложение будет вести счет на обе стороны.</p>
     </div>
     <button class="modal-close" onclick="closeModal('m-info')">Понятно</button>
   </div>
 </div>
 
 <div class="toast" id="toast" style="position:fixed;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--grad);color:var(--bg);padding:8px 16px;border-radius:999px;font-weight:800;font-size:12px;opacity:0;pointer-events:none;transition:all .3s;z-index:200;text-align:center;box-shadow:var(--shadow-lg);"></div>
+
+
+
 <script>
 /* ==================== КОНСТАНТЫ ==================== */
 const DEFAULT_ZONES = [
@@ -811,6 +827,7 @@ const RANKS = [
   {min:35,name:'Мастер'},{min:50,name:'Ветеран'},{min:75,name:'Чемпион'},{min:100,name:'Легенда'},
 ];
 
+/* ==================== XP ФОРМУЛЫ ==================== */
 function totalXpForLevel(n){ return Math.round(n*(n-1)/2); }
 function computeLevel(xp){
   xp = Math.max(0, xp);
@@ -822,11 +839,13 @@ function computeLevel(xp){
 }
 function rankForLevel(l){ let r = RANKS[0]; for(const x of RANKS) if(l >= x.min) r = x; return r; }
 
+/* ==================== STORE ==================== */
 const store = {
   get(k, d){ try{ const v = localStorage.getItem('as2_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem('as2_'+k, JSON.stringify(v)); }catch(e){ console.error(e); } }
 };
 
+/* ==================== ДАННЫЕ ==================== */
 let zones = store.get('zones', DEFAULT_ZONES);
 let gears = store.get('gears', DEFAULT_GEARS);
 let skills = store.get('skills', DEFAULT_SKILLS);
@@ -853,6 +872,7 @@ let editingExId = null, editingTrainId = null, editingCompId = null;
 let tempTrainEx = [], tempCompEx = [];
 let pickTarget = null, exConfigTarget = null;
 
+/* ==================== ДАТЫ ==================== */
 const TODAY = new Date();
 let viewMonth = TODAY.getMonth();
 let viewYear = TODAY.getFullYear();
@@ -864,6 +884,7 @@ function sameDay(a,b){ return a.getFullYear()===b.getFullYear()&&a.getMonth()===
 function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
+/* ==================== ТОСТЫ ==================== */
 let toastT;
 function toast(msg){
   const el = document.getElementById('toast'); if(!el) return;
@@ -875,14 +896,8 @@ function xpFly(amt){
   el.className = 'xp-fly'; el.textContent = '+'+amt+' XP';
   document.body.appendChild(el); setTimeout(()=>el.remove(), 1500);
 }
-function prFly(exName, display){
-  const el = document.createElement('div');
-  el.className = 'pr-fly';
-  el.innerHTML = '🏆 Новый рекорд!<br><span style="font-size:12px;font-weight:700">'+exName+'</span><br><span style="font-size:18px">'+display+'</span>';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 2500);
-}
 
+/* ==================== ЗОНЫ ==================== */
 function getMainZones(){ return zones.filter(z => z.isMain); }
 function getSubZones(parentId){ return zones.filter(z => z.parent === parentId); }
 function getZoneById(id){ return zones.find(z => z.id === id); }
@@ -893,6 +908,7 @@ function getZoneTotalXp(id){
   return own + childXp;
 }
 
+/* ==================== XP РАСЧЁТ ==================== */
 function xpFromTime(s){ return Math.round(s*0.01*100)/100; }
 function xpFromWeight(w,bw,r){ if(!bw||bw<=0) bw=70; return Math.round((w/bw)*0.01*r*100)/100; }
 function xpFromReps(r){ return Math.round(r*0.1*100)/100; }
@@ -918,6 +934,7 @@ function calcTrainXp(tr, override){
   return Math.round(total*100)/100;
 }
 
+/* ==================== XP СИСТЕМА ==================== */
 function ensureXpMaps(){
   if(!xpGears || typeof xpGears!=='object') xpGears = {};
   if(!xpZones || typeof xpZones!=='object') xpZones = {};
@@ -970,6 +987,7 @@ function removeXp(amount, label, tr){
   updateXpUI();
 }
 
+/* ==================== DECAY ==================== */
 const DECAY_TIERS = [{days:60,rate:0.01},{days:30,rate:0.005},{days:14,rate:0.0025},{days:7,rate:0.001}];
 function daysBetween(a,b){ return Math.floor((new Date(b)-new Date(a))/86400000); }
 function applyDecayOnLoad(){
@@ -994,6 +1012,7 @@ function applyDecayOnLoad(){
   if(lost > 0) setTimeout(()=>toast('🌙 Распад: −'+lost.toFixed(2)+' XP'), 1500);
 }
 
+/* ==================== XP UI ==================== */
 function updateXpUI(){
   const info = computeLevel(totalXp);
   const rank = rankForLevel(info.level);
@@ -1019,6 +1038,7 @@ function renderXpLog(){
   }).join('');
 }
 
+/* ==================== ТЕМА ==================== */
 function applyTheme(){
   const theme = THEMES.find(t => t.id === themeId) || THEMES[0];
   const vars = themeMode === 'light' ? theme.day : theme.night;
@@ -1048,17 +1068,17 @@ function renderThemes(){
   el.innerHTML = THEMES.map(t => {
     const v = t.night;
     const on = t.id === themeId;
-    return '<div class="theme-tile '+(on?'on':'')+'" onclick="setTheme(\''+t.id+'\')" style="border-radius:var(--radius);border:2px solid '+(on?'var(--acc)':'var(--line)')+';overflow:hidden;cursor:pointer;position:relative">'+
-      '<div style="height:36px;display:flex"><div style="flex:1;background:'+v.bg+'"></div><div style="flex:1;background:'+v.acc+'"></div><div style="flex:1;background:'+v.acc2+'"></div></div>'+
-      '<div style="font-size:9.5px;text-align:center;padding:4px 2px;background:var(--card2);color:var(--txt);font-weight:700;text-transform:uppercase;">'+t.name+'</div>'+
-      (on?'<div style="position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--acc);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900">✓</div>':'')+
-    '</div>';
+    return '<div class="theme-tile '+(on?'on':'')+'" onclick="setTheme(\''+t.id+'\')">'+
+      '<div class="swatch"><div style="background:'+v.bg+'"></div><div style="background:'+v.acc+'"></div><div style="background:'+v.acc2+'"></div></div>'+
+      '<div class="name">'+t.name+'</div><div class="check">✓</div></div>';
   }).join('');
 }
 
+/* ==================== FAB ==================== */
 function toggleFabMenu(){ const m=document.getElementById('fabMenu'); if(m) m.classList.toggle('on'); }
 function closeFabMenu(){ const m=document.getElementById('fabMenu'); if(m) m.classList.remove('on'); }
 
+/* ==================== АВАТАР ==================== */
 function loadAvatar(input){
   const file = input.files[0]; if(!file) return;
   const r = new FileReader();
@@ -1096,6 +1116,7 @@ function saveProfile(){
   store.set('profile', profile); applyAvatar(); toast('Сохранено');
 }
 
+/* ==================== МЕДИА ==================== */
 function loadExPhotos(input){
   const files = Array.from(input.files || []);
   files.forEach(file => {
@@ -1124,15 +1145,15 @@ function loadExPhotos(input){
 function renderExMediaGrid(){
   const grid = document.getElementById('exMediaGrid'); if(!grid) return;
   grid.innerHTML = currentExMedia.map((m, i) => 
-    '<div class="media-item" onclick="openMediaViewer('+i+')" style="position:relative;aspect-ratio:1;border-radius:var(--radius-sm);overflow:hidden;background:var(--card2);border:1px solid var(--line);cursor:pointer">'+
+    '<div class="media-item" onclick="openMediaViewer('+i+')">'+
       (m.type === 'image' 
-        ? '<img src="'+m.data+'" style="width:100%;height:100%;object-fit:cover">' 
-        : '<video src="'+m.data+'" muted style="width:100%;height:100%;object-fit:cover"></video><div style="position:absolute;bottom:3px;left:3px;background:rgba(0,0,0,.7);color:#fff;padding:1px 5px;border-radius:4px;font-size:8px">▶</div>')+
-      '<button class="media-del" onclick="event.stopPropagation();removeExMedia('+i+')" style="position:absolute;top:3px;right:3px;background:rgba(0,0,0,.7);color:#fff;border:none;width:20px;height:20px;border-radius:50%;font-size:10px;cursor:pointer">✕</button>'+
+        ? '<img src="'+m.data+'">' 
+        : '<video src="'+m.data+'" muted></video><div class="video-badge">▶</div>')+
+      '<button class="media-del" onclick="event.stopPropagation();removeExMedia('+i+')">✕</button>'+
     '</div>'
   ).join('') +
-  '<div class="media-add" onclick="document.getElementById(\'exPhoto\').click()" style="aspect-ratio:1;border-radius:var(--radius-sm);border:2px dashed var(--line);background:var(--card);color:var(--mut);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;gap:2px">'+
-    '<div>+</div><div style="font-size:8px;text-align:center;line-height:1.1;font-weight:600">фото/<br>видео</div>'+
+  '<div class="media-add" onclick="document.getElementById(\'exPhoto\').click()">'+
+    '<div>+</div><div class="lbl">фото/<br>видео</div>'+
   '</div>';
 }
 function removeExMedia(i){ currentExMedia.splice(i, 1); renderExMediaGrid(); }
@@ -1146,21 +1167,24 @@ function openMediaViewer(idx){
   openModal('m-media');
 }
 
+/* ==================== NAV ==================== */
 function nav(el){
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
   el.classList.add('on');
   document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
   const v = document.getElementById(el.dataset.v); if(v) v.classList.add('on');
   closeFabMenu();
-  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); }
+  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); renderCharacter(); }
   if(el.dataset.v === 'v-comps'){ renderCompsTab(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function navTo(id){ const b = document.querySelector('.nav-btn[data-v="'+id+'"]'); if(b) nav(b); }
 
+/* ==================== MODALS ==================== */
 function openModal(id){ const el = document.getElementById(id); if(el) el.classList.add('on'); }
 function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('on'); }
 
+/* ==================== КАЛЕНДАРЬ ==================== */
 function getISOWeek(d){
   const date = new Date(d); date.setHours(0,0,0,0);
   date.setDate(date.getDate()+3-((date.getDay()+6)%7));
@@ -1224,6 +1248,7 @@ function mdayHtml(date, other){
 }
 function shiftMonth(n){ viewMonth+=n; if(viewMonth<0){viewMonth=11;viewYear--} if(viewMonth>11){viewMonth=0;viewYear++} renderMonth(); }
 
+/* ==================== ТРЕНИРОВКИ ==================== */
 function getTrainsForDate(date){
   const dow = date.getDay(); const dIso = isoDate(date);
   return trainings.filter(t => {
@@ -1380,6 +1405,7 @@ function addExToDay(trainId){
 }
 function editTrainFromDay(trainId){ openTrainModal(trainId); }
 
+/* ==================== УПРАЖНЕНИЯ ==================== */
 function renderEx(){
   const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
   let list = exercises.filter(e => e.name.toLowerCase().includes(q));
@@ -1402,14 +1428,14 @@ function renderEx(){
     const media = e.media && e.media.length ? e.media[0] : null;
     const thumb = media 
       ? (media.type === 'image' 
-          ? '<div class="ex-thumb" style="width:44px;height:44px;border-radius:7px;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto"><img src="'+media.data+'" style="width:100%;height:100%;object-fit:cover"></div>'
-          : '<div class="ex-thumb" style="width:44px;height:44px;border-radius:7px;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto">🎬</div>')
-      : '<div class="ex-thumb" style="width:44px;height:44px;border-radius:7px;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto">💪</div>';
+          ? '<div class="ex-thumb"><img src="'+media.data+'"></div>'
+          : '<div class="ex-thumb" style="font-size:16px">🎬</div>')
+      : '<div class="ex-thumb">💪</div>';
     const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).join('');
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).join('');
-    return '<div class="ex-card" onclick="openExModal(\''+e.id+'\')" style="display:flex;gap:12px;align-items:center;padding:8px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer;transition:border-color .15s">'+thumb+
-      '<div class="ex-info" style="flex:1;min-width:0"><div class="ex-name" style="font-size:12.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+e.name+(e.twoSided?' ↔':'')+'</div>'+(e.desc?'<div class="ex-desc" style="font-size:11px;color:var(--mut);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+e.desc+'</div>':'')+'<div class="ex-tags" style="font-size:11px;margin-top:2px">'+zB+' '+gB+'</div></div>'+
-      '<button class="ex-del" onclick="event.stopPropagation();delEx(\''+e.id+'\')" style="width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--mut);font-size:12px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:all .15s">✕</button></div>';
+    return '<div class="ex-card" onclick="openExModal(\''+e.id+'\')">'+thumb+
+      '<div class="ex-info"><div class="ex-name">'+e.name+(e.twoSided?' ↔':'')+'</div>'+(e.desc?'<div class="ex-desc">'+e.desc+'</div>':'')+'<div class="ex-tags">'+zB+' '+gB+'</div></div>'+
+      '<button class="ex-del" onclick="event.stopPropagation();delEx(\''+e.id+'\')">✕</button></div>';
   }).join('');
 }
 function delEx(id){
@@ -1428,6 +1454,7 @@ function setFilter(el){
   el.classList.add('active'); filter = el.dataset.f; renderEx();
 }
 
+/* ==================== ФИЛЬТРЫ-ПИЛЮЛИ ==================== */
 function toggleFilterBody(id){
   const body = document.getElementById(id+'Body');
   const toggle = document.getElementById(id+'Toggle');
@@ -1435,7 +1462,6 @@ function toggleFilterBody(id){
   const isOpen = body.classList.toggle('on');
   toggle.classList.toggle('open', isOpen);
 }
-
 function renderChips(){
   const z = document.getElementById('zones');
   if(z){
@@ -1449,53 +1475,47 @@ function renderChips(){
       const hasActiveChild = children.some(c => activeIds.includes(c.id));
       
       if(!children.length){
-        return '<div class="chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)" style="padding:6px 10px;border-radius:20px;font-size:11px;font-weight:600;background:'+(isActive?'var(--grad)':'var(--card)')+';border:1px solid '+(isActive?'transparent':'var(--line)')+';color:'+(isActive?'var(--bg)':'var(--mut)')+';cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-bottom:4px"><span>'+mz.emoji+'</span>'+mz.name+' <span style="font-size:9px;opacity:.7">'+ownCnt+'</span></div>';
+        return '<div class="chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)"><span>'+mz.emoji+'</span>'+mz.name+' <span class="chip-count">'+ownCnt+'</span></div>';
       }
       
-      return '<div class="zone-group'+(hasActiveChild?' open':'')+'" data-zonegroup="'+mz.id+'" style="width:100%;margin-bottom:4px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)">' +
-        '<div class="zone-group-head" onclick="toggleZoneGroup(\''+mz.id+'\')" style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;cursor:pointer;background:var(--card2)">' +
-          '<div class="zone-group-title" style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800"><span>'+mz.emoji+'</span>'+mz.name+'</div>' +
-          '<div class="zone-group-badge" style="display:flex;align-items:center;gap:6px"><span class="zone-group-count" style="font-size:9px;font-weight:800;color:var(--acc2);background:color-mix(in srgb, var(--acc2) 15%, transparent);padding:1px 6px;border-radius:999px">'+(ownCnt+childCnt)+'</span><span class="zone-group-arrow" style="font-size:10px;color:var(--mut);transition:transform .2s">▼</span></div>' +
+      return '<div class="zone-group'+(hasActiveChild?' open':'')+'" data-zonegroup="'+mz.id+'">' +
+        '<div class="zone-group-head" onclick="toggleZoneGroup(\''+mz.id+'\')">' +
+          '<div class="zone-group-title"><span>'+mz.emoji+'</span>'+mz.name+'</div>' +
+          '<div class="zone-group-badge"><span class="zone-group-count">'+(ownCnt+childCnt)+'</span><span class="zone-group-arrow">▼</span></div>' +
         '</div>' +
-        '<div class="zone-group-body" style="display:'+(hasActiveChild?'block':'none')+';padding:6px">' +
-          '<div class="sub-chips" style="display:flex;flex-wrap:wrap;gap:4px">' +
-            '<div class="sub-chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)" style="padding:4px 8px;border-radius:14px;font-size:10px;font-weight:600;background:'+(isActive?'var(--grad)':'var(--card)')+';border:1px solid '+(isActive?'transparent':'var(--line)')+';color:'+(isActive?'var(--bg)':'var(--mut)')+';cursor:pointer"><span>'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
+        '<div class="zone-group-body">' +
+          '<div class="sub-chips">' +
+            '<div class="sub-chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)"><span>'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
             children.map(c => {
               const cnt = exercises.filter(e => (e.zones||[]).includes(c.id)).length;
               const active = activeIds.includes(c.id);
-              return '<div class="sub-chip '+(active?'on':'')+'" data-val="'+c.id+'" onclick="toggleChip(this)" style="padding:4px 8px;border-radius:14px;font-size:10px;font-weight:600;background:'+(active?'var(--grad)':'var(--card)')+';border:1px solid '+(active?'transparent':'var(--line)')+';color:'+(active?'var(--bg)':'var(--mut)')+';cursor:pointer"><span>'+c.emoji+'</span>'+c.name+' <span style="opacity:.6">'+cnt+'</span></div>';
+              return '<div class="sub-chip '+(active?'on':'')+'" data-val="'+c.id+'" onclick="toggleChip(this)"><span>'+c.emoji+'</span>'+c.name+' <span style="opacity:.6">'+cnt+'</span></div>';
             }).join('') +
-            '<div class="sub-chip chip-add" onclick="addCustomZone(\''+mz.id+'\')" style="padding:4px 8px;border-radius:14px;font-size:10px;font-weight:600;background:transparent;border:1px dashed var(--acc2);color:var(--acc2);cursor:pointer">+ подзона</div>' +
+            '<div class="sub-chip chip-add" onclick="addCustomZone(\''+mz.id+'\')">+ подзона</div>' +
           '</div>' +
         '</div>' +
       '</div>';
     }).join('') +
-    '<button class="btn btn-sm btn-full" style="margin-top:6px;padding:6px;border-radius:8px;font-size:11px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer" onclick="addCustomZone()">+ Своя зона</button>';
+    '<button class="btn btn-sm btn-full" style="margin-top:6px" onclick="addCustomZone()">+ Своя зона</button>';
   }
   
   const g = document.getElementById('gears');
   if(g) g.innerHTML = gears.map(gn => {
     const cnt = exercises.filter(e => (e.gears||[]).includes(gn.id)).length;
-    const isActive = [...document.querySelectorAll('#gears .chip.on')].some(c => c.dataset.val === gn.id);
-    return '<div class="chip '+(isActive?'on':'')+'" data-val="'+gn.id+'" onclick="toggleChip(this)" style="padding:6px 10px;border-radius:20px;font-size:11px;font-weight:600;background:'+(isActive?'var(--grad)':'var(--card)')+';border:1px solid '+(isActive?'transparent':'var(--line)')+';color:'+(isActive?'var(--bg)':'var(--mut)')+';cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-bottom:4px"><span>'+gn.emoji+'</span>'+gn.name+' <span style="font-size:9px;opacity:.7">'+cnt+'</span></div>';
+    return '<div class="chip" data-val="'+gn.id+'" onclick="toggleChip(this)"><span>'+gn.emoji+'</span>'+gn.name+' <span class="chip-count">'+cnt+'</span></div>';
   }).join('');
 
   const s = document.getElementById('skills');
   if(s) s.innerHTML = skills.map(sk => {
     const cnt = exercises.filter(e => (e.skills||[]).includes(sk.id)).length;
-    const isActive = [...document.querySelectorAll('#skills .chip.on')].some(c => c.dataset.val === sk.id);
-    return '<div class="chip '+(isActive?'on':'')+'" data-val="'+sk.id+'" onclick="toggleChip(this)" style="padding:6px 10px;border-radius:20px;font-size:11px;font-weight:600;background:'+(isActive?'var(--grad)':'var(--card)')+';border:1px solid '+(isActive?'transparent':'var(--line)')+';color:'+(isActive?'var(--bg)':'var(--mut)')+';cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-bottom:4px"><span>'+sk.emoji+'</span>'+sk.name+' <span style="font-size:9px;opacity:.7">'+cnt+'</span></div>';
+    return '<div class="chip" data-val="'+sk.id+'" onclick="toggleChip(this)"><span>'+sk.emoji+'</span>'+sk.name+' <span class="chip-count">'+cnt+'</span></div>';
   }).join('');
   
   updateFilterCounters();
 }
 function toggleZoneGroup(zoneId){
   const group = document.querySelector(`.zone-group[data-zonegroup="${zoneId}"]`);
-  if(group) {
-    group.classList.toggle('open');
-    const body = group.querySelector('.zone-group-body');
-    if(body) body.style.display = group.classList.contains('open') ? 'block' : 'none';
-  }
+  if(group) group.classList.toggle('open');
 }
 function updateFilterCounters(){
   const z = document.querySelectorAll('#zones .chip.on, #zones .sub-chip.on').length;
@@ -1514,33 +1534,25 @@ function renderZoneTree(selectedIds){
     const children = getSubZones(mz.id);
     const mainOn = selectedIds.includes(mz.id);
     if(!children.length){
-      return '<div class="chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')" style="padding:4px 8px;border-radius:14px;font-size:10px;font-weight:600;background:'+(mainOn?'var(--grad)':'var(--card)')+';border:1px solid '+(mainOn?'transparent':'var(--line)')+';color:'+(mainOn?'var(--bg)':'var(--mut)')+';cursor:pointer;display:inline-block;margin:2px"><span>'+mz.emoji+'</span>'+mz.name+'</div>';
+      return '<div class="chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+mz.emoji+'</span>'+mz.name+'</div>';
     }
     const hasActiveChild = children.some(c => selectedIds.includes(c.id));
-    return '<div class="zone-group'+(hasActiveChild||mainOn?' open':'')+'" style="width:100%;margin-bottom:4px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)">' +
-      '<div class="zone-group-head" onclick="toggleZoneGroupModal(this)" style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;cursor:pointer;background:var(--card2)">' +
-        '<div class="zone-group-title" style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800"><span>'+mz.emoji+'</span>'+mz.name+'</div>' +
-        '<div class="zone-group-badge" style="display:flex;align-items:center;gap:6px"><span class="zone-group-arrow" style="font-size:10px;color:var(--mut);transition:transform .2s">▼</span></div>' +
+    return '<div class="zone-group'+(hasActiveChild||mainOn?' open':'')+'" style="width:100%">' +
+      '<div class="zone-group-head" onclick="this.parentElement.classList.toggle(\'open\')">' +
+        '<div class="zone-group-title"><span>'+mz.emoji+'</span>'+mz.name+'</div>' +
+        '<div class="zone-group-badge"><span class="zone-group-arrow">▼</span></div>' +
       '</div>' +
-      '<div class="zone-group-body" style="display:'+(hasActiveChild||mainOn?'block':'none')+';padding:6px">' +
-        '<div class="sub-chips" style="display:flex;flex-wrap:wrap;gap:4px">' +
-          '<div class="sub-chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')" style="padding:4px 8px;border-radius:14px;font-size:10px;font-weight:600;background:'+(mainOn?'var(--grad)':'var(--card)')+';border:1px solid '+(mainOn?'transparent':'var(--line)')+';color:'+(mainOn?'var(--bg)':'var(--mut)')+';cursor:pointer"><span>'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
+      '<div class="zone-group-body">' +
+        '<div class="sub-chips">' +
+          '<div class="sub-chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
           children.map(c => {
             const on = selectedIds.includes(c.id);
-            return '<div class="sub-chip '+(on?'on':'')+'" data-id="'+c.id+'" onclick="this.classList.toggle(\'on\')" style="padding:4px 8px;border-radius:14px;font-size:10px;font-weight:600;background:'+(on?'var(--grad)':'var(--card)')+';border:1px solid '+(on?'transparent':'var(--line)')+';color:'+(on?'var(--bg)':'var(--mut)')+';cursor:pointer"><span>'+c.emoji+'</span>'+c.name+'</div>';
+            return '<div class="sub-chip '+(on?'on':'')+'" data-id="'+c.id+'" onclick="this.classList.toggle(\'on\')"><span>'+c.emoji+'</span>'+c.name+'</div>';
           }).join('') +
         '</div>' +
       '</div>' +
     '</div>';
   }).join('');
-}
-function toggleZoneGroupModal(head){
-  const group = head.parentElement;
-  const body = group.querySelector('.zone-group-body');
-  const arrow = head.querySelector('.zone-group-arrow');
-  group.classList.toggle('open');
-  if(body) body.style.display = group.classList.contains('open') ? 'block' : 'none';
-  if(arrow) arrow.style.transform = group.classList.contains('open') ? 'rotate(180deg)' : '';
 }
 function getZonePick(){
   const el = document.getElementById('exZonesPick'); if(!el) return [];
@@ -1568,14 +1580,14 @@ function addCustomZone(parentId){
       '<div class="field-group">' +
         '<label class="field-label">Значок</label>' +
         '<input class="field-input" id="ngEmoji" maxlength="4" placeholder="💪" style="font-size:20px;text-align:center">' +
-        '<div class="emoji-picker" id="emojiPicker" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;max-height:120px;overflow-y:auto"></div>' +
+        '<div class="emoji-picker" id="emojiPicker"></div>' +
       '</div>' +
       '<button class="btn btn-primary btn-full" onclick="saveCustomZone()">Добавить</button>' +
       '<button class="modal-close" onclick="closeModal(\'m-new-gear\')">Отмена</button>';
   }
   
   const picker = document.getElementById('emojiPicker');
-  if(picker) picker.innerHTML = EMOJI_PRESETS.map(e => '<span onclick="pickEmoji(this,\''+e+'\')" style="width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border-radius:6px;border:1px solid transparent">'+e+'</span>').join('');
+  if(picker) picker.innerHTML = EMOJI_PRESETS.map(e => '<span onclick="pickEmoji(this,\''+e+'\')">'+e+'</span>').join('');
   
   openModal('m-new-gear');
 }
@@ -1596,6 +1608,7 @@ function saveCustomZone(){
   toast('Зона «'+name+'» добавлена');
 }
 
+/* ==================== МОДАЛКА УПРАЖНЕНИЯ ==================== */
 function openExModal(exId){
   editingExId = exId || null;
   const el = (id) => document.getElementById(id);
@@ -1617,7 +1630,7 @@ function renderMultiPick(cid, items, selectedIds){
   const el = document.getElementById(cid); if(!el) return;
   el.innerHTML = items.map(it => {
     const on = selectedIds.includes(it.id) ? 'on' : '';
-    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')" style="padding:4px 8px;border-radius:14px;font-size:10px;font-weight:600;background:'+(on?'var(--grad)':'var(--card)')+';border:1px solid '+(on?'transparent':'var(--line)')+';color:'+(on?'var(--bg)':'var(--mut)')+';cursor:pointer;display:inline-block;margin:2px"><span>'+it.emoji+'</span>'+it.name+'</div>';
+    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')"><span>'+it.emoji+'</span>'+it.name+'</div>';
   }).join('');
 }
 function getMultiPick(cid){
@@ -1650,6 +1663,7 @@ function saveEx(){
   editingExId = null;
 }
 
+/* ==================== МОДАЛКА ТРЕНИРОВКИ ==================== */
 function openTrainModal(trainId){
   editingTrainId = trainId || null;
   const el = (id) => document.getElementById(id);
@@ -1679,9 +1693,9 @@ function renderTempTrainEx(){
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
     if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
     if(e.weight) dosage.push(isX(e.weight)?'X кг':e.weight+' кг');
-    return '<div class="exercise-item" style="background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);padding:8px 10px;margin-top:6px;font-size:12px">'+
-      '<div class="ex-item-head" style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px"><div class="ex-item-name" style="font-weight:700;font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(ex?ex.name:'?')+(ex&&ex.twoSided?' ↔':'')+'</div><div class="ex-item-dosage" style="font-size:10px;padding:2px 8px;border-radius:16px;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap;font-weight:600">'+dosage.join(' ')+'</div></div>'+
-      '<div class="training-actions-row" style="display:flex;gap:6px;margin-top:6px"><button onclick="openExConfig(\'train\','+idx+')" style="flex:1;padding:6px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer">✏️</button><button onclick="removeTempEx(\'train\','+idx+')" style="flex:1;padding:6px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer">✕</button></div>'+
+    return '<div class="exercise-item">'+
+      '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+(ex&&ex.twoSided?' ↔':'')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
+      '<div class="training-actions-row"><button onclick="openExConfig(\'train\','+idx+')">✏️</button><button onclick="removeTempEx(\'train\','+idx+')">✕</button></div>'+
     '</div>';
   }).join('');
 }
@@ -1716,6 +1730,7 @@ function saveTrain(){
   editingTrainId = null;
 }
 
+/* ==================== МОДАЛКА КОМПЛЕКСА ==================== */
 function openCompModal(compId){
   editingCompId = compId || null;
   const el = (id) => document.getElementById(id);
@@ -1736,9 +1751,9 @@ function renderTempCompEx(){
     if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+(ex&&ex.twoSided?'×2':'')+'×');
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
     if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
-    return '<div class="exercise-item" style="background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);padding:8px 10px;margin-top:6px;font-size:12px">'+
-      '<div class="ex-item-head" style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px"><div class="ex-item-name" style="font-weight:700;font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(ex?ex.name:'?')+(ex&&ex.twoSided?' ↔':'')+'</div><div class="ex-item-dosage" style="font-size:10px;padding:2px 8px;border-radius:16px;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap;font-weight:600">'+dosage.join(' ')+'</div></div>'+
-      '<div class="training-actions-row" style="display:flex;gap:6px;margin-top:6px"><button onclick="openExConfig(\'comp\','+idx+')" style="flex:1;padding:6px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer">✏️</button><button onclick="removeTempEx(\'comp\','+idx+')" style="flex:1;padding:6px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer">✕</button></div>'+
+    return '<div class="exercise-item">'+
+      '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+(ex&&ex.twoSided?' ↔':'')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
+      '<div class="training-actions-row"><button onclick="openExConfig(\'comp\','+idx+')">✏️</button><button onclick="removeTempEx(\'comp\','+idx+')">✕</button></div>'+
     '</div>';
   }).join('');
 }
@@ -1758,6 +1773,7 @@ function saveComp(){
   editingCompId = null;
 }
 
+/* ==================== ВЫБОР УПРАЖНЕНИЙ ==================== */
 function openPickEx(target){
   pickTarget = target;
   const el = document.getElementById('pickTitle');
@@ -1771,14 +1787,14 @@ function renderPickEx(){
   const list = exercises.filter(e => e.name.toLowerCase().includes(q));
   const el = document.getElementById('pickExList'); if(!el) return;
   if(!list.length){ el.innerHTML = '<div class="empty">Нет упражнений</div>'; return; }
-  el.innerHTML = '<div style="display:flex;flex-direction:column;gap:6px">' + list.map(e => {
+  el.innerHTML = list.map(e => {
     const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji:''; }).join('');
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji:''; }).join('');
-    return '<div class="ex-card" onclick="pickExercise(\''+e.id+'\')" style="display:flex;gap:12px;align-items:center;padding:8px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer">'+
-      '<div class="ex-thumb" style="width:36px;height:36px;border-radius:7px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:16px">💪</div>'+
-      '<div class="ex-info" style="flex:1;min-width:0"><div class="ex-name" style="font-size:12px;font-weight:700">'+e.name+(e.twoSided?' ↔':'')+'</div><div class="ex-tags" style="font-size:10px;margin-top:2px">'+zB+' '+gB+'</div></div>'+
+    return '<div class="ex-card" onclick="pickExercise(\''+e.id+'\')">'+
+      '<div class="ex-thumb">💪</div>'+
+      '<div class="ex-info"><div class="ex-name">'+e.name+(e.twoSided?' ↔':'')+'</div><div class="ex-tags">'+zB+' '+gB+'</div></div>'+
       '<div style="font-size:14px;color:var(--acc);font-weight:900">+</div></div>';
-  }).join('') + '</div>';
+  }).join('');
 }
 function pickExercise(exId){
   const ex = exercises.find(x => x.id === exId); if(!ex) return;
@@ -1799,6 +1815,7 @@ function pickExercise(exId){
   else if(pickTarget === 'train') openExConfig('train', tempTrainEx.length-1);
 }
 
+/* ==================== НАСТРОЙКА ДОЗИРОВКИ ==================== */
 function openExConfig(target, index){
   const list = target === 'comp' ? tempCompEx : tempTrainEx;
   const e = list[index]; if(!e) return;
@@ -1849,15 +1866,16 @@ function saveExConfig(){
   closeModal('m-ex-config'); toast('Сохранено');
 }
 
+/* ==================== ВЫБОР КОМПЛЕКСА ==================== */
 function openPickComp(target){
   pickTarget = target;
   const el = document.getElementById('pickCompList'); if(!el) return;
   if(!complexes.length){ el.innerHTML = '<div class="empty">Комплексов нет</div>'; }
   else {
-    el.innerHTML = '<div style="display:flex;flex-direction:column;gap:6px">' + complexes.map(c => '<div class="ex-card" onclick="pickComplex(\''+c.id+'\')" style="display:flex;gap:12px;align-items:center;padding:8px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer">'+
-      '<div class="ex-thumb" style="width:36px;height:36px;border-radius:7px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:16px">📋</div>'+
-      '<div class="ex-info" style="flex:1;min-width:0"><div class="ex-name" style="font-size:12px;font-weight:700">'+c.name+'</div><div class="ex-desc" style="font-size:10px;color:var(--mut)">'+c.exercises.length+' упр</div></div>'+
-      '<div style="font-size:14px;color:var(--acc);font-weight:900">+</div></div>').join('') + '</div>';
+    el.innerHTML = complexes.map(c => '<div class="ex-card" onclick="pickComplex(\''+c.id+'\')">'+
+      '<div class="ex-thumb">📋</div>'+
+      '<div class="ex-info"><div class="ex-name">'+c.name+'</div><div class="ex-desc">'+c.exercises.length+' упр</div></div>'+
+      '<div style="font-size:14px;color:var(--acc);font-weight:900">+</div></div>').join('');
   }
   openModal('m-pick-comp');
 }
@@ -1870,6 +1888,7 @@ function pickComplex(compId){
   closeModal('m-pick-comp'); toast('Добавлено');
 }
 
+/* ==================== ШАБЛОНЫ ==================== */
 function openTrainList(){ renderTrainTemplates(); openModal('m-train-list'); }
 function renderTrainTemplates(){
   const el = document.getElementById('trainTemplates'); if(!el) return;
@@ -1892,6 +1911,7 @@ function delTrain(id){
   toast('Удалено');
 }
 
+/* ==================== КОМПЛЕКСЫ ==================== */
 function renderCompsTab(){
   const el = document.getElementById('compsList'); if(!el) return;
   const cnt = document.getElementById('compsCount'); if(cnt) cnt.textContent = complexes.length;
@@ -1943,7 +1963,9 @@ function escapeHtml(s){
   return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
 
-/* ==================== PR ==================== */
+
+
+/* ==================== PR (РЕКОРДЫ) ==================== */
 function formatTimeSec(s){
   const m = Math.floor(s/60);
   const sec = s % 60;
@@ -2021,6 +2043,7 @@ function getExerciseHistory(exId){
   return history.sort((a,b) => a.date.localeCompare(b.date));
 }
 
+/* ==================== ГРАФИКИ ==================== */
 function setProgressMetric(metric){
   progressMetric = metric;
   document.querySelectorAll('#progress-metric-tabs .metric-tab').forEach(t => {
@@ -2048,6 +2071,7 @@ function populateProgressSelect(){
       : '<option disabled>Нет выполненных упражнений</option>');
   if(currentVal && list.find(e => e.id === currentVal)) sel.value = currentVal;
 }
+
 function renderProgressChart(){
   const sel = document.getElementById('progress-ex-select');
   if(!sel) return;
@@ -2073,6 +2097,7 @@ function renderProgressChart(){
   const ex = exercises.find(e => e.id === exId);
   if(!ex) return;
   const pr = prs[exId];
+  
   if(prsEl){
     if(!pr || (!pr.weight && !pr.reps && !pr.time)){
       prsEl.innerHTML = '<div style="text-align:center;font-size:11px;color:var(--mut);padding:12px 0">Пока рекордов нет</div>';
@@ -2095,6 +2120,7 @@ function renderProgressChart(){
   if(!canvas) return;
   drawProgressChart(canvas, history, progressMetric, ex);
 }
+
 function drawProgressChart(canvas, history, metric, ex){
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
@@ -2117,17 +2143,21 @@ function drawProgressChart(canvas, history, metric, ex){
   else if(metric === 'volume'){ values = history.map(h => h.volume); yLabel = 'Объём (кг × повт)'; formatVal = v => Math.round(v) + ' кг'; }
   else if(metric === 'reps'){ values = history.map(h => h.totalReps || h.maxReps); yLabel = 'Повторы'; formatVal = v => Math.round(v); }
   else if(metric === 'time'){ values = history.map(h => h.time); yLabel = 'Время, сек'; formatVal = v => Math.round(v) + ' с'; }
+  
   const maxPoints = 20;
   let points = history.map((h, i) => ({ date: h.date, value: values[i] }));
   if(points.length > maxPoints) points = points.slice(-maxPoints);
+  
   const padL = 55, padR = 20, padT = 20, padB = 35;
   const plotW = W - padL - padR;
   const plotH = H - padT - padB;
+  
   const vals = points.map(p => p.value);
   let minV = Math.min(...vals);
   let maxV = Math.max(...vals);
   if(minV === maxV){ minV -= 1; maxV += 1; }
   const rangeV = maxV - minV;
+  
   ctx.strokeStyle = lineColor;
   ctx.lineWidth = 1;
   ctx.fillStyle = mutColor;
@@ -2138,29 +2168,35 @@ function drawProgressChart(canvas, history, metric, ex){
     ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
     ctx.fillText(formatVal(maxV - (rangeV/4) * i), padL - 6, y + 4);
   }
+  
   const xs = points.map((_, i) => points.length === 1 ? padL + plotW/2 : padL + (plotW / (points.length - 1)) * i);
   const ys = points.map(p => padT + plotH - ((p.value - minV) / rangeV) * plotH);
+  
   const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
   grad.addColorStop(0, accColor + '88'); grad.addColorStop(1, accColor + '00');
   ctx.fillStyle = grad;
   ctx.beginPath(); ctx.moveTo(xs[0], padT + plotH);
   xs.forEach((x, i) => ctx.lineTo(x, ys[i]));
   ctx.lineTo(xs[xs.length-1], padT + plotH); ctx.closePath(); ctx.fill();
+  
   ctx.strokeStyle = accColor; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
   ctx.beginPath();
   xs.forEach((x, i) => { if(i === 0) ctx.moveTo(x, ys[i]); else ctx.lineTo(x, ys[i]); });
   ctx.stroke();
+  
   xs.forEach((x, i) => {
     ctx.beginPath(); ctx.arc(x, ys[i], 4, 0, Math.PI*2);
     ctx.fillStyle = acc2Color; ctx.fill();
     ctx.strokeStyle = bgCard; ctx.lineWidth = 2; ctx.stroke();
   });
+  
   ctx.fillStyle = mutColor; ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
   const labelIndices = points.length <= 3 ? points.map((_, i) => i) : [0, Math.floor(points.length/2), points.length-1];
   labelIndices.forEach(i => {
     const d = new Date(points[i].date);
     ctx.fillText(d.getDate() + '.' + String(d.getMonth()+1).padStart(2,'0'), xs[i], H - 12);
   });
+  
   ctx.save();
   ctx.translate(14, padT + plotH/2);
   ctx.rotate(-Math.PI/2);
@@ -2344,9 +2380,8 @@ function drawWeightChart(){
   ctx.fillText(d2.getDate()+'.'+String(d2.getMonth()+1).padStart(2,'0'), W - padR, H - 10);
 }
 
-/* ==================== СТАТИСТИКА (MINIMALIST) ==================== */
+/* ==================== СТАТИСТИКА ==================== */
 function renderStats(){
-  const setT = (id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
   renderSkillXp();
   populateProgressSelect();
   renderProgressChart();
@@ -2450,7 +2485,7 @@ function renderSkillXp(){
   }).join('');
 }
 
-/* ==================== РЕЖИМ ВЫПОЛНЕНИЯ ==================== */
+/* ==================== РЕЖИМ ВЫПОЛНЕНИЯ ТРЕНИРОВКИ ==================== */
 let execState = null;
 function startTrainExecution(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
@@ -2479,7 +2514,7 @@ function startTrainExecution(trainId){
     currentIndex: 0,
     currentSet: 1,
     completed: [],
-    phase: 'idle',
+    phase: 'idle', // idle | work | rest
     timer: { remaining: 0, total: 0, running: false, int: null }
   };
   
@@ -2518,7 +2553,7 @@ function renderExecScreen(){
   
   if(progressTxt) progressTxt.textContent = (curIdx+1)+'/'+totalEx;
 
-  // Проверка X-параметров
+  // 1. Проверка X-параметров
   const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
   if(hasX && !item._xResolved){
     body.innerHTML =
@@ -2545,7 +2580,7 @@ function renderExecScreen(){
     return;
   }
 
-  // План
+  // 2. План всей тренировки
   let planHtml = '<div class="exec-plan-list">';
   execState.exercises.forEach((ex, idx) => {
     let cls = 'exec-plan-item';
@@ -2560,7 +2595,7 @@ function renderExecScreen(){
   });
   planHtml += '</div>';
 
-  // Точки подходов (с учетом 2 сторон)
+  // 3. Точки подходов/кругов
   let dotsHtml = '<div class="exec-dots">';
   const baseSets = +item.sets || 1;
   const totalSets = item.exTwoSided ? baseSets * 2 : baseSets;
@@ -2572,12 +2607,13 @@ function renderExecScreen(){
   }
   dotsHtml += '</div>';
 
-  // Определение стороны
+  // 4. Определение стороны (для 2-сторонних)
   let sideText = '';
   if(item.exTwoSided){
     sideText = (execState.currentSet % 2 !== 0) ? ' (Левая)' : ' (Правая)';
   }
 
+  // 5. Фаза и таймер
   let phaseText = 'Готов';
   let phaseClass = '';
   if(execState.phase === 'work') { phaseText = 'Работа' + sideText; phaseClass = 'work'; }
@@ -2604,8 +2640,10 @@ function renderExecScreen(){
       '</div>'+
     '</div>';
 
+  // 6. Кнопки управления
   if(execState.phase === 'idle'){
-    footer.innerHTML = '<button class="btn btn-primary exec-finish" onclick="execStartWork()">▶ Начать подход '+(execState.currentSet <= baseSets ? execState.currentSet : execState.currentSet-baseSets)+sideText+'</button>';
+    const setNum = execState.currentSet <= baseSets ? execState.currentSet : execState.currentSet - baseSets;
+    footer.innerHTML = '<button class="btn btn-primary exec-finish" onclick="execStartWork()">▶ Начать подход '+setNum+sideText+'</button>';
   } else if(execState.phase === 'work'){
     footer.innerHTML = 
       '<div class="exec-controls">'+
@@ -2803,6 +2841,13 @@ function beep(freq, dur){
     o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + dur);
   }catch(e){}
 }
+function prFly(exName, display){
+  const el = document.createElement('div');
+  el.className = 'pr-fly';
+  el.innerHTML = '🏆 Новый рекорд!<br><span style="font-size:12px;font-weight:700">'+exName+'</span><br><span style="font-size:18px">'+display+'</span>';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 2500);
+}
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
@@ -2891,7 +2936,7 @@ function restoreGearModalForm(){
   modalBody.innerHTML = 
     '<h3>Новый снаряд</h3>' +
     '<div class="field-group"><label class="field-label">Название</label><input class="field-input" id="ngName" placeholder="Канат"></div>' +
-    '<div class="field-group"><label class="field-label">Значок</label><input class="field-input" id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:20px;text-align:center"><div class="emoji-picker" id="emojiPicker" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;max-height:120px;overflow-y:auto"></div></div>' +
+    '<div class="field-group"><label class="field-label">Значок</label><input class="field-input" id="ngEmoji" maxlength="4" placeholder="🪢" style="font-size:20px;text-align:center"><div class="emoji-picker" id="emojiPicker"></div></div>' +
     '<button class="btn btn-primary btn-full" onclick="saveCustomGear()">Добавить</button>' +
     '<button class="modal-close" onclick="closeModal(\'m-new-gear\')">Отмена</button>';
 }
@@ -2900,13 +2945,12 @@ function addCustomGear(){
   document.getElementById('ngName').value = '';
   document.getElementById('ngEmoji').value = '';
   const picker = document.getElementById('emojiPicker');
-  if(picker) picker.innerHTML = EMOJI_PRESETS.map(e => '<span onclick="pickEmoji(this,\''+e+'\')" style="width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border-radius:6px;border:1px solid transparent">'+e+'</span>').join('');
+  if(picker) picker.innerHTML = EMOJI_PRESETS.map(e => '<span onclick="pickEmoji(this,\''+e+'\')">'+e+'</span>').join('');
   openModal('m-new-gear');
 }
 function pickEmoji(el, e){
   document.querySelectorAll('#emojiPicker span').forEach(s => s.classList.remove('on'));
   el.classList.add('on');
-  el.style.background = 'var(--grad)';
   document.getElementById('ngEmoji').value = e;
 }
 function saveCustomGear(){
@@ -3021,3 +3065,13 @@ document.addEventListener('keydown', e => {
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
