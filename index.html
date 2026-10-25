@@ -481,7 +481,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .stat-mini-val{font-size:var(--font-xl);font-weight:900;color:var(--acc2);font-variant-numeric:tabular-nums}
 .stat-mini-lbl{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-top:2px}
 
-/* Двухсторонние упражнения в экране выполнения */
+/* Двусторонние упражнения */
 .exec-side-indicator{display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin:var(--space-2) 0 var(--space-3);font-size:var(--font-md);font-weight:800}
 .exec-side{color:var(--mut);padding:4px 12px;border-radius:var(--radius-full);border:1px solid var(--line-soft);transition:all .2s}
 .exec-side.active{color:var(--bg);background:var(--grad);border-color:transparent;box-shadow:0 2px 10px color-mix(in srgb, var(--acc) 40%, transparent)}
@@ -492,6 +492,76 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .nav-btn{padding:6px var(--space-1)}
 .nav-btn svg{width:21px;height:21px}
 .nav-btn span{font-size:9.5px;letter-spacing:.1px;line-height:1.1;margin-top:1px}
+
+/* Сортировка упражнений */
+.training-actions-row .btn-move{
+  flex:0 0 auto;
+  min-width:30px;
+  padding:var(--space-2) var(--space-1);
+  font-size:13px;
+  font-weight:900;
+  color:var(--acc2);
+}
+
+/* Круговой блок */
+.exercise-item.round-block{
+  border-left:3px solid var(--acc);
+  background:color-mix(in srgb, var(--acc) 7%, var(--card));
+}
+.exec-round-count{
+  font-size:72px;
+  font-weight:900;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-3px;
+  margin:var(--space-2) 0 0;
+}
+.exec-round-lbl{
+  font-size:var(--font-xs);
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  font-weight:800;
+  color:var(--mut);
+  margin-bottom:var(--space-3);
+}
+.exec-round-list{
+  width:100%;
+  max-width:400px;
+  margin:var(--space-3) auto;
+  background:var(--card2);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:var(--space-2) var(--space-3);
+}
+.exec-round-ex{
+  display:flex;
+  justify-content:space-between;
+  gap:var(--space-2);
+  padding:var(--space-2) 0;
+  border-bottom:1px solid var(--line-soft);
+  font-size:var(--font-sm);
+  align-items:center;
+}
+.exec-round-ex:last-child{border-bottom:none}
+.exec-round-ex-name{
+  font-weight:700;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  flex:1;
+}
+.exec-round-ex-dose{
+  color:var(--mut);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  flex:0 0 auto;
+  font-size:var(--font-xs);
+}
 </style>
 </head>
 <body data-mode="dark">
@@ -905,6 +975,18 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <div class="modal">
     <h3 id="compModalTitle">Новый комплекс</h3>
     <div class="field-group"><label class="field-label">Название *</label><input class="field-input" id="cName"></div>
+    <div class="field-group">
+      <label class="field-label">Режим выполнения</label>
+      <div class="chip-row" id="cRoundModePick">
+        <div class="chip on" data-v="0" onclick="pickRoundMode(0)">📋 По подходам</div>
+        <div class="chip" data-v="1" onclick="pickRoundMode(1)">🔁 На количество кругов</div>
+      </div>
+    </div>
+    <div class="field-group" id="cRoundTimeGroup" style="display:none">
+      <label class="field-label">Время, мин</label>
+      <input class="field-input" type="number" id="cRoundTime" value="20" min="1" max="120">
+      <div class="note" style="margin-top:6px">💡 Запускается таймер. Атлет жмёт «Круг завершён» — круг считается. Пока таймер идёт — круги продолжаются.</div>
+    </div>
     <div class="section-title">Упражнения</div>
     <div id="cExList"><div class="empty" style="padding:8px">Пока пусто</div></div>
     <button class="btn btn-sm btn-full" style="margin-top:6px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
@@ -975,7 +1057,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     <div class="info-block"><h4>🎯 Зачем это</h4><p>Помогает <b>планировать</b> тренировки, <b>выполнять по шагам</b> и <b>видеть прогресс</b> — по каждой зоне, снаряду и навыку. Геймификация (XP, ранги, распад) держит мотивацию.</p></div>
     <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя и месяц одновременно</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• Изменения «на конкретный день» без правки шаблона</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
     <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p></div>
-    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку одним тапом — из шаблона или прямо в день календаря.</p></div>
+    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку одним тапом — из шаблона или прямо в день календаря.</p><p><b>Круговой режим:</b> при создании комплекса включите «На количество кругов» и задайте время (напр. 20 мин). Тогда в тренировке комплекс встанет блоком: атлет жмёт «Круг завершён» — круг считается, пока идёт таймер.</p><p><b>Сортировка:</b> в редакторе тренировки и комплекса упражнения можно двигать ↑ ↓.</p></div>
     <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
     <div class="info-block"><h4>🎯 Зоны тела</h4><p>13 главных + подзоны. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
     <div class="info-block"><h4>⭐ XP и ранги</h4><p>• Формулы: <code>сек×0.01</code> · <code>(вес/масса)×0.01×повт</code> · <code>повт×0.1</code></p><p>• Ранги: Новичок → Любитель → Атлет → Спортсмен → Мастер → Ветеран → Чемпион → Легенда</p><p>• Распад при простое: −0.1%/день (7+ дн) … −1%/день (60+ дн)</p></div>
@@ -995,11 +1077,18 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p><b>Создать:</b> «+ Тренировка». Заполни название, период (С/По), дни недели, время.</p>
       <p>Если период пустой — тренировка действует бессрочно.</p>
       <p>Упражнения: «+ Упражнение» (готовое) или «+ Комплекс» (набор).</p>
+      <p>Порядок упражнений можно менять кнопками ↑ ↓ в редакторе.</p>
     </div>
     <div class="info-block">
       <h4>✅ Выполнение</h4>
       <p>✓ — отметить сделанной. Только сегодня и в прошлое. Будущее под замком 🔒.</p>
       <p>▶ — запустить с таймером. В конце «Засчитать» ставит ✓ автоматически.</p>
+    </div>
+    <div class="info-block">
+      <h4>🔁 Круговой режим</h4>
+      <p>При создании комплекса переключите «На количество кругов» и задайте время (напр. 20 мин).</p>
+      <p>В тренировке такой комплекс встаёт блоком. В экране выполнения: жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз. По нулю блок закрывается автоматически.</p>
+      <p>XP = XP за 1 круг × число кругов. При отметке ✓ вручную спросит «Сколько кругов?».</p>
     </div>
     <div class="info-block">
       <h4>🎯 Зоны — главные и подзоны</h4>
@@ -1206,6 +1295,7 @@ function calcTrainXp(tr, override){
   const exs = (override && override.exercises) ? override.exercises : tr.exercises;
   let total = 0;
   exs.forEach(e => {
+    if(e.type === 'rounds') return;
     const ex = exercises.find(x => x.id === e.exId);
     if(!ex) return;
     const sets = +e.sets || 1, reps = +e.reps || 0, time = +e.time || 0, weight = +e.weight || 0;
@@ -1215,6 +1305,21 @@ function calcTrainXp(tr, override){
     else total += xpFromReps(reps)*sets*sidesMult;
   });
   return Math.round(total*100)/100;
+}
+
+function xpForOneRound(block){
+  if(!block) return 0;
+  const blockEx = block.blockEx || block.blockExMapped || [];
+  let xp = 0;
+  blockEx.forEach(be => {
+    const ex = exercises.find(x => x.id === be.exId);
+    if(!ex) return;
+    const sidesMult = ex.twoSides ? 2 : 1;
+    if(ex.format === 'time') xp += xpFromTime(+be.time || 0) * sidesMult;
+    else if(ex.format === 'weight') xp += xpFromWeight(+be.weight || 0, profile.weight||70, +be.reps || 0) * sidesMult;
+    else xp += xpFromReps(+be.reps || 0) * sidesMult;
+  });
+  return Math.round(xp * 100) / 100;
 }
 
 function ensureXpMaps(){
@@ -1236,6 +1341,7 @@ function distributeXpToSkills(tr, xp){
   if(!tr || !tr.exercises || !xp) return;
   const gS = new Set(), zS = new Set(), sS = new Set();
   tr.exercises.forEach(e => {
+    if(e.type === 'rounds') return;
     const ex = exercises.find(x => x.id === e.exId);
     if(!ex) return;
     (ex.gears||[]).forEach(g => gS.add(g));
@@ -1570,6 +1676,7 @@ function setTrainDone(date, trId, done, xpAwarded, exercisesSnapshot){
   }
   store.set('completions', completions);
 }
+
 function renderTrainings(){
   const dLabel = selectedDate.getDate()+' '+MONTHS_RU_GEN[selectedDate.getMonth()]+' '+selectedDate.getFullYear();
   const sdl = document.getElementById('selectedDateLabel'); if(sdl) sdl.textContent = dLabel;
@@ -1584,6 +1691,15 @@ function renderTrainings(){
     const xp = calcTrainXp(tr, eff);
     const exs = eff.exercises || [];
     const exListHtml = exs.map((e, idx) => {
+      if(e.type === 'rounds'){
+        const xpRound = xpForOneRound(e);
+        const buttons = isFuture ? '' : '<div class="training-actions-row"><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑</button></div>';
+        return '<div class="exercise-item round-block">'+
+          '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
+          '<div class="ex-item-tags"><span class="tag-mini">'+e.blockEx.length+' упражнений</span><span class="tag-mini">≈'+xpRound+' XP/круг</span></div>'+
+          buttons+
+        '</div>';
+      }
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
@@ -1641,15 +1757,29 @@ function toggleTrain(trainId){
   } else {
     const eff = getEffectiveTrain(tr, selectedDate);
     const exs = eff.exercises || [];
-    const xp = calcTrainXp(tr, eff);
+    let xp = calcTrainXp(tr, eff);
+    const roundsInfo = {};
+    exs.forEach((e, idx) => {
+      if(e.type === 'rounds'){
+        const r = parseInt(prompt('🔁 «'+e.name+'»:\nСколько кругов выполнили?', '0'), 10) || 0;
+        roundsInfo[idx] = r;
+        xp += xpForOneRound(e) * r;
+      }
+    });
+    xp = Math.round(xp * 100) / 100;
     setTrainDone(selectedDate, tr.id, true, xp, JSON.parse(JSON.stringify(exs)));
+    if(Object.keys(roundsInfo).length){
+      if(completions[key] && completions[key][tr.id]){
+        completions[key][tr.id].rounds = roundsInfo;
+        store.set('completions', completions);
+      }
+    }
     if(xp > 0) addXp(xp, tr.name, tr);
-    const newPRs = checkNewPRs(exs, key);
+    const regularExs = exs.filter(e => e.type !== 'rounds');
+    const newPRs = checkNewPRs(regularExs, key);
     if(newPRs.length > 0){
       setTimeout(() => {
-        newPRs.forEach((pr, i) => {
-          setTimeout(() => prFly(pr.exName, pr.display), i * 800);
-        });
+        newPRs.forEach((pr, i) => setTimeout(() => prFly(pr.exName, pr.display), i * 800));
       }, 500);
     }
   }
@@ -1963,6 +2093,14 @@ function saveEx(){
   editingExId = null;
 }
 
+function moveTempEx(t, i, dir){
+  const list = t === 'train' ? tempTrainEx : tempCompEx;
+  const j = i + dir;
+  if(j < 0 || j >= list.length) return;
+  const tmp = list[i]; list[i] = list[j]; list[j] = tmp;
+  if(t === 'train') renderTempTrainEx(); else renderTempCompEx();
+}
+
 function openTrainModal(trainId){
   editingTrainId = trainId || null;
   const el = (id) => document.getElementById(id);
@@ -1985,6 +2123,16 @@ function renderTempTrainEx(){
   const el = document.getElementById('tExList'); if(!el) return;
   if(!tempTrainEx.length){ el.innerHTML = '<div class="empty" style="padding:8px">Пока пусто</div>'; return; }
   el.innerHTML = tempTrainEx.map((e, idx) => {
+    if(e.type === 'rounds'){
+      return '<div class="exercise-item round-block">'+
+        '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
+        '<div style="font-size:10px;color:var(--mut);margin:3px 0">'+e.blockEx.length+' упражнений в круге</div>'+
+        '<div class="training-actions-row">'+
+          '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',-1)">↑</button>'+
+          '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',1)">↓</button>'+
+          '<button onclick="removeTempEx(\'train\','+idx+')">✕</button>'+
+        '</div></div>';
+    }
     const ex = exercises.find(x => x.id === e.exId);
     const isX = (v) => String(v).trim().toUpperCase() === 'X';
     const dosage = [];
@@ -1995,8 +2143,12 @@ function renderTempTrainEx(){
     if(ex && ex.twoSides) dosage.push('<span style="color:var(--acc2)">×2</span>');
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
-      '<div class="training-actions-row"><button onclick="openExConfig(\'train\','+idx+')">✏️</button><button onclick="removeTempEx(\'train\','+idx+')">✕</button></div>'+
-    '</div>';
+      '<div class="training-actions-row">'+
+        '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',-1)">↑</button>'+
+        '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',1)">↓</button>'+
+        '<button onclick="openExConfig(\'train\','+idx+')">✏️</button>'+
+        '<button onclick="removeTempEx(\'train\','+idx+')">✕</button>'+
+      '</div></div>';
   }).join('');
 }
 function removeTempEx(t, i){
@@ -2030,6 +2182,11 @@ function saveTrain(){
   editingTrainId = null;
 }
 
+function pickRoundMode(v){
+  document.querySelectorAll('#cRoundModePick .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === v));
+  const g = document.getElementById('cRoundTimeGroup');
+  if(g) g.style.display = v === 1 ? 'block' : 'none';
+}
 function openCompModal(compId){
   editingCompId = compId || null;
   const el = (id) => document.getElementById(id);
@@ -2037,6 +2194,8 @@ function openCompModal(compId){
   el('compModalTitle').textContent = c ? 'Изменить комплекс' : 'Новый комплекс';
   el('cName').value = c ? c.name : '';
   tempCompEx = c ? JSON.parse(JSON.stringify(c.exercises||[])) : [];
+  pickRoundMode(c && c.roundMode ? 1 : 0);
+  el('cRoundTime').value = c && c.roundTime ? c.roundTime : 20;
   renderTempCompEx();
   openModal('m-comp');
 }
@@ -2044,6 +2203,16 @@ function renderTempCompEx(){
   const el = document.getElementById('cExList'); if(!el) return;
   if(!tempCompEx.length){ el.innerHTML = '<div class="empty" style="padding:8px">Пока пусто</div>'; return; }
   el.innerHTML = tempCompEx.map((e, idx) => {
+    if(e.type === 'rounds'){
+      return '<div class="exercise-item round-block">'+
+        '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
+        '<div style="font-size:10px;color:var(--mut);margin:3px 0">'+e.blockEx.length+' упражнений в круге</div>'+
+        '<div class="training-actions-row">'+
+          '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',-1)">↑</button>'+
+          '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',1)">↓</button>'+
+          '<button onclick="removeTempEx(\'comp\','+idx+')">✕</button>'+
+        '</div></div>';
+    }
     const ex = exercises.find(x => x.id === e.exId);
     const isX = (v) => String(v).trim().toUpperCase() === 'X';
     const dosage = [];
@@ -2053,15 +2222,27 @@ function renderTempCompEx(){
     if(ex && ex.twoSides) dosage.push('<span style="color:var(--acc2)">×2</span>');
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
-      '<div class="training-actions-row"><button onclick="openExConfig(\'comp\','+idx+')">✏️</button><button onclick="removeTempEx(\'comp\','+idx+')">✕</button></div>'+
-    '</div>';
+      '<div class="training-actions-row">'+
+        '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',-1)">↑</button>'+
+        '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',1)">↓</button>'+
+        '<button onclick="openExConfig(\'comp\','+idx+')">✏️</button>'+
+        '<button onclick="removeTempEx(\'comp\','+idx+')">✕</button>'+
+      '</div></div>';
   }).join('');
 }
 function saveComp(){
   const name = document.getElementById('cName').value.trim();
   if(!name){ toast('Введи название'); return; }
-  const cData = {id: editingCompId || uid(), name,
-    exercises: JSON.parse(JSON.stringify(tempCompEx))};
+  const roundChip = document.querySelector('#cRoundModePick .chip.on');
+  const roundMode = roundChip && +roundChip.dataset.v === 1;
+  const roundTime = roundMode ? Math.max(1, parseInt(document.getElementById('cRoundTime').value, 10) || 20) : null;
+  const cData = {
+    id: editingCompId || uid(),
+    name,
+    exercises: JSON.parse(JSON.stringify(tempCompEx)),
+    roundMode,
+    roundTime
+  };
   if(editingCompId){
     const i = complexes.findIndex(c => c.id === editingCompId);
     if(i >= 0) complexes[i] = cData;
@@ -2170,16 +2351,23 @@ function openPickComp(target){
   if(!complexes.length){ el.innerHTML = '<div class="empty">Комплексов нет</div>'; }
   else {
     el.innerHTML = '<div class="ex-list">' + complexes.map(c => '<div class="ex-card" onclick="pickComplex(\''+c.id+'\')">'+
-      '<div class="ex-thumb">📋</div>'+
-      '<div class="ex-info"><div class="ex-name">'+c.name+'</div><div class="ex-desc">'+c.exercises.length+' упр</div></div>'+
+      '<div class="ex-thumb">'+(c.roundMode?'🔁':'📋')+'</div>'+
+      '<div class="ex-info"><div class="ex-name">'+escapeHtml(c.name)+'</div><div class="ex-desc">'+(c.roundMode ? '🔁 '+c.roundTime+' мин · '+c.exercises.length+' упр' : c.exercises.length+' упр')+'</div></div>'+
       '<div style="font-size:14px;color:var(--acc);font-weight:900">+</div></div>').join('') + '</div>';
   }
   openModal('m-pick-comp');
 }
 function pickComplex(compId){
   const c = complexes.find(x => x.id === compId); if(!c) return;
+  const blockData = c.roundMode ? {
+    type: 'rounds',
+    name: c.name,
+    blockEx: c.exercises.map(e => JSON.parse(JSON.stringify(e))),
+    time: (c.roundTime || 20) * 60
+  } : null;
   if(pickTarget === 'train'){
-    c.exercises.forEach(e => tempTrainEx.push(JSON.parse(JSON.stringify(e))));
+    if(blockData) tempTrainEx.push(blockData);
+    else c.exercises.forEach(e => tempTrainEx.push(JSON.parse(JSON.stringify(e))));
     renderTempTrainEx();
     closeModal('m-pick-comp'); toast('Добавлено');
   } else if(pickTarget === 'daycomp'){
@@ -2191,11 +2379,12 @@ function pickComplex(compId){
     if(!tr.dayOverrides[cfg.dayKey]){
       tr.dayOverrides[cfg.dayKey] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
     }
-    c.exercises.forEach(e => tr.dayOverrides[cfg.dayKey].exercises.push(JSON.parse(JSON.stringify(e))));
+    if(blockData) tr.dayOverrides[cfg.dayKey].exercises.push(blockData);
+    else c.exercises.forEach(e => tr.dayOverrides[cfg.dayKey].exercises.push(JSON.parse(JSON.stringify(e))));
     store.set('trainings', trainings);
     renderTrainings();
     closeModal('m-pick-comp');
-    toast('Комплекс «'+c.name+'» добавлен в этот день');
+    toast('Комплекс «'+c.name+'» добавлен'+(c.roundMode ? ' как круговая' : ''));
   }
 }
 
@@ -2238,8 +2427,8 @@ function renderCompsTab(){
       if(!ex) return '';
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
       const d = [];
-      if(e.sets) d.push((isX(e.sets)?'<span class="x">X</span>':e.sets) + ' подходов');
-      if(e.reps) d.push((isX(e.reps)?'<span class="x">X</span>':e.reps) + ' повторов');
+      if(e.sets) d.push((isX(e.sets)?'<span class="x">X</span>':e.sets) + ' подх.');
+      if(e.reps) d.push((isX(e.reps)?'<span class="x">X</span>':e.reps) + ' повт.');
       if(e.time) d.push((isX(e.time)?'<span class="x">X</span>':e.time) + ' сек');
       if(e.weight) d.push((isX(e.weight)?'<span class="x">X</span>':e.weight) + ' кг');
       if(e.rest) d.push('отдых ' + (isX(e.rest)?'<span class="x">X</span>':e.rest) + ' сек');
@@ -2252,7 +2441,7 @@ function renderCompsTab(){
     return '<div class="complex-card">'+
       '<div class="complex-head">'+
         '<div class="complex-name">'+escapeHtml(c.name)+'</div>'+
-        '<div class="complex-badge">'+c.exercises.length+' упр</div>'+
+        '<div class="complex-badge">'+(c.roundMode ? '🔁 '+c.roundTime+' мин' : c.exercises.length+' упр')+'</div>'+
       '</div>'+
       '<div class="complex-exercises">'+(exListHtml || '<div style="font-size:11px;color:var(--mut)">Пусто</div>')+'</div>'+
       '<div class="complex-actions">'+
@@ -2283,6 +2472,7 @@ function formatTimeSec(s){
 function checkNewPRs(trainExercises, dateStr){
   const newPRs = [];
   trainExercises.forEach(item => {
+    if(item.type === 'rounds') return;
     const realEx = exercises.find(e => e.id === item.exId);
     if(!realEx) return;
     const pr = prs[item.exId] || {};
@@ -2356,7 +2546,7 @@ function populateProgressSelect(){
     Object.keys(completions[dateStr]).forEach(trainId => {
       const comp = completions[dateStr][trainId];
       if(comp.done && comp.exercises){
-        comp.exercises.forEach(e => withHistory.add(e.exId));
+        comp.exercises.forEach(e => { if(e.exId) withHistory.add(e.exId); });
       }
     });
   });
@@ -2788,6 +2978,22 @@ function startTrainExecution(trainId){
   const eff = getEffectiveTrain(tr, selectedDate);
   if(!eff.exercises || !eff.exercises.length){ toast('Нет упражнений'); return; }
   const exs = eff.exercises.map(e => {
+    if(e.type === 'rounds'){
+      return {
+        type: 'rounds',
+        name: e.name,
+        time: e.time,
+        blockExMapped: (e.blockEx || []).map(be => {
+          const ex = exercises.find(x => x.id === be.exId);
+          return {
+            ...be,
+            exName: ex ? ex.name : '?',
+            exFormat: ex ? ex.format : 'reps',
+            twoSides: ex ? !!ex.twoSides : false
+          };
+        })
+      };
+    }
     const ex = exercises.find(x => x.id === e.exId);
     return {
       ...e,
@@ -2803,6 +3009,7 @@ function startTrainExecution(trainId){
     trainId, dateKey: isoDate(selectedDate), trainName: tr.name,
     exercises: JSON.parse(JSON.stringify(exs)),
     currentIndex: 0, currentSet: 1, currentSide: 1,
+    currentRounds: 0, roundTimer: null,
     completed: [],
     phase: 'idle',
     timer: { remaining: 0, total: 0, running: false, int: null }
@@ -2814,6 +3021,7 @@ function startTrainExecution(trainId){
 
 function closeExecScreen(){
   if(execState && execState.timer && execState.timer.int) clearInterval(execState.timer.int);
+  if(execState && execState.roundTimer && execState.roundTimer.int) clearInterval(execState.roundTimer.int);
   const ex = document.getElementById('execScreen');
   if(ex) ex.classList.remove('on');
   if(execState && execState.completed && execState.completed.length){
@@ -2838,6 +3046,60 @@ function renderExecScreen(){
   const item = execState.exercises[curIdx];
   if(!item){ finishExecution(); return; }
   if(progressTxt) progressTxt.textContent = (curIdx+1)+'/'+totalEx;
+
+  if(item.type === 'rounds'){
+    let planHtml = '<div class="exec-plan-list">';
+    execState.exercises.forEach((ex, idx) => {
+      let cls = 'exec-plan-item';
+      let icon = idx + 1;
+      if(idx < curIdx){ cls += ' done'; icon = '✓'; }
+      else if(idx === curIdx){ cls += ' active'; icon = '▶'; }
+      const label = ex.type === 'rounds' ? '🔁 ' + ex.name : ex.exName;
+      const dose = ex.type === 'rounds' ? Math.round(ex.time/60) + ' мин' : '';
+      planHtml += '<div class="'+cls+'">'+
+        '<div class="exec-plan-check">'+icon+'</div>'+
+        '<div class="exec-plan-name">'+label+'</div>'+
+        '<div class="exec-plan-dosage">'+dose+'</div>'+
+      '</div>';
+    });
+    planHtml += '</div>';
+    const rounds = execState.currentRounds || 0;
+    const running = execState.roundTimer && execState.roundTimer.running;
+    const remaining = execState.roundTimer ? Math.max(0, execState.roundTimer.remaining) : item.time;
+    body.innerHTML =
+      '<div class="exec-global-bar"><i style="width:'+Math.round(curIdx/totalEx*100)+'%"></i></div>'+
+      planHtml+
+      '<div class="exec-focus">'+
+        '<div class="exec-ex-number">Круговая '+(curIdx+1)+' из '+totalEx+'</div>'+
+        '<div class="exec-ex-name">'+item.name+'</div>'+
+        '<div class="exec-round-count">'+rounds+'</div>'+
+        '<div class="exec-round-lbl">'+(rounds === 1 ? 'круг' : rounds < 5 ? 'круга' : 'кругов')+'</div>'+
+        '<div class="exec-phase '+(running?'work':'')+'" style="margin-top:6px">'+(running ? '⏱ Таймер идёт' : 'Готов к старту')+'</div>'+
+        '<div class="exec-timer">'+fmt(remaining)+'</div>'+
+        '<div class="exec-round-list">'+
+          item.blockExMapped.map(be => {
+            const dose = [];
+            if(be.reps) dose.push(be.reps+' повт');
+            if(be.time) dose.push(be.time+' с');
+            if(be.weight) dose.push(be.weight+' кг');
+            if(be.twoSides) dose.push('×2');
+            if(!dose.length) dose.push('—');
+            return '<div class="exec-round-ex"><span class="exec-round-ex-name">'+be.exName+'</span><span class="exec-round-ex-dose">'+dose.join(' · ')+'</span></div>';
+          }).join('')+
+        '</div>'+
+      '</div>';
+    if(running){
+      footer.innerHTML =
+        '<button class="btn btn-primary exec-finish" onclick="roundComplete()" style="padding:var(--space-4);font-size:var(--font-lg)">✓ Круг завершён ('+(rounds+1)+')</button>'+
+        '<button class="btn btn-full" style="margin-top:8px" onclick="endRoundBlock(false)">Завершить круговую</button>';
+    } else if(rounds > 0){
+      footer.innerHTML =
+        '<button class="btn btn-primary exec-finish" onclick="endRoundBlock(false)">✓ Завершить ('+rounds+' '+(rounds===1?'круг':rounds<5?'круга':'кругов')+')</button>';
+    } else {
+      footer.innerHTML = '<button class="btn btn-primary exec-finish" onclick="startRoundBlock()">▶ Начать круги (⏱ '+Math.round(item.time/60)+' мин)</button>';
+    }
+    return;
+  }
 
   const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
   if(hasX && !item._xResolved){
@@ -2869,13 +3131,17 @@ function renderExecScreen(){
     if(idx < curIdx){ cls += ' done'; icon = '✓'; }
     else if(idx === curIdx){ cls += ' active'; icon = '▶'; }
     let dose = [];
-    if(ex.sets) dose.push(ex.sets + '×');
-    if(ex.reps) dose.push(ex.reps + 'повт');
-    if(ex.time) dose.push(ex.time + 'с');
-    if(ex.twoSides) dose.push('×2');
+    const label = ex.type === 'rounds' ? '🔁 '+ex.name : ex.exName;
+    if(ex.type === 'rounds'){ dose.push('🔁 '+Math.round(ex.time/60)+' мин'); }
+    else {
+      if(ex.sets) dose.push(ex.sets + '×');
+      if(ex.reps) dose.push(ex.reps + 'повт');
+      if(ex.time) dose.push(ex.time + 'с');
+      if(ex.twoSides) dose.push('×2');
+    }
     planHtml += '<div class="'+cls+'">'+
       '<div class="exec-plan-check">'+icon+'</div>'+
-      '<div class="exec-plan-name">'+ex.exName+'</div>'+
+      '<div class="exec-plan-name">'+label+'</div>'+
       '<div class="exec-plan-dosage">'+dose.join(' ')+'</div>'+
     '</div>';
   });
@@ -2965,13 +3231,62 @@ function applyXForm(){
   renderExecScreen();
 }
 
+function startRoundBlock(){
+  const item = execState.exercises[execState.currentIndex];
+  if(!item || item.type !== 'rounds') return;
+  if(execState.roundTimer && execState.roundTimer.int) clearInterval(execState.roundTimer.int);
+  execState.currentRounds = 0;
+  execState.roundTimer = { remaining: item.time, total: item.time, running: true, int: null };
+  execState.roundTimer.int = setInterval(() => {
+    if(!execState.roundTimer) return;
+    if(execState.roundTimer.remaining > 0){
+      execState.roundTimer.remaining--;
+      const disp = document.querySelector('.exec-timer');
+      if(disp) disp.textContent = fmt(execState.roundTimer.remaining);
+      if(execState.roundTimer.remaining <= 0){
+        clearInterval(execState.roundTimer.int);
+        execState.roundTimer.running = false;
+        beep(880, .6);
+        if(navigator.vibrate) navigator.vibrate([300, 150, 300]);
+        setTimeout(() => endRoundBlock(true), 500);
+      }
+    }
+  }, 1000);
+  renderExecScreen();
+}
+function roundComplete(){
+  if(!execState || execState.currentIndex == null) return;
+  execState.currentRounds = (execState.currentRounds || 0) + 1;
+  beep(660, .15);
+  if(navigator.vibrate) navigator.vibrate(40);
+  renderExecScreen();
+}
+function endRoundBlock(auto){
+  if(!execState) return;
+  if(execState.roundTimer && execState.roundTimer.int){ clearInterval(execState.roundTimer.int); }
+  const item = execState.exercises[execState.currentIndex];
+  if(!item) return;
+  const rounds = execState.currentRounds || 0;
+  if(!auto){
+    if(!confirm('Завершить круговую?\nКругов выполнено: ' + rounds)) return;
+  }
+  execState.roundTimer = null;
+  execState.currentRounds = 0;
+  execState.completed.push({ exIdx: execState.currentIndex, type: 'rounds', rounds: rounds });
+  if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
+  execState.currentIndex++;
+  execState.currentSet = 1;
+  execState.currentSide = 1;
+  execState.phase = 'idle';
+  renderExecScreen();
+}
+
 function execStartWork(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
   execState.phase = 'work';
   startExecPhase('work', +item.time || 0);
 }
-
 function startExecPhase(phase, seconds){
   if(execState.timer.int) clearInterval(execState.timer.int);
   execState.phase = phase;
@@ -2994,27 +3309,23 @@ function startExecPhase(phase, seconds){
   }
   renderExecScreen();
 }
-
 function toggleExecTimer(){
   if(execState.timer.running){ clearInterval(execState.timer.int); execState.timer.running = false; }
   else { startExecPhase(execState.phase, execState.timer.remaining); return; }
   renderExecScreen();
 }
-
 function execFinishSet(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
   if(execState.timer.int) clearInterval(execState.timer.int);
   const twoSides = !!item.twoSides;
   const totalSets = +item.sets || 1;
-
   if(twoSides && execState.currentSide === 1){
     execState.currentSide = 2;
     if(+item.rest > 0){ startExecPhase('rest', +item.rest); }
     else { startExecPhase('work', +item.time || 0); }
     return;
   }
-
   if(execState.currentSet >= totalSets){
     execState.completed.push({
       exIdx: execState.currentIndex,
@@ -3038,14 +3349,12 @@ function execFinishSet(){
     else { startExecPhase('work', +item.time || 0); }
   }
 }
-
 function execSkipRest(){
   if(execState.timer.int) clearInterval(execState.timer.int);
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
   startExecPhase('work', +item.time || 0);
 }
-
 function execSkipExercise(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
@@ -3064,11 +3373,17 @@ function execSkipExercise(){
 
 function finishExecution(){
   if(execState.timer.int) clearInterval(execState.timer.int);
+  if(execState.roundTimer && execState.roundTimer.int) clearInterval(execState.roundTimer.int);
   const body = document.getElementById('execBody');
   const footer = document.getElementById('execFooter');
   const progressTxt = document.getElementById('execProgressTxt');
   let xp = 0;
   execState.completed.forEach(c => {
+    if(c.type === 'rounds'){
+      const block = execState.exercises[c.exIdx];
+      xp += xpForOneRound(block) * (c.rounds || 0);
+      return;
+    }
     const ex = exercises.find(x => x.id === execState.exercises[c.exIdx].exId);
     if(!ex) return;
     const sidesMult = ex.twoSides ? 2 : 1;
@@ -3098,8 +3413,20 @@ function confirmFinishExecution(xp){
   const date = new Date(dateKey);
   const exs = getEffectiveTrain(tr, date).exercises || [];
   setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(exs)));
+  const roundsInfo = {};
+  execState.completed.forEach(c => {
+    if(c.type === 'rounds') roundsInfo[c.exIdx] = c.rounds;
+  });
+  if(Object.keys(roundsInfo).length){
+    const key = isoDate(date);
+    if(completions[key] && completions[key][tr.id]){
+      completions[key][tr.id].rounds = roundsInfo;
+      store.set('completions', completions);
+    }
+  }
   addXp(xp, tr.name, tr);
-  const newPRs = checkNewPRs(exs, dateKey);
+  const regularExs = exs.filter(e => e.type !== 'rounds');
+  const newPRs = checkNewPRs(regularExs, dateKey);
   if(newPRs.length > 0){
     setTimeout(() => {
       newPRs.forEach((pr, i) => setTimeout(() => prFly(pr.exName, pr.display), i * 800));
@@ -3124,7 +3451,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'AS-Fit', version:13, exported:new Date().toISOString(),
+  return {app:'AS-Fit', version:14, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
