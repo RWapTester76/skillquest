@@ -300,21 +300,16 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .weight-stat-l{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700;}
 .weight-stat-v{font-size:var(--font-lg);font-weight:900;color:var(--acc2);margin-top:2px;}
 
-/* ============ NEW EXECUTION SCREEN ============ */
+/* EXECUTION SCREEN */
 .exec-screen{position:fixed;inset:0;background:var(--bg);z-index:150;display:none;flex-direction:column;overflow-y:auto;}
 .exec-screen.on{display:flex}
 .exec-header{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;z-index:5;}
 .exec-close{width:32px;height:32px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:14px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
 .exec-title{flex:1;font-size:var(--font-md);font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .exec-progress{font-size:var(--font-xs);color:var(--mut);font-variant-numeric:tabular-nums;font-weight:800;}
-
 .exec-body{padding:var(--space-4);flex:1;max-width:600px;margin:0 auto;width:100%;display:flex;flex-direction:column;}
-
-/* Global Progress Bar */
 .exec-global-bar{height:4px;background:var(--line-soft);border-radius:var(--radius-full);margin-bottom:var(--space-4);overflow:hidden;}
 .exec-global-bar i{display:block;height:100%;background:var(--acc);transition:width .3s;}
-
-/* Workout Plan List */
 .exec-plan-list{background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-2);margin-bottom:var(--space-4);display:flex;flex-direction:column;gap:var(--space-1);}
 .exec-plan-item{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);font-size:var(--font-sm);color:var(--mut);transition:all .2s;}
 .exec-plan-item.done{opacity:.5;}
@@ -325,30 +320,23 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .exec-plan-item.active .exec-plan-check{border-color:var(--acc);color:var(--acc);}
 .exec-plan-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .exec-plan-dosage{font-size:var(--font-xs);opacity:.8;flex:0 0 auto;}
-
-/* Current Exercise Focus */
 .exec-focus{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--space-4) 0;}
 .exec-ex-number{font-size:var(--font-sm);color:var(--mut);text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:var(--space-1);}
 .exec-ex-name{font-size:24px;font-weight:900;margin-bottom:var(--space-3);line-height:1.2;}
-
-/* Visual Sets/Rounds Dots */
 .exec-dots{display:flex;gap:var(--space-2);justify-content:center;flex-wrap:wrap;margin-bottom:var(--space-4);}
 .exec-dot{width:14px;height:14px;border-radius:50%;background:var(--card2);border:2px solid var(--line);transition:all .2s;}
 .exec-dot.done{background:var(--acc);border-color:var(--acc);box-shadow:0 0 10px color-mix(in srgb, var(--acc) 50%, transparent);}
 .exec-dot.active{border-color:var(--acc);background:color-mix(in srgb, var(--acc) 20%, transparent);animation:pulse 1.5s infinite;}
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--acc) 40%, transparent);}70%{box-shadow:0 0 0 6px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
-
 .exec-phase{font-size:var(--font-sm);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--mut);margin-bottom:var(--space-2);}
 .exec-phase.work{color:var(--acc)}
 .exec-phase.rest{color:var(--ok)}
 .exec-timer{font-size:72px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;margin:var(--space-2) 0 var(--space-3);font-variant-numeric:tabular-nums;letter-spacing:-2px;}
-
 .exec-dosage{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-3);width:100%;max-width:400px;margin-bottom:var(--space-4);}
 .exec-dosage-row{display:flex;justify-content:space-around;flex-wrap:wrap;gap:var(--space-3);}
 .exec-dosage-item{display:flex;flex-direction:column;align-items:center;}
 .exec-dosage-item .lbl{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700;}
 .exec-dosage-item .val{font-size:var(--font-xl);font-weight:900;color:var(--acc2);margin-top:2px;}
-
 .exec-footer{padding:var(--space-3);background:var(--bg2);border-top:1px solid var(--line);max-width:600px;margin:0 auto;width:100%;position:sticky;bottom:0;}
 .exec-finish{width:100%;padding:var(--space-4);border-radius:var(--radius);border:none;background:var(--grad);color:var(--bg);font-size:var(--font-lg);font-weight:900;box-shadow:0 4px 16px color-mix(in srgb, var(--acc) 40%, transparent);}
 .exec-controls{display:flex;gap:var(--space-2);margin-top:var(--space-3);}
@@ -377,7 +365,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .xp-fly{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:var(--grad);color:var(--bg);font-weight:900;font-size:var(--font-lg);padding:var(--space-2) var(--space-4);border-radius:var(--radius);z-index:300;pointer-events:none;animation:xpfly 1.4s ease;box-shadow:var(--shadow-lg);}
 @keyframes xpfly{0%{opacity:0;transform:translateX(-50%) translateY(20px) scale(.6)}20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.1)}60%{opacity:1;transform:translateX(-50%) translateY(-10px) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-60px) scale(.9)}}
 .pr-fly{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.5);background:linear-gradient(135deg,#ffd700,#ff9500);color:#1a1a1a;font-weight:900;font-size:var(--font-md);padding:var(--space-4) var(--space-5);border-radius:var(--radius-lg);z-index:400;pointer-events:none;animation:prfly 2.4s cubic-bezier(.2,.9,.3,1.2);opacity:0;text-align:center;box-shadow:0 12px 40px rgba(255,200,0,.5);border:2px solid rgba(255,255,255,.3);max-width:80vw;}
-@keyframes prfly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-60%) scale(.9)}}
+@keyframes prfly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-60%,-60%) scale(.9)}}
 
 .note{font-size:var(--font-sm);color:var(--mut);line-height:1.5;padding:var(--space-2) var(--space-3);background:var(--card2);border-radius:var(--radius-sm);border-left:2px solid var(--acc2);margin-top:var(--space-2);}
 .note b{color:var(--acc2)}
@@ -409,6 +397,101 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .nav-btn svg{width:18px;height:18px}
   .theme-tile .name{font-size:8px}
 }
+
+/* ============ XP / STATS — ИНФОРМАТИВНЫЙ МИНИМАЛИЗМ ============ */
+.character-card,.progress-section{
+  background:color-mix(in srgb, var(--card) 75%, transparent);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-3);
+}
+.character-title{font-size:var(--font-xs);font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);margin-bottom:var(--space-2);display:flex;align-items:center;gap:6px}
+.character-svg{width:100%;height:240px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius);margin-bottom:var(--space-3);background:radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--acc) 6%, transparent), transparent 70%)}
+.character-svg svg{height:100%;width:auto}
+.character-legend{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.legend-item{display:inline-flex;align-items:center;gap:4px;font-size:var(--font-xs);color:var(--mut);background:color-mix(in srgb, var(--card2) 60%, transparent);padding:3px 8px;border-radius:var(--radius-full);border:1px solid var(--line-soft);font-weight:700}
+.legend-dot{width:6px;height:6px;border-radius:50%;flex:0 0 auto}
+
+.xp-hero{
+  background:linear-gradient(135deg, color-mix(in srgb, var(--acc) 10%, var(--card)), color-mix(in srgb, var(--acc2) 6%, var(--card)));
+  border:1px solid color-mix(in srgb, var(--acc) 28%, var(--line-soft));
+  border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-3);
+}
+.xp-hero-main{display:flex;align-items:center;gap:var(--space-4)}
+.xp-hero-level{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:var(--grad);color:var(--bg);flex:0 0 auto;box-shadow:0 4px 16px color-mix(in srgb, var(--acc) 40%, transparent)}
+.xp-hero-level .num{font-size:24px;font-weight:900;line-height:1;letter-spacing:-1px}
+.xp-hero-level .lbl{font-size:8px;font-weight:800;letter-spacing:1px;margin-top:1px;opacity:.85}
+.xp-hero-meta{flex:1;min-width:0}
+.xp-hero-rank{font-size:var(--font-lg);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.xp-hero-total{font-size:var(--font-sm);color:var(--mut);margin:2px 0 var(--space-2);font-variant-numeric:tabular-nums}
+.xp-hero-total b{color:var(--txt);font-weight:800}
+.xp-hero-bar{height:6px;background:color-mix(in srgb, var(--line-soft) 70%, transparent);border-radius:var(--radius-full);overflow:hidden}
+.xp-hero-bar i{display:block;height:100%;background:var(--grad);border-radius:var(--radius-full);transition:width .5s}
+.xp-hero-formula{margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid color-mix(in srgb, var(--acc) 18%, var(--line-soft));font-size:var(--font-xs);color:var(--mut);line-height:1.7}
+.xp-hero-formula b{color:var(--txt)}
+.xp-hero-formula code{background:color-mix(in srgb, var(--card2) 80%, transparent);padding:1px 5px;border-radius:4px;font-family:ui-monospace,monospace;font-size:var(--font-xs);color:var(--acc2);border:1px solid var(--line-soft)}
+
+.progress-section h3{font-size:var(--font-xs);font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);margin-bottom:var(--space-3);display:flex;align-items:center;gap:6px}
+.progress-ex-select{width:100%;padding:var(--space-3);border-radius:var(--radius);border:1px solid var(--line);background:color-mix(in srgb, var(--card2) 70%, transparent);color:var(--txt);font-size:var(--font-md);outline:none;margin-bottom:var(--space-3);-webkit-appearance:none;appearance:none;cursor:pointer}
+.progress-ex-select:focus{border-color:var(--acc)}
+.metric-tabs{display:flex;gap:2px;background:color-mix(in srgb, var(--card2) 60%, transparent);border-radius:var(--radius);padding:3px;margin-bottom:var(--space-3);border:1px solid var(--line-soft)}
+.metric-tab{flex:1;padding:var(--space-2);text-align:center;font-size:var(--font-sm);font-weight:700;color:var(--mut);border-radius:calc(var(--radius) - 3px);cursor:pointer;transition:all .15s;user-select:none}
+.metric-tab:active{transform:scale(.97)}
+.metric-tab.active{background:var(--grad);color:var(--bg);box-shadow:0 2px 8px color-mix(in srgb, var(--acc) 30%, transparent)}
+.progress-canvas{width:100%;height:200px;background:color-mix(in srgb, var(--card2) 50%, transparent);border-radius:var(--radius);display:block;margin-bottom:var(--space-2);border:1px solid var(--line-soft)}
+.progress-hint{font-size:var(--font-sm);color:var(--mut);text-align:center;padding:var(--space-2);line-height:1.5}
+
+.pr-list{display:flex;flex-direction:column;gap:var(--space-2);margin-bottom:var(--space-3)}
+.pr-item{display:flex;justify-content:space-between;align-items:center;padding:var(--space-2) var(--space-3);background:linear-gradient(90deg, color-mix(in srgb, var(--acc2) 10%, var(--card2)), color-mix(in srgb, var(--card2) 70%, transparent));border:1px solid color-mix(in srgb, var(--acc2) 25%, var(--line-soft));border-radius:var(--radius-sm);border-left:2px solid var(--acc2)}
+.pr-item-lbl{font-size:var(--font-sm);font-weight:800;color:var(--acc2)}
+.pr-item-date{font-size:var(--font-xs);color:var(--mut);margin-top:1px}
+.pr-item-val{font-size:var(--font-md);font-weight:900;color:var(--txt);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.skill-list{display:flex;flex-direction:column;gap:var(--space-2)}
+.skill-item{background:color-mix(in srgb, var(--card2) 55%, transparent);border:1px solid var(--line-soft);border-radius:var(--radius);padding:var(--space-3)}
+.skill-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);margin-bottom:var(--space-2)}
+.skill-name{font-size:var(--font-md);font-weight:700;display:flex;align-items:center;gap:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.skill-lvl{font-size:var(--font-xs);font-weight:900;color:var(--bg);background:var(--grad);padding:2px var(--space-2);border-radius:var(--radius-full);white-space:nowrap;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.skill-bar{height:4px;background:color-mix(in srgb, var(--line-soft) 70%, transparent);border-radius:var(--radius-full);overflow:hidden;margin-bottom:var(--space-2)}
+.skill-bar i{display:block;height:100%;background:var(--grad);border-radius:var(--radius-full);transition:width .4s}
+.skill-meta{display:flex;justify-content:space-between;align-items:center;font-size:var(--font-xs);color:var(--mut);gap:var(--space-2)}
+.skill-xp{font-weight:800;color:var(--acc2);font-variant-numeric:tabular-nums}
+.decay-fresh{color:var(--ok);font-weight:700}
+.decay-warn{color:var(--acc2);font-weight:700}
+.decay-warn2{color:#f59e0b;font-weight:700}
+.decay-bad{color:#f97316;font-weight:700}
+.decay-bad2{color:var(--danger);font-weight:700}
+.decay-cold{color:var(--mut);font-weight:600}
+.skill-subzones{margin-top:var(--space-2);padding-top:var(--space-2);border-top:1px dashed var(--line-soft);display:flex;flex-direction:column;gap:3px}
+.subzone-row{display:flex;justify-content:space-between;align-items:center;font-size:var(--font-xs);padding:2px 0;color:var(--mut)}
+.subzone-row.weak .sub-name{color:var(--acc2)}
+.sub-name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sub-lvl{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.warn-ico{color:var(--acc2);font-size:var(--font-xs)}
+
+.xp-log{display:flex;flex-direction:column;gap:1px;max-height:340px;overflow-y:auto}
+.xp-log-item{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);font-size:var(--font-sm);background:color-mix(in srgb, var(--card2) 45%, transparent)}
+.xp-log-date{font-size:var(--font-xs);color:var(--mut);font-variant-numeric:tabular-nums;min-width:36px;flex:0 0 auto}
+.xp-log-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--txt);font-weight:600}
+.xp-log-xp{font-weight:900;font-variant-numeric:tabular-nums;font-size:var(--font-sm)}
+.xp-log-xp.pos{color:var(--ok)}
+.xp-log-xp.neg{color:var(--danger)}
+
+.stats-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-2)}
+.stat-mini{background:color-mix(in srgb, var(--card2) 55%, transparent);border:1px solid var(--line-soft);border-radius:var(--radius);padding:var(--space-3);text-align:center}
+.stat-mini-val{font-size:var(--font-xl);font-weight:900;color:var(--acc2);font-variant-numeric:tabular-nums}
+.stat-mini-lbl{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-top:2px}
+
+/* Двухсторонние упражнения в экране выполнения */
+.exec-side-indicator{display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin:var(--space-2) 0 var(--space-3);font-size:var(--font-md);font-weight:800}
+.exec-side{color:var(--mut);padding:4px 12px;border-radius:var(--radius-full);border:1px solid var(--line-soft);transition:all .2s}
+.exec-side.active{color:var(--bg);background:var(--grad);border-color:transparent;box-shadow:0 2px 10px color-mix(in srgb, var(--acc) 40%, transparent)}
+.exec-side-sep{color:var(--mut);opacity:.4}
+.tag-sides{color:var(--acc2);background:color-mix(in srgb, var(--acc2) 14%, transparent);border-color:color-mix(in srgb, var(--acc2) 35%, transparent);font-weight:800}
+
+/* Nav — выравнивание */
+.nav-btn{padding:6px var(--space-1)}
+.nav-btn svg{width:21px;height:21px}
+.nav-btn span{font-size:9.5px;letter-spacing:.1px;line-height:1.1;margin-top:1px}
 </style>
 </head>
 <body data-mode="dark">
@@ -574,7 +657,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
         </div>
         <div class="xp-hero-meta">
           <div class="xp-hero-rank" id="xpRank">Новичок</div>
-          <div class="xp-hero-total"><b id="xpTotal">0</b> XP · до <b id="xpToNext">1</b></div>
+          <div class="xp-hero-total"><b id="xpTotal">0</b> XP · до следующего <b id="xpToNext">1</b></div>
           <div class="xp-hero-bar"><i id="xpBar" style="width:0%"></i></div>
         </div>
       </div>
@@ -659,6 +742,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
           <input class="field-input" id="inWeight" type="number">
         </div>
       </div>
+      <div class="note" style="margin-bottom:8px">💡 Масса синхронизируется с последней записью в журнале веса</div>
       <button class="btn btn-primary btn-full" onclick="saveProfile()">Сохранить</button>
     </div>
 
@@ -683,7 +767,8 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
     <div class="card">
       <div class="card-title"><div class="card-title-left">ℹ️ Справка</div></div>
-      <button class="btn btn-primary btn-full" onclick="openModal('m-info')">📖 Как пользоваться</button>
+      <button class="btn btn-primary btn-full" style="margin-bottom:6px" onclick="openModal('m-about')">✨ Возможности приложения</button>
+      <button class="btn btn-full" onclick="openModal('m-info')">📖 Как пользоваться</button>
     </div>
 
     <div class="card">
@@ -707,8 +792,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <button class="nav-btn" data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg><span>XP</span></button>
   <button class="nav-btn" data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg><span>Профиль</span></button>
 </nav>
-
-<!-- ============ НОВЫЙ ЭКРАН ВЫПОЛНЕНИЯ ============ -->
+<!-- ============ ЭКРАН ВЫПОЛНЕНИЯ ============ -->
 <div class="exec-screen" id="execScreen">
   <div class="exec-header">
     <button class="exec-close" onclick="closeExecScreen()">✕</button>
@@ -719,7 +803,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <div class="exec-footer" id="execFooter"></div>
 </div>
 
-<!-- Модалки -->
+<!-- МОДАЛКИ -->
 <div class="modal-overlay" id="m-weight" onclick="if(event.target===this)closeModal('m-weight')">
   <div class="modal">
     <h3>⚖️ Журнал веса</h3>
@@ -752,6 +836,13 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     <div class="field-group"><label class="field-label">Зоны</label><div id="exZonesPick"></div></div>
     <div class="field-group"><label class="field-label">Снаряды</label><div class="chip-row" id="exGearsPick"></div></div>
     <div class="field-group"><label class="field-label">Навыки</label><div class="chip-row" id="exSkillsPick"></div></div>
+    <div class="field-group">
+      <label class="field-label">Стороны тела</label>
+      <div class="chip-row" id="exTwoSidesPick">
+        <div class="chip on" data-v="1" onclick="pickTwoSides(1)">Одна сторона</div>
+        <div class="chip" data-v="2" onclick="pickTwoSides(2)">Две стороны (×2)</div>
+      </div>
+    </div>
     <div class="field-group">
       <label class="field-label">Формат XP</label>
       <select class="field-input" id="exFormat">
@@ -873,6 +964,29 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <div class="modal"><div id="mediaViewer"></div><button class="modal-close" onclick="closeModal('m-media')">Закрыть</button></div>
 </div>
 
+<div class="modal-overlay" id="m-about" onclick="if(event.target===this)closeModal('m-about')">
+  <div class="modal">
+    <h3>📱 О приложении</h3>
+    <div style="text-align:center;padding:6px 0 16px">
+      <div style="font-size:52px;line-height:1;margin-bottom:8px">💪</div>
+      <div style="font-size:17px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.3px">АС — Фитнес</div>
+      <div style="font-size:12px;color:var(--mut);margin-top:4px">Личный трекер тренировок с геймификацией</div>
+    </div>
+    <div class="info-block"><h4>🎯 Зачем это</h4><p>Помогает <b>планировать</b> тренировки, <b>выполнять по шагам</b> и <b>видеть прогресс</b> — по каждой зоне, снаряду и навыку. Геймификация (XP, ранги, распад) держит мотивацию.</p></div>
+    <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя и месяц одновременно</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• Изменения «на конкретный день» без правки шаблона</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
+    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p></div>
+    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку одним тапом — из шаблона или прямо в день календаря.</p></div>
+    <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
+    <div class="info-block"><h4>🎯 Зоны тела</h4><p>13 главных + подзоны. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
+    <div class="info-block"><h4>⭐ XP и ранги</h4><p>• Формулы: <code>сек×0.01</code> · <code>(вес/масса)×0.01×повт</code> · <code>повт×0.1</code></p><p>• Ранги: Новичок → Любитель → Атлет → Спортсмен → Мастер → Ветеран → Чемпион → Легенда</p><p>• Распад при простое: −0.1%/день (7+ дн) … −1%/день (60+ дн)</p></div>
+    <div class="info-block"><h4>🏆 Личные рекорды</h4><p>Автодетект при отметке. Побил — золотой баннер.</p></div>
+    <div class="info-block"><h4>📊 Аналитика</h4><p>Графики вес/объём/повторы/время, персонаж, отдельно снаряды/зоны/навыки.</p></div>
+    <div class="info-block"><h4>⚖️ Журнал веса</h4><p>Запись по датам, график, мин/макс. <b>Профиль берёт массу из последней записи.</b></p></div>
+    <div class="info-block"><h4>💾 Данные</h4><p>localStorage. Экспорт/импорт JSON, Share, буфер. Резервная копия — раз в неделю.</p></div>
+    <button class="modal-close" onclick="closeModal('m-about')">Понятно</button>
+  </div>
+</div>
+
 <div class="modal-overlay" id="m-info" onclick="if(event.target===this)closeModal('m-info')">
   <div class="modal">
     <h3>📖 Как пользоваться</h3>
@@ -899,6 +1013,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <h4>💪 Упражнения</h4>
       <p>Мульти-теги: несколько зон/снарядов/навыков. Медиа: несколько фото + видео + ссылка.</p>
       <p>⏱ Время: XP = сек × 0.01 · 🏋️ Вес: (вес/масса) × 0.01 × повторы · 💪 Свой: повторы × 0.1</p>
+      <p><b>Две стороны:</b> если упражнение на каждую руку/ногу — включи «Две стороны», XP ×2, в выполнении будет «Сторона 1 / Сторона 2».</p>
     </div>
     <div class="info-block">
       <h4>🏆 Личные рекорды (PR)</h4>
@@ -1032,6 +1147,12 @@ let prs = store.get('prs', {});
 let progressMetric = 'weight';
 let starterInstalled = store.get('starterInstalled', false);
 
+// ⭐ Синхронизация массы профиля с последней записью журнала
+if(weightLog.length > 0){
+  profile.weight = weightLog[weightLog.length - 1].value;
+  store.set('profile', profile);
+}
+
 let editingExId = null, editingTrainId = null, editingCompId = null;
 let tempTrainEx = [], tempCompEx = [];
 let pickTarget = null, exConfigTarget = null;
@@ -1079,6 +1200,7 @@ function getZoneTotalXp(id){
 function xpFromTime(s){ return Math.round(s*0.01*100)/100; }
 function xpFromWeight(w,bw,r){ if(!bw||bw<=0) bw=70; return Math.round((w/bw)*0.01*r*100)/100; }
 function xpFromReps(r){ return Math.round(r*0.1*100)/100; }
+
 function calcTrainXp(tr, override){
   if(!tr || !tr.exercises) return 0;
   const exs = (override && override.exercises) ? override.exercises : tr.exercises;
@@ -1087,9 +1209,10 @@ function calcTrainXp(tr, override){
     const ex = exercises.find(x => x.id === e.exId);
     if(!ex) return;
     const sets = +e.sets || 1, reps = +e.reps || 0, time = +e.time || 0, weight = +e.weight || 0;
-    if(ex.format === 'time') total += xpFromTime(time)*sets;
-    else if(ex.format === 'weight') total += xpFromWeight(weight, profile.weight||70, reps)*sets;
-    else total += xpFromReps(reps)*sets;
+    const sidesMult = ex.twoSides ? 2 : 1;
+    if(ex.format === 'time') total += xpFromTime(time)*sets*sidesMult;
+    else if(ex.format === 'weight') total += xpFromWeight(weight, profile.weight||70, reps)*sets*sidesMult;
+    else total += xpFromReps(reps)*sets*sidesMult;
   });
   return Math.round(total*100)/100;
 }
@@ -1264,9 +1387,23 @@ function removeAvatar(){
   if(confirm('Убрать?')){ profile.avatar=null; store.set('profile', profile); applyAvatar(); toast('Убрана'); }
 }
 function saveProfile(){
+  const newWeight = +document.getElementById('inWeight').value || 0;
   profile.name = document.getElementById('inName').value.trim() || 'Безымянный';
   profile.age = +document.getElementById('inAge').value || 0;
-  profile.weight = +document.getElementById('inWeight').value || 0;
+  if(newWeight > 0){
+    const lastLog = weightLog.length > 0 ? weightLog[weightLog.length - 1] : null;
+    if(!lastLog || lastLog.value !== newWeight){
+      const today = isoDate(TODAY);
+      const idx = weightLog.findIndex(w => w.date === today);
+      if(idx >= 0) weightLog[idx].value = newWeight;
+      else weightLog.push({date: today, value: newWeight});
+      weightLog.sort((a,b) => a.date.localeCompare(b.date));
+      store.set('weightLog', weightLog);
+    }
+    profile.weight = newWeight;
+  } else if(weightLog.length > 0){
+    profile.weight = weightLog[weightLog.length - 1].value;
+  }
   store.set('profile', profile); applyAvatar(); toast('Сохранено');
 }
 
@@ -1459,9 +1596,10 @@ function renderTrainings(){
       if(e.time) dosage.push(isX(e.time)?'<span class="x-mark">X</span>с':e.time+'с');
       if(e.weight) dosage.push(isX(e.weight)?'<span class="x-mark">X</span> кг':e.weight+' кг');
       if(e.rest) dosage.push(isX(e.rest)?'отдых <span class="x-mark">X</span>':e.rest+'с');
+      const sidesTag = ex.twoSides ? '<span class="tag-mini tag-sides">×2 стороны</span>' : '';
       return '<div class="exercise-item">'+
         '<div class="ex-item-head"><div class="ex-item-name">'+ex.name+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
-        '<div class="ex-item-tags">'+(zE?'<span class="tag-mini">'+zE+'</span>':'')+(gE?'<span class="tag-mini">'+gE+'</span>':'')+(sE?'<span class="tag-mini">'+sE+'</span>':'')+'</div>'+
+        '<div class="ex-item-tags">'+sidesTag+(zE?'<span class="tag-mini">'+zE+'</span>':'')+(gE?'<span class="tag-mini">'+gE+'</span>':'')+(sE?'<span class="tag-mini">'+sE+'</span>':'')+'</div>'+
         (isFuture ? '' : '<div class="training-actions-row"><button onclick="editDayOverride(\''+tr.id+'\','+idx+')">✏️</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑</button></div>')+
       '</div>';
     }).join('');
@@ -1482,7 +1620,7 @@ function renderTrainings(){
         '<div class="training-actions">'+actionsHtml+'</div>'+
       '</div>'+
       '<div class="training-body">'+(exListHtml||'<div class="empty" style="padding:6px;font-size:11px">Нет упражнений</div>')+
-        (isFuture ? '' : '<div class="training-actions-row"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️ Настроить</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упр</button></div>')+
+        (isFuture ? '' : '<div class="training-actions-row"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упр</button><button onclick="addCompToDay(\''+tr.id+'\')">+ Комплекс</button></div>')+
       '</div></div>';
   }).join('');
 }
@@ -1551,6 +1689,16 @@ function addExToDay(trainId){
   pickTarget = 'day';
   exConfigTarget = {type:'newInDay', trainId, dayKey:key};
   openModal('m-pick-ex'); renderPickEx();
+}
+function addCompToDay(trainId){
+  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  if(!complexes.length){
+    toast('Нет комплексов — создайте в разделе «Комплексы»');
+    return;
+  }
+  pickTarget = 'daycomp';
+  exConfigTarget = {type:'newInDay', trainId, dayKey: isoDate(selectedDate)};
+  openPickComp('daycomp');
 }
 function editTrainFromDay(trainId){ openTrainModal(trainId); }
 
@@ -1662,7 +1810,7 @@ function renderChips(){
   updateFilterCounters();
 }
 function toggleZoneGroup(zoneId){
-  const group = document.querySelector(`.zone-group[data-zonegroup="${zoneId}"]`);
+  const group = document.querySelector('.zone-group[data-zonegroup="'+zoneId+'"]');
   if(group) group.classList.toggle('open');
 }
 function updateFilterCounters(){
@@ -1770,7 +1918,11 @@ function openExModal(exId){
   renderZoneTree(e ? (e.zones||[]) : []);
   renderMultiPick('exGearsPick', gears, e ? (e.gears||[]) : []);
   renderMultiPick('exSkillsPick', skills, e ? (e.skills||[]) : []);
+  pickTwoSides(e && e.twoSides ? 2 : 1);
   openModal('m-ex');
+}
+function pickTwoSides(v){
+  document.querySelectorAll('#exTwoSidesPick .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === v));
 }
 function renderMultiPick(cid, items, selectedIds){
   const el = document.getElementById(cid); if(!el) return;
@@ -1786,6 +1938,8 @@ function getMultiPick(cid){
 function saveEx(){
   const name = document.getElementById('exName').value.trim();
   if(!name){ toast('Введи название'); return; }
+  const sidesChip = document.querySelector('#exTwoSidesPick .chip.on');
+  const twoSides = sidesChip && +sidesChip.dataset.v === 2;
   const exData = {
     id: editingExId || uid(),
     name,
@@ -1795,7 +1949,8 @@ function saveEx(){
     gears: getMultiPick('exGearsPick'),
     skills: getMultiPick('exSkillsPick'),
     format: document.getElementById('exFormat').value,
-    desc: document.getElementById('exDesc').value.trim()
+    desc: document.getElementById('exDesc').value.trim(),
+    twoSides
   };
   if(editingExId){
     const i = exercises.findIndex(x => x.id === editingExId);
@@ -1837,6 +1992,7 @@ function renderTempTrainEx(){
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
     if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
     if(e.weight) dosage.push(isX(e.weight)?'X кг':e.weight+' кг');
+    if(ex && ex.twoSides) dosage.push('<span style="color:var(--acc2)">×2</span>');
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
       '<div class="training-actions-row"><button onclick="openExConfig(\'train\','+idx+')">✏️</button><button onclick="removeTempEx(\'train\','+idx+')">✕</button></div>'+
@@ -1894,6 +2050,7 @@ function renderTempCompEx(){
     if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+'×');
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
     if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
+    if(ex && ex.twoSides) dosage.push('<span style="color:var(--acc2)">×2</span>');
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
       '<div class="training-actions-row"><button onclick="openExConfig(\'comp\','+idx+')">✏️</button><button onclick="removeTempEx(\'comp\','+idx+')">✕</button></div>'+
@@ -2024,8 +2181,22 @@ function pickComplex(compId){
   if(pickTarget === 'train'){
     c.exercises.forEach(e => tempTrainEx.push(JSON.parse(JSON.stringify(e))));
     renderTempTrainEx();
+    closeModal('m-pick-comp'); toast('Добавлено');
+  } else if(pickTarget === 'daycomp'){
+    const cfg = exConfigTarget;
+    if(!cfg){ closeModal('m-pick-comp'); return; }
+    const tr = trainings.find(t => t.id === cfg.trainId);
+    if(!tr){ closeModal('m-pick-comp'); return; }
+    if(!tr.dayOverrides) tr.dayOverrides = {};
+    if(!tr.dayOverrides[cfg.dayKey]){
+      tr.dayOverrides[cfg.dayKey] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
+    }
+    c.exercises.forEach(e => tr.dayOverrides[cfg.dayKey].exercises.push(JSON.parse(JSON.stringify(e))));
+    store.set('trainings', trainings);
+    renderTrainings();
+    closeModal('m-pick-comp');
+    toast('Комплекс «'+c.name+'» добавлен в этот день');
   }
-  closeModal('m-pick-comp'); toast('Добавлено');
 }
 
 function openTrainList(){ renderTrainTemplates(); openModal('m-train-list'); }
@@ -2072,6 +2243,7 @@ function renderCompsTab(){
       if(e.time) d.push((isX(e.time)?'<span class="x">X</span>':e.time) + ' сек');
       if(e.weight) d.push((isX(e.weight)?'<span class="x">X</span>':e.weight) + ' кг');
       if(e.rest) d.push('отдых ' + (isX(e.rest)?'<span class="x">X</span>':e.rest) + ' сек');
+      if(ex.twoSides) d.push('<span class="x">×2</span>');
       return '<div class="complex-ex-item">'+
         '<div class="complex-ex-name">'+escapeHtml(ex.name)+'</div>'+
         '<div class="complex-ex-dosage">'+d.join(' · ')+'</div>'+
@@ -2147,6 +2319,8 @@ function checkNewPRs(trainExercises, dateStr){
 }
 function getExerciseHistory(exId){
   const history = [];
+  const exDef = exercises.find(e => e.id === exId);
+  const sidesMult = exDef && exDef.twoSides ? 2 : 1;
   Object.keys(completions).forEach(dateStr => {
     Object.keys(completions[dateStr]).forEach(trainId => {
       const comp = completions[dateStr][trainId];
@@ -2155,13 +2329,12 @@ function getExerciseHistory(exId){
       if(!item) return;
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
       if(isX(item.weight) || isX(item.reps) || isX(item.time)) return;
-      const w = +item.weight || 0;
-      const r = +item.reps || 0;
-      const s = +item.sets || 1;
-      const t = +item.time || 0;
+      const w = +item.weight || 0, r = +item.reps || 0, s = +item.sets || 1, t = +item.time || 0;
       history.push({
         date: dateStr, weight: w, reps: r, sets: s, time: t,
-        volume: w * r * s, totalReps: r * s, maxReps: r
+        volume: w * r * s * sidesMult,
+        totalReps: r * s * sidesMult,
+        maxReps: r
       });
     });
   });
@@ -2359,26 +2532,26 @@ function renderCharacter(){
   const legColor = legs > 60 ? 'var(--acc)' : legs > 30 ? 'var(--acc2)' : 'var(--mut)';
   const chestColor = chest > 60 ? 'var(--acc)' : chest > 30 ? 'var(--acc2)' : 'var(--mut)';
   const coreColor = core > 60 ? 'var(--acc)' : core > 30 ? 'var(--acc2)' : 'var(--mut)';
-  const svg = `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="45" r="22" fill="${chestColor}" opacity="${lineOpacity}" stroke="${strokeColor}" stroke-width="2"/>
-    <circle cx="92" cy="42" r="2" fill="#fff" opacity="${0.5 + chest/200}"/>
-    <circle cx="108" cy="42" r="2" fill="#fff" opacity="${0.5 + chest/200}"/>
-    <rect x="90" y="65" width="20" height="15" fill="${chestColor}" opacity="${lineOpacity * 0.7}"/>
-    <path d="M 60 80 Q 100 70 140 80 L 145 140 Q 100 155 55 140 Z" fill="${chestColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
-    <rect x="${100 - torsoW/2}" y="140" width="${torsoW}" height="50" fill="${coreColor}" opacity="${lineOpacity * 0.7}" stroke="${strokeColor}" stroke-width="1.5" rx="8"/>
-    <line x1="100" y1="145" x2="100" y2="185" stroke="${strokeColor}" stroke-width="1.5" opacity="${lineOpacity * 0.5}"/>
-    <line x1="${100 - torsoW/2 + 8}" y1="155" x2="${100 + torsoW/2 - 8}" y2="155" stroke="${strokeColor}" stroke-width="1" opacity="${lineOpacity * 0.4}"/>
-    <line x1="${100 - torsoW/2 + 8}" y1="170" x2="${100 + torsoW/2 - 8}" y2="170" stroke="${strokeColor}" stroke-width="1" opacity="${lineOpacity * 0.4}"/>
-    <path d="M 60 85 Q 30 110 ${30 - (armW-12)/2} 160 L ${30 - (armW-12)/2 + armW} 165 Q 35 130 55 110 Z" fill="${armColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
-    <path d="M 140 85 Q 170 110 ${170 + (armW-12)/2} 160 L ${170 + (armW-12)/2 - armW} 165 Q 165 130 145 110 Z" fill="${armColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
-    ${arms > 40 ? `<ellipse cx="${24 + (armW-12)/2}" cy="140" rx="${armW/2}" ry="10" fill="${armColor}" opacity="${lineOpacity * 0.6}"/><ellipse cx="${176 - (armW-12)/2}" cy="140" rx="${armW/2}" ry="10" fill="${armColor}" opacity="${lineOpacity * 0.6}"/>` : ''}
-    <path d="M 75 190 L 65 270 L ${65 + legW - 18} 275 L ${75 + legW - 18} 195 Z" fill="${legColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
-    <path d="M 125 190 L 135 270 L ${135 - legW + 18} 275 L ${125 - legW + 18} 195 Z" fill="${legColor}" opacity="${lineOpacity * 0.8}" stroke="${strokeColor}" stroke-width="2"/>
-    ${legs > 40 ? `<ellipse cx="70" cy="225" rx="${legW/2.5}" ry="18" fill="${legColor}" opacity="${lineOpacity * 0.5}"/><ellipse cx="130" cy="225" rx="${legW/2.5}" ry="18" fill="${legColor}" opacity="${lineOpacity * 0.5}"/>` : ''}
-    <ellipse cx="${65 + legW/2 - 9}" cy="278" rx="10" ry="4" fill="${legColor}" opacity="${lineOpacity * 0.6}"/>
-    <ellipse cx="${135 - legW/2 + 9}" cy="278" rx="10" ry="4" fill="${legColor}" opacity="${lineOpacity * 0.6}"/>
-    ${cardio > 30 ? `<circle cx="100" cy="150" r="${80 + cardio/5}" fill="none" stroke="var(--acc)" stroke-width="1" opacity="${cardio/200}" stroke-dasharray="4,4"/>` : ''}
-  </svg>`;
+  const svg = '<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">'+
+    '<circle cx="100" cy="45" r="22" fill="'+chestColor+'" opacity="'+lineOpacity+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
+    '<circle cx="92" cy="42" r="2" fill="#fff" opacity="'+(0.5 + chest/200)+'"/>'+
+    '<circle cx="108" cy="42" r="2" fill="#fff" opacity="'+(0.5 + chest/200)+'"/>'+
+    '<rect x="90" y="65" width="20" height="15" fill="'+chestColor+'" opacity="'+(lineOpacity * 0.7)+'"/>'+
+    '<path d="M 60 80 Q 100 70 140 80 L 145 140 Q 100 155 55 140 Z" fill="'+chestColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
+    '<rect x="'+(100 - torsoW/2)+'" y="140" width="'+torsoW+'" height="50" fill="'+coreColor+'" opacity="'+(lineOpacity * 0.7)+'" stroke="'+strokeColor+'" stroke-width="1.5" rx="8"/>'+
+    '<line x1="100" y1="145" x2="100" y2="185" stroke="'+strokeColor+'" stroke-width="1.5" opacity="'+(lineOpacity * 0.5)+'"/>'+
+    '<line x1="'+(100 - torsoW/2 + 8)+'" y1="155" x2="'+(100 + torsoW/2 - 8)+'" y2="155" stroke="'+strokeColor+'" stroke-width="1" opacity="'+(lineOpacity * 0.4)+'"/>'+
+    '<line x1="'+(100 - torsoW/2 + 8)+'" y1="170" x2="'+(100 + torsoW/2 - 8)+'" y2="170" stroke="'+strokeColor+'" stroke-width="1" opacity="'+(lineOpacity * 0.4)+'"/>'+
+    '<path d="M 60 85 Q 30 110 '+(30 - (armW-12)/2)+' 160 L '+(30 - (armW-12)/2 + armW)+' 165 Q 35 130 55 110 Z" fill="'+armColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
+    '<path d="M 140 85 Q 170 110 '+(170 + (armW-12)/2)+' 160 L '+(170 + (armW-12)/2 - armW)+' 165 Q 165 130 145 110 Z" fill="'+armColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
+    (arms > 40 ? '<ellipse cx="'+(24 + (armW-12)/2)+'" cy="140" rx="'+(armW/2)+'" ry="10" fill="'+armColor+'" opacity="'+(lineOpacity * 0.6)+'"/><ellipse cx="'+(176 - (armW-12)/2)+'" cy="140" rx="'+(armW/2)+'" ry="10" fill="'+armColor+'" opacity="'+(lineOpacity * 0.6)+'"/>' : '')+
+    '<path d="M 75 190 L 65 270 L '+(65 + legW - 18)+' 275 L '+(75 + legW - 18)+' 195 Z" fill="'+legColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
+    '<path d="M 125 190 L 135 270 L '+(135 - legW + 18)+' 275 L '+(125 - legW + 18)+' 195 Z" fill="'+legColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
+    (legs > 40 ? '<ellipse cx="70" cy="225" rx="'+(legW/2.5)+'" ry="18" fill="'+legColor+'" opacity="'+(lineOpacity * 0.5)+'"/><ellipse cx="130" cy="225" rx="'+(legW/2.5)+'" ry="18" fill="'+legColor+'" opacity="'+(lineOpacity * 0.5)+'"/>' : '')+
+    '<ellipse cx="'+(65 + legW/2 - 9)+'" cy="278" rx="10" ry="4" fill="'+legColor+'" opacity="'+(lineOpacity * 0.6)+'"/>'+
+    '<ellipse cx="'+(135 - legW/2 + 9)+'" cy="278" rx="10" ry="4" fill="'+legColor+'" opacity="'+(lineOpacity * 0.6)+'"/>'+
+    (cardio > 30 ? '<circle cx="100" cy="150" r="'+(80 + cardio/5)+'" fill="none" stroke="var(--acc)" stroke-width="1" opacity="'+(cardio/200)+'" stroke-dasharray="4,4"/>' : '')+
+  '</svg>';
   container.innerHTML = svg;
   const legend = document.getElementById('charLegend');
   if(legend){
@@ -2413,6 +2586,9 @@ function addWeightEntry(){
   else { weightLog.push({date, value: val}); }
   weightLog.sort((a,b) => a.date.localeCompare(b.date));
   store.set('weightLog', weightLog);
+  profile.weight = weightLog[weightLog.length - 1].value;
+  store.set('profile', profile);
+  applyAvatar();
   document.getElementById('wValue').value = '';
   renderWeightLog();
   drawWeightChart();
@@ -2421,6 +2597,11 @@ function addWeightEntry(){
 function delWeightEntry(date){
   weightLog = weightLog.filter(w => w.date !== date);
   store.set('weightLog', weightLog);
+  if(weightLog.length > 0){
+    profile.weight = weightLog[weightLog.length - 1].value;
+    store.set('profile', profile);
+    applyAvatar();
+  }
   renderWeightLog();
   drawWeightChart();
   toast('Удалено');
@@ -2599,39 +2780,33 @@ function renderSkillXp(){
   }).join('');
 }
 
-/* ==================== НОВЫЙ РЕЖИМ ВЫПОЛНЕНИЯ ==================== */
+/* ==================== ВЫПОЛНЕНИЕ ==================== */
 let execState = null;
 function startTrainExecution(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку запустить нельзя'); return; }
   const eff = getEffectiveTrain(tr, selectedDate);
   if(!eff.exercises || !eff.exercises.length){ toast('Нет упражнений'); return; }
-  
-  // Копируем и обогащаем упражнения
   const exs = eff.exercises.map(e => {
     const ex = exercises.find(x => x.id === e.exId);
     return {
       ...e,
       exName: ex ? ex.name : '?',
       exFormat: ex ? ex.format : 'reps',
+      twoSides: ex ? !!ex.twoSides : false,
       exZones: ex ? (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji+z.name:''; }).filter(Boolean) : [],
       exGears: ex ? (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji+g.name:''; }).filter(Boolean) : [],
       exSkills: ex ? (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s?s.emoji+s.name:''; }).filter(Boolean) : [],
     };
   });
-  
   execState = {
-    trainId,
-    dateKey: isoDate(selectedDate),
-    trainName: tr.name,
+    trainId, dateKey: isoDate(selectedDate), trainName: tr.name,
     exercises: JSON.parse(JSON.stringify(exs)),
-    currentIndex: 0,
-    currentSet: 1,
+    currentIndex: 0, currentSet: 1, currentSide: 1,
     completed: [],
-    phase: 'idle', // idle | work | rest
+    phase: 'idle',
     timer: { remaining: 0, total: 0, running: false, int: null }
   };
-  
   document.getElementById('execScreen').classList.add('on');
   document.getElementById('execTitle').textContent = tr.name;
   renderExecScreen();
@@ -2642,7 +2817,7 @@ function closeExecScreen(){
   const ex = document.getElementById('execScreen');
   if(ex) ex.classList.remove('on');
   if(execState && execState.completed && execState.completed.length){
-    if(!confirm('Закрыть тренировку? Прогресс не сохранится.')) {
+    if(!confirm('Закрыть тренировку? Прогресс не сохранится.')){
       document.getElementById('execScreen').classList.add('on');
       renderExecScreen();
       return;
@@ -2658,25 +2833,20 @@ function renderExecScreen(){
   const body = document.getElementById('execBody');
   const footer = document.getElementById('execFooter');
   const progressTxt = document.getElementById('execProgressTxt');
-  
   const totalEx = execState.exercises.length;
   const curIdx = execState.currentIndex;
   const item = execState.exercises[curIdx];
-  
   if(!item){ finishExecution(); return; }
-  
   if(progressTxt) progressTxt.textContent = (curIdx+1)+'/'+totalEx;
 
-  // 1. Проверка X-параметров
   const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
   if(hasX && !item._xResolved){
     body.innerHTML =
       '<div class="exec-global-bar"><i style="width:0%"></i></div>'+
       '<div style="text-align:center;font-size:44px;margin:20px 0">✏️</div>'+
       '<div class="exec-ex-name">'+item.exName+'</div>'+
-      '<div class="note" style="text-align:center;margin-bottom:16px">Задай параметры для этого упражнения</div>'+
+      '<div class="note" style="text-align:center;margin-bottom:16px">Задай параметры'+(item.twoSides?' (значения — на одну сторону)':'')+'</div>'+
       '<div id="xFormContainer" style="max-width:400px;margin:0 auto;width:100%"></div>';
-      
     const form = document.getElementById('xFormContainer');
     const fields = [];
     if(isXValue(item.sets)) fields.push({key:'sets', label:'Подходы', placeholder:'3'});
@@ -2684,30 +2854,25 @@ function renderExecScreen(){
     if(isXValue(item.time)) fields.push({key:'time', label:'Время, сек', placeholder:'60'});
     if(isXValue(item.weight)) fields.push({key:'weight', label:'Вес, кг', placeholder:'16'});
     if(isXValue(item.rest)) fields.push({key:'rest', label:'Отдых, сек', placeholder:'60'});
-    
     form.innerHTML = fields.map(f =>
       '<div class="field-group"><label class="field-label">'+f.label+'</label><input class="field-input" type="number" id="xInput_'+f.key+'" placeholder="'+f.placeholder+'"></div>'
     ).join('') +
     '<button class="btn btn-primary btn-full" style="margin-top:12px;padding:14px" onclick="applyXForm()">▶ Начать упражнение</button>';
-    
     footer.innerHTML = '';
     return;
   }
 
-  // 2. Рендер плана всей тренировки
   let planHtml = '<div class="exec-plan-list">';
   execState.exercises.forEach((ex, idx) => {
     let cls = 'exec-plan-item';
     let icon = idx + 1;
-    if(idx < curIdx) { cls += ' done'; icon = '✓'; }
-    else if(idx === curIdx) { cls += ' active'; icon = '▶'; }
-    
-    // Считаем дозировку для отображения в плане
+    if(idx < curIdx){ cls += ' done'; icon = '✓'; }
+    else if(idx === curIdx){ cls += ' active'; icon = '▶'; }
     let dose = [];
     if(ex.sets) dose.push(ex.sets + '×');
     if(ex.reps) dose.push(ex.reps + 'повт');
     if(ex.time) dose.push(ex.time + 'с');
-    
+    if(ex.twoSides) dose.push('×2');
     planHtml += '<div class="'+cls+'">'+
       '<div class="exec-plan-check">'+icon+'</div>'+
       '<div class="exec-plan-name">'+ex.exName+'</div>'+
@@ -2716,9 +2881,8 @@ function renderExecScreen(){
   });
   planHtml += '</div>';
 
-  // 3. Визуальные кружочки для подходов/кругов
-  let dotsHtml = '<div class="exec-dots">';
   const totalSets = +item.sets || 1;
+  let dotsHtml = '<div class="exec-dots">';
   for(let i = 1; i <= totalSets; i++){
     let cls = 'exec-dot';
     if(i < execState.currentSet) cls += ' done';
@@ -2727,24 +2891,36 @@ function renderExecScreen(){
   }
   dotsHtml += '</div>';
 
-  // 4. Текущее упражнение (Фокус)
-  let phaseText = 'Готов';
-  let phaseClass = '';
-  if(execState.phase === 'work') { phaseText = 'Работа'; phaseClass = 'work'; }
-  if(execState.phase === 'rest') { phaseText = 'Отдых'; phaseClass = 'rest'; }
-  
+  let sideHtml = '';
+  if(item.twoSides){
+    sideHtml = '<div class="exec-side-indicator">'+
+      '<span class="exec-side '+(execState.currentSide===1?'active':'')+'">Сторона 1</span>'+
+      '<span class="exec-side-sep">/</span>'+
+      '<span class="exec-side '+(execState.currentSide===2?'active':'')+'">Сторона 2</span>'+
+    '</div>';
+  }
+
+  let phaseText = 'Готов', phaseClass = '';
+  if(execState.phase === 'work'){
+    phaseText = item.twoSides ? 'Работа · Сторона '+execState.currentSide : 'Работа';
+    phaseClass = 'work';
+  }
+  if(execState.phase === 'rest'){
+    phaseText = item.twoSides && execState.currentSide === 2 ? 'Отдых перед стороной 2' : 'Отдых';
+    phaseClass = 'rest';
+  }
+
   const timerDisplay = execState.phase === 'idle' ? '00:00' : fmt(Math.max(0, execState.timer.remaining));
-  const progPct = execState.phase === 'idle' ? 0 : (execState.timer.total > 0 ? Math.max(0, Math.min(100, (1 - execState.timer.remaining/execState.timer.total)*100)) : 0);
-  
-  const globalPct = Math.round((curIdx / totalEx) * 100);
+  const globalPct = Math.round(((curIdx + (execState.currentSet-1)/totalSets) / totalEx) * 100);
 
   body.innerHTML =
     '<div class="exec-global-bar"><i style="width:'+globalPct+'%"></i></div>'+
     planHtml+
     '<div class="exec-focus">'+
-      '<div class="exec-ex-number">Упражнение '+(curIdx+1)+'</div>'+
+      '<div class="exec-ex-number">Упражнение '+(curIdx+1)+' из '+totalEx+'</div>'+
       '<div class="exec-ex-name">'+item.exName+'</div>'+
       dotsHtml+
+      sideHtml+
       '<div class="exec-phase '+phaseClass+'">'+phaseText+'</div>'+
       '<div class="exec-timer">'+timerDisplay+'</div>'+
       '<div class="exec-dosage">'+
@@ -2756,11 +2932,11 @@ function renderExecScreen(){
       '</div>'+
     '</div>';
 
-  // 5. Кнопки управления
   if(execState.phase === 'idle'){
-    footer.innerHTML = '<button class="btn btn-primary exec-finish" onclick="execStartWork()">▶ Начать подход 1</button>';
+    const sideLabel = item.twoSides ? ' · Сторона 1' : '';
+    footer.innerHTML = '<button class="btn btn-primary exec-finish" onclick="execStartWork()">▶ Начать подход '+execState.currentSet+sideLabel+'</button>';
   } else if(execState.phase === 'work'){
-    footer.innerHTML = 
+    footer.innerHTML =
       '<div class="exec-controls">'+
         '<button class="btn" onclick="execFinishSet()">Подход готов</button>'+
         '<button class="btn btn-primary" onclick="execFinishSet()">Завершить</button>'+
@@ -2770,8 +2946,9 @@ function renderExecScreen(){
         '<button class="btn" onclick="execSkipExercise()">Пропустить</button>'+
       '</div>';
   } else if(execState.phase === 'rest'){
-    footer.innerHTML = 
-      '<button class="btn btn-primary exec-finish" onclick="execStartWork()">▶ Следующий подход</button>'+
+    const nextLabel = (item.twoSides && execState.currentSide === 2) ? '▶ Сторона 2' : '▶ Следующий подход';
+    footer.innerHTML =
+      '<button class="btn btn-primary exec-finish" onclick="execStartWork()">'+nextLabel+'</button>'+
       '<button class="btn btn-full" style="margin-top:6px" onclick="execSkipRest()">Пропустить отдых</button>';
   }
 }
@@ -2794,26 +2971,24 @@ function execStartWork(){
   execState.phase = 'work';
   startExecPhase('work', +item.time || 0);
 }
+
 function startExecPhase(phase, seconds){
   if(execState.timer.int) clearInterval(execState.timer.int);
   execState.phase = phase;
   execState.timer.remaining = seconds;
   execState.timer.total = seconds || 1;
   execState.timer.running = seconds > 0;
-  
   if(seconds > 0){
     execState.timer.int = setInterval(() => {
       if(execState.timer.remaining > 0){
         execState.timer.remaining--;
-        // Оптимизация: не перерисовываем весь экран, только таймер и бар
         const disp = document.querySelector('.exec-timer');
         if(disp) disp.textContent = fmt(execState.timer.remaining);
-        const prog = document.querySelector('.exec-progress i'); // Если добавим прогресс-бар под таймер
       } else {
         clearInterval(execState.timer.int);
         execState.timer.running = false;
-        if(execState.timer.phase === 'work'){ beep(880,.3); if(navigator.vibrate) navigator.vibrate(200); }
-        else if(execState.timer.phase === 'rest'){ beep(660,.25); }
+        if(execState.phase === 'work'){ beep(880,.3); if(navigator.vibrate) navigator.vibrate(200); }
+        else if(execState.phase === 'rest'){ beep(660,.25); }
       }
     }, 1000);
   }
@@ -2830,35 +3005,37 @@ function execFinishSet(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
   if(execState.timer.int) clearInterval(execState.timer.int);
-  
-  if(execState.currentSet >= (+item.sets || 1)){
-    // Все подходы выполнены, переходим к след. упражнению
+  const twoSides = !!item.twoSides;
+  const totalSets = +item.sets || 1;
+
+  if(twoSides && execState.currentSide === 1){
+    execState.currentSide = 2;
+    if(+item.rest > 0){ startExecPhase('rest', +item.rest); }
+    else { startExecPhase('work', +item.time || 0); }
+    return;
+  }
+
+  if(execState.currentSet >= totalSets){
     execState.completed.push({
       exIdx: execState.currentIndex,
-      sets: +item.sets || 1, reps: +item.reps || 0,
-      time: +item.time || 0, weight: +item.weight || 0
+      sets: totalSets, reps: +item.reps || 0,
+      time: +item.time || 0, weight: +item.weight || 0,
+      twoSides: twoSides
     });
-    
-    if(execState.currentIndex >= execState.exercises.length - 1){ 
-      finishExecution(); 
-      return; 
-    }
-    
+    if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
     execState.currentIndex++;
     execState.currentSet = 1;
+    execState.currentSide = 1;
     execState.phase = 'idle';
     execState.timer.remaining = 0;
     execState.timer.total = 1;
     execState.timer.running = false;
     renderExecScreen();
   } else {
-    // Еще есть подходы
     execState.currentSet++;
-    if(item.rest && +item.rest > 0){ 
-      startExecPhase('rest', +item.rest); 
-    } else { 
-      startExecPhase('work', +item.time || 0); 
-    }
+    execState.currentSide = 1;
+    if(+item.rest > 0){ startExecPhase('rest', +item.rest); }
+    else { startExecPhase('work', +item.time || 0); }
   }
 }
 
@@ -2873,16 +3050,11 @@ function execSkipExercise(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
   if(!confirm('Пропустить упражнение?')) return;
-  
   if(execState.timer.int) clearInterval(execState.timer.int);
-  
-  if(execState.currentIndex >= execState.exercises.length - 1){ 
-    finishExecution(); 
-    return; 
-  }
-  
+  if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
   execState.currentIndex++;
   execState.currentSet = 1;
+  execState.currentSide = 1;
   execState.phase = 'idle';
   execState.timer.remaining = 0;
   execState.timer.total = 1;
@@ -2895,19 +3067,17 @@ function finishExecution(){
   const body = document.getElementById('execBody');
   const footer = document.getElementById('execFooter');
   const progressTxt = document.getElementById('execProgressTxt');
-  
   let xp = 0;
   execState.completed.forEach(c => {
     const ex = exercises.find(x => x.id === execState.exercises[c.exIdx].exId);
     if(!ex) return;
-    if(ex.format === 'time') xp += xpFromTime(c.time) * (c.sets || 1);
-    else if(ex.format === 'weight') xp += xpFromWeight(c.weight, profile.weight||70, c.reps) * (c.sets || 1);
-    else xp += xpFromReps(c.reps) * (c.sets || 1);
+    const sidesMult = ex.twoSides ? 2 : 1;
+    if(ex.format === 'time') xp += xpFromTime(c.time) * (c.sets || 1) * sidesMult;
+    else if(ex.format === 'weight') xp += xpFromWeight(c.weight, profile.weight||70, c.reps) * (c.sets || 1) * sidesMult;
+    else xp += xpFromReps(c.reps) * (c.sets || 1) * sidesMult;
   });
   xp = Math.round(xp * 100) / 100;
-  
   if(progressTxt) progressTxt.textContent = '✓';
-  
   body.innerHTML =
     '<div style="text-align:center;padding:40px 0">'+
       '<div style="font-size:64px;margin-bottom:16px">🎉</div>'+
@@ -2927,19 +3097,14 @@ function confirmFinishExecution(xp){
   const dateKey = execState.dateKey;
   const date = new Date(dateKey);
   const exs = getEffectiveTrain(tr, date).exercises || [];
-  
   setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(exs)));
   addXp(xp, tr.name, tr);
-  
   const newPRs = checkNewPRs(exs, dateKey);
   if(newPRs.length > 0){
     setTimeout(() => {
-      newPRs.forEach((pr, i) => {
-        setTimeout(() => prFly(pr.exName, pr.display), i * 800);
-      });
+      newPRs.forEach((pr, i) => setTimeout(() => prFly(pr.exName, pr.display), i * 800));
     }, 300);
   }
-  
   renderWeek(); renderMonth(); renderTrainings(); renderStats();
   closeExecScreen();
   execState = null;
@@ -2959,7 +3124,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'AS-Fit', version:12, exported:new Date().toISOString(),
+  return {app:'AS-Fit', version:13, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
@@ -3012,6 +3177,10 @@ function importDB(input){
       store.set('totalXp', totalXp); store.set('xpLog', xpLog);
       store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
       store.set('prs', prs); store.set('starterInstalled', starterInstalled);
+      if(weightLog.length > 0){
+        profile.weight = weightLog[weightLog.length - 1].value;
+        store.set('profile', profile);
+      }
       ensureXpMaps(); applyTheme(); renderAll(); toast('Импорт готов');
     } catch(err){ toast('Ошибка: '+err.message); }
   };
@@ -3079,17 +3248,17 @@ function installStarterPack(){
   const starterExercises = [
     {name:'Прыжки на скакалке', zones:['cardio','calves'], gears:['rope'], skills:['endurance','coord'], format:'time', desc:'Базовые прыжки. Локти близко, вращение кистями.'},
     {name:'Разминка шеи', zones:['neck'], gears:['none'], skills:['flex','coord'], format:'time', desc:'Медленные наклоны и вращения головой.'},
-    {name:'Жим гири одной рукой', zones:['shoulders','shoulders_side','shoulders_tri'], gears:['kb'], skills:['strength'], format:'weight', desc:'Гиря на плече, выжать вверх. Спина прямая.'},
+    {name:'Жим гири одной рукой', zones:['shoulders','shoulders_side','shoulders_tri'], gears:['kb'], skills:['strength'], format:'weight', desc:'Гиря на плече, выжать вверх. Спина прямая.', twoSides:true},
     {name:'Подтягивания на турнике', zones:['back','back_lat','shoulders_front'], gears:['pullup'], skills:['strength'], format:'reps', desc:'Прямой хват. Тянуть до подбородка над перекладиной.'},
     {name:'Отжимания от пола', zones:['chest','chest_mid','shoulders_front','shoulders_tri'], gears:['none'], skills:['strength'], format:'reps', desc:'Ладони чуть шире плеч. Тело прямое.'},
     {name:'Ягодичный мост', zones:['glutes','glutes_max','hips'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, стопы у таза. Поднять таз.'},
     {name:'Приседания', zones:['hips','hips_quad','glutes','glutes_max'], gears:['none'], skills:['strength'], format:'reps', desc:'Ноги на ширине плеч. Опускаться до параллели.'},
-    {name:'Подъёмы на носки', zones:['calves'], gears:['none'], skills:['strength'], format:'reps', desc:'Стоя, подняться на носки.'},
-    {name:'Перекаты стопы', zones:['feet','calves'], gears:['none'], skills:['balance'], format:'time', desc:'Перекатывай стопу с пятки на носок.'},
-    {name:'Сжатие эспандера', zones:['hands','hands_flex'], gears:['band'], skills:['strength'], format:'reps', desc:'Сжимай эспандер до полного сжатия.'},
+    {name:'Подъёмы на носки', zones:['calves'], gears:['none'], skills:['strength'], format:'reps', desc:'Стоя, подняться на носки.', twoSides:true},
+    {name:'Перекаты стопы', zones:['feet','calves'], gears:['none'], skills:['balance'], format:'time', desc:'Перекатывай стопу с пятки на носок.', twoSides:true},
+    {name:'Сжатие эспандера', zones:['hands','hands_flex'], gears:['band'], skills:['strength'], format:'reps', desc:'Сжимай эспандер до полного сжатия.', twoSides:true},
     {name:'Скручивания', zones:['abs','abs_upper'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, руки за головой. Поднять лопатки.'},
     {name:'Планка', zones:['core','abs'], gears:['mat'], skills:['strength','balance'], format:'time', desc:'Локти под плечами, тело — прямая линия.'},
-    {name:'Поза голубя', zones:['stretch','hips'], gears:['mat'], skills:['flex'], format:'time', desc:'Одна нога согнута впереди, другая вытянута назад.'},
+    {name:'Поза голубя', zones:['stretch','hips'], gears:['mat'], skills:['flex'], format:'time', desc:'Одна нога согнута впереди, другая вытянута назад.', twoSides:true},
   ];
   const idsMap = {};
   starterExercises.forEach(e => {
@@ -3099,7 +3268,7 @@ function installStarterPack(){
     if(!exists){
       exercises.push({
         id, name: e.name, media: [], link: '', zones: e.zones, gears: e.gears, skills: e.skills,
-        format: e.format, desc: e.desc
+        format: e.format, desc: e.desc, twoSides: !!e.twoSides
       });
     } else {
       idsMap[e.name] = exists.id;
@@ -3160,6 +3329,10 @@ applyTheme();
 ensureXpMaps();
 applyDecayOnLoad();
 installStarterPack();
+if(weightLog.length > 0){
+  profile.weight = weightLog[weightLog.length - 1].value;
+  store.set('profile', profile);
+}
 renderAll();
 
 document.addEventListener('click', e => {
