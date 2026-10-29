@@ -210,7 +210,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .sub-chip:active{transform:scale(.95)}
 .sub-chip.on{background:var(--grad);color:var(--bg);border-color:transparent;}
 
-/* EXERCISE LIST */
+/* EXERCISE LIST (базовая — переопределяется ниже) */
 .ex-list{display:flex;flex-direction:column;gap:var(--space-2)}
 .ex-card{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-2);border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer;transition:border-color .15s;}
 .ex-card:active{border-color:var(--acc)}
@@ -562,6 +562,144 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   flex:0 0 auto;
   font-size:var(--font-xs);
 }
+
+/* ============ КОМПАКТНЫЙ СПИСОК УПРАЖНЕНИЙ (v2) ============ */
+.ex-list{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  background:var(--line-soft);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.ex-list .ex-card{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  border-radius:0;
+  border:none;
+  border-bottom:1px solid var(--line-soft);
+  background:var(--card);
+  min-height:44px;
+  transition:background .12s;
+}
+.ex-list .ex-card:last-child{border-bottom:none}
+.ex-list .ex-card:active{background:var(--card2);border-color:var(--line-soft)}
+
+.ex-list .ex-thumb{
+  width:28px;height:28px;
+  border-radius:var(--radius-sm);
+  font-size:13px;
+  flex:0 0 auto;
+  background:var(--card2);
+  border:1px solid var(--line-soft);
+}
+.ex-list .ex-thumb img{width:100%;height:100%;object-fit:cover}
+
+.ex-list .ex-info{
+  flex:1;min-width:0;
+  display:flex;flex-direction:column;gap:1px;
+}
+.ex-list .ex-name{
+  font-size:12.5px;
+  font-weight:700;
+  line-height:1.25;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.ex-list .ex-desc{display:none}
+
+.ex-list .ex-tags{
+  font-size:10.5px;
+  color:var(--mut);
+  margin-top:0;
+  line-height:1.2;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  opacity:.85;
+}
+.ex-list .ex-tags .dot-sep{opacity:.35;margin:0 3px}
+
+.ex-list .ex-del{
+  width:26px;height:26px;
+  font-size:12px;
+  border:none;
+  background:transparent;
+  color:var(--mut);
+  opacity:.55;
+}
+.ex-list .ex-card:active .ex-del{opacity:1}
+
+.ex-count-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 2px 4px;
+  font-size:11px;
+  color:var(--mut);
+  font-weight:600;
+}
+.ex-count-line b{color:var(--acc2);font-weight:800}
+
+/* ============ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ============ */
+@media (max-width:480px){
+  .app{padding:6px 8px 16px}
+  .header{padding:6px 8px;margin:-6px -8px 6px;gap:6px}
+  .logo{font-size:13px}
+  .xp-mini{padding:4px 8px;gap:5px}
+  .xp-mini-lvl{width:22px;height:22px;font-size:10px}
+  .xp-mini-rank{font-size:9px}
+  .theme-toggle{width:38px;height:22px}
+  .theme-toggle .thumb{width:16px;height:16px;top:2px;left:2px}
+  body[data-mode="dark"] .theme-toggle .thumb{transform:translateX(16px)}
+
+  .tabs{gap:2px;margin-bottom:8px}
+  .tab-btn{padding:5px 9px;font-size:10.5px;border-radius:6px}
+
+  .filter-head{padding:6px 10px}
+  .filter-label{font-size:10px;letter-spacing:.3px}
+  .filter-badge{font-size:9px;padding:1px 5px}
+  .filter-content{padding:6px}
+
+  .chip{padding:5px 9px;font-size:10.5px;gap:3px}
+  .sub-chip{padding:3px 7px;font-size:9.5px}
+
+  .section-title{font-size:10px;margin-bottom:6px}
+
+  .btn{padding:8px 12px;font-size:11.5px;border-radius:8px}
+  .btn-sm{padding:6px 10px;font-size:10.5px}
+
+  .ex-list .ex-card{padding:6px 8px;min-height:40px;gap:7px}
+  .ex-list .ex-thumb{width:24px;height:24px;font-size:11px}
+  .ex-list .ex-name{font-size:12px}
+  .ex-list .ex-tags{font-size:10px}
+
+  .modal{padding:10px 12px calc(12px + env(safe-area-inset-bottom));max-height:96vh}
+  .modal h3{font-size:15px;margin-bottom:8px}
+
+  .nav-btn{padding:4px 2px;font-size:8.5px}
+  .nav-btn svg{width:19px;height:19px}
+  .nav-bottom{padding:4px 2px calc(4px + env(safe-area-inset-bottom))}
+}
+
+@media (max-width:360px){
+  .ex-list .ex-card{padding:5px 7px;min-height:38px;gap:6px}
+  .ex-list .ex-thumb{width:22px;height:22px;font-size:10px}
+  .ex-list .ex-name{font-size:11.5px}
+  .ex-list .ex-tags{font-size:9.5px}
+  .nav-btn span{font-size:8px}
+  .nav-btn svg{width:18px;height:18px}
+}
+
+@media (min-width:700px){
+  .ex-list{max-width:600px}
+  .app{max-width:640px;padding:12px 16px 24px}
+  .header{padding:10px 16px;margin:-12px -16px 10px}
+}
 </style>
 </head>
 <body data-mode="dark">
@@ -689,7 +827,8 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       </div>
     </div>
 
-    <div class="section-title" style="margin-top:8px">Упражнения (<span id="exCount">0</span>)</div>
+    <div class="section-title" style="margin-top:8px">Упражнения</div>
+    <div class="ex-count-line"><span>Найдено: <b id="exCount">0</b></span><span id="exFilterHint"></span></div>
     <div class="ex-list" id="exList"></div>
     <div class="btn-row" style="margin-top:8px">
       <button class="btn btn-primary btn-full" onclick="openExModal()">+ Упражнение</button>
@@ -1056,7 +1195,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     </div>
     <div class="info-block"><h4>🎯 Зачем это</h4><p>Помогает <b>планировать</b> тренировки, <b>выполнять по шагам</b> и <b>видеть прогресс</b> — по каждой зоне, снаряду и навыку. Геймификация (XP, ранги, распад) держит мотивацию.</p></div>
     <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя и месяц одновременно</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• Изменения «на конкретный день» без правки шаблона</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
-    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p></div>
+    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги, плотный режим для больших баз</p></div>
     <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку одним тапом — из шаблона или прямо в день календаря.</p><p><b>Круговой режим:</b> при создании комплекса включите «На количество кругов» и задайте время (напр. 20 мин). Тогда в тренировке комплекс встанет блоком: атлет жмёт «Круг завершён» — круг считается, пока идёт таймер.</p><p><b>Сортировка:</b> в редакторе тренировки и комплекса упражнения можно двигать ↑ ↓.</p></div>
     <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
     <div class="info-block"><h4>🎯 Зоны тела</h4><p>13 главных + подзоны. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
@@ -1103,6 +1242,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p>Мульти-теги: несколько зон/снарядов/навыков. Медиа: несколько фото + видео + ссылка.</p>
       <p>⏱ Время: XP = сек × 0.01 · 🏋️ Вес: (вес/масса) × 0.01 × повторы · 💪 Свой: повторы × 0.1</p>
       <p><b>Две стороны:</b> если упражнение на каждую руку/ногу — включи «Две стороны», XP ×2, в выполнении будет «Сторона 1 / Сторона 2».</p>
+      <p><b>Компактный список:</b> в меню упражнений строки в один ряд — миниатюра, имя, эмодзи-теги. Описание видно при открытии карточки. Удобно при большой базе.</p>
     </div>
     <div class="info-block">
       <h4>🏆 Личные рекорды (PR)</h4>
@@ -1832,6 +1972,7 @@ function addCompToDay(trainId){
 }
 function editTrainFromDay(trainId){ openTrainModal(trainId); }
 
+/* ============ СПИСОК УПРАЖНЕНИЙ (КОМПАКТНЫЙ) ============ */
 function renderEx(){
   const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
   let list = exercises.filter(e => e.name.toLowerCase().includes(q));
@@ -1847,21 +1988,36 @@ function renderEx(){
     const a = [...document.querySelectorAll('#skills .chip.on')].map(c => c.dataset.val);
     if(a.length) list = list.filter(e => (e.skills||[]).some(s => a.includes(s)));
   }
+
   const ec = document.getElementById('exCount'); if(ec) ec.textContent = list.length;
   const box = document.getElementById('exList'); if(!box) return;
-  if(!list.length){ box.innerHTML = '<div class="empty">Список пуст</div>'; return; }
+  if(!list.length){
+    box.innerHTML = '<div class="empty" style="padding:20px 8px">'+(q ? 'Ничего не найдено' : 'Список пуст')+'</div>';
+    return;
+  }
+
   box.innerHTML = list.map(e => {
     const media = e.media && e.media.length ? e.media[0] : null;
-    const thumb = media 
-      ? (media.type === 'image' 
-          ? '<div class="ex-thumb"><img src="'+media.data+'"></div>'
-          : '<div class="ex-thumb" style="font-size:16px">🎬</div>')
-      : '<div class="ex-thumb">💪</div>';
-    const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).join('');
-    const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).join('');
-    return '<div class="ex-card" onclick="openExModal(\''+e.id+'\')">'+thumb+
-      '<div class="ex-info"><div class="ex-name">'+e.name+'</div>'+(e.desc?'<div class="ex-desc">'+e.desc+'</div>':'')+'<div class="ex-tags">'+zB+' '+gB+'</div></div>'+
-      '<button class="ex-del" onclick="event.stopPropagation();delEx(\''+e.id+'\')">✕</button></div>';
+    const thumb = media
+      ? (media.type === 'image'
+          ? '<div class="ex-thumb"><img src="'+media.data+'" loading="lazy"></div>'
+          : '<div class="ex-thumb" style="font-size:12px">🎬</div>')
+      : '<div class="ex-thumb">'+(e.format === 'time' ? '⏱' : e.format === 'weight' ? '🏋️' : '💪')+'</div>';
+
+    const zB = (e.zones||[]).slice(0,3).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).filter(Boolean).join('');
+    const gB = (e.gears||[]).slice(0,3).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).filter(Boolean).join('');
+    const sidesTag = e.twoSides ? '×2' : '';
+    const metaParts = [zB, gB, sidesTag].filter(Boolean);
+    const metaHtml = metaParts.length ? '<div class="ex-tags">'+metaParts.join('<span class="dot-sep">·</span>')+'</div>' : '';
+
+    return '<div class="ex-card" onclick="openExModal(\''+e.id+'\')">'+
+      thumb+
+      '<div class="ex-info">'+
+        '<div class="ex-name">'+escapeHtml(e.name)+'</div>'+
+        metaHtml+
+      '</div>'+
+      '<button class="ex-del" onclick="event.stopPropagation();delEx(\''+e.id+'\')" aria-label="Удалить">✕</button>'+
+    '</div>';
   }).join('');
 }
 function delEx(id){
@@ -2271,8 +2427,8 @@ function renderPickEx(){
     const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji:''; }).join('');
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji:''; }).join('');
     return '<div class="ex-card" onclick="pickExercise(\''+e.id+'\')">'+
-      '<div class="ex-thumb">💪</div>'+
-      '<div class="ex-info"><div class="ex-name">'+e.name+'</div><div class="ex-tags">'+zB+' '+gB+'</div></div>'+
+      '<div class="ex-thumb">'+(e.format === 'time' ? '⏱' : e.format === 'weight' ? '🏋️' : '💪')+'</div>'+
+      '<div class="ex-info"><div class="ex-name">'+escapeHtml(e.name)+'</div><div class="ex-tags">'+zB+' '+gB+'</div></div>'+
       '<div style="font-size:14px;color:var(--acc);font-weight:900">+</div></div>';
   }).join('') + '</div>';
 }
@@ -3451,7 +3607,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'AS-Fit', version:14, exported:new Date().toISOString(),
+  return {app:'AS-Fit', version:15, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
