@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0e1116">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>АС — Фитнес</title>
+<title>Делать Упражнения</title>
 <style>
 :root{
   --bg:#0e1116; --bg2:#151a22; --card:#1a2029; --card2:#222a36;
@@ -49,7 +49,9 @@ input,select,textarea{-webkit-appearance:none;appearance:none}
   padding-left:var(--space-3);padding-right:var(--space-3);
   display:flex;align-items:center;gap:var(--space-3);
 }
+.logo-wrap{display:flex;align-items:baseline;gap:4px;flex:0 0 auto;}
 .logo{font-weight:800;font-size:var(--font-lg);letter-spacing:.3px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;flex:0 0 auto;}
+.logo-ver{font-size:9px;font-weight:800;color:var(--mut);letter-spacing:.3px;padding:1px 5px;border:1px solid var(--line);border-radius:var(--radius-full);background:var(--card);}
 .xp-mini{flex:1;display:flex;align-items:center;gap:var(--space-2);cursor:pointer;min-width:0;padding:var(--space-2) var(--space-3);background:var(--card);border:1px solid var(--line);border-radius:var(--radius-full);transition:transform .15s, background .15s;}
 .xp-mini:active{transform:scale(.97);background:var(--card2)}
 .xp-mini-lvl{width:26px;height:26px;border-radius:50%;background:var(--grad);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;flex:0 0 auto;}
@@ -210,7 +212,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .sub-chip:active{transform:scale(.95)}
 .sub-chip.on{background:var(--grad);color:var(--bg);border-color:transparent;}
 
-/* EXERCISE LIST (базовая — переопределяется ниже) */
+/* EXERCISE LIST */
 .ex-list{display:flex;flex-direction:column;gap:var(--space-2)}
 .ex-card{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-2);border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer;transition:border-color .15s;}
 .ex-card:active{border-color:var(--acc)}
@@ -398,7 +400,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .theme-tile .name{font-size:8px}
 }
 
-/* ============ XP / STATS — ИНФОРМАТИВНЫЙ МИНИМАЛИЗМ ============ */
+/* ============ XP / STATS ============ */
 .character-card,.progress-section{
   background:color-mix(in srgb, var(--card) 75%, transparent);
   border:1px solid var(--line-soft);
@@ -481,19 +483,19 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .stat-mini-val{font-size:var(--font-xl);font-weight:900;color:var(--acc2);font-variant-numeric:tabular-nums}
 .stat-mini-lbl{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-top:2px}
 
-/* Двусторонние упражнения */
+/* Двусторонние */
 .exec-side-indicator{display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin:var(--space-2) 0 var(--space-3);font-size:var(--font-md);font-weight:800}
 .exec-side{color:var(--mut);padding:4px 12px;border-radius:var(--radius-full);border:1px solid var(--line-soft);transition:all .2s}
 .exec-side.active{color:var(--bg);background:var(--grad);border-color:transparent;box-shadow:0 2px 10px color-mix(in srgb, var(--acc) 40%, transparent)}
 .exec-side-sep{color:var(--mut);opacity:.4}
 .tag-sides{color:var(--acc2);background:color-mix(in srgb, var(--acc2) 14%, transparent);border-color:color-mix(in srgb, var(--acc2) 35%, transparent);font-weight:800}
 
-/* Nav — выравнивание */
+/* Nav */
 .nav-btn{padding:6px var(--space-1)}
 .nav-btn svg{width:21px;height:21px}
 .nav-btn span{font-size:9.5px;letter-spacing:.1px;line-height:1.1;margin-top:1px}
 
-/* Сортировка упражнений */
+/* Сортировка */
 .training-actions-row .btn-move{
   flex:0 0 auto;
   min-width:30px;
@@ -509,178 +511,124 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   background:color-mix(in srgb, var(--acc) 7%, var(--card));
 }
 .exec-round-count{
-  font-size:72px;
-  font-weight:900;
-  background:var(--grad);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  line-height:1;
-  font-variant-numeric:tabular-nums;
-  letter-spacing:-3px;
-  margin:var(--space-2) 0 0;
+  font-size:72px;font-weight:900;background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-3px;margin:var(--space-2) 0 0;
 }
-.exec-round-lbl{
-  font-size:var(--font-xs);
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  font-weight:800;
-  color:var(--mut);
-  margin-bottom:var(--space-3);
-}
-.exec-round-list{
-  width:100%;
-  max-width:400px;
-  margin:var(--space-3) auto;
-  background:var(--card2);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:var(--space-2) var(--space-3);
-}
-.exec-round-ex{
-  display:flex;
-  justify-content:space-between;
-  gap:var(--space-2);
-  padding:var(--space-2) 0;
-  border-bottom:1px solid var(--line-soft);
-  font-size:var(--font-sm);
-  align-items:center;
-}
+.exec-round-lbl{font-size:var(--font-xs);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;color:var(--mut);margin-bottom:var(--space-3)}
+.exec-round-list{width:100%;max-width:400px;margin:var(--space-3) auto;background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-2) var(--space-3)}
+.exec-round-ex{display:flex;justify-content:space-between;gap:var(--space-2);padding:var(--space-2) 0;border-bottom:1px solid var(--line-soft);font-size:var(--font-sm);align-items:center}
 .exec-round-ex:last-child{border-bottom:none}
-.exec-round-ex-name{
-  font-weight:700;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  flex:1;
-}
-.exec-round-ex-dose{
-  color:var(--mut);
-  font-weight:600;
-  font-variant-numeric:tabular-nums;
-  flex:0 0 auto;
-  font-size:var(--font-xs);
-}
+.exec-round-ex-name{font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.exec-round-ex-dose{color:var(--mut);font-weight:600;font-variant-numeric:tabular-nums;flex:0 0 auto;font-size:var(--font-xs)}
 
-/* ============ КОМПАКТНЫЙ СПИСОК УПРАЖНЕНИЙ (v2) ============ */
+/* ============ КОМПАКТНЫЙ СПИСОК УПРАЖНЕНИЙ ============ */
 .ex-list{
-  display:flex;
-  flex-direction:column;
-  gap:1px;
-  background:var(--line-soft);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  overflow:hidden;
+  display:flex;flex-direction:column;gap:1px;
+  background:var(--line-soft);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;
 }
 .ex-list .ex-card{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:7px 10px;
-  border-radius:0;
-  border:none;
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:0;border:none;
   border-bottom:1px solid var(--line-soft);
-  background:var(--card);
-  min-height:44px;
-  transition:background .12s;
+  background:var(--card);min-height:44px;transition:background .12s;
 }
 .ex-list .ex-card:last-child{border-bottom:none}
 .ex-list .ex-card:active{background:var(--card2);border-color:var(--line-soft)}
-
-.ex-list .ex-thumb{
-  width:28px;height:28px;
-  border-radius:var(--radius-sm);
-  font-size:13px;
-  flex:0 0 auto;
-  background:var(--card2);
-  border:1px solid var(--line-soft);
-}
+.ex-list .ex-thumb{width:28px;height:28px;border-radius:var(--radius-sm);font-size:13px;flex:0 0 auto;background:var(--card2);border:1px solid var(--line-soft)}
 .ex-list .ex-thumb img{width:100%;height:100%;object-fit:cover}
-
-.ex-list .ex-info{
-  flex:1;min-width:0;
-  display:flex;flex-direction:column;gap:1px;
-}
-.ex-list .ex-name{
-  font-size:12.5px;
-  font-weight:700;
-  line-height:1.25;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
+.ex-list .ex-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.ex-list .ex-name{font-size:12.5px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ex-list .ex-desc{display:none}
-
-.ex-list .ex-tags{
-  font-size:10.5px;
-  color:var(--mut);
-  margin-top:0;
-  line-height:1.2;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  opacity:.85;
-}
+.ex-list .ex-tags{font-size:10.5px;color:var(--mut);margin-top:0;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.85}
 .ex-list .ex-tags .dot-sep{opacity:.35;margin:0 3px}
-
-.ex-list .ex-del{
-  width:26px;height:26px;
-  font-size:12px;
-  border:none;
-  background:transparent;
-  color:var(--mut);
-  opacity:.55;
-}
+.ex-list .ex-del{width:26px;height:26px;font-size:12px;border:none;background:transparent;color:var(--mut);opacity:.55}
 .ex-list .ex-card:active .ex-del{opacity:1}
-
-.ex-count-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 2px 4px;
-  font-size:11px;
-  color:var(--mut);
-  font-weight:600;
-}
+.ex-count-line{display:flex;justify-content:space-between;align-items:center;padding:0 2px 4px;font-size:11px;color:var(--mut);font-weight:600}
 .ex-count-line b{color:var(--acc2);font-weight:800}
+
+/* ============ ПЛИТКИ ВЫБОРА (зоны / снаряды / навыки) ============ */
+.picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:4px}
+.picker-tile{
+  background:var(--card2);border:2px solid var(--line-soft);border-radius:var(--radius);
+  padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;position:relative;
+  display:flex;flex-direction:column;align-items:center;gap:4px;min-height:84px;justify-content:center;
+}
+.picker-tile:active{transform:scale(.95)}
+.picker-tile.on{
+  border-color:var(--acc);
+  background:color-mix(in srgb, var(--acc) 14%, var(--card2));
+  box-shadow:0 2px 12px color-mix(in srgb, var(--acc) 30%, transparent);
+}
+.picker-tile .pt-emoji{font-size:26px;line-height:1}
+.picker-tile .pt-name{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:var(--txt);line-height:1.15;text-align:center;word-break:break-word}
+.picker-tile .pt-count{font-size:9px;font-weight:800;color:var(--acc2);background:color-mix(in srgb, var(--acc2) 18%, transparent);padding:1px 6px;border-radius:var(--radius-full);margin-top:2px}
+.picker-tile.on .pt-count{color:var(--bg);background:var(--acc2)}
+.picker-tile .pt-check{position:absolute;top:4px;right:4px;width:14px;height:14px;border-radius:50%;background:var(--acc);color:var(--bg);font-size:9px;font-weight:900;display:none;align-items:center;justify-content:center}
+.picker-tile.on .pt-check{display:flex}
+
+@media (max-width:480px){
+  .picker-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px}
+  .picker-tile{min-height:72px;padding:8px 4px;gap:3px}
+  .picker-tile .pt-emoji{font-size:22px}
+  .picker-tile .pt-name{font-size:9px}
+  .picker-tile .pt-count{font-size:8px}
+}
+
+/* ============ ЖУРНАЛ ОБХВАТОВ ============ */
+.meas-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:10px}
+.meas-tabs::-webkit-scrollbar{display:none}
+.meas-tab{padding:6px 12px;border-radius:var(--radius-full);font-size:11px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap;flex:0 0 auto;cursor:pointer;transition:all .15s}
+.meas-tab.active{background:var(--grad);color:var(--bg);border-color:transparent}
+.meas-chart{width:100%;height:170px;background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:10px;display:block}
+.meas-input-row{display:flex;gap:6px;margin-bottom:10px}
+.meas-input-row input{flex:1;padding:10px;border-radius:var(--radius);border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:12.5px;outline:none}
+.meas-input-row input:focus{border-color:var(--acc)}
+.meas-input-row button{padding:10px 16px;border-radius:var(--radius);border:none;background:var(--grad);color:var(--bg);font-size:12.5px;font-weight:900}
+.meas-list{display:flex;flex-direction:column;gap:2px;max-height:260px;overflow-y:auto}
+.meas-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--card);border-radius:var(--radius-sm);font-size:12px}
+.meas-item-date{color:var(--mut);font-size:10.5px}
+.meas-item-val{font-weight:900;color:var(--acc2);font-variant-numeric:tabular-nums}
+.meas-item-del{width:22px;height:22px;border-radius:var(--radius-sm);border:1px solid var(--line);background:transparent;color:var(--mut);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.meas-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.meas-summary-item{background:var(--card2);border:1px solid var(--line-soft);border-radius:var(--radius-sm);padding:8px;text-align:center}
+.meas-summary-l{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+.meas-summary-v{font-size:14px;font-weight:900;color:var(--acc2);margin-top:2px;font-variant-numeric:tabular-nums}
+.meas-ratio{background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 8%,var(--card)),color-mix(in srgb,var(--acc2) 5%,var(--card)));border:1px solid color-mix(in srgb,var(--acc) 22%,var(--line-soft));border-radius:var(--radius);padding:10px;margin-bottom:10px;font-size:11px;line-height:1.6;color:var(--mut)}
+.meas-ratio b{color:var(--txt);font-weight:800}
+.meas-ratio .ratio-row{display:flex;justify-content:space-between;padding:2px 0;font-variant-numeric:tabular-nums}
+.meas-ratio .ratio-row b{color:var(--acc2)}
 
 /* ============ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ============ */
 @media (max-width:480px){
   .app{padding:6px 8px 16px}
   .header{padding:6px 8px;margin:-6px -8px 6px;gap:6px}
   .logo{font-size:13px}
+  .logo-ver{font-size:8px;padding:0 4px}
   .xp-mini{padding:4px 8px;gap:5px}
   .xp-mini-lvl{width:22px;height:22px;font-size:10px}
   .xp-mini-rank{font-size:9px}
   .theme-toggle{width:38px;height:22px}
   .theme-toggle .thumb{width:16px;height:16px;top:2px;left:2px}
   body[data-mode="dark"] .theme-toggle .thumb{transform:translateX(16px)}
-
   .tabs{gap:2px;margin-bottom:8px}
   .tab-btn{padding:5px 9px;font-size:10.5px;border-radius:6px}
-
   .filter-head{padding:6px 10px}
   .filter-label{font-size:10px;letter-spacing:.3px}
   .filter-badge{font-size:9px;padding:1px 5px}
   .filter-content{padding:6px}
-
   .chip{padding:5px 9px;font-size:10.5px;gap:3px}
   .sub-chip{padding:3px 7px;font-size:9.5px}
-
   .section-title{font-size:10px;margin-bottom:6px}
-
   .btn{padding:8px 12px;font-size:11.5px;border-radius:8px}
   .btn-sm{padding:6px 10px;font-size:10.5px}
-
   .ex-list .ex-card{padding:6px 8px;min-height:40px;gap:7px}
   .ex-list .ex-thumb{width:24px;height:24px;font-size:11px}
   .ex-list .ex-name{font-size:12px}
   .ex-list .ex-tags{font-size:10px}
-
   .modal{padding:10px 12px calc(12px + env(safe-area-inset-bottom));max-height:96vh}
   .modal h3{font-size:15px;margin-bottom:8px}
-
   .nav-btn{padding:4px 2px;font-size:8.5px}
   .nav-btn svg{width:19px;height:19px}
   .nav-bottom{padding:4px 2px calc(4px + env(safe-area-inset-bottom))}
@@ -705,7 +653,10 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 <body data-mode="dark">
 <div class="app">
   <header class="header">
-    <div class="logo">АС</div>
+    <div class="logo-wrap">
+      <div class="logo">ДУ</div>
+      <div class="logo-ver" id="logoVersion">v17</div>
+    </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
       <div class="xp-mini-info">
@@ -750,14 +701,8 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <div class="week-grid" id="weekRow"></div>
     </div>
 
-    <div class="card">
-      <div class="cal-nav">
-        <button class="cal-nav-btn" onclick="shiftMonth(-1)">‹</button>
-        <div class="cal-nav-title"><b id="monthTitle">—</b></div>
-        <button class="cal-nav-btn" onclick="goToday()">●</button>
-        <button class="cal-nav-btn" onclick="shiftMonth(1)">›</button>
-      </div>
-      <div class="month-grid" id="monthGrid"></div>
+    <div class="btn-row" style="margin-bottom:8px">
+      <button class="btn btn-sm" onclick="openMonthModal()" id="monthBtnLabel">📅 Календарь месяца</button>
     </div>
 
     <div class="card">
@@ -787,44 +732,10 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <button class="tab-btn" data-f="skill" onclick="setFilter(this)">Навыки</button>
     </div>
 
-    <div class="filter-block">
-      <div class="filter-head" id="zonesToggle" onclick="toggleFilterBody('zones')">
-        <div class="filter-label">🎯 Зоны</div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span class="filter-badge" id="zonesCount">0</span>
-          <span class="filter-arrow">▼</span>
-        </div>
-      </div>
-      <div class="filter-content" id="zonesBody">
-        <div id="zones"></div>
-      </div>
-    </div>
-
-    <div class="filter-block">
-      <div class="filter-head" id="gearsToggle" onclick="toggleFilterBody('gears')">
-        <div class="filter-label">🎒 Снаряды</div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span class="filter-badge" id="gearsCount">0</span>
-          <span class="filter-arrow">▼</span>
-        </div>
-      </div>
-      <div class="filter-content" id="gearsBody">
-        <div class="chip-row" id="gears"></div>
-        <button class="btn btn-sm btn-full" style="margin-top:6px" onclick="addCustomGear()">+ Свой снаряд</button>
-      </div>
-    </div>
-
-    <div class="filter-block">
-      <div class="filter-head" id="skillsToggle" onclick="toggleFilterBody('skills')">
-        <div class="filter-label">⭐ Навыки</div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span class="filter-badge" id="skillsCount">0</span>
-          <span class="filter-arrow">▼</span>
-        </div>
-      </div>
-      <div class="filter-content" id="skillsBody">
-        <div class="chip-row" id="skills"></div>
-      </div>
+    <div class="btn-row" style="margin-bottom:6px">
+      <button class="btn btn-sm" onclick="openPicker('zones')">🎯 Зоны <span class="filter-badge" id="zonesCount" style="margin-left:4px">0</span></button>
+      <button class="btn btn-sm" onclick="openPicker('gears')">🎒 Снаряды <span class="filter-badge" id="gearsCount" style="margin-left:4px">0</span></button>
+      <button class="btn btn-sm" onclick="openPicker('skills')">⭐ Навыки <span class="filter-badge" id="skillsCount" style="margin-left:4px">0</span></button>
     </div>
 
     <div class="section-title" style="margin-top:8px">Упражнения</div>
@@ -961,6 +872,11 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     </div>
 
     <div class="card">
+      <div class="card-title"><div class="card-title-left">📏 Обхваты тела</div></div>
+      <button class="btn btn-primary btn-full" onclick="openMeasurements()">📐 Открыть журнал обхватов</button>
+    </div>
+
+    <div class="card">
       <div class="card-title"><div class="card-title-left">🎨 Тема</div></div>
       <div class="themes-grid" id="themesGrid"></div>
     </div>
@@ -1029,6 +945,23 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     </div>
     <div class="weight-list" id="weightList"></div>
     <button class="modal-close" onclick="closeModal('m-weight')">Закрыть</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="m-meas" onclick="if(event.target===this)closeModal('m-meas')">
+  <div class="modal">
+    <h3>📏 Обхваты тела</h3>
+    <div class="meas-tabs" id="measTabs"></div>
+    <div class="meas-summary" id="measSummary"></div>
+    <div class="meas-ratio" id="measRatio"></div>
+    <canvas class="meas-chart" id="measChart" width="600" height="340"></canvas>
+    <div class="meas-input-row">
+      <input type="date" id="measDate">
+      <input type="number" step="0.1" placeholder="см" id="measValue">
+      <button onclick="addMeasEntry()">+</button>
+    </div>
+    <div class="meas-list" id="measList"></div>
+    <button class="modal-close" onclick="closeModal('m-meas')">Закрыть</button>
   </div>
 </div>
 
@@ -1124,7 +1057,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     <div class="field-group" id="cRoundTimeGroup" style="display:none">
       <label class="field-label">Время, мин</label>
       <input class="field-input" type="number" id="cRoundTime" value="20" min="1" max="120">
-      <div class="note" style="margin-top:6px">💡 Запускается таймер. Атлет жмёт «Круг завершён» — круг считается. Пока таймер идёт — круги продолжаются.</div>
+      <div class="note" style="margin-top:6px">💡 Запускается таймер. Атлет жмёт «Круг завершён» — круг считается.</div>
     </div>
     <div class="section-title">Упражнения</div>
     <div id="cExList"><div class="empty" style="padding:8px">Пока пусто</div></div>
@@ -1185,24 +1118,49 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <div class="modal"><div id="mediaViewer"></div><button class="modal-close" onclick="closeModal('m-media')">Закрыть</button></div>
 </div>
 
+<div class="modal-overlay" id="m-picker" onclick="if(event.target===this)closeModal('m-picker')">
+  <div class="modal">
+    <h3 id="pickerTitle">Выбор</h3>
+    <div id="pickerBody"></div>
+    <button class="btn btn-sm btn-full" style="margin-top:8px" onclick="pickerClear()">✕ Сбросить фильтр</button>
+    <button class="modal-close" onclick="closeModal('m-picker')">Закрыть</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="m-month" onclick="if(event.target===this)closeModal('m-month')">
+  <div class="modal">
+    <h3 id="monthTitle">—</h3>
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="shiftMonth(-1)">‹</button>
+      <div class="cal-nav-title"><b>Выбор даты</b></div>
+      <button class="cal-nav-btn" onclick="monthGoToday()">●</button>
+      <button class="cal-nav-btn" onclick="shiftMonth(1)">›</button>
+    </div>
+    <div class="month-grid" id="monthGrid"></div>
+    <button class="modal-close" onclick="closeModal('m-month')">Закрыть</button>
+  </div>
+</div>
+
 <div class="modal-overlay" id="m-about" onclick="if(event.target===this)closeModal('m-about')">
   <div class="modal">
     <h3>📱 О приложении</h3>
     <div style="text-align:center;padding:6px 0 16px">
       <div style="font-size:52px;line-height:1;margin-bottom:8px">💪</div>
-      <div style="font-size:17px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.3px">АС — Фитнес</div>
+      <div style="font-size:17px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.3px">Делать Упражнения</div>
       <div style="font-size:12px;color:var(--mut);margin-top:4px">Личный трекер тренировок с геймификацией</div>
     </div>
     <div class="info-block"><h4>🎯 Зачем это</h4><p>Помогает <b>планировать</b> тренировки, <b>выполнять по шагам</b> и <b>видеть прогресс</b> — по каждой зоне, снаряду и навыку. Геймификация (XP, ранги, распад) держит мотивацию.</p></div>
-    <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя и месяц одновременно</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• Изменения «на конкретный день» без правки шаблона</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
-    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги, плотный режим для больших баз</p></div>
-    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку одним тапом — из шаблона или прямо в день календаря.</p><p><b>Круговой режим:</b> при создании комплекса включите «На количество кругов» и задайте время (напр. 20 мин). Тогда в тренировке комплекс встанет блоком: атлет жмёт «Круг завершён» — круг считается, пока идёт таймер.</p><p><b>Сортировка:</b> в редакторе тренировки и комплекса упражнения можно двигать ↑ ↓.</p></div>
+    <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя на главном экране, месяц — всплывающий</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• Изменения «на конкретный день» без правки шаблона</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
+    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
+    <div class="info-block"><h4>🎯 Плитки-фильтры</h4><p>Кнопки «Зоны / Снаряды / Навыки» открывают плитки. Нажал — фильтр применился. «Сбросить» очищает всё.</p></div>
+    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Сортировка:</b> упражнения двигаются ↑ ↓.</p></div>
     <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
     <div class="info-block"><h4>🎯 Зоны тела</h4><p>13 главных + подзоны. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
     <div class="info-block"><h4>⭐ XP и ранги</h4><p>• Формулы: <code>сек×0.01</code> · <code>(вес/масса)×0.01×повт</code> · <code>повт×0.1</code></p><p>• Ранги: Новичок → Любитель → Атлет → Спортсмен → Мастер → Ветеран → Чемпион → Легенда</p><p>• Распад при простое: −0.1%/день (7+ дн) … −1%/день (60+ дн)</p></div>
     <div class="info-block"><h4>🏆 Личные рекорды</h4><p>Автодетект при отметке. Побил — золотой баннер.</p></div>
     <div class="info-block"><h4>📊 Аналитика</h4><p>Графики вес/объём/повторы/время, персонаж, отдельно снаряды/зоны/навыки.</p></div>
     <div class="info-block"><h4>⚖️ Журнал веса</h4><p>Запись по датам, график, мин/макс. <b>Профиль берёт массу из последней записи.</b></p></div>
+    <div class="info-block"><h4>📏 Обхваты тела</h4><p>13 частей тела с табами: шея, грудь, талия, живот, бёдра, бёдра/голени/бицепсы/предплечья слева/справа.</p><p><b>Анализ композиции:</b> индексы Грудь/Талия, Талия/Бёдра, Бёдра/Талия, Шея/Талия, Бицепс/Талия.</p></div>
     <div class="info-block"><h4>💾 Данные</h4><p>localStorage. Экспорт/импорт JSON, Share, буфер. Резервная копия — раз в неделю.</p></div>
     <button class="modal-close" onclick="closeModal('m-about')">Понятно</button>
   </div>
@@ -1215,8 +1173,8 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <h4>🏋️ Тренировки</h4>
       <p><b>Создать:</b> «+ Тренировка». Заполни название, период (С/По), дни недели, время.</p>
       <p>Если период пустой — тренировка действует бессрочно.</p>
-      <p>Упражнения: «+ Упражнение» (готовое) или «+ Комплекс» (набор).</p>
-      <p>Порядок упражнений можно менять кнопками ↑ ↓ в редакторе.</p>
+      <p>Упражнения: «+ Упражнение» или «+ Комплекс».</p>
+      <p>Порядок меняется кнопками ↑ ↓ в редакторе.</p>
     </div>
     <div class="info-block">
       <h4>✅ Выполнение</h4>
@@ -1224,14 +1182,25 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p>▶ — запустить с таймером. В конце «Засчитать» ставит ✓ автоматически.</p>
     </div>
     <div class="info-block">
+      <h4>🎯 Плитки-фильтры</h4>
+      <p>В меню «Упр.» кнопки «Зоны / Снаряды / Навыки» открывают плитки. Нажал — фильтр применился, плитка подсветилась.</p>
+      <p>«Сбросить фильтр» очищает все три категории.</p>
+    </div>
+    <div class="info-block">
       <h4>🔁 Круговой режим</h4>
       <p>При создании комплекса переключите «На количество кругов» и задайте время (напр. 20 мин).</p>
-      <p>В тренировке такой комплекс встаёт блоком. В экране выполнения: жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз. По нулю блок закрывается автоматически.</p>
+      <p>В тренировке такой комплекс встаёт блоком. Жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз. По нулю блок закрывается автоматически.</p>
       <p>XP = XP за 1 круг × число кругов. При отметке ✓ вручную спросит «Сколько кругов?».</p>
     </div>
     <div class="info-block">
-      <h4>🎯 Зоны — главные и подзоны</h4>
-      <p>13 главных зон и подзоны внутри. XP главной = свой XP + сумма подзон. В статистике видно, какая подзона отстаёт (⚠).</p>
+      <h4>📅 Календарь месяца</h4>
+      <p>Кнопка «📅 Календарь месяца» открывает всплывающее окно с полным месяцем.</p>
+      <p>Выбрал день — модалка закрылась, неделя и тренировки обновились.</p>
+    </div>
+    <div class="info-block">
+      <h4>📏 Обхваты</h4>
+      <p>В профиле «Открыть журнал обхватов». Табы по частям тела, ввод значения, график, список.</p>
+      <p>Индексы композиции появляются, когда заполнены нужные пары.</p>
     </div>
     <div class="info-block">
       <h4>⭐ X-параметры</h4>
@@ -1241,8 +1210,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <h4>💪 Упражнения</h4>
       <p>Мульти-теги: несколько зон/снарядов/навыков. Медиа: несколько фото + видео + ссылка.</p>
       <p>⏱ Время: XP = сек × 0.01 · 🏋️ Вес: (вес/масса) × 0.01 × повторы · 💪 Свой: повторы × 0.1</p>
-      <p><b>Две стороны:</b> если упражнение на каждую руку/ногу — включи «Две стороны», XP ×2, в выполнении будет «Сторона 1 / Сторона 2».</p>
-      <p><b>Компактный список:</b> в меню упражнений строки в один ряд — миниатюра, имя, эмодзи-теги. Описание видно при открытии карточки. Удобно при большой базе.</p>
+      <p><b>Две стороны:</b> включи «Две стороны», XP ×2, в выполнении будет «Сторона 1 / Сторона 2».</p>
     </div>
     <div class="info-block">
       <h4>🏆 Личные рекорды (PR)</h4>
@@ -1263,6 +1231,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 <div class="toast" id="toast"></div>
 <script>
 /* ==================== КОНСТАНТЫ ==================== */
+const APP_VERSION = 'v17';
 const DEFAULT_ZONES = [
   {id:'cardio', name:'Кардио', emoji:'🫁', isMain:true},
   {id:'neck', name:'Шея', emoji:'🦒', isMain:true},
@@ -1372,9 +1341,15 @@ let xpGears = store.get('xpGears', {});
 let xpZones = store.get('xpZones', {});
 let xpSkills = store.get('xpSkills', {});
 let weightLog = store.get('weightLog', []);
+let measurements = store.get('measurements', {});
+let measActive = 'chest';
 let prs = store.get('prs', {});
 let progressMetric = 'weight';
 let starterInstalled = store.get('starterInstalled', false);
+
+let filterZones = [];
+let filterGears = [];
+let filterSkills = [];
 
 // ⭐ Синхронизация массы профиля с последней записью журнала
 if(weightLog.length > 0){
@@ -1749,12 +1724,29 @@ function renderWeek(){
 }
 function shiftWeek(n){ weekStart = addDays(weekStart, 7*n); selectedDate = new Date(weekStart); renderWeek(); renderMonth(); renderTrainings(); }
 function goToday(){ selectedDate=new Date(TODAY); weekStart=startOfWeek(TODAY); viewMonth=TODAY.getMonth(); viewYear=TODAY.getFullYear(); renderWeek(); renderMonth(); renderTrainings(); }
-function selectDate(d){ selectedDate=d; weekStart=startOfWeek(d); viewMonth=d.getMonth(); viewYear=d.getFullYear(); renderWeek(); renderMonth(); renderTrainings(); }
+function selectDate(d){
+  selectedDate=d;
+  weekStart=startOfWeek(d);
+  viewMonth=d.getMonth();
+  viewYear=d.getFullYear();
+  renderWeek(); renderMonth(); renderTrainings();
+  closeModal('m-month');
+}
+function openMonthModal(){
+  renderMonth();
+  openModal('m-month');
+}
+function monthGoToday(){
+  viewMonth = TODAY.getMonth();
+  viewYear = TODAY.getFullYear();
+  renderMonth();
+}
 function renderMonth(){
   const mt = document.getElementById('monthTitle'); if(mt) mt.textContent = MONTHS_RU[viewMonth]+' '+viewYear;
   const ml = document.getElementById('monthLabel'); if(ml) ml.textContent = MONTHS_RU[viewMonth];
   const mb = document.getElementById('monthBar');
   if(mb) mb.style.width = ((viewMonth+1)/12*100)+'%';
+  const btn = document.getElementById('monthBtnLabel'); if(btn) btn.textContent = '📅 '+MONTHS_RU[viewMonth]+' '+viewYear;
   const first = new Date(viewYear, viewMonth, 1);
   const startDow = (first.getDay()+6)%7;
   const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
@@ -1972,21 +1964,92 @@ function addCompToDay(trainId){
 }
 function editTrainFromDay(trainId){ openTrainModal(trainId); }
 
-/* ============ СПИСОК УПРАЖНЕНИЙ (КОМПАКТНЫЙ) ============ */
+/* ============ ПЛИТКИ-ФИЛЬТРЫ + СПИСОК УПРАЖНЕНИЙ ============ */
+function openPicker(type){
+  const title = document.getElementById('pickerTitle');
+  const body = document.getElementById('pickerBody');
+  if(!title || !body) return;
+  if(type === 'zones'){
+    title.textContent = '🎯 Зоны';
+    const mainZones = getMainZones();
+    body.innerHTML = '<div class="picker-grid">' +
+      mainZones.map(mz => {
+        const children = getSubZones(mz.id);
+        const cnt = exercises.filter(e => (e.zones||[]).includes(mz.id) || children.some(c => (e.zones||[]).includes(c.id))).length;
+        const on = filterZones.includes(mz.id);
+        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+mz.id+'\',\'zones\')">'+
+          '<div class="pt-check">✓</div>'+
+          '<div class="pt-emoji">'+mz.emoji+'</div>'+
+          '<div class="pt-name">'+mz.name+'</div>'+
+          '<div class="pt-count">'+cnt+'</div>'+
+        '</div>';
+      }).join('') +
+    '</div>';
+  } else if(type === 'gears'){
+    title.textContent = '🎒 Снаряды';
+    body.innerHTML = '<div class="picker-grid">' +
+      gears.map(g => {
+        const cnt = exercises.filter(e => (e.gears||[]).includes(g.id)).length;
+        const on = filterGears.includes(g.id);
+        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+g.id+'\',\'gears\')">'+
+          '<div class="pt-check">✓</div>'+
+          '<div class="pt-emoji">'+g.emoji+'</div>'+
+          '<div class="pt-name">'+g.name+'</div>'+
+          '<div class="pt-count">'+cnt+'</div>'+
+        '</div>';
+      }).join('') +
+    '</div>' +
+    '<button class="btn btn-sm btn-full" style="margin-top:10px" onclick="closeModal(\'m-picker\');addCustomGear()">+ Свой снаряд</button>';
+  } else if(type === 'skills'){
+    title.textContent = '⭐ Навыки';
+    body.innerHTML = '<div class="picker-grid">' +
+      skills.map(s => {
+        const cnt = exercises.filter(e => (e.skills||[]).includes(s.id)).length;
+        const on = filterSkills.includes(s.id);
+        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+s.id+'\',\'skills\')">'+
+          '<div class="pt-check">✓</div>'+
+          '<div class="pt-emoji">'+s.emoji+'</div>'+
+          '<div class="pt-name">'+s.name+'</div>'+
+          '<div class="pt-count">'+cnt+'</div>'+
+        '</div>';
+      }).join('') +
+    '</div>';
+  }
+  openModal('m-picker');
+}
+function togglePickerTile(el, id, type){
+  const arr = type === 'zones' ? filterZones : type === 'gears' ? filterGears : filterSkills;
+  const idx = arr.indexOf(id);
+  if(idx >= 0){ arr.splice(idx, 1); el.classList.remove('on'); }
+  else { arr.push(id); el.classList.add('on'); }
+  updateFilterCounters();
+  renderEx();
+}
+function pickerClear(){
+  filterZones = []; filterGears = []; filterSkills = [];
+  updateFilterCounters();
+  renderEx();
+  closeModal('m-picker');
+  toast('Фильтр сброшен');
+}
+function renderChips(){ updateFilterCounters(); }
+function updateFilterCounters(){
+  const zc = document.getElementById('zonesCount'); if(zc) zc.textContent = filterZones.length;
+  const gc = document.getElementById('gearsCount'); if(gc) gc.textContent = filterGears.length;
+  const sc = document.getElementById('skillsCount'); if(sc) sc.textContent = filterSkills.length;
+}
+
 function renderEx(){
   const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
   let list = exercises.filter(e => e.name.toLowerCase().includes(q));
-  if(filter==='zone'){
-    const a = [...document.querySelectorAll('#zones .chip.on, #zones .sub-chip.on')].map(c => c.dataset.val);
-    if(a.length) list = list.filter(e => (e.zones||[]).some(z => a.includes(z)));
+  if(filterZones.length){
+    list = list.filter(e => (e.zones||[]).some(z => filterZones.includes(z)));
   }
-  if(filter==='gear'){
-    const a = [...document.querySelectorAll('#gears .chip.on')].map(c => c.dataset.val);
-    if(a.length) list = list.filter(e => (e.gears||[]).some(g => a.includes(g)));
+  if(filterGears.length){
+    list = list.filter(e => (e.gears||[]).some(g => filterGears.includes(g)));
   }
-  if(filter==='skill'){
-    const a = [...document.querySelectorAll('#skills .chip.on')].map(c => c.dataset.val);
-    if(a.length) list = list.filter(e => (e.skills||[]).some(s => a.includes(s)));
+  if(filterSkills.length){
+    list = list.filter(e => (e.skills||[]).some(s => filterSkills.includes(s)));
   }
 
   const ec = document.getElementById('exCount'); if(ec) ec.textContent = list.length;
@@ -2029,85 +2092,18 @@ function delEx(id){
 }
 function clearAllEx(){
   if(!exercises.length){ toast('Пусто'); return; }
-  if(confirm('Удалить все упражнения?')){ exercises = []; store.set('exercises', exercises); renderEx(); renderChips(); renderStats(); toast('Очищено'); }
+  if(confirm('Удалить все упражнения?')){
+    exercises = [];
+    filterZones = []; filterGears = []; filterSkills = [];
+    store.set('exercises', exercises);
+    renderEx(); renderChips(); renderStats();
+    toast('Очищено');
+  }
 }
 function setFilter(el){
   document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
   el.classList.add('active'); filter = el.dataset.f; renderEx();
 }
-
-function toggleFilterBody(id){
-  const body = document.getElementById(id+'Body');
-  const toggle = document.getElementById(id+'Toggle');
-  if(!body || !toggle) return;
-  const isOpen = body.classList.toggle('on');
-  toggle.classList.toggle('open', isOpen);
-}
-
-function renderChips(){
-  const z = document.getElementById('zones');
-  if(z){
-    const mainZones = getMainZones();
-    const activeIds = [...document.querySelectorAll('#zones .chip.on, #zones .sub-chip.on')].map(c => c.dataset.val);
-    z.innerHTML = mainZones.map(mz => {
-      const children = getSubZones(mz.id);
-      const ownCnt = exercises.filter(e => (e.zones||[]).includes(mz.id)).length;
-      const childCnt = children.reduce((sum, c) => sum + exercises.filter(e => (e.zones||[]).includes(c.id)).length, 0);
-      const isActive = activeIds.includes(mz.id);
-      const hasActiveChild = children.some(c => activeIds.includes(c.id));
-      
-      if(!children.length){
-        return '<div class="chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)"><span>'+mz.emoji+'</span>'+mz.name+' <span class="chip-count">'+ownCnt+'</span></div>';
-      }
-      
-      return '<div class="zone-group'+(hasActiveChild?' open':'')+'" data-zonegroup="'+mz.id+'">' +
-        '<div class="zone-group-head" onclick="toggleZoneGroup(\''+mz.id+'\')">' +
-          '<div class="zone-group-title"><span>'+mz.emoji+'</span>'+mz.name+'</div>' +
-          '<div class="zone-group-badge"><span class="zone-group-count">'+(ownCnt+childCnt)+'</span><span class="zone-group-arrow">▼</span></div>' +
-        '</div>' +
-        '<div class="zone-group-body">' +
-          '<div class="sub-chips">' +
-            '<div class="sub-chip '+(isActive?'on':'')+'" data-val="'+mz.id+'" onclick="toggleChip(this)"><span>'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
-            children.map(c => {
-              const cnt = exercises.filter(e => (e.zones||[]).includes(c.id)).length;
-              const active = activeIds.includes(c.id);
-              return '<div class="sub-chip '+(active?'on':'')+'" data-val="'+c.id+'" onclick="toggleChip(this)"><span>'+c.emoji+'</span>'+c.name+' <span style="opacity:.6">'+cnt+'</span></div>';
-            }).join('') +
-            '<div class="sub-chip chip-add" onclick="addCustomZone(\''+mz.id+'\')">+ подзона</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('') +
-    '<button class="btn btn-sm btn-full" style="margin-top:6px" onclick="addCustomZone()">+ Своя зона</button>';
-  }
-  
-  const g = document.getElementById('gears');
-  if(g) g.innerHTML = gears.map(gn => {
-    const cnt = exercises.filter(e => (e.gears||[]).includes(gn.id)).length;
-    return '<div class="chip" data-val="'+gn.id+'" onclick="toggleChip(this)"><span>'+gn.emoji+'</span>'+gn.name+' <span class="chip-count">'+cnt+'</span></div>';
-  }).join('');
-
-  const s = document.getElementById('skills');
-  if(s) s.innerHTML = skills.map(sk => {
-    const cnt = exercises.filter(e => (e.skills||[]).includes(sk.id)).length;
-    return '<div class="chip" data-val="'+sk.id+'" onclick="toggleChip(this)"><span>'+sk.emoji+'</span>'+sk.name+' <span class="chip-count">'+cnt+'</span></div>';
-  }).join('');
-  
-  updateFilterCounters();
-}
-function toggleZoneGroup(zoneId){
-  const group = document.querySelector('.zone-group[data-zonegroup="'+zoneId+'"]');
-  if(group) group.classList.toggle('open');
-}
-function updateFilterCounters(){
-  const z = document.querySelectorAll('#zones .chip.on, #zones .sub-chip.on').length;
-  const g = document.querySelectorAll('#gears .chip.on').length;
-  const s = document.querySelectorAll('#skills .chip.on').length;
-  const zc = document.getElementById('zonesCount'); if(zc) zc.textContent = z;
-  const gc = document.getElementById('gearsCount'); if(gc) gc.textContent = g;
-  const sc = document.getElementById('skillsCount'); if(sc) sc.textContent = s;
-}
-function toggleChip(el){ el.classList.toggle('on'); updateFilterCounters(); renderEx(); }
 
 function renderZoneTree(selectedIds){
   const el = document.getElementById('exZonesPick'); if(!el) return;
@@ -2147,7 +2143,6 @@ function addCustomZone(parentId){
   const parentOptions = mainZones.map(mz => 
     '<option value="'+mz.id+'"'+(mz.id===presetParent?' selected':'')+'>'+mz.emoji+' '+mz.name+' (подзона)</option>'
   ).join('');
-  
   const modalBody = document.querySelector('#m-new-gear .modal');
   if(modalBody){
     modalBody.innerHTML = 
@@ -2167,10 +2162,8 @@ function addCustomZone(parentId){
       '<button class="btn btn-primary btn-full" onclick="saveCustomZone()">Добавить</button>' +
       '<button class="modal-close" onclick="closeModal(\'m-new-gear\')">Отмена</button>';
   }
-  
   const picker = document.getElementById('emojiPicker');
   if(picker) picker.innerHTML = EMOJI_PRESETS.map(e => '<span onclick="pickEmoji(this,\''+e+'\')">'+e+'</span>').join('');
-  
   openModal('m-new-gear');
 }
 function saveCustomZone(){
@@ -3036,6 +3029,192 @@ function drawWeightChart(){
   ctx.fillText(d2.getDate()+'.'+String(d2.getMonth()+1).padStart(2,'0'), W - padR, H - 10);
 }
 
+/* ==================== ЖУРНАЛ ОБХВАТОВ ==================== */
+const MEAS_PARTS = [
+  {id:'neck', name:'Шея', emoji:'🦒'},
+  {id:'chest', name:'Грудь', emoji:'🫀'},
+  {id:'waist', name:'Талия', emoji:'🎯'},
+  {id:'belly', name:'Живот', emoji:'🍔'},
+  {id:'hips', name:'Бёдра', emoji:'🍑'},
+  {id:'thigh_l', name:'Лев. бедро', emoji:'🦵'},
+  {id:'thigh_r', name:'Прав. бедро', emoji:'🦵'},
+  {id:'shin_l', name:'Лев. голень', emoji:'🦿'},
+  {id:'shin_r', name:'Прав. голень', emoji:'🦿'},
+  {id:'bicep_l', name:'Лев. бицепс', emoji:'💪'},
+  {id:'bicep_r', name:'Прав. бицепс', emoji:'💪'},
+  {id:'forearm_l', name:'Лев. предпл.', emoji:'✋'},
+  {id:'forearm_r', name:'Прав. предпл.', emoji:'✋'},
+];
+
+function openMeasurements(){
+  document.getElementById('measDate').value = isoDate(TODAY);
+  document.getElementById('measValue').value = '';
+  renderMeasTabs();
+  renderMeasSummary();
+  renderMeasRatio();
+  renderMeasList();
+  openModal('m-meas');
+  setTimeout(drawMeasChart, 100);
+}
+function renderMeasTabs(){
+  const el = document.getElementById('measTabs');
+  if(!el) return;
+  el.innerHTML = MEAS_PARTS.map(p => {
+    const arr = measurements[p.id] || [];
+    const last = arr.length ? ' · '+arr[arr.length-1].value.toFixed(1) : '';
+    return '<div class="meas-tab '+(measActive===p.id?'active':'')+'" onclick="setMeasTab(\''+p.id+'\')">'+p.emoji+' '+p.name+last+'</div>';
+  }).join('');
+}
+function setMeasTab(id){
+  measActive = id;
+  renderMeasTabs();
+  renderMeasSummary();
+  renderMeasList();
+  drawMeasChart();
+}
+function addMeasEntry(){
+  const date = document.getElementById('measDate').value;
+  const val = parseFloat(document.getElementById('measValue').value);
+  if(!date){ toast('Выбери дату'); return; }
+  if(!val || val < 5 || val > 300){ toast('Введи корректный размер'); return; }
+  if(!measurements[measActive]) measurements[measActive] = [];
+  const arr = measurements[measActive];
+  const idx = arr.findIndex(x => x.date === date);
+  if(idx >= 0) arr[idx].value = val;
+  else arr.push({date, value: val});
+  arr.sort((a,b) => a.date.localeCompare(b.date));
+  store.set('measurements', measurements);
+  document.getElementById('measValue').value = '';
+  renderMeasTabs();
+  renderMeasSummary();
+  renderMeasRatio();
+  renderMeasList();
+  drawMeasChart();
+  toast('Записано');
+}
+function delMeasEntry(date){
+  if(!measurements[measActive]) return;
+  measurements[measActive] = measurements[measActive].filter(x => x.date !== date);
+  store.set('measurements', measurements);
+  renderMeasTabs();
+  renderMeasSummary();
+  renderMeasRatio();
+  renderMeasList();
+  drawMeasChart();
+  toast('Удалено');
+}
+function renderMeasSummary(){
+  const el = document.getElementById('measSummary');
+  if(!el) return;
+  const arr = measurements[measActive] || [];
+  if(!arr.length){
+    el.innerHTML = '<div class="meas-summary-item"><div class="meas-summary-l">Сейчас</div><div class="meas-summary-v">—</div></div>'+
+      '<div class="meas-summary-item"><div class="meas-summary-l">Мин</div><div class="meas-summary-v">—</div></div>'+
+      '<div class="meas-summary-item"><div class="meas-summary-l">Макс</div><div class="meas-summary-v">—</div></div>';
+    return;
+  }
+  const vals = arr.map(x => x.value);
+  const cur = arr[arr.length-1].value;
+  const mn = Math.min(...vals);
+  const mx = Math.max(...vals);
+  el.innerHTML = '<div class="meas-summary-item"><div class="meas-summary-l">Сейчас</div><div class="meas-summary-v">'+cur.toFixed(1)+'</div></div>'+
+    '<div class="meas-summary-item"><div class="meas-summary-l">Мин</div><div class="meas-summary-v">'+mn.toFixed(1)+'</div></div>'+
+    '<div class="meas-summary-item"><div class="meas-summary-l">Макс</div><div class="meas-summary-v">'+mx.toFixed(1)+'</div></div>';
+}
+function renderMeasRatio(){
+  const el = document.getElementById('measRatio');
+  if(!el) return;
+  const getLast = (id) => {
+    const arr = measurements[id] || [];
+    return arr.length ? arr[arr.length-1].value : null;
+  };
+  const chest = getLast('chest');
+  const waist = getLast('waist');
+  const hips = getLast('hips');
+  const neck = getLast('neck');
+  const bicepL = getLast('bicep_l');
+  const bicepR = getLast('bicep_r');
+  const bicep = (bicepL !== null && bicepR !== null) ? (bicepL+bicepR)/2 : (bicepL ?? bicepR);
+  const rows = [];
+  if(chest && waist) rows.push({label:'Грудь / Талия', val:(chest/waist).toFixed(2)});
+  if(waist && hips) rows.push({label:'Талия / Бёдра', val:(waist/hips).toFixed(2)});
+  if(hips && waist) rows.push({label:'Бёдра / Талия', val:(hips/waist).toFixed(2)});
+  if(neck && waist) rows.push({label:'Шея / Талия', val:(neck/waist).toFixed(2)});
+  if(bicep && waist) rows.push({label:'Бицепс / Талия', val:(bicep/waist).toFixed(2)});
+  if(!rows.length){
+    el.innerHTML = '<b>📊 Анализ композиции</b><br>Заполни грудь, талию и бёдра — появятся индексы.';
+    return;
+  }
+  el.innerHTML = '<b>📊 Анализ композиции</b>' + rows.map(r => '<div class="ratio-row"><span>'+r.label+'</span><b>'+r.val+'</b></div>').join('');
+}
+function renderMeasList(){
+  const el = document.getElementById('measList');
+  if(!el) return;
+  const arr = (measurements[measActive] || []).slice().reverse();
+  if(!arr.length){ el.innerHTML = '<div class="empty">Записей нет</div>'; return; }
+  el.innerHTML = arr.map(m => {
+    const d = new Date(m.date);
+    const dt = d.getDate()+' '+MONTHS_RU_GEN[d.getMonth()]+' '+d.getFullYear();
+    return '<div class="meas-item"><span class="meas-item-date">'+dt+'</span>'+
+      '<span class="meas-item-val">'+m.value.toFixed(1)+' см</span>'+
+      '<button class="meas-item-del" onclick="delMeasEntry(\''+m.date+'\')">✕</button></div>';
+  }).join('');
+}
+function drawMeasChart(){
+  const canvas = document.getElementById('measChart'); if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cs = getComputedStyle(document.documentElement);
+  const lineColor = cs.getPropertyValue('--line').trim() || '#333';
+  const accColor = cs.getPropertyValue('--acc').trim() || '#f80';
+  const acc2Color = cs.getPropertyValue('--acc2').trim() || '#fb0';
+  const mutColor = cs.getPropertyValue('--mut').trim() || '#888';
+  const bgCard = cs.getPropertyValue('--card2').trim() || '#222';
+  ctx.clearRect(0,0,W,H);
+  const arr = measurements[measActive] || [];
+  if(arr.length < 2){
+    ctx.fillStyle = mutColor; ctx.font = '14px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(arr.length === 0 ? 'Добавь первую запись' : 'Нужно 2 записи', W/2, H/2);
+    return;
+  }
+  const padL = 50, padR = 20, padT = 20, padB = 30;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const vals = arr.map(x => x.value);
+  const minV = Math.min(...vals) - 0.5, maxV = Math.max(...vals) + 0.5;
+  const rangeV = maxV - minV || 1;
+  ctx.strokeStyle = lineColor; ctx.lineWidth = 1;
+  ctx.fillStyle = mutColor; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+  for(let i=0; i<=4; i++){
+    const y = padT + (plotH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+    ctx.fillText((maxV - (rangeV/4)*i).toFixed(1), padL - 5, y + 4);
+  }
+  const xs = arr.map((_, i) => padL + (plotW / (arr.length - 1)) * i);
+  const ys = arr.map(x => padT + plotH - ((x.value - minV) / rangeV) * plotH);
+  const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
+  grad.addColorStop(0, accColor + '88'); grad.addColorStop(1, accColor + '00');
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.moveTo(xs[0], padT + plotH);
+  xs.forEach((x, i) => ctx.lineTo(x, ys[i]));
+  ctx.lineTo(xs[xs.length-1], padT + plotH); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = accColor; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+  ctx.beginPath();
+  xs.forEach((x, i) => { if(i === 0) ctx.moveTo(x, ys[i]); else ctx.lineTo(x, ys[i]); });
+  ctx.stroke();
+  xs.forEach((x, i) => {
+    ctx.beginPath(); ctx.arc(x, ys[i], 4, 0, Math.PI*2);
+    ctx.fillStyle = acc2Color; ctx.fill();
+    ctx.strokeStyle = bgCard; ctx.lineWidth = 2; ctx.stroke();
+  });
+  ctx.fillStyle = mutColor; ctx.font = '10px sans-serif';
+  ctx.textAlign = 'left';
+  const d1 = new Date(arr[0].date);
+  ctx.fillText(d1.getDate()+'.'+String(d1.getMonth()+1).padStart(2,'0'), padL, H - 10);
+  ctx.textAlign = 'right';
+  const d2 = new Date(arr[arr.length-1].date);
+  ctx.fillText(d2.getDate()+'.'+String(d2.getMonth()+1).padStart(2,'0'), W - padR, H - 10);
+}
+
 /* ==================== СТАТИСТИКА ==================== */
 function renderStats(){
   const setT = (id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
@@ -3607,8 +3786,8 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'AS-Fit', version:15, exported:new Date().toISOString(),
-    zones, gears, skills, exercises, complexes, trainings, completions, weightLog,
+  return {app:'Delat-Uprazhneniya', version:17, exported:new Date().toISOString(),
+    zones, gears, skills, exercises, complexes, trainings, completions, weightLog, measurements,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
 }
@@ -3617,7 +3796,7 @@ function exportDB(){
   const blob = new Blob([data], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'as-fit-'+new Date().toISOString().slice(0,10)+'.json';
+  a.href = url; a.download = 'du-'+new Date().toISOString().slice(0,10)+'.json';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(url), 1000);
   toast('Файл скачан');
@@ -3640,11 +3819,18 @@ function importDB(input){
         if(data.prs && typeof data.prs === 'object'){
           Object.keys(data.prs).forEach(exId => { if(!prs[exId]) prs[exId] = data.prs[exId]; });
         }
+        if(data.measurements && typeof data.measurements === 'object'){
+          Object.keys(data.measurements).forEach(k => {
+            if(!measurements[k]) measurements[k] = data.measurements[k];
+            else measurements[k] = measurements[k].concat(data.measurements[k]);
+          });
+        }
       } else {
         zones = data.zones||zones; gears = data.gears||gears; skills = data.skills||skills;
         exercises = data.exercises||[]; complexes = data.complexes||[];
         trainings = data.trainings||[]; completions = data.completions||{};
         weightLog = data.weightLog||[];
+        measurements = data.measurements||{};
         if(data.themeId) themeId = data.themeId;
         if(data.themeMode) themeMode = data.themeMode;
         totalXp = typeof data.totalXp === 'number' ? data.totalXp : 0;
@@ -3656,6 +3842,7 @@ function importDB(input){
       store.set('exercises', exercises); store.set('complexes', complexes);
       store.set('trainings', trainings); store.set('completions', completions);
       store.set('weightLog', weightLog);
+      store.set('measurements', measurements);
       store.set('themeId', themeId); store.set('themeMode', themeMode);
       store.set('totalXp', totalXp); store.set('xpLog', xpLog);
       store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
@@ -3671,12 +3858,12 @@ function importDB(input){
 }
 async function shareDB(){
   const data = JSON.stringify(buildDB(), null, 2);
-  const file = new File([data], 'as-fit.json', {type:'application/json'});
+  const file = new File([data], 'du.json', {type:'application/json'});
   if(navigator.canShare && navigator.canShare({files:[file]})){
-    try { await navigator.share({files:[file], title:'База АС'}); toast('Отправлено'); }
+    try { await navigator.share({files:[file], title:'База ДУ'}); toast('Отправлено'); }
     catch(e){ if(e.name !== 'AbortError') toast('Ошибка'); }
   } else if(navigator.share){
-    try { await navigator.share({title:'База АС', text: exercises.length+' упражнений'}); toast('Отправлено'); }
+    try { await navigator.share({title:'База ДУ', text: exercises.length+' упражнений'}); toast('Отправлено'); }
     catch(e){ if(e.name !== 'AbortError') toast('Ошибка'); }
   } else toast('Share недоступен');
 }
@@ -3816,6 +4003,8 @@ if(weightLog.length > 0){
   profile.weight = weightLog[weightLog.length - 1].value;
   store.set('profile', profile);
 }
+const logoVerEl = document.getElementById('logoVersion');
+if(logoVerEl) logoVerEl.textContent = APP_VERSION;
 renderAll();
 
 document.addEventListener('click', e => {
