@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Делать Упражнения</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0f1a'/%3E%3Cpath fill='%23fff' d='M10 50L26 22h8l16 28h-7L30 30 17 50z'/%3E%3Cpath fill='%231456ff' d='M40 50l14-22h-6L34 50z'/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#0e1116; --bg2:#151a22; --card:#1a2029; --card2:#222a36;
@@ -648,14 +649,21 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .app{max-width:640px;padding:12px 16px 24px}
   .header{padding:10px 16px;margin:-12px -16px 10px}
 }
+
+.ic{width:1.15em;height:1.15em;margin-right:.2em;vertical-align:-.22em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ic .a{stroke:var(--acc)}.ic .f,.logo .f{fill:var(--acc);stroke:none}
+.ic.z{width:.62em;height:1.3em;vertical-align:-.3em}.ic.z .bd{fill:none;stroke:currentColor;stroke-width:1;opacity:.5}
+.pt-emoji .ic{width:28px;height:28px;margin:0}.pt-emoji .ic.z{width:15px;height:32px}
+.nav-btn svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.nav-btn svg .a{stroke:var(--acc)}
+.slogan{font-size:12px;font-weight:700;font-style:italic;color:var(--mut);text-align:center;margin:0 0 10px;cursor:pointer}
 </style>
 </head>
 <body data-mode="dark">
 <div class="app">
   <header class="header">
     <div class="logo-wrap">
-      <div class="logo">ДУ</div>
-      <div class="logo-ver" id="logoVersion">v17</div>
+      <div class="logo"><svg viewBox="0 0 64 48" style="height:26px;width:34px;color:var(--txt);display:block;fill:none"><path class="f" d="M24 2h4v8h-4zM30 2h4v8h-4zM36 2h4v8h-4z"/><path fill="currentColor" stroke="none" d="M6 40L24 14h8L50 40h-8L28 22 16 40z"/><path class="f" d="M40 40l16-24h-6L34 40z"/></svg></div>
+      <div class="logo-ver" id="logoVersion">v18</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -673,6 +681,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
   <!-- ========== КАЛЕНДАРЬ ========== -->
   <section class="view on" id="v-main">
+    <div class="slogan" id="slogan"></div>
     <div class="progress-row">
       <div class="progress-cell">
         <div class="lbl">Неделя</div>
@@ -911,11 +920,11 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 <button class="fab" id="fabBtn" onclick="toggleFabMenu()">+</button>
 
 <nav class="nav-bottom">
-  <button class="nav-btn on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg><span>Календарь</span></button>
-  <button class="nav-btn" data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg><span>Упр.</span></button>
-  <button class="nav-btn" data-v="v-comps" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg><span>Комплексы</span></button>
-  <button class="nav-btn" data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg><span>XP</span></button>
-  <button class="nav-btn" data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg><span>Профиль</span></button>
+  <button class="nav-btn on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16"/><path class="a" d="M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>Календарь</span></button>
+  <button class="nav-btn" data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M6 8v8M18 8v8M3 10v4M21 10v4"/><path class="a" d="M6 12h12"/></svg><span>Упр.</span></button>
+  <button class="nav-btn" data-v="v-comps" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4zM4 12l8 4 8-4"/><path class="a" d="M4 16l8 4 8-4"/></svg><span>Комплексы</span></button>
+  <button class="nav-btn" data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M6 20v-6M12 20V8"/><path class="a" d="M18 20V4"/><path d="M3 20h18"/></svg><span>XP</span></button>
+  <button class="nav-btn" data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9V4l4 3h6l4-3v5c0 5-3 9-7 9s-7-4-7-9z"/><path class="a" d="M9.5 11h.01M14.5 11h.01M11 14l1 1 1-1"/></svg><span>Профиль</span></button>
 </nav>
 <!-- ============ ЭКРАН ВЫПОЛНЕНИЯ ============ -->
 <div class="exec-screen" id="execScreen">
@@ -1230,8 +1239,56 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
 <div class="toast" id="toast"></div>
 <script>
+const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
+const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
+const P={
+cardio:['f','Кардио','<path d="M20 29l-5-5a3 3 0 0 1 5-3.5 3 3 0 0 1 5 3.5z"/>'],
+neck:['f','Шея','<path d="M17 11h6v4h-6z"/>'],
+shoulders:['f','Плечи',c(8.5,18,3.6)+c(31.5,18,3.6)],
+shoulders_front:['f','Передняя дельта',c(10.5,17.5,2.6)+c(29.5,17.5,2.6)],
+shoulders_side:['f','Средняя дельта',c(6.5,19,2.6)+c(33.5,19,2.6)],
+shoulders_rear:['b','Задняя дельта',c(10.5,17.5,2.6)+c(29.5,17.5,2.6)],
+shoulders_tri:['b','Трицепс','<path d="M5 20l5-2-1 9-4 1zM35 20l-5-2 1 9 4 1z"/>'],
+back:['b','Спина',`<path d="${BL+BR+BW+BO}"/>`],
+back_lat:['b','Широчайшие',`<path d="${BW}"/>`],
+back_trap:['b','Трапеция',`<path d="${BL}"/>`],
+back_rhomb:['b','Ромбовидные',`<path d="${BR}"/>`],
+back_lower:['b','Поясница',`<path d="${BO}"/>`],
+chest:['f','Грудь','<path d="M12 17h16v11H12z"/>'],
+chest_upper:['f','Верх груди','<path d="M12 17h16v3.5H12z"/>'],
+chest_mid:['f','Середина груди','<path d="M12.5 21h15v3.5h-15z"/>'],
+chest_lower:['f','Низ груди','<path d="M13 25h14v3h-14z"/>'],
+glutes:['b','Ягодицы',`<path d="${GM}"/>`],
+glutes_max:['b','Большая ягодичная',`<path d="${GM}"/>`],
+glutes_med:['b','Средняя ягодичная','<path d="M12 41q4-2 8 0v3h-8zM20 41q4-2 8 0v3h-8z"/>'],
+hips:['f','Бёдра','<path d="M12.5 45h7l-.8 15h-5.4zM20.5 45h7l-1 15h-5.4z"/>'],
+hips_quad:['f','Квадрицепс','<path d="M12.5 45h6l-.8 15h-5zM21.5 45h6l-.8 15h-5z"/>'],
+hips_ham:['b','Бицепс бедра','<path d="M12.5 50h7l-.8 11h-5.4zM20.5 50h7l-1 11h-5.4z"/>'],
+hips_add:['f','Приводящие','<path d="M17.5 46h2.5l-.5 11h-1.8zM20 46h2.5l.3 11h-1.8z"/>'],
+calves:['b','Голени','<path d="M13.5 62h5.5l-.6 12h-4zM21 62h5.5l-1 12h-4z"/>'],
+feet:['f','Стопы','<path d="M12.5 75h7v3.5h-8zM20.5 75h7.5v3.5h-8z"/>'],
+hands:['f','Кисти',c(4.5,39,2.6)+c(35.5,39,2.6)],
+hands_flex:['f','Сгибатели',c(4.5,39,2.6)+c(35.5,39,2.6)],
+hands_ext:['b','Разгибатели',c(4.5,39,2.6)+c(35.5,39,2.6)],
+abs:['f','Пресс','<path d="M16 29h8v14h-8z"/>'],
+abs_upper:['f','Верхний пресс','<path d="M16 29h8v5h-8z"/>'],
+abs_lower:['f','Нижний пресс','<path d="M16 37h8v6h-8z"/>'],
+abs_oblique:['f','Косые','<path d="M12.5 30h3v12h-2zM27.5 30h-3v12h2z"/>'],
+core:['f','Кор','<path d="M13 28h14v15H13z"/>'],
+stretch:['f','Растяжка',S]};
+
+const ICS={"cal": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"15\" rx=\"3\"/><path d=\"M4 10h16\"/><path class=\"a\" d=\"M8 3v4M16 3v4M9 15l2 2 4-4\"/>", "ex": "<path d=\"M6 8v8M18 8v8M3 10v4M21 10v4\"/><path class=\"a\" d=\"M6 12h12\"/>", "comps": "<path d=\"M12 4l8 4-8 4-8-4zM4 12l8 4 8-4\"/><path class=\"a\" d=\"M4 16l8 4 8-4\"/>", "xp": "<path d=\"M6 20v-6M12 20V8\"/><path class=\"a\" d=\"M18 20V4\"/><path d=\"M3 20h18\"/>", "prof": "<path d=\"M5 9V4l4 3h6l4-3v5c0 5-3 9-7 9s-7-4-7-9z\"/><path class=\"a\" d=\"M9.5 11h.01M14.5 11h.01M11 14l1 1 1-1\"/>", "none": "<circle class=\"a\" cx=\"12\" cy=\"4.5\" r=\"2\"/><path d=\"M5 9l7 2 7-2M12 11v5M12 16l-3 5M12 16l3 5\"/>", "rope": "<path d=\"M8 7v5c0 5 2 8 4 8s4-3 4-8V7\"/><path class=\"a\" d=\"M6.5 3h3v4h-3zM14.5 3h3v4h-3z\"/>", "kb": "<path d=\"M8.5 9V6a3.5 3.5 0 0 1 7 0v3\"/><circle cx=\"12\" cy=\"15\" r=\"6\"/><path class=\"a\" d=\"M10 15h4\"/>", "pullup": "<path d=\"M5 4v18M19 4v18\"/><path class=\"a\" d=\"M3 6h18\"/><path d=\"M12 10v5M9 20l3-5 3 5\"/>", "bars": "<path d=\"M6 10v10M18 10v10M3 20h6M15 20h6\"/><path class=\"a\" d=\"M3 10h18M3 14h18\"/>", "rings": "<path d=\"M7 3v6M17 3v6\"/><circle class=\"a\" cx=\"7\" cy=\"14\" r=\"4.5\"/><circle class=\"a\" cx=\"17\" cy=\"14\" r=\"4.5\"/>", "trx": "<circle cx=\"12\" cy=\"3.5\" r=\"1.5\"/><path d=\"M12 5l-6 13M12 5l6 13\"/><path class=\"a\" d=\"M3 18h6M15 18h6\"/>", "band": "<ellipse cx=\"12\" cy=\"12\" rx=\"9\" ry=\"5.5\"/><path class=\"a\" d=\"M6 10c4-2 8-2 12 0\"/>", "db": "<g transform=\"rotate(-45 12 12)\"><path d=\"M6 8v8M18 8v8M3 10v4M21 10v4\"/><path class=\"a\" d=\"M6 12h12\"/></g>", "bb": "<path d=\"M2 12h20M5 6v12M19 6v12\"/><path class=\"a\" d=\"M8 8.5v7M16 8.5v7\"/>", "ball": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3v18\"/><path class=\"a\" d=\"M6 5c3 3 3 11 0 14M18 5c-3 3-3 11 0 14\"/>", "mat": "<path d=\"M3 15c0-2 1-3 3-3h12v6H6c-2 0-3-1-3-3z\"/><circle class=\"a\" cx=\"18\" cy=\"15\" r=\"3\"/>", "coord": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle class=\"f\" cx=\"12\" cy=\"12\" r=\"1.6\"/>", "strength": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path class=\"a\" d=\"M12 17V8M8 12l4-4 4 4\"/>", "speed": "<path class=\"a\" d=\"M13 3L5 14h6l-1 7 8-11h-6z\"/>", "endurance": "<rect x=\"3\" y=\"7\" width=\"16\" height=\"10\" rx=\"2.5\"/><path d=\"M21 10.5v3\"/><rect class=\"f\" x=\"5.5\" y=\"9.5\" width=\"8\" height=\"5\" rx=\"1\"/>", "flex": "<path class=\"a\" d=\"M3 14c3-7 6-7 9 0s6 7 9 0\"/><circle cx=\"12\" cy=\"5\" r=\"1.5\"/>", "power": "<path d=\"M12 3c4 2 5 7 4 11l-4 2-4-2c-1-4 0-9 4-11zM8 14l-3 3M16 14l3 3\"/><circle class=\"a\" cx=\"12\" cy=\"9\" r=\"1.6\"/><path class=\"a\" d=\"M12 18v3\"/>", "balance": "<path d=\"M12 4v15M7 19h10\"/><path class=\"a\" d=\"M4 8h16M4 8l-2.5 5h5zM20 8l-2.5 5h5z\"/>", "agility": "<path d=\"M8 17c0-3 2-5 4-5s4 2 4 5c0 2-1.5 3-4 3s-4-1-4-3z\"/><circle class=\"a\" cx=\"6\" cy=\"11\" r=\"1.7\"/><circle class=\"a\" cx=\"10\" cy=\"6.5\" r=\"1.7\"/><circle class=\"a\" cx=\"14\" cy=\"6.5\" r=\"1.7\"/><circle class=\"a\" cx=\"18\" cy=\"11\" r=\"1.7\"/>", "cardio": "<path d=\"M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z\"/><path class=\"a\" d=\"M6 12h3l2-3 2 5 1.5-2H18\"/>", "neck": "<path d=\"M9 3v6c0 2-1 3-3 4M15 3v6c0 2 1 3 3 4\"/><path class=\"a\" d=\"M6 13c2 0 3 2 6 2s4-2 6-2M6 13v6h12v-6\"/>", "shoulders": "<path d=\"M4 19v-6a8 8 0 0 1 16 0v6\"/><path class=\"a\" d=\"M8 19v-5a4 4 0 0 1 8 0v5\"/>", "back": "<path d=\"M5 4c0 8 2 13 7 16 5-3 7-8 7-16\"/><path class=\"a\" d=\"M12 6v14M8 9l4 2 4-2\"/>", "chest": "<path d=\"M3 9c4-3 7-3 9 0 2-3 5-3 9 0 0 6-4 9-9 9s-9-3-9-9z\"/><path class=\"a\" d=\"M12 9v9\"/>", "glutes": "<circle cx=\"8\" cy=\"14\" r=\"5\"/><circle cx=\"16\" cy=\"14\" r=\"5\"/><path class=\"a\" d=\"M5 5h14\"/>", "hips": "<path d=\"M8 3h8l-1 9 1 9h-8l1-9z\"/><path class=\"a\" d=\"M9.5 16h5\"/>", "calves": "<path d=\"M9 3c1 5-2 7-2 11s2 5 4 7M15 3c-1 4 1 6 1 9 0 3-2 6-5 9\"/><ellipse class=\"a\" cx=\"12\" cy=\"13\" rx=\"2\" ry=\"3.5\"/>", "feet": "<path d=\"M3 16v-3l5-1 2-4 3 2 6 3c2 1 2 2 2 4z\"/><path class=\"a\" d=\"M3 19.5h18\"/>", "hands": "<path d=\"M7 11h10v6a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4z\"/><path class=\"a\" d=\"M10 11V7M12 11V6M14 11V7\"/>", "abs": "<rect x=\"6\" y=\"3\" width=\"12\" height=\"18\" rx=\"4\"/><path class=\"a\" d=\"M12 3v18M6 9h12M6 15h12\"/>", "core": "<path d=\"M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z\"/><path class=\"a\" d=\"M12 8v7\"/>", "stretch": "<circle cx=\"12\" cy=\"4.5\" r=\"2\"/><path d=\"M5 21c3-6 5-8 7-8s4 2 7 8\"/><path class=\"a\" d=\"M6 9l6 4 6-4\"/>"};
+const MA={waist:'core',belly:'abs',thigh_l:'hips_quad',thigh_r:'hips_quad',shin_l:'calves',shin_r:'calves'};
+function E(o){if(!o)return '';const id=MA[o.id]||o.id;
+if(P[id]){const[v,n,m]=P[id];return `<svg class="ic z" viewBox="0 0 40 80"><g class="bd">${S}${v=='b'?'<path d="M20 12v32" stroke-dasharray="1.5 1.5"/>':''}</g><g class="f">${m}</g></svg>`}
+if(ICS[id])return `<svg class="ic" viewBox="0 0 24 24">${ICS[id]}</svg>`;return o.emoji||''}
+const SLOGANS=['Пока ты отдыхаешь, враг тренируется','Ещё подход','Диван подождёт','Завтра ноги скажут всё, что думают','Последний повтор самый честный','Железо не торгуется','У кота девять жизней, у тебя одна. Тренируйся','Маленький шаг тоже шаг','Отдых тоже часть тренировки','Медленно — тоже вперёд'];
+function showSlogan(n){const el=document.getElementById('slogan');if(!el)return;window._sl=(n===undefined?Math.floor(Date.now()/864e5):n)%SLOGANS.length;el.textContent=SLOGANS[window._sl]}
+document.addEventListener('DOMContentLoaded',()=>{showSlogan();const el=document.getElementById('slogan');if(el)el.onclick=()=>showSlogan(window._sl+1)});
+</script>
+<script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v17';
+const APP_VERSION = 'v18';
 const DEFAULT_ZONES = [
   {id:'cardio', name:'Кардио', emoji:'🫁', isMain:true},
   {id:'neck', name:'Шея', emoji:'🦒', isMain:true},
@@ -1835,9 +1892,9 @@ function renderTrainings(){
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
-      const zE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji+z.name : ''; }).filter(Boolean).join(' ');
-      const gE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji+g.name : ''; }).filter(Boolean).join(' ');
-      const sE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? s.emoji+s.name : ''; }).filter(Boolean).join(' ');
+      const zE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? E(z)+z.name : ''; }).filter(Boolean).join(' ');
+      const gE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? E(g)+g.name : ''; }).filter(Boolean).join(' ');
+      const sE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? E(s)+s.name : ''; }).filter(Boolean).join(' ');
       const dosage = [];
       if(e.sets) dosage.push(isX(e.sets)?'<span class="x-mark">X</span>×':e.sets+'×');
       if(e.reps) dosage.push(isX(e.reps)?'<span class="x-mark">X</span> повт':e.reps+' повт');
@@ -1979,7 +2036,7 @@ function openPicker(type){
         const on = filterZones.includes(mz.id);
         return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+mz.id+'\',\'zones\')">'+
           '<div class="pt-check">✓</div>'+
-          '<div class="pt-emoji">'+mz.emoji+'</div>'+
+          '<div class="pt-emoji">'+E(mz)+'</div>'+
           '<div class="pt-name">'+mz.name+'</div>'+
           '<div class="pt-count">'+cnt+'</div>'+
         '</div>';
@@ -1993,7 +2050,7 @@ function openPicker(type){
         const on = filterGears.includes(g.id);
         return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+g.id+'\',\'gears\')">'+
           '<div class="pt-check">✓</div>'+
-          '<div class="pt-emoji">'+g.emoji+'</div>'+
+          '<div class="pt-emoji">'+E(g)+'</div>'+
           '<div class="pt-name">'+g.name+'</div>'+
           '<div class="pt-count">'+cnt+'</div>'+
         '</div>';
@@ -2008,7 +2065,7 @@ function openPicker(type){
         const on = filterSkills.includes(s.id);
         return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+s.id+'\',\'skills\')">'+
           '<div class="pt-check">✓</div>'+
-          '<div class="pt-emoji">'+s.emoji+'</div>'+
+          '<div class="pt-emoji">'+E(s)+'</div>'+
           '<div class="pt-name">'+s.name+'</div>'+
           '<div class="pt-count">'+cnt+'</div>'+
         '</div>';
@@ -2067,8 +2124,8 @@ function renderEx(){
           : '<div class="ex-thumb" style="font-size:12px">🎬</div>')
       : '<div class="ex-thumb">'+(e.format === 'time' ? '⏱' : e.format === 'weight' ? '🏋️' : '💪')+'</div>';
 
-    const zB = (e.zones||[]).slice(0,3).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).filter(Boolean).join('');
-    const gB = (e.gears||[]).slice(0,3).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).filter(Boolean).join('');
+    const zB = (e.zones||[]).slice(0,3).map(zid => { const z = zones.find(x=>x.id===zid); return z ? E(z) : ''; }).filter(Boolean).join('');
+    const gB = (e.gears||[]).slice(0,3).map(gid => { const g = gears.find(x=>x.id===gid); return g ? E(g) : ''; }).filter(Boolean).join('');
     const sidesTag = e.twoSides ? '×2' : '';
     const metaParts = [zB, gB, sidesTag].filter(Boolean);
     const metaHtml = metaParts.length ? '<div class="ex-tags">'+metaParts.join('<span class="dot-sep">·</span>')+'</div>' : '';
@@ -2112,20 +2169,20 @@ function renderZoneTree(selectedIds){
     const children = getSubZones(mz.id);
     const mainOn = selectedIds.includes(mz.id);
     if(!children.length){
-      return '<div class="chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+mz.emoji+'</span>'+mz.name+'</div>';
+      return '<div class="chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+E(mz)+'</span>'+mz.name+'</div>';
     }
     const hasActiveChild = children.some(c => selectedIds.includes(c.id));
     return '<div class="zone-group'+(hasActiveChild||mainOn?' open':'')+'" style="width:100%">' +
       '<div class="zone-group-head" onclick="this.parentElement.classList.toggle(\'open\')">' +
-        '<div class="zone-group-title"><span>'+mz.emoji+'</span>'+mz.name+'</div>' +
+        '<div class="zone-group-title"><span>'+E(mz)+'</span>'+mz.name+'</div>' +
         '<div class="zone-group-badge"><span class="zone-group-arrow">▼</span></div>' +
       '</div>' +
       '<div class="zone-group-body">' +
         '<div class="sub-chips">' +
-          '<div class="sub-chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
+          '<div class="sub-chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+E(mz)+'</span>'+mz.name+' (все)</div>' +
           children.map(c => {
             const on = selectedIds.includes(c.id);
-            return '<div class="sub-chip '+(on?'on':'')+'" data-id="'+c.id+'" onclick="this.classList.toggle(\'on\')"><span>'+c.emoji+'</span>'+c.name+'</div>';
+            return '<div class="sub-chip '+(on?'on':'')+'" data-id="'+c.id+'" onclick="this.classList.toggle(\'on\')"><span>'+E(c)+'</span>'+c.name+'</div>';
           }).join('') +
         '</div>' +
       '</div>' +
@@ -2141,7 +2198,7 @@ function addCustomZone(parentId){
   const mainZones = getMainZones();
   const presetParent = parentId || '';
   const parentOptions = mainZones.map(mz => 
-    '<option value="'+mz.id+'"'+(mz.id===presetParent?' selected':'')+'>'+mz.emoji+' '+mz.name+' (подзона)</option>'
+    '<option value="'+mz.id+'"'+(mz.id===presetParent?' selected':'')+'>'+mz.name+' (подзона)</option>'
   ).join('');
   const modalBody = document.querySelector('#m-new-gear .modal');
   if(modalBody){
@@ -2207,7 +2264,7 @@ function renderMultiPick(cid, items, selectedIds){
   const el = document.getElementById(cid); if(!el) return;
   el.innerHTML = items.map(it => {
     const on = selectedIds.includes(it.id) ? 'on' : '';
-    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')"><span>'+it.emoji+'</span>'+it.name+'</div>';
+    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')"><span>'+E(it)+'</span>'+it.name+'</div>';
   }).join('');
 }
 function getMultiPick(cid){
@@ -2417,8 +2474,8 @@ function renderPickEx(){
   const el = document.getElementById('pickExList'); if(!el) return;
   if(!list.length){ el.innerHTML = '<div class="empty">Нет упражнений</div>'; return; }
   el.innerHTML = '<div class="ex-list">' + list.map(e => {
-    const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji:''; }).join('');
-    const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji:''; }).join('');
+    const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?E(z):''; }).join('');
+    const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?E(g):''; }).join('');
     return '<div class="ex-card" onclick="pickExercise(\''+e.id+'\')">'+
       '<div class="ex-thumb">'+(e.format === 'time' ? '⏱' : e.format === 'weight' ? '🏋️' : '💪')+'</div>'+
       '<div class="ex-info"><div class="ex-name">'+escapeHtml(e.name)+'</div><div class="ex-tags">'+zB+' '+gB+'</div></div>'+
@@ -3062,7 +3119,7 @@ function renderMeasTabs(){
   el.innerHTML = MEAS_PARTS.map(p => {
     const arr = measurements[p.id] || [];
     const last = arr.length ? ' · '+arr[arr.length-1].value.toFixed(1) : '';
-    return '<div class="meas-tab '+(measActive===p.id?'active':'')+'" onclick="setMeasTab(\''+p.id+'\')">'+p.emoji+' '+p.name+last+'</div>';
+    return '<div class="meas-tab '+(measActive===p.id?'active':'')+'" onclick="setMeasTab(\''+p.id+'\')">'+E(p)+' '+p.name+last+'</div>';
   }).join('');
 }
 function setMeasTab(id){
@@ -3252,7 +3309,7 @@ function renderSkillXp(){
     const el = document.getElementById(cfg.containerId); if(!el) return;
     const items = Object.entries(cfg.map).map(([id, d]) => {
       const ent = cfg.entities.find(x => x.id === id);
-      return {id, name: ent?ent.emoji+' '+ent.name:id, xp: d.xp||0, lastTrained: d.lastTrained};
+      return {id, name: ent?E(ent)+' '+ent.name:id, xp: d.xp||0, lastTrained: d.lastTrained};
     }).sort((a,b) => b.xp - a.xp);
     if(!items.length || items.every(i => !i.xp)){ el.innerHTML = '<div class="empty">Пока нет опыта</div>'; return; }
     el.innerHTML = items.filter(i => i.xp > 0 || i.lastTrained).map(item => {
@@ -3289,7 +3346,7 @@ function renderSkillXp(){
     let subHtml = '';
     if(item.children.length){
       const subItems = item.children.map(c => ({
-        id: c.id, name: c.emoji + ' ' + c.name,
+        id: c.id, name: E(c) + ' ' + c.name,
         xp: (xpZones[c.id]?.xp || 0)
       })).filter(s => s.xp > 0);
       if(subItems.length){
@@ -3301,7 +3358,7 @@ function renderSkillXp(){
         }).join('') + '</div>';
       }
     }
-    return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span>'+info.icon+'</span>'+item.mz.emoji+' '+item.mz.name+'</div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.totalXp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div>'+subHtml+'</div>';
+    return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span>'+info.icon+'</span>'+E(item.mz)+' '+item.mz.name+'</div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.totalXp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div>'+subHtml+'</div>';
   }).join('');
 }
 
@@ -3335,9 +3392,9 @@ function startTrainExecution(trainId){
       exName: ex ? ex.name : '?',
       exFormat: ex ? ex.format : 'reps',
       twoSides: ex ? !!ex.twoSides : false,
-      exZones: ex ? (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji+z.name:''; }).filter(Boolean) : [],
-      exGears: ex ? (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji+g.name:''; }).filter(Boolean) : [],
-      exSkills: ex ? (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s?s.emoji+s.name:''; }).filter(Boolean) : [],
+      exZones: ex ? (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?E(z)+z.name:''; }).filter(Boolean) : [],
+      exGears: ex ? (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?E(g)+g.name:''; }).filter(Boolean) : [],
+      exSkills: ex ? (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s?E(s)+s.name:''; }).filter(Boolean) : [],
     };
   });
   execState = {
