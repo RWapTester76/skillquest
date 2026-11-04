@@ -496,7 +496,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .nav-btn svg{width:21px;height:21px}
 .nav-btn span{font-size:9.5px;letter-spacing:.1px;line-height:1.1;margin-top:1px}
 
-/* Сортировка */
+/* Сортировка (legacy, для совместимости) */
 .training-actions-row .btn-move{
   flex:0 0 auto;
   min-width:30px;
@@ -549,7 +549,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .ex-count-line{display:flex;justify-content:space-between;align-items:center;padding:0 2px 4px;font-size:11px;color:var(--mut);font-weight:600}
 .ex-count-line b{color:var(--acc2);font-weight:800}
 
-/* ============ ПЛИТКИ ВЫБОРА (зоны / снаряды / навыки) ============ */
+/* ============ ПЛИТКИ ВЫБОРА ============ */
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:4px}
 .picker-tile{
   background:var(--card2);border:2px solid var(--line-soft);border-radius:var(--radius);
@@ -656,6 +656,81 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .pt-emoji .ic{width:28px;height:28px;margin:0}.pt-emoji .ic.z{width:15px;height:32px}
 .nav-btn svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.nav-btn svg .a{stroke:var(--acc)}
 .slogan{font-size:12px;font-weight:700;font-style:italic;color:var(--mut);text-align:center;margin:0 0 10px;cursor:pointer}
+
+/* ============ DRAG & DROP (v19) ============ */
+.training-actions-row .btn-drag{
+  flex:0 0 auto;
+  min-width:34px;
+  max-width:40px;
+  font-size:15px;
+  font-weight:900;
+  color:var(--acc2);
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.training-actions-row .btn-drag:active{cursor:grabbing}
+.exercise-item{position:relative}
+.exercise-item:not(.dragging){transition:transform .15s ease}
+.exercise-item.dragging{
+  z-index:100;
+  background:var(--card2) !important;
+  box-shadow:0 8px 24px rgba(0,0,0,.55);
+  opacity:.95;
+  cursor:grabbing;
+}
+
+/* ============ ИКОННОЕ МЕНЮ XP (v19) ============ */
+.stat-menu-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+  margin-bottom:12px;
+}
+.stat-menu-btn{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:12px 6px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  cursor:pointer;
+  transition:all .15s;
+  min-height:74px;
+  color:var(--txt);
+}
+.stat-menu-btn:active{transform:scale(.95)}
+.stat-menu-btn.on{
+  background:var(--grad);
+  border-color:transparent;
+  color:var(--bg);
+  box-shadow:0 4px 14px color-mix(in srgb, var(--acc) 35%, transparent);
+}
+.stat-menu-btn .sm-ico{
+  font-size:26px;
+  line-height:1;
+}
+.stat-menu-btn .sm-lbl{
+  font-size:9.5px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  text-align:center;
+  line-height:1.15;
+}
+.stat-panel{display:none;animation:fadeIn .2s ease}
+.stat-panel.on{display:block}
+
+@media (max-width:380px){
+  .stat-menu-grid{grid-template-columns:repeat(3,1fr)}
+  .stat-menu-btn{min-height:66px;padding:10px 4px}
+  .stat-menu-btn .sm-ico{font-size:22px}
+  .stat-menu-btn .sm-lbl{font-size:8.5px}
+}
 </style>
 </head>
 <body data-mode="dark">
@@ -663,7 +738,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <header class="header">
     <div class="logo-wrap">
       <div class="logo"><svg viewBox="0 0 64 48" style="height:26px;width:34px;color:var(--txt);display:block;fill:none"><path class="f" d="M24 2h4v8h-4zM30 2h4v8h-4zM36 2h4v8h-4z"/><path fill="currentColor" stroke="none" d="M6 40L24 14h8L50 40h-8L28 22 16 40z"/><path class="f" d="M40 40l16-24h-6L34 40z"/></svg></div>
-      <div class="logo-ver" id="logoVersion">v18</div>
+      <div class="logo-ver" id="logoVersion">v19</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -734,12 +809,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <span class="search-icon">🔍</span>
       <input class="search-input" placeholder="Поиск упражнения..." id="exSearch" oninput="renderEx()">
     </div>
-    <div class="tabs">
-      <button class="tab-btn active" data-f="all" onclick="setFilter(this)">Все</button>
-      <button class="tab-btn" data-f="zone" onclick="setFilter(this)">Зоны</button>
-      <button class="tab-btn" data-f="gear" onclick="setFilter(this)">Снаряды</button>
-      <button class="tab-btn" data-f="skill" onclick="setFilter(this)">Навыки</button>
-    </div>
 
     <div class="btn-row" style="margin-bottom:6px">
       <button class="btn btn-sm" onclick="openPicker('zones')">🎯 Зоны <span class="filter-badge" id="zonesCount" style="margin-left:4px">0</span></button>
@@ -772,12 +841,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
   <!-- ========== XP / СТАТИСТИКА ========== -->
   <section class="view" id="v-stat">
-    <div class="character-card">
-      <div class="character-title">🧍 Твой персонаж</div>
-      <div class="character-svg" id="charContainer"></div>
-      <div class="character-legend" id="charLegend"></div>
-    </div>
-
     <div class="xp-hero">
       <div class="xp-hero-main">
         <div class="xp-hero-level">
@@ -790,51 +853,100 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
           <div class="xp-hero-bar"><i id="xpBar" style="width:0%"></i></div>
         </div>
       </div>
-      <div class="xp-hero-formula">
-        <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
+    </div>
+
+    <div class="stat-menu-grid" id="statMenu">
+      <button class="stat-menu-btn" data-tab="char" onclick="switchStatTab(this)">
+        <span class="sm-ico">🧍</span><span class="sm-lbl">Персонаж</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="progress" onclick="switchStatTab(this)">
+        <span class="sm-ico">📈</span><span class="sm-lbl">Прогресс</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="gears" onclick="switchStatTab(this)">
+        <span class="sm-ico">🎒</span><span class="sm-lbl">Снаряды</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="zones" onclick="switchStatTab(this)">
+        <span class="sm-ico">💪</span><span class="sm-lbl">Зоны</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="skills" onclick="switchStatTab(this)">
+        <span class="sm-ico">🎯</span><span class="sm-lbl">Навыки</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="log" onclick="switchStatTab(this)">
+        <span class="sm-ico">📝</span><span class="sm-lbl">XP Лог</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="summary" onclick="switchStatTab(this)">
+        <span class="sm-ico">📊</span><span class="sm-lbl">Сводка</span>
+      </button>
+    </div>
+
+    <div class="stat-panel on" data-panel="char">
+      <div class="character-card">
+        <div class="character-title">🧍 Твой персонаж</div>
+        <div class="character-svg" id="charContainer"></div>
+        <div class="character-legend" id="charLegend"></div>
       </div>
     </div>
 
-    <div class="progress-section">
-      <h3>📈 Прогресс упражнения</h3>
-      <select id="progress-ex-select" class="progress-ex-select" onchange="renderProgressChart()">
-        <option value="">— выбери упражнение —</option>
-      </select>
-      <div id="progress-prs"></div>
-      <div class="metric-tabs" id="progress-metric-tabs">
-        <div class="metric-tab active" data-metric="weight" onclick="setProgressMetric('weight')">Вес</div>
-        <div class="metric-tab" data-metric="volume" onclick="setProgressMetric('volume')">Объём</div>
-        <div class="metric-tab" data-metric="reps" onclick="setProgressMetric('reps')">Повторы</div>
-        <div class="metric-tab" data-metric="time" onclick="setProgressMetric('time')">Время</div>
+    <div class="stat-panel" data-panel="progress">
+      <div class="progress-section">
+        <h3>📈 Прогресс упражнения</h3>
+        <select id="progress-ex-select" class="progress-ex-select" onchange="renderProgressChart()">
+          <option value="">— выбери упражнение —</option>
+        </select>
+        <div id="progress-prs"></div>
+        <div class="metric-tabs" id="progress-metric-tabs">
+          <div class="metric-tab active" data-metric="weight" onclick="setProgressMetric('weight')">Вес</div>
+          <div class="metric-tab" data-metric="volume" onclick="setProgressMetric('volume')">Объём</div>
+          <div class="metric-tab" data-metric="reps" onclick="setProgressMetric('reps')">Повторы</div>
+          <div class="metric-tab" data-metric="time" onclick="setProgressMetric('time')">Время</div>
+        </div>
+        <canvas id="progress-chart" class="progress-canvas" width="600" height="400"></canvas>
+        <div class="progress-hint" id="progress-info">Выбери упражнение из списка</div>
       </div>
-      <canvas id="progress-chart" class="progress-canvas" width="600" height="400"></canvas>
-      <div class="progress-hint" id="progress-info">Выбери упражнение из списка</div>
     </div>
 
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">🎒 Снаряды</div></div>
-      <div class="skill-list" id="skillGears"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">💪 Зоны</div></div>
-      <div class="skill-list" id="skillZones"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">🎯 Навыки</div></div>
-      <div class="skill-list" id="skillSkills"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">XP Лог</div></div>
-      <div class="xp-log" id="xpLog"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">Сводка</div></div>
-      <div class="stats-summary">
-        <div class="stat-mini"><div class="stat-mini-val" id="stTotal">0</div><div class="stat-mini-lbl">Упражнений</div></div>
-        <div class="stat-mini"><div class="stat-mini-val" id="stTrains">0</div><div class="stat-mini-lbl">Тренировок</div></div>
-        <div class="stat-mini"><div class="stat-mini-val" id="stComps">0</div><div class="stat-mini-lbl">Комплексов</div></div>
-        <div class="stat-mini"><div class="stat-mini-val" id="stGears">0</div><div class="stat-mini-lbl">Снарядов</div></div>
+    <div class="stat-panel" data-panel="gears">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">🎒 Снаряды</div></div>
+        <div class="skill-list" id="skillGears"></div>
       </div>
+    </div>
+
+    <div class="stat-panel" data-panel="zones">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">💪 Зоны</div></div>
+        <div class="skill-list" id="skillZones"></div>
+      </div>
+    </div>
+
+    <div class="stat-panel" data-panel="skills">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">🎯 Навыки</div></div>
+        <div class="skill-list" id="skillSkills"></div>
+      </div>
+    </div>
+
+    <div class="stat-panel" data-panel="log">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">XP Лог</div></div>
+        <div class="xp-log" id="xpLog"></div>
+      </div>
+    </div>
+
+    <div class="stat-panel" data-panel="summary">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">Сводка</div></div>
+        <div class="stats-summary">
+          <div class="stat-mini"><div class="stat-mini-val" id="stTotal">0</div><div class="stat-mini-lbl">Упражнений</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stTrains">0</div><div class="stat-mini-lbl">Тренировок</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stComps">0</div><div class="stat-mini-lbl">Комплексов</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stGears">0</div><div class="stat-mini-lbl">Снарядов</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-hero-formula" style="margin-top:12px">
+      <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
     </div>
   </section>
 
@@ -1162,12 +1274,12 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя на главном экране, месяц — всплывающий</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• Изменения «на конкретный день» без правки шаблона</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
     <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
     <div class="info-block"><h4>🎯 Плитки-фильтры</h4><p>Кнопки «Зоны / Снаряды / Навыки» открывают плитки. Нажал — фильтр применился. «Сбросить» очищает всё.</p></div>
-    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Сортировка:</b> упражнения двигаются ↑ ↓.</p></div>
+    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Сортировка:</b> упражнения в редакторе перетаскиваются за ручку ⠿.</p></div>
     <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
     <div class="info-block"><h4>🎯 Зоны тела</h4><p>13 главных + подзоны. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
     <div class="info-block"><h4>⭐ XP и ранги</h4><p>• Формулы: <code>сек×0.01</code> · <code>(вес/масса)×0.01×повт</code> · <code>повт×0.1</code></p><p>• Ранги: Новичок → Любитель → Атлет → Спортсмен → Мастер → Ветеран → Чемпион → Легенда</p><p>• Распад при простое: −0.1%/день (7+ дн) … −1%/день (60+ дн)</p></div>
     <div class="info-block"><h4>🏆 Личные рекорды</h4><p>Автодетект при отметке. Побил — золотой баннер.</p></div>
-    <div class="info-block"><h4>📊 Аналитика</h4><p>Графики вес/объём/повторы/время, персонаж, отдельно снаряды/зоны/навыки.</p></div>
+    <div class="info-block"><h4>📊 Аналитика</h4><p>Графики вес/объём/повторы/время, персонаж, отдельно снаряды/зоны/навыки. Меню — большие иконки сверху.</p></div>
     <div class="info-block"><h4>⚖️ Журнал веса</h4><p>Запись по датам, график, мин/макс. <b>Профиль берёт массу из последней записи.</b></p></div>
     <div class="info-block"><h4>📏 Обхваты тела</h4><p>13 частей тела с табами: шея, грудь, талия, живот, бёдра, бёдра/голени/бицепсы/предплечья слева/справа.</p><p><b>Анализ композиции:</b> индексы Грудь/Талия, Талия/Бёдра, Бёдра/Талия, Шея/Талия, Бицепс/Талия.</p></div>
     <div class="info-block"><h4>💾 Данные</h4><p>localStorage. Экспорт/импорт JSON, Share, буфер. Резервная копия — раз в неделю.</p></div>
@@ -1183,7 +1295,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p><b>Создать:</b> «+ Тренировка». Заполни название, период (С/По), дни недели, время.</p>
       <p>Если период пустой — тренировка действует бессрочно.</p>
       <p>Упражнения: «+ Упражнение» или «+ Комплекс».</p>
-      <p>Порядок меняется кнопками ↑ ↓ в редакторе.</p>
+      <p>Порядок меняется перетаскиванием за ручку ⠿ в редакторе.</p>
     </div>
     <div class="info-block">
       <h4>✅ Выполнение</h4>
@@ -1288,7 +1400,7 @@ document.addEventListener('DOMContentLoaded',()=>{showSlogan();const el=document
 </script>
 <script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v18';
+const APP_VERSION = 'v19';
 const DEFAULT_ZONES = [
   {id:'cardio', name:'Кардио', emoji:'🫁', isMain:true},
   {id:'neck', name:'Шея', emoji:'🦒', isMain:true},
@@ -1390,7 +1502,6 @@ let completions = store.get('completions', {});
 let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
 let themeId = store.get('themeId', 'neon');
 let themeMode = store.get('themeMode', 'dark');
-let filter = 'all';
 let currentExMedia = [];
 let totalXp = store.get('totalXp', 0);
 let xpLog = store.get('xpLog', []);
@@ -1403,12 +1514,12 @@ let measActive = 'chest';
 let prs = store.get('prs', {});
 let progressMetric = 'weight';
 let starterInstalled = store.get('starterInstalled', false);
+let statActiveTab = store.get('statActiveTab', 'char');
 
 let filterZones = [];
 let filterGears = [];
 let filterSkills = [];
 
-// ⭐ Синхронизация массы профиля с последней записью журнала
 if(weightLog.length > 0){
   profile.weight = weightLog[weightLog.length - 1].value;
   store.set('profile', profile);
@@ -1741,7 +1852,7 @@ function nav(el){
   document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
   const v = document.getElementById(el.dataset.v); if(v) v.classList.add('on');
   closeFabMenu();
-  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); renderCharacter(); }
+  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); renderCharacter(); applyStatTab(); }
   if(el.dataset.v === 'v-comps'){ renderCompsTab(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1789,15 +1900,8 @@ function selectDate(d){
   renderWeek(); renderMonth(); renderTrainings();
   closeModal('m-month');
 }
-function openMonthModal(){
-  renderMonth();
-  openModal('m-month');
-}
-function monthGoToday(){
-  viewMonth = TODAY.getMonth();
-  viewYear = TODAY.getFullYear();
-  renderMonth();
-}
+function openMonthModal(){ renderMonth(); openModal('m-month'); }
+function monthGoToday(){ viewMonth = TODAY.getMonth(); viewYear = TODAY.getFullYear(); renderMonth(); }
 function renderMonth(){
   const mt = document.getElementById('monthTitle'); if(mt) mt.textContent = MONTHS_RU[viewMonth]+' '+viewYear;
   const ml = document.getElementById('monthLabel'); if(ml) ml.textContent = MONTHS_RU[viewMonth];
@@ -2157,10 +2261,6 @@ function clearAllEx(){
     toast('Очищено');
   }
 }
-function setFilter(el){
-  document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-  el.classList.add('active'); filter = el.dataset.f; renderEx();
-}
 
 function renderZoneTree(selectedIds){
   const el = document.getElementById('exZonesPick'); if(!el) return;
@@ -2299,6 +2399,62 @@ function saveEx(){
   editingExId = null;
 }
 
+/* ==================== DRAG & DROP ==================== */
+let dragState = { active:false };
+
+function startDrag(e, type, idx){
+  e.preventDefault();
+  const listEl = document.getElementById(type === 'train' ? 'tExList' : 'cExList');
+  if(!listEl) return;
+  const items = [...listEl.querySelectorAll('.exercise-item')];
+  if(!items[idx]) return;
+  const r0 = items[0].getBoundingClientRect();
+  const r1 = items[1] ? items[1].getBoundingClientRect() : null;
+  const step = r1 ? (r1.top - r0.top) : (r0.height + 6);
+  dragState = {
+    active:true, type, fromIdx:idx, toIdx:idx, startY:e.clientY,
+    itemEl:items[idx], listEl, items, step
+  };
+  items[idx].classList.add('dragging');
+  document.body.style.userSelect = 'none';
+  document.addEventListener('pointermove', onDragMove, {passive:false});
+  document.addEventListener('pointerup', onDragEnd);
+  document.addEventListener('pointercancel', onDragEnd);
+}
+
+function onDragMove(e){
+  if(!dragState.active) return;
+  e.preventDefault();
+  const delta = e.clientY - dragState.startY;
+  const target = Math.max(0, Math.min(dragState.items.length-1, dragState.fromIdx + Math.round(delta / dragState.step)));
+  dragState.toIdx = target;
+  dragState.itemEl.style.transform = 'translateY(' + delta + 'px)';
+  dragState.items.forEach((el, i) => {
+    if(i === dragState.fromIdx) return;
+    let shift = 0;
+    if(dragState.fromIdx < target && i > dragState.fromIdx && i <= target) shift = -dragState.step;
+    else if(dragState.fromIdx > target && i >= target && i < dragState.fromIdx) shift = dragState.step;
+    el.style.transform = shift ? 'translateY(' + shift + 'px)' : '';
+  });
+}
+
+function onDragEnd(){
+  document.removeEventListener('pointermove', onDragMove);
+  document.removeEventListener('pointerup', onDragEnd);
+  document.removeEventListener('pointercancel', onDragEnd);
+  document.body.style.userSelect = '';
+  const s = dragState;
+  dragState = { active:false };
+  if(!s.active) return;
+  s.items.forEach(el => { el.style.transform = ''; el.classList.remove('dragging'); });
+  if(s.fromIdx !== s.toIdx && s.fromIdx >= 0){
+    const list = s.type === 'train' ? tempTrainEx : tempCompEx;
+    const [item] = list.splice(s.fromIdx, 1);
+    list.splice(s.toIdx, 0, item);
+    if(s.type === 'train') renderTempTrainEx(); else renderTempCompEx();
+  }
+}
+
 function moveTempEx(t, i, dir){
   const list = t === 'train' ? tempTrainEx : tempCompEx;
   const j = i + dir;
@@ -2334,8 +2490,7 @@ function renderTempTrainEx(){
         '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
         '<div style="font-size:10px;color:var(--mut);margin:3px 0">'+e.blockEx.length+' упражнений в круге</div>'+
         '<div class="training-actions-row">'+
-          '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',-1)">↑</button>'+
-          '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',1)">↓</button>'+
+          '<button class="btn-drag" onpointerdown="startDrag(event,\'train\','+idx+')" aria-label="Перетащить">⠿</button>'+
           '<button onclick="removeTempEx(\'train\','+idx+')">✕</button>'+
         '</div></div>';
     }
@@ -2350,8 +2505,7 @@ function renderTempTrainEx(){
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
       '<div class="training-actions-row">'+
-        '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',-1)">↑</button>'+
-        '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',1)">↓</button>'+
+        '<button class="btn-drag" onpointerdown="startDrag(event,\'train\','+idx+')" aria-label="Перетащить">⠿</button>'+
         '<button onclick="openExConfig(\'train\','+idx+')">✏️</button>'+
         '<button onclick="removeTempEx(\'train\','+idx+')">✕</button>'+
       '</div></div>';
@@ -2414,8 +2568,7 @@ function renderTempCompEx(){
         '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
         '<div style="font-size:10px;color:var(--mut);margin:3px 0">'+e.blockEx.length+' упражнений в круге</div>'+
         '<div class="training-actions-row">'+
-          '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',-1)">↑</button>'+
-          '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',1)">↓</button>'+
+          '<button class="btn-drag" onpointerdown="startDrag(event,\'comp\','+idx+')" aria-label="Перетащить">⠿</button>'+
           '<button onclick="removeTempEx(\'comp\','+idx+')">✕</button>'+
         '</div></div>';
     }
@@ -2429,8 +2582,7 @@ function renderTempCompEx(){
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
       '<div class="training-actions-row">'+
-        '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',-1)">↑</button>'+
-        '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',1)">↓</button>'+
+        '<button class="btn-drag" onpointerdown="startDrag(event,\'comp\','+idx+')" aria-label="Перетащить">⠿</button>'+
         '<button onclick="openExConfig(\'comp\','+idx+')">✏️</button>'+
         '<button onclick="removeTempEx(\'comp\','+idx+')">✕</button>'+
       '</div></div>';
@@ -3843,7 +3995,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'Delat-Uprazhneniya', version:17, exported:new Date().toISOString(),
+  return {app:'Delat-Uprazhneniya', version:19, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog, measurements,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
@@ -4041,6 +4193,22 @@ function installStarterPack(){
   store.set('starterInstalled', true);
 }
 
+/* ==================== ИКОННОЕ МЕНЮ XP ==================== */
+function switchStatTab(btn){
+  statActiveTab = btn.dataset.tab;
+  store.set('statActiveTab', statActiveTab);
+  applyStatTab();
+  if(statActiveTab === 'progress') setTimeout(() => renderProgressChart(), 60);
+  if(statActiveTab === 'char') setTimeout(() => renderCharacter(), 60);
+}
+function applyStatTab(){
+  const tab = statActiveTab || 'char';
+  document.querySelectorAll('#statMenu .stat-menu-btn').forEach(b =>
+    b.classList.toggle('on', b.dataset.tab === tab));
+  document.querySelectorAll('#v-stat .stat-panel').forEach(p =>
+    p.classList.toggle('on', p.dataset.panel === tab));
+}
+
 /* ==================== РЕНДЕР ВСЕГО ==================== */
 function renderAll(){
   renderWeek(); renderMonth(); renderTrainings();
@@ -4048,6 +4216,7 @@ function renderAll(){
   renderStats(); updateXpUI(); renderSkillXp(); renderCharacter();
   applyTheme(); applyAvatar(); renderCompsTab();
   populateProgressSelect();
+  applyStatTab();
   if(document.getElementById('m-train-list')?.classList.contains('on')) renderTrainTemplates();
 }
 
