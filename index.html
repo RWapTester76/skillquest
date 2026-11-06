@@ -138,7 +138,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .training-body.on{display:block;animation:slideDown .25s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 
-.exercise-item{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);padding:var(--space-2) var(--space-3);margin-top:var(--space-2);font-size:var(--font-sm);}
+.exercise-item{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);padding:var(--space-2) var(--space-3);margin-top:var(--space-2);font-size:var(--font-sm);position:relative;}
 .ex-item-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);margin-bottom:2px;}
 .ex-item-name{font-weight:700;font-size:var(--font-sm);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .ex-item-dosage{font-size:var(--font-xs);padding:2px var(--space-2);border-radius:var(--radius-full);background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap;font-weight:600;}
@@ -171,16 +171,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .tab-btn{padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);font-size:var(--font-sm);font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--mut);white-space:nowrap;flex:0 0 auto;transition:all .15s;}
 .tab-btn.active{background:var(--grad);color:var(--bg);border-color:transparent;box-shadow:0 2px 8px color-mix(in srgb, var(--acc) 25%, transparent);}
 
-.filter-block{margin-bottom:var(--space-2)}
-.filter-head{display:flex;align-items:center;justify-content:space-between;padding:var(--space-3);background:var(--card);border:1px solid var(--line);border-radius:var(--radius);cursor:pointer;user-select:none;transition:all .15s;}
-.filter-head:active{background:var(--card2)}
-.filter-head.open{border-color:var(--acc)}
-.filter-label{display:flex;align-items:center;gap:var(--space-2);font-size:var(--font-sm);font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);}
-.filter-badge{font-size:var(--font-xs);font-weight:800;color:var(--acc2);background:color-mix(in srgb, var(--acc2) 15%, transparent);padding:2px var(--space-2);border-radius:var(--radius-full);}
-.filter-arrow{font-size:11px;color:var(--mut);transition:transform .2s;}
-.filter-head.open .filter-arrow{transform:rotate(180deg)}
-.filter-content{display:none;padding:var(--space-2);background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);margin-top:var(--space-1);}
-.filter-content.on{display:block;animation:slideDown .2s ease}
 .chip-row{display:flex;flex-wrap:wrap;gap:var(--space-1);}
 .chip{padding:var(--space-2) var(--space-3);border-radius:var(--radius-full);font-size:var(--font-sm);font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all .12s;}
 .chip:active{transform:scale(.95)}
@@ -204,7 +194,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .sub-chip:active{transform:scale(.95)}
 .sub-chip.on{background:var(--grad);color:var(--bg);border-color:transparent;}
 
-.ex-list{display:flex;flex-direction:column;gap:var(--space-2)}
+.ex-list{display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .ex-card{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-2);border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer;transition:border-color .15s;}
 .ex-card:active{border-color:var(--acc)}
 .ex-thumb{width:44px;height:44px;border-radius:var(--radius-sm);background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;flex:0 0 auto;}
@@ -592,10 +582,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   body[data-mode="dark"] .theme-toggle .thumb{transform:translateX(16px)}
   .tabs{gap:2px;margin-bottom:8px}
   .tab-btn{padding:5px 9px;font-size:10.5px;border-radius:6px}
-  .filter-head{padding:6px 10px}
-  .filter-label{font-size:10px;letter-spacing:.3px}
-  .filter-badge{font-size:9px;padding:1px 5px}
-  .filter-content{padding:6px}
   .chip{padding:5px 9px;font-size:10.5px;gap:3px}
   .sub-chip{padding:3px 7px;font-size:9.5px}
   .section-title{font-size:10px;margin-bottom:6px}
@@ -647,7 +633,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   -webkit-user-select:none;
 }
 .training-actions-row .btn-drag:active{cursor:grabbing}
-.exercise-item{position:relative}
 .exercise-item:not(.dragging){transition:transform .15s ease}
 .exercise-item.dragging{
   z-index:100;
@@ -757,6 +742,55 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   cursor:pointer;margin-bottom:10px;
 }
 .picker-back:active{transform:scale(.97);background:var(--card2)}
+
+/* ============ ПЛИТКИ СНАРЯДОВ / НАВЫКОВ В РЕДАКТОРЕ УПРАЖНЕНИЯ ============ */
+.ex-tiles{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(64px,1fr));
+  gap:6px;
+  margin-top:4px;
+}
+.ex-tile{
+  background:var(--card2);
+  border:1.5px solid var(--line-soft);
+  border-radius:var(--radius-sm);
+  padding:8px 4px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .15s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  min-height:64px;
+  justify-content:center;
+  position:relative;
+}
+.ex-tile:active{transform:scale(.95)}
+.ex-tile.on{
+  border-color:var(--acc);
+  background:color-mix(in srgb, var(--acc) 14%, var(--card2));
+}
+.ex-tile .ic{width:22px;height:22px;margin:0}
+.ex-tile .ic.z{width:12px;height:28px}
+.ex-tile .et-name{
+  font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.2px;
+  color:var(--txt);line-height:1.1;text-align:center;
+}
+.ex-tile .et-check{
+  position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;
+  background:var(--acc);color:var(--bg);font-size:8px;font-weight:900;
+  display:none;align-items:center;justify-content:center;
+}
+.ex-tile.on .et-check{display:flex}
+
+@media (max-width:480px){
+  .ex-tiles{grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:5px}
+  .ex-tile{min-height:56px;padding:6px 3px;gap:2px}
+  .ex-tile .ic{width:18px;height:18px}
+  .ex-tile .ic.z{width:10px;height:24px}
+  .ex-tile .et-name{font-size:8px}
+}
 </style>
 </head>
 <body data-mode="dark">
@@ -764,7 +798,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <header class="header">
     <div class="logo-wrap">
       <div class="logo"><svg viewBox="0 0 64 48" style="height:26px;width:34px;color:var(--txt);display:block;fill:none"><path class="f" d="M24 2h4v8h-4zM30 2h4v8h-4zM36 2h4v8h-4z"/><path fill="currentColor" stroke="none" d="M6 40L24 14h8L50 40h-8L28 22 16 40z"/><path class="f" d="M40 40l16-24h-6L34 40z"/></svg></div>
-      <div class="logo-ver" id="logoVersion">v20.2</div>
+      <div class="logo-ver" id="logoVersion">v20.3</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -1064,6 +1098,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <button class="nav-btn" data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M6 20v-6M12 20V8"/><path class="a" d="M18 20V4"/><path d="M3 20h18"/></svg><span>XP</span></button>
   <button class="nav-btn" data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9V4l4 3h6l4-3v5c0 5-3 9-7 9s-7-4-7-9z"/><path class="a" d="M9.5 11h.01M14.5 11h.01M11 14l1 1 1-1"/></svg><span>Профиль</span></button>
 </nav>
+
 <!-- ============ ЭКРАН ВЫПОЛНЕНИЯ ============ -->
 <div class="exec-screen" id="execScreen">
   <div class="exec-header">
@@ -1123,8 +1158,8 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     </div>
     <div class="field-group"><label class="field-label">Ссылка на сайт</label><input class="field-input" id="exLink" type="url" placeholder="https://..."></div>
     <div class="field-group"><label class="field-label">Зоны</label><div id="exZonesPick"></div></div>
-    <div class="field-group"><label class="field-label">Снаряды</label><div class="chip-row" id="exGearsPick"></div></div>
-    <div class="field-group"><label class="field-label">Навыки</label><div class="chip-row" id="exSkillsPick"></div></div>
+    <div class="field-group"><label class="field-label">Снаряды</label><div id="exGearsPick"></div></div>
+    <div class="field-group"><label class="field-label">Навыки</label><div id="exSkillsPick"></div></div>
     <div class="field-group">
       <label class="field-label">Стороны тела</label>
       <div class="chip-row" id="exTwoSidesPick">
@@ -1206,6 +1241,14 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <input class="field-input" type="number" id="cRoundTime" value="20" min="1" max="120">
       <div class="note" style="margin-top:6px">💡 Запускается таймер. Атлет жмёт «Круг завершён» — круг считается.</div>
     </div>
+    <div class="field-group" id="cRestModeGroup">
+      <label class="field-label">Отдых между подходами</label>
+      <div class="chip-row" id="cRestModePick">
+        <div class="chip on" data-v="0" onclick="pickRestMode(0)">📏 Стандартный</div>
+        <div class="chip" data-v="1" onclick="pickRestMode(1)">📊 Нестандартный</div>
+      </div>
+      <div class="note" id="cRestModeNote" style="display:none">💡 Для каждого упражнения можно задать свой отдых после каждого подхода — например <b>60,90,120</b>. Если не задан — используется обычный «Отдых, с».</div>
+    </div>
     <div class="section-title">Упражнения</div>
     <div id="cExList"><div class="empty" style="padding:8px">Пока пусто</div></div>
     <button class="btn btn-sm btn-full" style="margin-top:6px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
@@ -1245,6 +1288,11 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <div class="field-group"><label class="field-label">Отдых, с</label><input class="field-input" type="text" id="exCfgRest" value="60"></div>
     </div>
     <div class="field-group"><label class="field-label">Вес, кг</label><input class="field-input" type="text" id="exCfgWeight" value="0"></div>
+    <div class="field-group" id="exCfgRestPerSetGroup" style="display:none">
+      <label class="field-label">Отдых после подходов (через запятую)</label>
+      <input class="field-input" type="text" id="exCfgRestPerSet" placeholder="60,90,120">
+      <div class="note" style="margin-top:4px">💡 <b>60,90,120</b> = отдых 60с после 1-го подхода, 90с после 2-го, 120с после 3-го. Пусто = использовать «Отдых, с».</div>
+    </div>
     <div class="field-group"><label class="field-label">Заметка</label><input class="field-input" id="exCfgNote"></div>
     <button class="btn btn-primary btn-full" onclick="saveExConfig()">ОК</button>
     <button class="modal-close" onclick="closeModal('m-ex-config')">Отмена</button>
@@ -1298,9 +1346,9 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     </div>
     <div class="info-block"><h4>🎯 Зачем это</h4><p>Помогает <b>планировать</b> тренировки, <b>выполнять по шагам</b> и <b>видеть прогресс</b> — по каждой зоне, снаряду и навыку. Геймификация (XP, ранги, распад) держит мотивацию.</p></div>
     <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя на главном экране, месяц — всплывающий</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• В календаре — только просмотр; редактирование через «Шаблоны»</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
-    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
+    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки — плитками с иконками</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
     <div class="info-block"><h4>🎯 Плитки-фильтры</h4><p>Кнопки «Зоны / Снаряды / Навыки» открывают плитки. Клик на главную зону с подзонами → вторая страница с конкретными пучками. Нажал — фильтр применился. «Сбросить» очищает всё.</p></div>
-    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Сортировка:</b> упражнения в редакторе перетаскиваются за ручку ⠿.</p></div>
+    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Нестандартный отдых:</b> для режима «по подходам» можно задать массив отдыха между подходами (например <code>60,90,120</code>) для каждого упражнения отдельно.</p><p><b>Сортировка:</b> упражнения в редакторе перетаскиваются за ручку ⠿.</p></div>
     <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
     <div class="info-block"><h4>🎯 Зоны тела</h4><p>Главные + подзоны: плечи (дельты, бицепс, трицепс), спина (широчайшие, трапеция, ромбовидные, поясница), грудь (верх/середина/низ), ягодицы (большая/средняя/малая), бёдра (квадрицепс, бицепс бедра, приводящие, отводящие), голень (икра, камбала, берцовые), пресс (прямая, поперечная, косые), кисти (сгибатели, разгибатели). Плюс: кардио, лицо, шея, стопы, кор, растяжка. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
     <div class="info-block"><h4>⭐ XP и ранги</h4><p>• Формулы: <code>сек×0.01</code> · <code>(вес/масса)×0.01×повт</code> · <code>повт×0.1</code></p><p>• Ранги: Новичок → Любитель → Атлет → Спортсмен → Мастер → Ветеран → Чемпион → Легенда</p><p>• Распад при простое: −0.1%/день (7+ дн) … −1%/день (60+ дн)</p></div>
@@ -1338,6 +1386,12 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p>При создании комплекса переключите «На количество кругов» и задайте время (напр. 20 мин).</p>
       <p>В тренировке такой комплекс встаёт блоком. Жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз. По нулю блок закрывается автоматически.</p>
       <p>XP = XP за 1 круг × число кругов. При отметке ✓ вручную спросит «Сколько кругов?».</p>
+    </div>
+    <div class="info-block">
+      <h4>📊 Нестандартный отдых</h4>
+      <p>В комплексе «по подходам» включите «Нестандартный» — в каждом упражнении появится поле «Отдых после подходов».</p>
+      <p>Пример: <b>60,90,120</b> = отдых 60с после 1-го подхода, 90с после 2-го, 120с после 3-го.</p>
+      <p>Если массив короче подходов — для недостающих берётся обычный «Отдых, с». Если пусто — используется только «Отдых, с».</p>
     </div>
     <div class="info-block">
       <h4>📅 Календарь месяца</h4>
@@ -1434,7 +1488,7 @@ document.addEventListener('DOMContentLoaded',()=>{showSlogan();const el=document
 </script>
 <script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v20.2';
+const APP_VERSION = 'v20.3';
 const DEFAULT_ZONES = [
   {id:'cardio', name:'Кардио', emoji:'🫁', isMain:true},
   {id:'face', name:'Лицо', emoji:'😊', isMain:true},
@@ -1561,14 +1615,19 @@ let filterZones = [];
 let filterGears = [];
 let filterSkills = [];
 
-if(weightLog.length > 0){
-  profile.weight = weightLog[weightLog.length - 1].value;
-  store.set('profile', profile);
-}
+let pickerNav = { stack: [] };
+let zoneTreeExpanded = new Set();
+let currentExZones = [];
+let currentCompCustomRest = false;
 
 let editingExId = null, editingTrainId = null, editingCompId = null;
 let tempTrainEx = [], tempCompEx = [];
 let pickTarget = null, exConfigTarget = null;
+
+if(weightLog.length > 0){
+  profile.weight = weightLog[weightLog.length - 1].value;
+  store.set('profile', profile);
+}
 
 const TODAY = new Date();
 let viewMonth = TODAY.getMonth();
@@ -1580,6 +1639,7 @@ function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; 
 function sameDay(a,b){ return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(); }
 function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function escapeHtml(s){ return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 let toastT;
 function toast(msg){
@@ -2117,8 +2177,6 @@ function toggleTrain(trainId){
 }
 
 /* ============ ФИЛЬТРЫ-ПЛИТКИ С DRILL-DOWN ============ */
-let pickerNav = { stack: [] };
-
 function openPicker(type){
   pickerNav = { stack: [{ type, parentId: null }] };
   renderPickerPage();
@@ -2318,9 +2376,6 @@ function clearAllEx(){
 }
 
 /* ============ РЕДАКТОР УПРАЖНЕНИЯ — ПЛИТКИ ЗОН ============ */
-let zoneTreeExpanded = new Set();
-let currentExZones = [];
-
 function renderZoneTree(){
   const el = document.getElementById('exZonesPick');
   if(!el) return;
@@ -2378,9 +2433,6 @@ function toggleSubZone(id){
   renderZoneTree();
 }
 function getZonePick(){ return currentExZones.slice(); }
-function escapeHtml(s){
-  return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-}
 </script>
 <script>
 /* ============ РЕДАКТОР УПРАЖНЕНИЯ ============ */
@@ -2408,14 +2460,19 @@ function pickTwoSides(v){
 }
 function renderMultiPick(cid, items, selectedIds){
   const el = document.getElementById(cid); if(!el) return;
+  el.classList.add('ex-tiles');
   el.innerHTML = items.map(it => {
     const on = selectedIds.includes(it.id) ? 'on' : '';
-    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')"><span>'+E(it)+'</span>'+it.name+'</div>';
+    return '<div class="ex-tile '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')">'+
+      '<div class="et-check">✓</div>'+
+      E(it)+
+      '<div class="et-name">'+it.name+'</div>'+
+    '</div>';
   }).join('');
 }
 function getMultiPick(cid){
   const el = document.getElementById(cid); if(!el) return [];
-  return [...el.querySelectorAll('.chip.on')].map(c => c.dataset.id);
+  return [...el.querySelectorAll('.chip.on, .ex-tile.on')].map(c => c.dataset.id);
 }
 function saveEx(){
   const name = document.getElementById('exName').value.trim();
@@ -2583,6 +2640,16 @@ function pickRoundMode(v){
   document.querySelectorAll('#cRoundModePick .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === v));
   const g = document.getElementById('cRoundTimeGroup');
   if(g) g.style.display = v === 1 ? 'block' : 'none';
+  const rg = document.getElementById('cRestModeGroup');
+  if(rg) rg.style.display = v === 0 ? 'block' : 'none';
+  if(v === 1){ currentCompCustomRest = false; pickRestMode(0); }
+}
+function pickRestMode(v){
+  currentCompCustomRest = (v === 1);
+  document.querySelectorAll('#cRestModePick .chip').forEach(c =>
+    c.classList.toggle('on', +c.dataset.v === v));
+  const note = document.getElementById('cRestModeNote');
+  if(note) note.style.display = v === 1 ? 'block' : 'none';
 }
 function openCompModal(compId){
   editingCompId = compId || null;
@@ -2592,6 +2659,7 @@ function openCompModal(compId){
   el('cName').value = c ? c.name : '';
   tempCompEx = c ? JSON.parse(JSON.stringify(c.exercises||[])) : [];
   pickRoundMode(c && c.roundMode ? 1 : 0);
+  pickRestMode(c && c.customRestMode ? 1 : 0);
   el('cRoundTime').value = c && c.roundTime ? c.roundTime : 20;
   renderTempCompEx();
   openModal('m-comp');
@@ -2615,6 +2683,11 @@ function renderTempCompEx(){
     if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+'×');
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
     if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
+    if(e.restPerSet && e.restPerSet.length){
+      dosage.push('⏱ '+e.restPerSet.join('/'));
+    } else if(e.rest){
+      dosage.push('⏱ '+e.rest+'с');
+    }
     if(ex && ex.twoSides) dosage.push('<span style="color:var(--acc2)">×2</span>');
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
@@ -2636,7 +2709,8 @@ function saveComp(){
     name,
     exercises: JSON.parse(JSON.stringify(tempCompEx)),
     roundMode,
-    roundTime
+    roundTime,
+    customRestMode: !roundMode && currentCompCustomRest
   };
   if(editingCompId){
     const i = complexes.findIndex(c => c.id === editingCompId);
@@ -2692,6 +2766,16 @@ function openExConfig(target, index){
   el('exCfgSets').value = e.sets||1; el('exCfgReps').value = e.reps||0;
   el('exCfgTime').value = e.time||0; el('exCfgRest').value = e.rest||0;
   el('exCfgWeight').value = e.weight||0; el('exCfgNote').value = e.note||'';
+
+  const restGroup = el('exCfgRestPerSetGroup');
+  const restInput = el('exCfgRestPerSet');
+  const hasExisting = Array.isArray(e.restPerSet) && e.restPerSet.length > 0;
+  const showRestField = (target === 'comp' && currentCompCustomRest) || hasExisting;
+  if(restGroup) restGroup.style.display = showRestField ? 'block' : 'none';
+  if(restInput){
+    restInput.value = hasExisting ? e.restPerSet.join(',') : '';
+  }
+
   openModal('m-ex-config');
 }
 function parseDosageValue(v){
@@ -2708,6 +2792,18 @@ function saveExConfig(){
     weight: parseDosageValue(document.getElementById('exCfgWeight').value),
     note: document.getElementById('exCfgNote').value.trim()
   };
+
+  const restGroup = document.getElementById('exCfgRestPerSetGroup');
+  const restInput = document.getElementById('exCfgRestPerSet');
+  if(restGroup && restGroup.style.display !== 'none' && restInput){
+    const raw = restInput.value.trim();
+    if(raw){
+      data.restPerSet = raw.split(/[,\s]+/).filter(Boolean).map(x => parseDosageValue(x));
+    } else {
+      data.restPerSet = null;
+    }
+  }
+
   if(cfg.type === 'temp'){
     const list = cfg.target === 'comp' ? tempCompEx : tempTrainEx;
     if(list[cfg.index]) list[cfg.index] = {...list[cfg.index], ...data};
@@ -2788,7 +2884,11 @@ function renderCompsTab(){
       if(e.reps) d.push((isX(e.reps)?'<span class="x">X</span>':e.reps) + ' повт.');
       if(e.time) d.push((isX(e.time)?'<span class="x">X</span>':e.time) + ' сек');
       if(e.weight) d.push((isX(e.weight)?'<span class="x">X</span>':e.weight) + ' кг');
-      if(e.rest) d.push('отдых ' + (isX(e.rest)?'<span class="x">X</span>':e.rest) + ' сек');
+      if(e.restPerSet && e.restPerSet.length){
+        d.push('отдых ' + e.restPerSet.join('/') + ' сек');
+      } else if(e.rest){
+        d.push('отдых ' + (isX(e.rest)?'<span class="x">X</span>':e.rest) + ' сек');
+      }
       if(ex.twoSides) d.push('<span class="x">×2</span>');
       return '<div class="complex-ex-item">'+
         '<div class="complex-ex-name">'+escapeHtml(ex.name)+'</div>'+
@@ -2884,7 +2984,6 @@ function getExerciseHistory(exId){
   });
   return history.sort((a,b) => a.date.localeCompare(b.date));
 }
-
 function setProgressMetric(metric){
   progressMetric = metric;
   document.querySelectorAll('#progress-metric-tabs .metric-tab').forEach(t => {
@@ -3244,7 +3343,6 @@ const MEAS_PARTS = [
   {id:'forearm_l', name:'Лев. предпл.', emoji:'✋'},
   {id:'forearm_r', name:'Прав. предпл.', emoji:'✋'},
 ];
-
 function openMeasurements(){
   document.getElementById('measDate').value = isoDate(TODAY);
   document.getElementById('measValue').value = '';
@@ -3461,7 +3559,6 @@ function renderSkillXp(){
       return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span>'+info.icon+'</span>'+item.name+'</div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.xp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div></div>';
     }).join('');
   });
-
   const zEl = document.getElementById('skillZones');
   if(!zEl) return;
   const mainZones = getMainZones();
@@ -3479,7 +3576,6 @@ function renderSkillXp(){
     return {mz, children, ownXp, childrenXp, totalXp, lastTrained};
   }).filter(i => i.totalXp > 0 || i.lastTrained)
     .sort((a,b) => b.totalXp - a.totalXp);
-
   if(!items.length){ zEl.innerHTML = '<div class="empty">Пока нет опыта</div>'; return; }
   zEl.innerHTML = items.map(item => {
     const info = skillRankInfo(item.totalXp);
@@ -3503,7 +3599,8 @@ function renderSkillXp(){
     return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span>'+info.icon+'</span>'+E(item.mz)+' '+item.mz.name+'</div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.totalXp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div>'+subHtml+'</div>';
   }).join('');
 }
-
+</script>
+<script>
 /* ==================== ВЫПОЛНЕНИЕ ==================== */
 let execState = null;
 function startTrainExecution(trainId){
@@ -3847,7 +3944,8 @@ function execFinishSet(){
   const totalSets = +item.sets || 1;
   if(twoSides && execState.currentSide === 1){
     execState.currentSide = 2;
-    if(+item.rest > 0){ startExecPhase('rest', +item.rest); }
+    const restDur = +item.rest || 0;
+    if(restDur > 0){ startExecPhase('rest', restDur); }
     else { startExecPhase('work', +item.time || 0); }
     return;
   }
@@ -3868,9 +3966,14 @@ function execFinishSet(){
     execState.timer.running = false;
     renderExecScreen();
   } else {
+    const finishedSet = execState.currentSet;
     execState.currentSet++;
     execState.currentSide = 1;
-    if(+item.rest > 0){ startExecPhase('rest', +item.rest); }
+    let restDur = +item.rest || 0;
+    if(item.restPerSet && item.restPerSet[finishedSet - 1] !== undefined && item.restPerSet[finishedSet - 1] !== null){
+      restDur = +item.restPerSet[finishedSet - 1] || 0;
+    }
+    if(restDur > 0){ startExecPhase('rest', restDur); }
     else { startExecPhase('work', +item.time || 0); }
   }
 }
@@ -3962,7 +4065,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'Delat-Uprazhneniya', version:202, exported:new Date().toISOString(),
+  return {app:'Delat-Uprazhneniya', version:203, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog, measurements,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
@@ -4052,7 +4155,6 @@ function resetAll(){ if(confirm('Сбросить всё?')){ localStorage.clear
 
 /* ==================== СВОИ СНАРЯДЫ ==================== */
 const EMOJI_PRESETS = ['🪢','🏋️','🎿','🏗️','⭕','🎗️','⚽','🏀','🏐','🎾','🥊','🥋','🎽','🦯','🪃','🛹','🛼','⛸️','🧘','🤸','🏃','🚴','🏊','⛹️','🤾','🏌️','🪝','🧱','🪜','🛞','🧗','🥌','🏑','🏒','🎯','🥏','🏓','🏸','🎳','🪀','🪁','⚙️','🔗','🧲','🪨','🪵','🧊','🟫','🟩','🟦','🟥','🟨','🟪','⬛','⬜'];
-
 function restoreGearModalForm(){
   const modalBody = document.querySelector('#m-new-gear .modal');
   if(!modalBody) return;
