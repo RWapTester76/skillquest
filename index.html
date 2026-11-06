@@ -179,21 +179,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .chip.on .chip-count{opacity:.9}
 .chip-add{color:var(--acc2);border-style:dashed;border-color:var(--acc2);background:transparent;}
 
-.zone-group{width:100%;margin-bottom:var(--space-1);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--card);}
-.zone-group-head{display:flex;align-items:center;justify-content:space-between;padding:var(--space-2) var(--space-3);cursor:pointer;user-select:none;background:var(--card2);}
-.zone-group-head:active{background:var(--line-soft)}
-.zone-group-title{display:flex;align-items:center;gap:var(--space-2);font-size:var(--font-sm);font-weight:800;}
-.zone-group-badge{display:flex;align-items:center;gap:var(--space-2);}
-.zone-group-count{font-size:var(--font-xs);font-weight:800;color:var(--acc2);background:color-mix(in srgb, var(--acc2) 15%, transparent);padding:1px 6px;border-radius:var(--radius-full);}
-.zone-group-arrow{font-size:10px;color:var(--mut);transition:transform .2s;}
-.zone-group.open .zone-group-arrow{transform:rotate(180deg)}
-.zone-group-body{display:none;padding:var(--space-2)}
-.zone-group.open .zone-group-body{display:block}
-.sub-chips{display:flex;flex-wrap:wrap;gap:var(--space-1)}
-.sub-chip{padding:var(--space-1) var(--space-2);border-radius:var(--radius-full);font-size:var(--font-xs);font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:all .12s;}
-.sub-chip:active{transform:scale(.95)}
-.sub-chip.on{background:var(--grad);color:var(--bg);border-color:transparent;}
-
 .ex-list{display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .ex-card{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-2);border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer;transition:border-color .15s;}
 .ex-card:active{border-color:var(--acc)}
@@ -467,15 +452,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .nav-btn svg{width:21px;height:21px}
 .nav-btn span{font-size:9.5px;letter-spacing:.1px;line-height:1.1;margin-top:1px}
 
-.training-actions-row .btn-move{
-  flex:0 0 auto;
-  min-width:30px;
-  padding:var(--space-2) var(--space-1);
-  font-size:13px;
-  font-weight:900;
-  color:var(--acc2);
-}
-
 .exercise-item.round-block{
   border-left:3px solid var(--acc);
   background:color-mix(in srgb, var(--acc) 7%, var(--card));
@@ -682,58 +658,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .stat-menu-btn .sm-lbl{font-size:8.5px}
 }
 
-/* ============ ПЛИТКИ ЗОН В РЕДАКТОРЕ УПРАЖНЕНИЯ ============ */
-.zone-tiles-wrap{display:flex;flex-direction:column;gap:8px}
-.zone-tile{
-  background:var(--card2);border:1.5px solid var(--line-soft);border-radius:var(--radius-sm);
-  padding:8px 6px;text-align:center;cursor:pointer;transition:all .15s;
-  display:inline-flex;flex-direction:column;align-items:center;gap:2px;
-  min-width:62px;position:relative;vertical-align:top;margin:0 4px 4px 0;
-}
-.zone-tile:active{transform:scale(.95)}
-.zone-tile.on{border-color:var(--acc);background:color-mix(in srgb, var(--acc) 14%, var(--card2))}
-.zone-tile.expanded{border-color:var(--acc2)}
-.zone-tile .ic{width:22px;height:22px;margin:0}
-.zone-tile .ic.z{width:14px;height:30px}
-.zone-tile .zt-name{
-  font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.2px;
-  color:var(--txt);line-height:1.1;text-align:center;
-}
-.zone-tile .zt-arrow{
-  position:absolute;bottom:1px;right:4px;font-size:7px;color:var(--mut);
-}
-.zone-tile.expanded .zt-arrow{color:var(--acc2)}
-.zone-tile .zt-check{
-  position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;
-  background:var(--acc);color:var(--bg);font-size:8px;font-weight:900;
-  display:none;align-items:center;justify-content:center;
-}
-.zone-tile.on .zt-check{display:flex}
-
-.zone-sub-row{
-  display:flex;flex-wrap:wrap;gap:5px;
-  padding:8px 4px 8px 10px;
-  border-left:2px solid var(--acc);
-  margin:0 0 4px 4px;
-  background:color-mix(in srgb, var(--acc) 4%, transparent);
-  border-radius:0 6px 6px 0;
-}
-.zone-sub-tile{
-  background:var(--card);border:1.5px solid var(--line-soft);border-radius:var(--radius-sm);
-  padding:6px 10px;font-size:10px;font-weight:700;color:var(--mut);
-  cursor:pointer;transition:all .12s;
-  display:inline-flex;align-items:center;gap:4px;
-}
-.zone-sub-tile:active{transform:scale(.95)}
-.zone-sub-tile.on{
-  border-color:var(--acc);background:color-mix(in srgb, var(--acc) 14%, var(--card));
-  color:var(--txt);
-}
-.zone-sub-tile .ic{width:13px;height:13px;margin:0}
-.zone-sub-tile .ic.z{width:8px;height:17px}
-.zone-sub-tile .zst-all{color:var(--acc2);font-weight:900}
-
-/* ============ ПОДМЕНЮ PICKER ============ */
 .picker-back{
   display:inline-flex;align-items:center;gap:4px;
   padding:6px 12px;border-radius:var(--radius-sm);
@@ -743,7 +667,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 }
 .picker-back:active{transform:scale(.97);background:var(--card2)}
 
-/* ============ ПЛИТКИ СНАРЯДОВ / НАВЫКОВ В РЕДАКТОРЕ УПРАЖНЕНИЯ ============ */
+/* ============ ПЛИТКИ СНАРЯДОВ / НАВЫКОВ / ЗОН В РЕДАКТОРЕ УПРАЖНЕНИЯ ============ */
 .ex-tiles{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(64px,1fr));
@@ -798,7 +722,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <header class="header">
     <div class="logo-wrap">
       <div class="logo"><svg viewBox="0 0 64 48" style="height:26px;width:34px;color:var(--txt);display:block;fill:none"><path class="f" d="M24 2h4v8h-4zM30 2h4v8h-4zM36 2h4v8h-4z"/><path fill="currentColor" stroke="none" d="M6 40L24 14h8L50 40h-8L28 22 16 40z"/><path class="f" d="M40 40l16-24h-6L34 40z"/></svg></div>
-      <div class="logo-ver" id="logoVersion">v20.3</div>
+      <div class="logo-ver" id="logoVersion">v20.4</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -1278,7 +1202,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <div class="modal">
     <h3 id="exCfgTitle">Настройка</h3>
     <div class="field-group"><label class="field-label">Упражнение</label><div id="exCfgName" style="font-size:12px;font-weight:700;padding:8px 10px;background:var(--card);border-radius:var(--radius-sm)"></div></div>
-    <div class="note" style="margin-bottom:8px">💡 Введи <b>X</b> → спросим во время тренировки</div>
+    <div class="note" style="margin-bottom:8px">💡 Введи <b>X</b> → спросим во время тренировки. Для повторов и веса X спросим <b>после каждого подхода</b>.</div>
     <div class="field-row" style="margin-bottom:8px">
       <div class="field-group"><label class="field-label">Подходы</label><input class="field-input" type="text" id="exCfgSets" value="3"></div>
       <div class="field-group"><label class="field-label">Повторы</label><input class="field-input" type="text" id="exCfgReps" value="10"></div>
@@ -1346,7 +1270,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     </div>
     <div class="info-block"><h4>🎯 Зачем это</h4><p>Помогает <b>планировать</b> тренировки, <b>выполнять по шагам</b> и <b>видеть прогресс</b> — по каждой зоне, снаряду и навыку. Геймификация (XP, ранги, распад) держит мотивацию.</p></div>
     <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя на главном экране, месяц — всплывающий</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• В календаре — только просмотр; редактирование через «Шаблоны»</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
-    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки — плитками с иконками</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
+    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки — плитками с иконками</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• <b>X для повторов и веса</b> — спрашивается <b>после каждого подхода</b></p><p>• <b>X для подходов, времени, отдыха</b> — спрашивается перед упражнением</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
     <div class="info-block"><h4>🎯 Плитки-фильтры</h4><p>Кнопки «Зоны / Снаряды / Навыки» открывают плитки. Клик на главную зону с подзонами → вторая страница с конкретными пучками. Нажал — фильтр применился. «Сбросить» очищает всё.</p></div>
     <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Нестандартный отдых:</b> для режима «по подходам» можно задать массив отдыха между подходами (например <code>60,90,120</code>) для каждого упражнения отдельно.</p><p><b>Сортировка:</b> упражнения в редакторе перетаскиваются за ручку ⠿.</p></div>
     <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
@@ -1377,21 +1301,26 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p>▶ — запустить с таймером. В конце «Засчитать» ставит ✓ автоматически.</p>
     </div>
     <div class="info-block">
+      <h4>⭐ X-параметры</h4>
+      <p><b>Подходы, время, отдых</b> — спросим <b>перед</b> упражнением (один раз).</p>
+      <p><b>Повторы, вес</b> — спросим <b>после каждого подхода</b>. Если предыдущий подход был заполнен, его значение подставляется как дефолт — можно просто нажать Enter.</p>
+      <p>Для двусторонних упражнений повторы спрашиваются «на одну сторону».</p>
+    </div>
+    <div class="info-block">
       <h4>🎯 Плитки-фильтры</h4>
-      <p>В меню «Упр.» кнопки «Зоны / Снаряды / Навыки» открывают плитки. Клик на главную зону с подзонами → вторая страница с конкретными пучками (например, «Плечи» → «Средняя дельта», «Задняя дельта», «Бицепс», «Трицепс»).</p>
+      <p>В меню «Упр.» кнопки «Зоны / Снаряды / Навыки» открывают плитки. Клик на главную зону с подзонами → вторая страница с конкретными пучками.</p>
       <p>«Сбросить фильтр» очищает все три категории.</p>
     </div>
     <div class="info-block">
       <h4>🔁 Круговой режим</h4>
       <p>При создании комплекса переключите «На количество кругов» и задайте время (напр. 20 мин).</p>
-      <p>В тренировке такой комплекс встаёт блоком. Жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз. По нулю блок закрывается автоматически.</p>
+      <p>В тренировке такой комплекс встаёт блоком. Жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз.</p>
       <p>XP = XP за 1 круг × число кругов. При отметке ✓ вручную спросит «Сколько кругов?».</p>
     </div>
     <div class="info-block">
       <h4>📊 Нестандартный отдых</h4>
       <p>В комплексе «по подходам» включите «Нестандартный» — в каждом упражнении появится поле «Отдых после подходов».</p>
       <p>Пример: <b>60,90,120</b> = отдых 60с после 1-го подхода, 90с после 2-го, 120с после 3-го.</p>
-      <p>Если массив короче подходов — для недостающих берётся обычный «Отдых, с». Если пусто — используется только «Отдых, с».</p>
     </div>
     <div class="info-block">
       <h4>📅 Календарь месяца</h4>
@@ -1402,21 +1331,16 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     <div class="info-block">
       <h4>📏 Обхваты</h4>
       <p>В профиле «Открыть журнал обхватов». Табы по частям тела, ввод значения, график, список.</p>
-      <p>Индексы композиции появляются, когда заполнены нужные пары.</p>
-    </div>
-    <div class="info-block">
-      <h4>⭐ X-параметры</h4>
-      <p>В дозировке упражнения введи <b>X</b> вместо числа. Перед началом спросит значение.</p>
     </div>
     <div class="info-block">
       <h4>💪 Упражнения</h4>
       <p>Мульти-теги: несколько зон/снарядов/навыков. Медиа: несколько фото + видео + ссылка.</p>
       <p>⏱ Время: XP = сек × 0.01 · 🏋️ Вес: (вес/масса) × 0.01 × повторы · 💪 Свой: повторы × 0.1</p>
-      <p><b>Две стороны:</b> включи «Две стороны», XP ×2, в выполнении будет «Сторона 1 / Сторона 2».</p>
+      <p><b>Две стороны:</b> XP ×2, в выполнении «Сторона 1 / Сторона 2».</p>
     </div>
     <div class="info-block">
       <h4>🏆 Личные рекорды (PR)</h4>
-      <p>При отметке ✓ проверяются рекорды. Побил — золотой баннер.</p>
+      <p>При отметке ✓ проверяются рекорды. Побил — золотой баннер. Для X-повторов PR берётся как максимум из массива.</p>
     </div>
     <div class="info-block">
       <h4>🌙 Распад</h4>
@@ -1488,7 +1412,7 @@ document.addEventListener('DOMContentLoaded',()=>{showSlogan();const el=document
 </script>
 <script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v20.3';
+const APP_VERSION = 'v20.4';
 const DEFAULT_ZONES = [
   {id:'cardio', name:'Кардио', emoji:'🫁', isMain:true},
   {id:'face', name:'Лицо', emoji:'😊', isMain:true},
@@ -1616,7 +1540,6 @@ let filterGears = [];
 let filterSkills = [];
 
 let pickerNav = { stack: [] };
-let zoneTreeExpanded = new Set();
 let currentExZones = [];
 let currentCompCustomRest = false;
 
@@ -2134,47 +2057,6 @@ function toggleTrainBody(head){
   const body = head.nextElementSibling;
   if(body) body.classList.toggle('on');
 }
-function toggleTrain(trainId){
-  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
-  if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку отметить нельзя'); return; }
-  const key = isoDate(selectedDate);
-  const wasDone = isTrainDone(selectedDate, tr);
-  if(wasDone){
-    const c = completions[key] && completions[key][tr.id];
-    const xpA = c ? c.xpAwarded : 0;
-    setTrainDone(selectedDate, tr.id, false);
-    if(xpA > 0) removeXp(xpA, tr.name, tr);
-  } else {
-    const eff = getEffectiveTrain(tr, selectedDate);
-    const exs = eff.exercises || [];
-    let xp = calcTrainXp(tr, eff);
-    const roundsInfo = {};
-    exs.forEach((e, idx) => {
-      if(e.type === 'rounds'){
-        const r = parseInt(prompt('🔁 «'+e.name+'»:\nСколько кругов выполнили?', '0'), 10) || 0;
-        roundsInfo[idx] = r;
-        xp += xpForOneRound(e) * r;
-      }
-    });
-    xp = Math.round(xp * 100) / 100;
-    setTrainDone(selectedDate, tr.id, true, xp, JSON.parse(JSON.stringify(exs)));
-    if(Object.keys(roundsInfo).length){
-      if(completions[key] && completions[key][tr.id]){
-        completions[key][tr.id].rounds = roundsInfo;
-        store.set('completions', completions);
-      }
-    }
-    if(xp > 0) addXp(xp, tr.name, tr);
-    const regularExs = exs.filter(e => e.type !== 'rounds');
-    const newPRs = checkNewPRs(regularExs, key);
-    if(newPRs.length > 0){
-      setTimeout(() => {
-        newPRs.forEach((pr, i) => setTimeout(() => prFly(pr.exName, pr.display), i * 800));
-      }, 500);
-    }
-  }
-  renderTrainings(); renderWeek(); renderMonth(); renderStats();
-}
 
 /* ============ ФИЛЬТРЫ-ПЛИТКИ С DRILL-DOWN ============ */
 function openPicker(type){
@@ -2375,58 +2257,22 @@ function clearAllEx(){
   }
 }
 
-/* ============ РЕДАКТОР УПРАЖНЕНИЯ — ПЛИТКИ ЗОН ============ */
+/* ============ РЕДАКТОР УПРАЖНЕНИЯ — ПЛИТКИ ЗОН (плоско) ============ */
 function renderZoneTree(){
   const el = document.getElementById('exZonesPick');
   if(!el) return;
-  const mainZones = getMainZones();
-  let html = '<div class="zone-tiles-wrap">';
-  mainZones.forEach(mz => {
-    const children = getSubZones(mz.id);
-    const mainOn = currentExZones.includes(mz.id);
-    const hasSubs = children.length > 0;
-    const hasActiveChild = children.some(c => currentExZones.includes(c.id));
-    const isExpanded = zoneTreeExpanded.has(mz.id) || hasActiveChild;
-    html += '<div class="zone-tile '+(mainOn?'on ':'')+(isExpanded?'expanded':'')+'" data-id="'+mz.id+'" onclick="toggleZoneTile(\''+mz.id+'\','+(hasSubs?'true':'false')+')">'+
-      '<div class="zt-check">✓</div>'+
-      E(mz)+
-      '<div class="zt-name">'+mz.name+'</div>'+
-      (hasSubs ? '<div class="zt-arrow">'+(isExpanded?'▲':'▼')+'</div>' : '')+
+  el.classList.add('ex-tiles');
+  // Плоский список: все зоны и подзоны в порядке следования массива
+  el.innerHTML = zones.map(z => {
+    const on = currentExZones.includes(z.id);
+    return '<div class="ex-tile '+(on?'on':'')+'" data-id="'+z.id+'" onclick="toggleZoneTile(\''+z.id+'\')">'+
+      '<div class="et-check">✓</div>'+
+      E(z)+
+      '<div class="et-name">'+z.name+'</div>'+
     '</div>';
-  });
-  html += '</div>';
-  mainZones.forEach(mz => {
-    const children = getSubZones(mz.id);
-    if(!children.length) return;
-    const mainOn = currentExZones.includes(mz.id);
-    const hasActiveChild = children.some(c => currentExZones.includes(c.id));
-    const isExpanded = zoneTreeExpanded.has(mz.id) || hasActiveChild;
-    if(!isExpanded) return;
-    html += '<div class="zone-sub-row">';
-    html += '<div class="zone-sub-tile '+(mainOn?'on':'')+'" onclick="toggleSubZone(\''+mz.id+'\')"><span class="zst-all">Вся зона</span></div>';
-    children.forEach(c => {
-      const on = currentExZones.includes(c.id);
-      html += '<div class="zone-sub-tile '+(on?'on':'')+'" onclick="toggleSubZone(\''+c.id+'\')">'+
-        E(c)+' '+c.name+
-      '</div>';
-    });
-    html += '</div>';
-  });
-  el.innerHTML = html;
+  }).join('');
 }
-function toggleZoneTile(id, hasSubs){
-  if(hasSubs){
-    if(zoneTreeExpanded.has(id)) zoneTreeExpanded.delete(id);
-    else zoneTreeExpanded.add(id);
-    renderZoneTree();
-  } else {
-    const idx = currentExZones.indexOf(id);
-    if(idx >= 0) currentExZones.splice(idx, 1);
-    else currentExZones.push(id);
-    renderZoneTree();
-  }
-}
-function toggleSubZone(id){
+function toggleZoneTile(id){
   const idx = currentExZones.indexOf(id);
   if(idx >= 0) currentExZones.splice(idx, 1);
   else currentExZones.push(id);
@@ -2448,7 +2294,6 @@ function openExModal(exId){
   currentExMedia = e && e.media ? JSON.parse(JSON.stringify(e.media)) : [];
   renderExMediaGrid();
   currentExZones = e ? (e.zones||[]).slice() : [];
-  zoneTreeExpanded.clear();
   renderZoneTree();
   renderMultiPick('exGearsPick', gears, e ? (e.gears||[]) : []);
   renderMultiPick('exSkillsPick', skills, e ? (e.skills||[]) : []);
@@ -2931,10 +2776,12 @@ function checkNewPRs(trainExercises, dateStr){
     if(!realEx) return;
     const pr = prs[item.exId] || {};
     const isX = (v) => String(v).trim().toUpperCase() === 'X';
-    if(isX(item.weight) || isX(item.reps) || isX(item.time)) return;
     if(realEx.format === 'weight'){
-      const w = +item.weight || 0;
-      const r = +item.reps || 0;
+      const wps = item.weightPerSet || [];
+      const rps = item.repsPerSet || [];
+      const w = wps.length ? Math.max(...wps) : (+item.weight || 0);
+      const r = rps.length ? Math.max(...rps) : (+item.reps || 0);
+      if(isX(w) || isX(r)) return;
       if(w <= 0 && r <= 0) return;
       if(w > (pr.weight?.value || 0)){
         pr.weight = { value: w, reps: r, date: dateStr };
@@ -2945,12 +2792,15 @@ function checkNewPRs(trainExercises, dateStr){
       }
     } else if(realEx.format === 'time'){
       const t = +item.time || 0;
+      if(isX(t)) return;
       if(t > (pr.time?.value || 0)){
         pr.time = { value: t, date: dateStr };
         newPRs.push({ exName: realEx.name, display: formatTimeSec(t) });
       }
     } else if(realEx.format === 'reps'){
-      const r = +item.reps || 0;
+      const rps = item.repsPerSet || [];
+      const r = rps.length ? Math.max(...rps) : (+item.reps || 0);
+      if(isX(r)) return;
       if(r > (pr.reps?.value || 0)){
         pr.reps = { value: r, weight: 0, date: dateStr };
         newPRs.push({ exName: realEx.name, display: r + ' повторов' });
@@ -2972,13 +2822,27 @@ function getExerciseHistory(exId){
       const item = comp.exercises.find(e => e.exId === exId);
       if(!item) return;
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
-      if(isX(item.weight) || isX(item.reps) || isX(item.time)) return;
-      const w = +item.weight || 0, r = +item.reps || 0, s = +item.sets || 1, t = +item.time || 0;
+      const rps = Array.isArray(item.repsPerSet) && item.repsPerSet.length
+        ? item.repsPerSet
+        : null;
+      const wps = Array.isArray(item.weightPerSet) && item.weightPerSet.length
+        ? item.weightPerSet
+        : null;
+      if(!rps && isX(item.reps)) return;
+      if(!wps && isX(item.weight)) return;
+      const s = +item.sets || 1;
+      const t = +item.time || 0;
+      const repsArr = rps || new Array(s).fill(+item.reps || 0);
+      const weightArr = wps || new Array(s).fill(+item.weight || 0);
+      const totalReps = repsArr.reduce((sum, x) => sum + x, 0) * sidesMult;
+      const totalVolume = repsArr.reduce((sum, r, i) => sum + r * (weightArr[i] || 0), 0) * sidesMult;
+      const maxR = repsArr.length ? Math.max(...repsArr) : 0;
+      const maxW = weightArr.length ? Math.max(...weightArr) : 0;
       history.push({
-        date: dateStr, weight: w, reps: r, sets: s, time: t,
-        volume: w * r * s * sidesMult,
-        totalReps: r * s * sidesMult,
-        maxReps: r
+        date: dateStr, weight: maxW, reps: maxR, sets: s, time: t,
+        volume: totalVolume,
+        totalReps: totalReps,
+        maxReps: maxR
       });
     });
   });
@@ -3601,8 +3465,73 @@ function renderSkillXp(){
 }
 </script>
 <script>
+/* ==================== toggleTrain ==================== */
+function toggleTrain(trainId){
+  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку отметить нельзя'); return; }
+  const key = isoDate(selectedDate);
+  const wasDone = isTrainDone(selectedDate, tr);
+  if(wasDone){
+    const c = completions[key] && completions[key][tr.id];
+    const xpA = c ? c.xpAwarded : 0;
+    setTrainDone(selectedDate, tr.id, false);
+    if(xpA > 0) removeXp(xpA, tr.name, tr);
+  } else {
+    const eff = getEffectiveTrain(tr, selectedDate);
+    const exs = eff.exercises || [];
+    let xp = calcTrainXp(tr, eff);
+    const roundsInfo = {};
+    const actualExs = exs.map((e, idx) => {
+      if(e.type === 'rounds'){
+        const r = parseInt(prompt('🔁 «'+e.name+'»:\nСколько кругов выполнили?', '0'), 10) || 0;
+        roundsInfo[idx] = r;
+        xp += xpForOneRound(e) * r;
+        return {...e, actualRounds: r};
+      }
+      if(isXValue(e.reps) || isXValue(e.weight)){
+        const vReps = isXValue(e.reps) ? (parseInt(prompt('«'+e.name+'»\nПовторов за подход?', '0'), 10) || 0) : 0;
+        const vWeight = isXValue(e.weight) ? (parseFloat(prompt('«'+e.name+'»\nВес, кг?', '0')) || 0) : 0;
+        const sets = +e.sets || 1;
+        const ex = exercises.find(x => x.id === e.exId);
+        const sidesMult = ex && ex.twoSides ? 2 : 1;
+        let exXp = 0;
+        if(ex && ex.format === 'weight'){
+          exXp += xpFromWeight(vWeight, profile.weight||70, vReps) * sets * sidesMult;
+        } else if(ex){
+          exXp += xpFromReps(vReps) * sets * sidesMult;
+        }
+        xp += exXp;
+        return {...e,
+          repsPerSet: new Array(sets).fill(vReps),
+          weightPerSet: new Array(sets).fill(vWeight),
+          reps: vReps, weight: vWeight
+        };
+      }
+      return e;
+    });
+    xp = Math.round(xp * 100) / 100;
+    setTrainDone(selectedDate, tr.id, true, xp, JSON.parse(JSON.stringify(actualExs)));
+    if(Object.keys(roundsInfo).length){
+      if(completions[key] && completions[key][tr.id]){
+        completions[key][tr.id].rounds = roundsInfo;
+        store.set('completions', completions);
+      }
+    }
+    if(xp > 0) addXp(xp, tr.name, tr);
+    const regularExs = actualExs.filter(e => e.type !== 'rounds');
+    const newPRs = checkNewPRs(regularExs, key);
+    if(newPRs.length > 0){
+      setTimeout(() => {
+        newPRs.forEach((pr, i) => setTimeout(() => prFly(pr.exName, pr.display), i * 800));
+      }, 500);
+    }
+  }
+  renderTrainings(); renderWeek(); renderMonth(); renderStats();
+}
+
 /* ==================== ВЫПОЛНЕНИЕ ==================== */
 let execState = null;
+
 function startTrainExecution(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку запустить нельзя'); return; }
@@ -3638,6 +3567,8 @@ function startTrainExecution(trainId){
     exercises: JSON.parse(JSON.stringify(exs)),
     currentIndex: 0, currentSet: 1, currentSide: 1,
     currentRounds: 0, roundTimer: null,
+    currentRepsPerSet: [],
+    currentWeightPerSet: [],
     completed: [],
     phase: 'idle',
     timer: { remaining: 0, total: 0, running: false, int: null }
@@ -3646,6 +3577,7 @@ function startTrainExecution(trainId){
   document.getElementById('execTitle').textContent = tr.name;
   renderExecScreen();
 }
+
 function closeExecScreen(){
   if(execState && execState.timer && execState.timer.int) clearInterval(execState.timer.int);
   if(execState && execState.roundTimer && execState.roundTimer.int) clearInterval(execState.roundTimer.int);
@@ -3660,7 +3592,9 @@ function closeExecScreen(){
   }
   execState = null;
 }
+
 function isXValue(v){ return String(v).trim().toUpperCase() === 'X'; }
+
 function renderExecScreen(){
   if(!execState){ return; }
   const body = document.getElementById('execBody');
@@ -3726,20 +3660,18 @@ function renderExecScreen(){
     return;
   }
 
-  const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
+  const hasX = ['sets','time','rest'].some(f => isXValue(item[f]));
   if(hasX && !item._xResolved){
     body.innerHTML =
       '<div class="exec-global-bar"><i style="width:0%"></i></div>'+
       '<div style="text-align:center;font-size:44px;margin:20px 0">✏️</div>'+
       '<div class="exec-ex-name">'+item.exName+'</div>'+
-      '<div class="note" style="text-align:center;margin-bottom:16px">Задай параметры'+(item.twoSides?' (значения — на одну сторону)':'')+'</div>'+
+      '<div class="note" style="text-align:center;margin-bottom:16px">Задай параметры'+(item.twoSides?' (значения — на одну сторону)':'')+'<br><b>Повторы и вес</b> спросим <b>после каждого подхода</b></div>'+
       '<div id="xFormContainer" style="max-width:400px;margin:0 auto;width:100%"></div>';
     const form = document.getElementById('xFormContainer');
     const fields = [];
     if(isXValue(item.sets)) fields.push({key:'sets', label:'Подходы', placeholder:'3'});
-    if(isXValue(item.reps)) fields.push({key:'reps', label:'Повторы', placeholder:'10'});
     if(isXValue(item.time)) fields.push({key:'time', label:'Время, сек', placeholder:'60'});
-    if(isXValue(item.weight)) fields.push({key:'weight', label:'Вес, кг', placeholder:'16'});
     if(isXValue(item.rest)) fields.push({key:'rest', label:'Отдых, сек', placeholder:'60'});
     form.innerHTML = fields.map(f =>
       '<div class="field-group"><label class="field-label">'+f.label+'</label><input class="field-input" type="number" id="xInput_'+f.key+'" placeholder="'+f.placeholder+'"></div>'
@@ -3804,6 +3736,23 @@ function renderExecScreen(){
   const timerDisplay = execState.phase === 'idle' ? '00:00' : fmt(Math.max(0, execState.timer.remaining));
   const globalPct = Math.round(((curIdx + (execState.currentSet-1)/totalSets) / totalEx) * 100);
 
+  const dosageHtmlParts = [];
+  if(item.reps) dosageHtmlParts.push('<div class="exec-dosage-item"><div class="lbl">Повторы</div><div class="val">'+(isXValue(item.reps)?'X':item.reps)+'</div></div>');
+  if(item.time) dosageHtmlParts.push('<div class="exec-dosage-item"><div class="lbl">Время</div><div class="val">'+item.time+'с</div></div>');
+  if(item.weight) dosageHtmlParts.push('<div class="exec-dosage-item"><div class="lbl">Вес</div><div class="val">'+(isXValue(item.weight)?'X':item.weight)+'кг</div></div>');
+
+  const shownReps = execState.currentRepsPerSet[execState.currentSet - 1];
+  const shownWeight = execState.currentWeightPerSet[execState.currentSet - 1];
+  let enteredHtml = '';
+  if(shownReps != null || shownWeight != null){
+    enteredHtml = '<div class="note" style="margin-top:8px;text-align:center">'+
+      'Подход '+execState.currentSet+': '+
+      (shownReps != null ? '<b>'+shownReps+'</b> повт' : '')+
+      (shownReps != null && shownWeight != null ? ' · ' : '')+
+      (shownWeight != null ? '<b>'+shownWeight+'</b> кг' : '')+
+    '</div>';
+  }
+
   body.innerHTML =
     '<div class="exec-global-bar"><i style="width:'+globalPct+'%"></i></div>'+
     planHtml+
@@ -3815,11 +3764,8 @@ function renderExecScreen(){
       '<div class="exec-phase '+phaseClass+'">'+phaseText+'</div>'+
       '<div class="exec-timer">'+timerDisplay+'</div>'+
       '<div class="exec-dosage">'+
-        '<div class="exec-dosage-row">'+
-          (item.reps ? '<div class="exec-dosage-item"><div class="lbl">Повторы</div><div class="val">'+item.reps+'</div></div>' : '')+
-          (item.time ? '<div class="exec-dosage-item"><div class="lbl">Время</div><div class="val">'+item.time+'с</div></div>' : '')+
-          (item.weight ? '<div class="exec-dosage-item"><div class="lbl">Вес</div><div class="val">'+item.weight+'кг</div></div>' : '')+
-        '</div>'+
+        '<div class="exec-dosage-row">'+dosageHtmlParts.join('')+'</div>'+
+        enteredHtml+
       '</div>'+
     '</div>';
 
@@ -3829,8 +3775,7 @@ function renderExecScreen(){
   } else if(execState.phase === 'work'){
     footer.innerHTML =
       '<div class="exec-controls">'+
-        '<button class="btn" onclick="execFinishSet()">Подход готов</button>'+
-        '<button class="btn btn-primary" onclick="execFinishSet()">Завершить</button>'+
+        '<button class="btn btn-primary" onclick="execFinishSet()">Подход готов</button>'+
       '</div>'+
       '<div class="exec-controls" style="margin-top:6px">'+
         '<button class="btn" onclick="toggleExecTimer()">'+(execState.timer.running?'⏸ Пауза':'▶ Продолжить')+'</button>'+
@@ -3843,9 +3788,10 @@ function renderExecScreen(){
       '<button class="btn btn-full" style="margin-top:6px" onclick="execSkipRest()">Пропустить отдых</button>';
   }
 }
+
 function applyXForm(){
   const item = execState.exercises[execState.currentIndex];
-  ['sets','reps','time','weight','rest'].forEach(f => {
+  ['sets','time','rest'].forEach(f => {
     if(isXValue(item[f])){
       const inp = document.getElementById('xInput_'+f);
       if(inp && inp.value) item[f] = +inp.value || 0;
@@ -3854,6 +3800,7 @@ function applyXForm(){
   item._xResolved = true;
   renderExecScreen();
 }
+
 function startRoundBlock(){
   const item = execState.exercises[execState.currentIndex];
   if(!item || item.type !== 'rounds') return;
@@ -3942,6 +3889,8 @@ function execFinishSet(){
   if(execState.timer.int) clearInterval(execState.timer.int);
   const twoSides = !!item.twoSides;
   const totalSets = +item.sets || 1;
+  const askingSet = execState.currentSet;
+
   if(twoSides && execState.currentSide === 1){
     execState.currentSide = 2;
     const restDur = +item.rest || 0;
@@ -3949,13 +3898,42 @@ function execFinishSet(){
     else { startExecPhase('work', +item.time || 0); }
     return;
   }
+
+  const needReps = isXValue(item.reps);
+  const needWeight = isXValue(item.weight);
+
+  if(needReps){
+    const prev = execState.currentRepsPerSet[askingSet - 2];
+    const def = (prev != null) ? String(prev) : '';
+    const msg = 'Подход ' + askingSet + ': сколько повторов' + (twoSides ? ' на одну сторону' : '') + ' сделали?';
+    const v = prompt(msg, def);
+    if(v === null){ return; }
+    execState.currentRepsPerSet[askingSet - 1] = +v || 0;
+  } else {
+    execState.currentRepsPerSet[askingSet - 1] = +item.reps || 0;
+  }
+
+  if(needWeight){
+    const prev = execState.currentWeightPerSet[askingSet - 2];
+    const def = (prev != null) ? String(prev) : '';
+    const v = prompt('Подход ' + askingSet + ': какой вес использовали? (кг)', def);
+    if(v === null){ return; }
+    execState.currentWeightPerSet[askingSet - 1] = +v || 0;
+  } else {
+    execState.currentWeightPerSet[askingSet - 1] = +item.weight || 0;
+  }
+
   if(execState.currentSet >= totalSets){
     execState.completed.push({
       exIdx: execState.currentIndex,
-      sets: totalSets, reps: +item.reps || 0,
-      time: +item.time || 0, weight: +item.weight || 0,
+      sets: totalSets,
+      repsPerSet: execState.currentRepsPerSet.slice(0, totalSets),
+      weightPerSet: execState.currentWeightPerSet.slice(0, totalSets),
+      time: +item.time || 0,
       twoSides: twoSides
     });
+    execState.currentRepsPerSet = [];
+    execState.currentWeightPerSet = [];
     if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
     execState.currentIndex++;
     execState.currentSet = 1;
@@ -3989,6 +3967,8 @@ function execSkipExercise(){
   if(!confirm('Пропустить упражнение?')) return;
   if(execState.timer.int) clearInterval(execState.timer.int);
   if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
+  execState.currentRepsPerSet = [];
+  execState.currentWeightPerSet = [];
   execState.currentIndex++;
   execState.currentSet = 1;
   execState.currentSide = 1;
@@ -3998,6 +3978,7 @@ function execSkipExercise(){
   execState.timer.running = false;
   renderExecScreen();
 }
+
 function finishExecution(){
   if(execState.timer.int) clearInterval(execState.timer.int);
   if(execState.roundTimer && execState.roundTimer.int) clearInterval(execState.roundTimer.int);
@@ -4014,9 +3995,25 @@ function finishExecution(){
     const ex = exercises.find(x => x.id === execState.exercises[c.exIdx].exId);
     if(!ex) return;
     const sidesMult = ex.twoSides ? 2 : 1;
-    if(ex.format === 'time') xp += xpFromTime(c.time) * (c.sets || 1) * sidesMult;
-    else if(ex.format === 'weight') xp += xpFromWeight(c.weight, profile.weight||70, c.reps) * (c.sets || 1) * sidesMult;
-    else xp += xpFromReps(c.reps) * (c.sets || 1) * sidesMult;
+    const sets = c.sets || 1;
+    const repsPerSet = (c.repsPerSet && c.repsPerSet.length)
+      ? c.repsPerSet
+      : new Array(sets).fill(0);
+    const weightPerSet = (c.weightPerSet && c.weightPerSet.length)
+      ? c.weightPerSet
+      : new Array(sets).fill(0);
+    if(ex.format === 'time'){
+      xp += xpFromTime(c.time) * sets * sidesMult;
+    } else if(ex.format === 'weight'){
+      repsPerSet.forEach((r, i) => {
+        const w = weightPerSet[i] || 0;
+        xp += xpFromWeight(w, profile.weight||70, r) * sidesMult;
+      });
+    } else {
+      repsPerSet.forEach(r => {
+        xp += xpFromReps(r) * sidesMult;
+      });
+    }
   });
   xp = Math.round(xp * 100) / 100;
   if(progressTxt) progressTxt.textContent = '✓';
@@ -4031,16 +4028,40 @@ function finishExecution(){
     '<button class="btn btn-primary exec-finish" onclick="confirmFinishExecution('+xp+')">✓ Засчитать тренировку</button>'+
     '<button class="btn btn-full" style="margin-top:8px;padding:12px" onclick="closeExecScreen();execState=null;">Отмена</button>';
 }
+
 function confirmFinishExecution(xp){
   if(!execState) return;
   const tr = trainings.find(t => t.id === execState.trainId);
   if(!tr){ closeExecScreen(); return; }
   const dateKey = execState.dateKey;
   const date = new Date(dateKey);
-  const exs = getEffectiveTrain(tr, date).exercises || [];
-  setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(exs)));
+  const templateExs = getEffectiveTrain(tr, date).exercises || [];
+
+  const actualExs = templateExs.map((tpl, idx) => {
+    const c = execState.completed.find(x => x.exIdx === idx);
+    if(!c){ return tpl; }
+    if(tpl.type === 'rounds'){
+      return {...tpl, actualRounds: c.rounds || 0};
+    }
+    return {
+      ...tpl,
+      sets: c.sets || +tpl.sets || 1,
+      repsPerSet: c.repsPerSet || null,
+      weightPerSet: c.weightPerSet || null,
+      reps: (c.repsPerSet && c.repsPerSet.length)
+        ? (c.repsPerSet.reduce((s,r)=>s+r,0) / c.repsPerSet.length)
+        : +tpl.reps || 0,
+      weight: (c.weightPerSet && c.weightPerSet.length)
+        ? c.weightPerSet[0]
+        : +tpl.weight || 0,
+      twoSides: !!tpl.twoSides,
+      time: c.time || +tpl.time || 0
+    };
+  });
+
+  setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(actualExs)));
   addXp(xp, tr.name, tr);
-  const regularExs = exs.filter(e => e.type !== 'rounds');
+  const regularExs = actualExs.filter(e => e.type !== 'rounds');
   const newPRs = checkNewPRs(regularExs, dateKey);
   if(newPRs.length > 0){
     setTimeout(() => {
@@ -4052,6 +4073,7 @@ function confirmFinishExecution(xp){
   execState = null;
   toast('Тренировка засчитана: +'+xp+' XP');
 }
+
 function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 let audioCtx = null;
 function beep(freq, dur){
@@ -4065,7 +4087,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'Delat-Uprazhneniya', version:203, exported:new Date().toISOString(),
+  return {app:'Delat-Uprazhneniya', version:204, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog, measurements,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
