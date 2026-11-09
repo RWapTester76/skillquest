@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Делать Упражнения</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0f1a'/%3E%3Cpath fill='%23fff' d='M10 50L26 22h8l16 28h-7L30 30 17 50z'/%3E%3Cpath fill='%231456ff' d='M40 50l14-22h-6L34 50z'/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#0e1116; --bg2:#151a22; --card:#1a2029; --card2:#222a36;
@@ -39,7 +40,6 @@ input,select,textarea{-webkit-appearance:none;appearance:none}
 
 .app{max-width:600px;margin:0 auto;padding:var(--space-3) var(--space-3) var(--space-5)}
 
-/* HEADER */
 .header{
   position:sticky;top:0;z-index:40;
   background:linear-gradient(180deg, var(--bg) 70%, color-mix(in srgb, var(--bg) 85%, transparent) 100%);
@@ -70,14 +70,12 @@ body[data-mode="dark"] .theme-toggle .moon{opacity:1}
 body[data-mode="light"] .theme-toggle .sun{opacity:1}
 body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
-/* CARD */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-3);box-shadow:var(--shadow-sm);}
 .card-title{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);margin-bottom:var(--space-3);}
 .card-title-left{display:flex;align-items:center;gap:var(--space-2);font-size:var(--font-sm);font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);}
 .card-title-left::before{content:"";width:3px;height:12px;border-radius:2px;background:var(--grad);flex:0 0 auto;}
 .badge-count{font-size:var(--font-xs);font-weight:800;background:var(--grad);color:var(--bg);padding:2px var(--space-3);border-radius:var(--radius-full);}
 
-/* PROGRESS ROW */
 .progress-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);margin-bottom:var(--space-3);}
 .progress-cell{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-3) var(--space-3);}
 .progress-cell .lbl{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
@@ -86,7 +84,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .progress-cell .bar{height:3px;background:var(--line-soft);border-radius:var(--radius-full);margin-top:var(--space-2);overflow:hidden;}
 .progress-cell .bar i{display:block;height:100%;background:var(--grad);border-radius:var(--radius-full);transition:width .4s;}
 
-/* CALENDAR */
 .cal-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);margin-bottom:var(--space-3);}
 .cal-nav-title{font-size:var(--font-md);font-weight:800;flex:1;text-align:center;}
 .cal-nav-title b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
@@ -121,7 +118,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .mday.is-selected .m-dot{background:rgba(0,0,0,.35);opacity:1}
 .mday.is-selected .m-dot.on{background:var(--bg)}
 
-/* TRAINING CARDS */
 .training-card{background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:var(--space-2);overflow:hidden;transition:border-color .15s;}
 .training-card:active{border-color:var(--acc)}
 .training-head{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3);cursor:pointer;}
@@ -142,7 +138,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .training-body.on{display:block;animation:slideDown .25s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 
-.exercise-item{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);padding:var(--space-2) var(--space-3);margin-top:var(--space-2);font-size:var(--font-sm);}
+.exercise-item{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);padding:var(--space-2) var(--space-3);margin-top:var(--space-2);font-size:var(--font-sm);position:relative;}
 .ex-item-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);margin-bottom:2px;}
 .ex-item-name{font-weight:700;font-size:var(--font-sm);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .ex-item-dosage{font-size:var(--font-xs);padding:2px var(--space-2);border-radius:var(--radius-full);background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap;font-weight:600;}
@@ -154,7 +150,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .training-actions-row button{flex:1;padding:var(--space-2);border-radius:var(--radius-sm);font-size:var(--font-sm);font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--txt);transition:transform .1s;}
 .training-actions-row button:active{transform:scale(.97);background:var(--card2)}
 
-/* BUTTONS */
 .btn{padding:var(--space-3) var(--space-4);border-radius:var(--radius);font-size:var(--font-md);font-weight:700;transition:all .12s;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);border:1px solid var(--line);background:var(--card);color:var(--txt);white-space:nowrap;}
 .btn:active{transform:scale(.97)}
 .btn-primary{background:var(--grad);color:var(--bg);border-color:transparent;box-shadow:0 4px 14px color-mix(in srgb, var(--acc) 35%, transparent);}
@@ -166,54 +161,20 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .btn-row{display:flex;gap:var(--space-2)}
 .btn-row .btn{flex:1;min-width:0}
 
-/* SEARCH & TABS */
 .search{position:relative;margin-bottom:var(--space-3);}
 .search-input{width:100%;padding:var(--space-3) var(--space-4) var(--space-3) 36px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:var(--font-md);outline:none;transition:border-color .15s;}
 .search-input:focus{border-color:var(--acc)}
 .search-input::placeholder{color:var(--mut)}
 .search-icon{position:absolute;left:var(--space-3);top:50%;transform:translateY(-50%);pointer-events:none;font-size:14px;color:var(--mut);}
-.tabs{display:flex;gap:var(--space-1);margin-bottom:var(--space-3);overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
-.tabs::-webkit-scrollbar{display:none}
-.tab-btn{padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);font-size:var(--font-sm);font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--mut);white-space:nowrap;flex:0 0 auto;transition:all .15s;}
-.tab-btn.active{background:var(--grad);color:var(--bg);border-color:transparent;box-shadow:0 2px 8px color-mix(in srgb, var(--acc) 25%, transparent);}
 
-/* FILTERS */
-.filter-block{margin-bottom:var(--space-2)}
-.filter-head{display:flex;align-items:center;justify-content:space-between;padding:var(--space-3);background:var(--card);border:1px solid var(--line);border-radius:var(--radius);cursor:pointer;user-select:none;transition:all .15s;}
-.filter-head:active{background:var(--card2)}
-.filter-head.open{border-color:var(--acc)}
-.filter-label{display:flex;align-items:center;gap:var(--space-2);font-size:var(--font-sm);font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);}
-.filter-badge{font-size:var(--font-xs);font-weight:800;color:var(--acc2);background:color-mix(in srgb, var(--acc2) 15%, transparent);padding:2px var(--space-2);border-radius:var(--radius-full);}
-.filter-arrow{font-size:11px;color:var(--mut);transition:transform .2s;}
-.filter-head.open .filter-arrow{transform:rotate(180deg)}
-.filter-content{display:none;padding:var(--space-2);background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);margin-top:var(--space-1);}
-.filter-content.on{display:block;animation:slideDown .2s ease}
 .chip-row{display:flex;flex-wrap:wrap;gap:var(--space-1);}
 .chip{padding:var(--space-2) var(--space-3);border-radius:var(--radius-full);font-size:var(--font-sm);font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all .12s;}
 .chip:active{transform:scale(.95)}
 .chip.on{background:var(--grad);color:var(--bg);border-color:transparent;font-weight:700;}
 .chip .chip-count{font-size:var(--font-xs);opacity:.7;font-weight:800;}
 .chip.on .chip-count{opacity:.9}
-.chip-add{color:var(--acc2);border-style:dashed;border-color:var(--acc2);background:transparent;}
 
-/* ZONES */
-.zone-group{width:100%;margin-bottom:var(--space-1);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--card);}
-.zone-group-head{display:flex;align-items:center;justify-content:space-between;padding:var(--space-2) var(--space-3);cursor:pointer;user-select:none;background:var(--card2);}
-.zone-group-head:active{background:var(--line-soft)}
-.zone-group-title{display:flex;align-items:center;gap:var(--space-2);font-size:var(--font-sm);font-weight:800;}
-.zone-group-badge{display:flex;align-items:center;gap:var(--space-2);}
-.zone-group-count{font-size:var(--font-xs);font-weight:800;color:var(--acc2);background:color-mix(in srgb, var(--acc2) 15%, transparent);padding:1px 6px;border-radius:var(--radius-full);}
-.zone-group-arrow{font-size:10px;color:var(--mut);transition:transform .2s;}
-.zone-group.open .zone-group-arrow{transform:rotate(180deg)}
-.zone-group-body{display:none;padding:var(--space-2)}
-.zone-group.open .zone-group-body{display:block}
-.sub-chips{display:flex;flex-wrap:wrap;gap:var(--space-1)}
-.sub-chip{padding:var(--space-1) var(--space-2);border-radius:var(--radius-full);font-size:var(--font-xs);font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--mut);cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:all .12s;}
-.sub-chip:active{transform:scale(.95)}
-.sub-chip.on{background:var(--grad);color:var(--bg);border-color:transparent;}
-
-/* EXERCISE LIST */
-.ex-list{display:flex;flex-direction:column;gap:var(--space-2)}
+.ex-list{display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .ex-card{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-2);border-radius:var(--radius);background:var(--card);border:1px solid var(--line);cursor:pointer;transition:border-color .15s;}
 .ex-card:active{border-color:var(--acc)}
 .ex-thumb{width:44px;height:44px;border-radius:var(--radius-sm);background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;flex:0 0 auto;}
@@ -225,7 +186,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .ex-del{width:26px;height:26px;border-radius:var(--radius-sm);border:1px solid var(--line);background:transparent;color:var(--mut);font-size:12px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .ex-del:active{background:color-mix(in srgb, var(--danger) 15%, transparent);border-color:var(--danger);color:var(--danger);}
 
-/* COMPLEXES */
 .complex-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-3);margin-bottom:var(--space-3);}
 .complex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-3);}
 .complex-name{font-size:var(--font-lg);font-weight:800;flex:1;line-height:1.2;}
@@ -243,7 +203,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .complex-empty .t{font-size:var(--font-md);font-weight:800;color:var(--txt);margin-bottom:var(--space-2)}
 .complex-empty .d{font-size:var(--font-sm);line-height:1.5}
 
-/* PROFILE & THEMES */
 .profile-head{display:flex;align-items:center;gap:var(--space-3);padding-bottom:var(--space-3);}
 .avatar{width:56px;height:56px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:var(--bg);background-size:cover;background-position:center;flex:0 0 auto;overflow:hidden;box-shadow:0 4px 14px color-mix(in srgb, var(--acc) 35%, transparent);position:relative;cursor:pointer;}
 .avatar.has-img{color:transparent}
@@ -267,7 +226,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .theme-tile .check{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--acc);color:var(--bg);display:none;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
 .theme-tile.on .check{display:flex}
 
-/* MODALS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center;z-index:100;padding:0;animation:fadeIn .2s;}
 .modal-overlay.on{display:flex}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -278,7 +236,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .modal-close{width:100%;padding:var(--space-3);border-radius:var(--radius);background:var(--card);color:var(--mut);font-weight:700;margin-top:var(--space-3);font-size:var(--font-sm);transition:all .15s;}
 .modal-close:active{background:var(--card2);transform:scale(.98)}
 
-/* MEDIA & WEIGHT */
 .media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);margin-bottom:var(--space-2);}
 .media-item{position:relative;aspect-ratio:1;border-radius:var(--radius-sm);overflow:hidden;background:var(--card2);border:1px solid var(--line);cursor:pointer;}
 .media-item img, .media-item video{width:100%;height:100%;object-fit:cover;display:block;}
@@ -302,7 +259,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .weight-stat-l{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700;}
 .weight-stat-v{font-size:var(--font-lg);font-weight:900;color:var(--acc2);margin-top:2px;}
 
-/* EXECUTION SCREEN */
 .exec-screen{position:fixed;inset:0;background:var(--bg);z-index:150;display:none;flex-direction:column;overflow-y:auto;}
 .exec-screen.on{display:flex}
 .exec-header{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;z-index:5;}
@@ -344,7 +300,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .exec-controls{display:flex;gap:var(--space-2);margin-top:var(--space-3);}
 .exec-controls .btn{flex:1;padding:var(--space-4);font-size:var(--font-md);}
 
-/* NAV & FAB */
 .nav-bottom{position:fixed;bottom:0;left:0;right:0;background:color-mix(in srgb, var(--bg2) 95%, transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:var(--space-2) var(--space-1) var(--space-2);padding-bottom:calc(var(--space-2) + env(safe-area-inset-bottom));z-index:50;}
 .nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:var(--space-1) var(--space-2);font-size:var(--font-xs);font-weight:700;color:var(--mut);cursor:pointer;transition:color .15s, transform .1s;flex:1;max-width:75px;border-radius:var(--radius-sm);}
 .nav-btn:active{transform:scale(.9)}
@@ -400,7 +355,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .theme-tile .name{font-size:8px}
 }
 
-/* ============ XP / STATS ============ */
 .character-card,.progress-section{
   background:color-mix(in srgb, var(--card) 75%, transparent);
   border:1px solid var(--line-soft);
@@ -483,29 +437,16 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .stat-mini-val{font-size:var(--font-xl);font-weight:900;color:var(--acc2);font-variant-numeric:tabular-nums}
 .stat-mini-lbl{font-size:var(--font-xs);color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-top:2px}
 
-/* Двусторонние */
 .exec-side-indicator{display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin:var(--space-2) 0 var(--space-3);font-size:var(--font-md);font-weight:800}
 .exec-side{color:var(--mut);padding:4px 12px;border-radius:var(--radius-full);border:1px solid var(--line-soft);transition:all .2s}
 .exec-side.active{color:var(--bg);background:var(--grad);border-color:transparent;box-shadow:0 2px 10px color-mix(in srgb, var(--acc) 40%, transparent)}
 .exec-side-sep{color:var(--mut);opacity:.4}
 .tag-sides{color:var(--acc2);background:color-mix(in srgb, var(--acc2) 14%, transparent);border-color:color-mix(in srgb, var(--acc2) 35%, transparent);font-weight:800}
 
-/* Nav */
 .nav-btn{padding:6px var(--space-1)}
 .nav-btn svg{width:21px;height:21px}
 .nav-btn span{font-size:9.5px;letter-spacing:.1px;line-height:1.1;margin-top:1px}
 
-/* Сортировка */
-.training-actions-row .btn-move{
-  flex:0 0 auto;
-  min-width:30px;
-  padding:var(--space-2) var(--space-1);
-  font-size:13px;
-  font-weight:900;
-  color:var(--acc2);
-}
-
-/* Круговой блок */
 .exercise-item.round-block{
   border-left:3px solid var(--acc);
   background:color-mix(in srgb, var(--acc) 7%, var(--card));
@@ -522,7 +463,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .exec-round-ex-name{font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 .exec-round-ex-dose{color:var(--mut);font-weight:600;font-variant-numeric:tabular-nums;flex:0 0 auto;font-size:var(--font-xs)}
 
-/* ============ КОМПАКТНЫЙ СПИСОК УПРАЖНЕНИЙ ============ */
 .ex-list{
   display:flex;flex-direction:column;gap:1px;
   background:var(--line-soft);border:1px solid var(--line);
@@ -548,7 +488,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .ex-count-line{display:flex;justify-content:space-between;align-items:center;padding:0 2px 4px;font-size:11px;color:var(--mut);font-weight:600}
 .ex-count-line b{color:var(--acc2);font-weight:800}
 
-/* ============ ПЛИТКИ ВЫБОРА (зоны / снаряды / навыки) ============ */
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:4px}
 .picker-tile{
   background:var(--card2);border:2px solid var(--line-soft);border-radius:var(--radius);
@@ -567,6 +506,8 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .picker-tile.on .pt-count{color:var(--bg);background:var(--acc2)}
 .picker-tile .pt-check{position:absolute;top:4px;right:4px;width:14px;height:14px;border-radius:50%;background:var(--acc);color:var(--bg);font-size:9px;font-weight:900;display:none;align-items:center;justify-content:center}
 .picker-tile.on .pt-check{display:flex}
+.picker-tile .pt-sub{font-size:8px;font-weight:800;color:var(--acc2);letter-spacing:.3px;margin-top:1px;opacity:.9}
+.picker-tile.on .pt-sub{color:var(--bg);opacity:.85}
 
 @media (max-width:480px){
   .picker-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px}
@@ -576,7 +517,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .picker-tile .pt-count{font-size:8px}
 }
 
-/* ============ ЖУРНАЛ ОБХВАТОВ ============ */
 .meas-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:10px}
 .meas-tabs::-webkit-scrollbar{display:none}
 .meas-tab{padding:6px 12px;border-radius:var(--radius-full);font-size:11px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--mut);white-space:nowrap;flex:0 0 auto;cursor:pointer;transition:all .15s}
@@ -600,7 +540,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 .meas-ratio .ratio-row{display:flex;justify-content:space-between;padding:2px 0;font-variant-numeric:tabular-nums}
 .meas-ratio .ratio-row b{color:var(--acc2)}
 
-/* ============ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ============ */
 @media (max-width:480px){
   .app{padding:6px 8px 16px}
   .header{padding:6px 8px;margin:-6px -8px 6px;gap:6px}
@@ -612,14 +551,8 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .theme-toggle{width:38px;height:22px}
   .theme-toggle .thumb{width:16px;height:16px;top:2px;left:2px}
   body[data-mode="dark"] .theme-toggle .thumb{transform:translateX(16px)}
-  .tabs{gap:2px;margin-bottom:8px}
   .tab-btn{padding:5px 9px;font-size:10.5px;border-radius:6px}
-  .filter-head{padding:6px 10px}
-  .filter-label{font-size:10px;letter-spacing:.3px}
-  .filter-badge{font-size:9px;padding:1px 5px}
-  .filter-content{padding:6px}
   .chip{padding:5px 9px;font-size:10.5px;gap:3px}
-  .sub-chip{padding:3px 7px;font-size:9.5px}
   .section-title{font-size:10px;margin-bottom:6px}
   .btn{padding:8px 12px;font-size:11.5px;border-radius:8px}
   .btn-sm{padding:6px 10px;font-size:10.5px}
@@ -648,14 +581,167 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   .app{max-width:640px;padding:12px 16px 24px}
   .header{padding:10px 16px;margin:-12px -16px 10px}
 }
+
+.ic{width:1.15em;height:1.15em;margin-right:.2em;vertical-align:-.22em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ic .a{stroke:var(--acc)}.ic .f,.logo .f{fill:var(--acc);stroke:none}
+.ic.z{width:.62em;height:1.3em;vertical-align:-.3em}.ic.z .bd{fill:none;stroke:currentColor;stroke-width:1;opacity:.5}
+.pt-emoji .ic{width:28px;height:28px;margin:0}.pt-emoji .ic.z{width:15px;height:32px}
+.nav-btn svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.nav-btn svg .a{stroke:var(--acc)}
+.slogan{font-size:12px;font-weight:700;font-style:italic;color:var(--mut);text-align:center;margin:0 0 10px;cursor:pointer}
+
+.training-actions-row .btn-drag{
+  flex:0 0 auto;
+  min-width:34px;
+  max-width:40px;
+  font-size:15px;
+  font-weight:900;
+  color:var(--acc2);
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.training-actions-row .btn-drag:active{cursor:grabbing}
+.exercise-item:not(.dragging){transition:transform .15s ease}
+.exercise-item.dragging{
+  z-index:100;
+  background:var(--card2) !important;
+  box-shadow:0 8px 24px rgba(0,0,0,.55);
+  opacity:.95;
+  cursor:grabbing;
+}
+
+.stat-menu-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+  margin-bottom:12px;
+}
+.stat-menu-btn{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:12px 6px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  cursor:pointer;
+  transition:all .15s;
+  min-height:74px;
+  color:var(--txt);
+}
+.stat-menu-btn:active{transform:scale(.95)}
+.stat-menu-btn.on{
+  background:var(--grad);
+  border-color:transparent;
+  color:var(--bg);
+  box-shadow:0 4px 14px color-mix(in srgb, var(--acc) 35%, transparent);
+}
+.stat-menu-btn .sm-ico{font-size:26px;line-height:1}
+.stat-menu-btn .sm-lbl{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;text-align:center;line-height:1.15}
+.stat-panel{display:none;animation:fadeIn .2s ease}
+.stat-panel.on{display:block}
+
+@media (max-width:380px){
+  .stat-menu-grid{grid-template-columns:repeat(3,1fr)}
+  .stat-menu-btn{min-height:66px;padding:10px 4px}
+  .stat-menu-btn .sm-ico{font-size:22px}
+  .stat-menu-btn .sm-lbl{font-size:8.5px}
+}
+
+.picker-back{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:6px 12px;border-radius:var(--radius-sm);
+  background:var(--card);border:1px solid var(--line);
+  font-size:11px;font-weight:800;color:var(--mut);
+  cursor:pointer;margin-bottom:10px;
+}
+.picker-back:active{transform:scale(.97);background:var(--card2)}
+
+.ex-tiles{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(64px,1fr));
+  gap:6px;
+  margin-top:4px;
+}
+.ex-tile{
+  background:var(--card2);
+  border:1.5px solid var(--line-soft);
+  border-radius:var(--radius-sm);
+  padding:8px 4px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .15s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  min-height:64px;
+  justify-content:center;
+  position:relative;
+}
+.ex-tile:active{transform:scale(.95)}
+.ex-tile.on{
+  border-color:var(--acc);
+  background:color-mix(in srgb, var(--acc) 14%, var(--card2));
+}
+.ex-tile .ic{width:22px;height:22px;margin:0}
+.ex-tile .ic.z{width:12px;height:28px}
+.ex-tile .et-name{
+  font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.2px;
+  color:var(--txt);line-height:1.1;text-align:center;
+}
+.ex-tile .et-check{
+  position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;
+  background:var(--acc);color:var(--bg);font-size:8px;font-weight:900;
+  display:none;align-items:center;justify-content:center;
+}
+.ex-tile.on .et-check{display:flex}
+
+@media (max-width:480px){
+  .ex-tiles{grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:5px}
+  .ex-tile{min-height:56px;padding:6px 3px;gap:2px}
+  .ex-tile .ic{width:18px;height:18px}
+  .ex-tile .ic.z{width:10px;height:24px}
+  .ex-tile .et-name{font-size:8px}
+}
+
+.chip.ex-cat-chip{
+  padding:8px 14px;
+  font-size:var(--font-md);
+  font-weight:700;
+  gap:6px;
+}
+.chip.ex-cat-chip.has-selection{
+  border-color:var(--acc2);
+  color:var(--acc2);
+  background:color-mix(in srgb, var(--acc2) 10%, var(--card));
+}
+.chip.ex-cat-chip.has-selection .chip-count{
+  background:var(--acc2);
+  color:var(--bg);
+  opacity:1;
+}
+.chip.ex-cat-chip .chip-count{
+  background:var(--card2);
+  color:var(--mut);
+  padding:1px 6px;
+  border-radius:var(--radius-full);
+  font-size:var(--font-xs);
+  font-weight:800;
+  min-width:18px;
+  text-align:center;
+}
 </style>
 </head>
 <body data-mode="dark">
 <div class="app">
   <header class="header">
     <div class="logo-wrap">
-      <div class="logo">ДУ</div>
-      <div class="logo-ver" id="logoVersion">v17</div>
+      <div class="logo"><svg viewBox="0 0 64 48" style="height:26px;width:34px;color:var(--txt);display:block;fill:none"><path class="f" d="M24 2h4v8h-4zM30 2h4v8h-4zM36 2h4v8h-4z"/><path fill="currentColor" stroke="none" d="M6 40L24 14h8L50 40h-8L28 22 16 40z"/><path class="f" d="M40 40l16-24h-6L34 40z"/></svg></div>
+      <div class="logo-ver" id="logoVersion">v20.5</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -673,6 +759,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
   <!-- ========== КАЛЕНДАРЬ ========== -->
   <section class="view on" id="v-main">
+    <div class="slogan" id="slogan"></div>
     <div class="progress-row">
       <div class="progress-cell">
         <div class="lbl">Неделя</div>
@@ -725,12 +812,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <span class="search-icon">🔍</span>
       <input class="search-input" placeholder="Поиск упражнения..." id="exSearch" oninput="renderEx()">
     </div>
-    <div class="tabs">
-      <button class="tab-btn active" data-f="all" onclick="setFilter(this)">Все</button>
-      <button class="tab-btn" data-f="zone" onclick="setFilter(this)">Зоны</button>
-      <button class="tab-btn" data-f="gear" onclick="setFilter(this)">Снаряды</button>
-      <button class="tab-btn" data-f="skill" onclick="setFilter(this)">Навыки</button>
-    </div>
 
     <div class="btn-row" style="margin-bottom:6px">
       <button class="btn btn-sm" onclick="openPicker('zones')">🎯 Зоны <span class="filter-badge" id="zonesCount" style="margin-left:4px">0</span></button>
@@ -751,6 +832,10 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
   <!-- ========== КОМПЛЕКСЫ ========== -->
   <section class="view" id="v-comps">
+    <div class="search">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" placeholder="Поиск по названию..." id="compSearchInput" oninput="renderCompsTab()">
+    </div>
     <div class="card">
       <div class="card-title">
         <div class="card-title-left">Мои комплексы</div>
@@ -763,12 +848,6 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 
   <!-- ========== XP / СТАТИСТИКА ========== -->
   <section class="view" id="v-stat">
-    <div class="character-card">
-      <div class="character-title">🧍 Твой персонаж</div>
-      <div class="character-svg" id="charContainer"></div>
-      <div class="character-legend" id="charLegend"></div>
-    </div>
-
     <div class="xp-hero">
       <div class="xp-hero-main">
         <div class="xp-hero-level">
@@ -781,51 +860,100 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
           <div class="xp-hero-bar"><i id="xpBar" style="width:0%"></i></div>
         </div>
       </div>
-      <div class="xp-hero-formula">
-        <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
+    </div>
+
+    <div class="stat-menu-grid" id="statMenu">
+      <button class="stat-menu-btn" data-tab="char" onclick="switchStatTab(this)">
+        <span class="sm-ico">🧍</span><span class="sm-lbl">Персонаж</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="progress" onclick="switchStatTab(this)">
+        <span class="sm-ico">📈</span><span class="sm-lbl">Прогресс</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="gears" onclick="switchStatTab(this)">
+        <span class="sm-ico">🎒</span><span class="sm-lbl">Снаряды</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="zones" onclick="switchStatTab(this)">
+        <span class="sm-ico">💪</span><span class="sm-lbl">Зоны</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="skills" onclick="switchStatTab(this)">
+        <span class="sm-ico">🎯</span><span class="sm-lbl">Навыки</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="log" onclick="switchStatTab(this)">
+        <span class="sm-ico">📝</span><span class="sm-lbl">XP Лог</span>
+      </button>
+      <button class="stat-menu-btn" data-tab="summary" onclick="switchStatTab(this)">
+        <span class="sm-ico">📊</span><span class="sm-lbl">Сводка</span>
+      </button>
+    </div>
+
+    <div class="stat-panel on" data-panel="char">
+      <div class="character-card">
+        <div class="character-title">🧍 Твой персонаж</div>
+        <div class="character-svg" id="charContainer"></div>
+        <div class="character-legend" id="charLegend"></div>
       </div>
     </div>
 
-    <div class="progress-section">
-      <h3>📈 Прогресс упражнения</h3>
-      <select id="progress-ex-select" class="progress-ex-select" onchange="renderProgressChart()">
-        <option value="">— выбери упражнение —</option>
-      </select>
-      <div id="progress-prs"></div>
-      <div class="metric-tabs" id="progress-metric-tabs">
-        <div class="metric-tab active" data-metric="weight" onclick="setProgressMetric('weight')">Вес</div>
-        <div class="metric-tab" data-metric="volume" onclick="setProgressMetric('volume')">Объём</div>
-        <div class="metric-tab" data-metric="reps" onclick="setProgressMetric('reps')">Повторы</div>
-        <div class="metric-tab" data-metric="time" onclick="setProgressMetric('time')">Время</div>
+    <div class="stat-panel" data-panel="progress">
+      <div class="progress-section">
+        <h3>📈 Прогресс упражнения</h3>
+        <select id="progress-ex-select" class="progress-ex-select" onchange="renderProgressChart()">
+          <option value="">— выбери упражнение —</option>
+        </select>
+        <div id="progress-prs"></div>
+        <div class="metric-tabs" id="progress-metric-tabs">
+          <div class="metric-tab active" data-metric="weight" onclick="setProgressMetric('weight')">Вес</div>
+          <div class="metric-tab" data-metric="volume" onclick="setProgressMetric('volume')">Объём</div>
+          <div class="metric-tab" data-metric="reps" onclick="setProgressMetric('reps')">Повторы</div>
+          <div class="metric-tab" data-metric="time" onclick="setProgressMetric('time')">Время</div>
+        </div>
+        <canvas id="progress-chart" class="progress-canvas" width="600" height="400"></canvas>
+        <div class="progress-hint" id="progress-info">Выбери упражнение из списка</div>
       </div>
-      <canvas id="progress-chart" class="progress-canvas" width="600" height="400"></canvas>
-      <div class="progress-hint" id="progress-info">Выбери упражнение из списка</div>
     </div>
 
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">🎒 Снаряды</div></div>
-      <div class="skill-list" id="skillGears"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">💪 Зоны</div></div>
-      <div class="skill-list" id="skillZones"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">🎯 Навыки</div></div>
-      <div class="skill-list" id="skillSkills"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">XP Лог</div></div>
-      <div class="xp-log" id="xpLog"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">Сводка</div></div>
-      <div class="stats-summary">
-        <div class="stat-mini"><div class="stat-mini-val" id="stTotal">0</div><div class="stat-mini-lbl">Упражнений</div></div>
-        <div class="stat-mini"><div class="stat-mini-val" id="stTrains">0</div><div class="stat-mini-lbl">Тренировок</div></div>
-        <div class="stat-mini"><div class="stat-mini-val" id="stComps">0</div><div class="stat-mini-lbl">Комплексов</div></div>
-        <div class="stat-mini"><div class="stat-mini-val" id="stGears">0</div><div class="stat-mini-lbl">Снарядов</div></div>
+    <div class="stat-panel" data-panel="gears">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">🎒 Снаряды</div></div>
+        <div class="skill-list" id="skillGears"></div>
       </div>
+    </div>
+
+    <div class="stat-panel" data-panel="zones">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">💪 Зоны</div></div>
+        <div class="skill-list" id="skillZones"></div>
+      </div>
+    </div>
+
+    <div class="stat-panel" data-panel="skills">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">🎯 Навыки</div></div>
+        <div class="skill-list" id="skillSkills"></div>
+      </div>
+    </div>
+
+    <div class="stat-panel" data-panel="log">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">XP Лог</div></div>
+        <div class="xp-log" id="xpLog"></div>
+      </div>
+    </div>
+
+    <div class="stat-panel" data-panel="summary">
+      <div class="card">
+        <div class="card-title"><div class="card-title-left">Сводка</div></div>
+        <div class="stats-summary">
+          <div class="stat-mini"><div class="stat-mini-val" id="stTotal">0</div><div class="stat-mini-lbl">Упражнений</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stTrains">0</div><div class="stat-mini-lbl">Тренировок</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stComps">0</div><div class="stat-mini-lbl">Комплексов</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stGears">0</div><div class="stat-mini-lbl">Снарядов</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-hero-formula" style="margin-top:12px">
+      <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
     </div>
   </section>
 
@@ -911,12 +1039,13 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 <button class="fab" id="fabBtn" onclick="toggleFabMenu()">+</button>
 
 <nav class="nav-bottom">
-  <button class="nav-btn on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg><span>Календарь</span></button>
-  <button class="nav-btn" data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg><span>Упр.</span></button>
-  <button class="nav-btn" data-v="v-comps" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg><span>Комплексы</span></button>
-  <button class="nav-btn" data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg><span>XP</span></button>
-  <button class="nav-btn" data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg><span>Профиль</span></button>
+  <button class="nav-btn on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16"/><path class="a" d="M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>Календарь</span></button>
+  <button class="nav-btn" data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M6 8v8M18 8v8M3 10v4M21 10v4"/><path class="a" d="M6 12h12"/></svg><span>Упр.</span></button>
+  <button class="nav-btn" data-v="v-comps" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4zM4 12l8 4 8-4"/><path class="a" d="M4 16l8 4 8-4"/></svg><span>Комплексы</span></button>
+  <button class="nav-btn" data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M6 20v-6M12 20V8"/><path class="a" d="M18 20V4"/><path d="M3 20h18"/></svg><span>XP</span></button>
+  <button class="nav-btn" data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M5 9V4l4 3h6l4-3v5c0 5-3 9-7 9s-7-4-7-9z"/><path class="a" d="M9.5 11h.01M14.5 11h.01M11 14l1 1 1-1"/></svg><span>Профиль</span></button>
 </nav>
+
 <!-- ============ ЭКРАН ВЫПОЛНЕНИЯ ============ -->
 <div class="exec-screen" id="execScreen">
   <div class="exec-header">
@@ -975,9 +1104,21 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <input type="file" id="exPhoto" accept="image/*,video/*" multiple style="display:none" onchange="loadExPhotos(this)">
     </div>
     <div class="field-group"><label class="field-label">Ссылка на сайт</label><input class="field-input" id="exLink" type="url" placeholder="https://..."></div>
-    <div class="field-group"><label class="field-label">Зоны</label><div id="exZonesPick"></div></div>
-    <div class="field-group"><label class="field-label">Снаряды</label><div class="chip-row" id="exGearsPick"></div></div>
-    <div class="field-group"><label class="field-label">Навыки</label><div class="chip-row" id="exSkillsPick"></div></div>
+    <div class="field-group">
+      <label class="field-label">Категории</label>
+      <div class="chip-row">
+        <button type="button" class="chip ex-cat-chip" id="exCatZones" onclick="openExPicker('zones')">
+          <span>🎯</span> Зоны <span class="chip-count" id="exCatZonesCount">0</span>
+        </button>
+        <button type="button" class="chip ex-cat-chip" id="exCatGears" onclick="openExPicker('gears')">
+          <span>🎒</span> Снаряды <span class="chip-count" id="exCatGearsCount">0</span>
+        </button>
+        <button type="button" class="chip ex-cat-chip" id="exCatSkills" onclick="openExPicker('skills')">
+          <span>⭐</span> Навыки <span class="chip-count" id="exCatSkillsCount">0</span>
+        </button>
+      </div>
+      <div class="note" style="margin-top:6px">💡 Нажми на категорию — откроется список плиток с иконками</div>
+    </div>
     <div class="field-group">
       <label class="field-label">Стороны тела</label>
       <div class="chip-row" id="exTwoSidesPick">
@@ -996,6 +1137,15 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
     <div class="field-group"><label class="field-label">Описание</label><textarea class="field-input" id="exDesc" rows="3"></textarea></div>
     <button class="btn btn-primary btn-full" onclick="saveEx()">Сохранить</button>
     <button class="modal-close" onclick="closeModal('m-ex')">Отмена</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="m-ex-picker" onclick="if(event.target===this)closeModal('m-ex-picker')">
+  <div class="modal">
+    <h3 id="exPickerTitle">Выбор</h3>
+    <div id="exPickerBody"></div>
+    <button class="btn btn-primary btn-full" style="margin-top:12px" onclick="closeExPicker()">✓ Готово</button>
+    <button class="modal-close" onclick="closeExPicker()">Закрыть</button>
   </div>
 </div>
 
@@ -1059,6 +1209,14 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <input class="field-input" type="number" id="cRoundTime" value="20" min="1" max="120">
       <div class="note" style="margin-top:6px">💡 Запускается таймер. Атлет жмёт «Круг завершён» — круг считается.</div>
     </div>
+    <div class="field-group" id="cRestModeGroup">
+      <label class="field-label">Отдых между подходами</label>
+      <div class="chip-row" id="cRestModePick">
+        <div class="chip on" data-v="0" onclick="pickRestMode(0)">📏 Стандартный</div>
+        <div class="chip" data-v="1" onclick="pickRestMode(1)">📊 Нестандартный</div>
+      </div>
+      <div class="note" id="cRestModeNote" style="display:none">💡 Для каждого упражнения можно задать свой отдых после каждого подхода — например <b>60,90,120</b>. Если не задан — используется обычный «Отдых, с».</div>
+    </div>
     <div class="section-title">Упражнения</div>
     <div id="cExList"><div class="empty" style="padding:8px">Пока пусто</div></div>
     <button class="btn btn-sm btn-full" style="margin-top:6px" onclick="openPickEx('comp')">+ Добавить упражнение</button>
@@ -1079,6 +1237,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 <div class="modal-overlay" id="m-pick-comp" onclick="if(event.target===this)closeModal('m-pick-comp')">
   <div class="modal">
     <h3>Выбор комплекса</h3>
+    <div class="search"><span class="search-icon">🔍</span><input class="search-input" placeholder="Поиск комплекса..." id="pickCompSearch" oninput="renderPickCompList()"></div>
     <div id="pickCompList"></div>
     <button class="modal-close" onclick="closeModal('m-pick-comp')">Отмена</button>
   </div>
@@ -1088,7 +1247,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
   <div class="modal">
     <h3 id="exCfgTitle">Настройка</h3>
     <div class="field-group"><label class="field-label">Упражнение</label><div id="exCfgName" style="font-size:12px;font-weight:700;padding:8px 10px;background:var(--card);border-radius:var(--radius-sm)"></div></div>
-    <div class="note" style="margin-bottom:8px">💡 Введи <b>X</b> → спросим во время тренировки</div>
+    <div class="note" style="margin-bottom:8px">💡 Введи <b>X</b> → спросим во время тренировки. Для повторов и веса X спросим <b>после каждого подхода</b>.</div>
     <div class="field-row" style="margin-bottom:8px">
       <div class="field-group"><label class="field-label">Подходы</label><input class="field-input" type="text" id="exCfgSets" value="3"></div>
       <div class="field-group"><label class="field-label">Повторы</label><input class="field-input" type="text" id="exCfgReps" value="10"></div>
@@ -1098,6 +1257,11 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <div class="field-group"><label class="field-label">Отдых, с</label><input class="field-input" type="text" id="exCfgRest" value="60"></div>
     </div>
     <div class="field-group"><label class="field-label">Вес, кг</label><input class="field-input" type="text" id="exCfgWeight" value="0"></div>
+    <div class="field-group" id="exCfgRestPerSetGroup" style="display:none">
+      <label class="field-label">Отдых после подходов (через запятую)</label>
+      <input class="field-input" type="text" id="exCfgRestPerSet" placeholder="60,90,120">
+      <div class="note" style="margin-top:4px">💡 <b>60,90,120</b> = отдых 60с после 1-го подхода, 90с после 2-го, 120с после 3-го. Пусто = использовать «Отдых, с».</div>
+    </div>
     <div class="field-group"><label class="field-label">Заметка</label><input class="field-input" id="exCfgNote"></div>
     <button class="btn btn-primary btn-full" onclick="saveExConfig()">ОК</button>
     <button class="modal-close" onclick="closeModal('m-ex-config')">Отмена</button>
@@ -1150,15 +1314,16 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <div style="font-size:12px;color:var(--mut);margin-top:4px">Личный трекер тренировок с геймификацией</div>
     </div>
     <div class="info-block"><h4>🎯 Зачем это</h4><p>Помогает <b>планировать</b> тренировки, <b>выполнять по шагам</b> и <b>видеть прогресс</b> — по каждой зоне, снаряду и навыку. Геймификация (XP, ранги, распад) держит мотивацию.</p></div>
-    <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя на главном экране, месяц — всплывающий</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• Изменения «на конкретный день» без правки шаблона</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
-    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Мульти-теги: зоны, снаряды, навыки</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• Параметр <b>X</b> — спросим значение перед подходом</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
-    <div class="info-block"><h4>🎯 Плитки-фильтры</h4><p>Кнопки «Зоны / Снаряды / Навыки» открывают плитки. Нажал — фильтр применился. «Сбросить» очищает всё.</p></div>
-    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Сортировка:</b> упражнения двигаются ↑ ↓.</p></div>
+    <div class="info-block"><h4>📅 Календарь</h4><p>• Неделя на главном экране, месяц — всплывающий</p><p>• Гибкий период С/По — разово или бессрочно</p><p>• Дни недели + время + длительность</p><p>• В календаре — только просмотр; редактирование через «Шаблоны»</p><p>• Прошлое — отмечается, будущее 🔒</p></div>
+    <div class="info-block"><h4>🏋️ Упражнения</h4><p>• Фото/видео + ссылка</p><p>• Три иконки-категории: Зоны / Снаряды / Навыки → каждая открывает плитки с иконками</p><p>• Форматы XP: ⏱ время · 🏋️ вес×повторы · 💪 свой вес</p><p>• <b>X для повторов и веса</b> — спрашивается <b>после каждого подхода</b></p><p>• <b>X для подходов, времени, отдыха</b> — спрашивается перед упражнением</p><p>• <b>Две стороны</b> — счёт и таймеры учитывают обе стороны (×2)</p><p>• <b>Компактный список</b> — строки в один ряд, эмодзи-теги</p></div>
+    <div class="info-block"><h4>🔍 Поиск</h4><p>• В меню «Упр.» — поле поиска по названию</p><p>• В меню «Комплексы» — поиск по карточкам</p><p>• При выборе комплекса в тренировку — поле «Поиск комплекса»</p></div>
+    <div class="info-block"><h4>🎯 Плитки-фильтры</h4><p>Кнопки «Зоны / Снаряды / Навыки» открывают плитки. Клик на главную зону с подзонами → вторая страница с конкретными пучками. Нажал — фильтр применился. «Сбросить» очищает всё.</p></div>
+    <div class="info-block"><h4>🔁 Комплексы</h4><p>Готовые наборы вставляются в любую тренировку.</p><p><b>Круговой режим:</b> включите «На количество кругов» и задайте время. Атлет жмёт «Круг завершён» — круг считается.</p><p><b>Нестандартный отдых:</b> для режима «по подходам» можно задать массив отдыха между подходами (например <code>60,90,120</code>) для каждого упражнения отдельно.</p><p><b>Сортировка:</b> упражнения в редакторе перетаскиваются за ручку ⠿.</p></div>
     <div class="info-block"><h4>▶️ Выполнение</h4><p>Пошаговый проход, таймер работы/отдыха, звук и вибрация, точки подходов, «Пропустить», авто-XP и PR-баннеры.</p></div>
-    <div class="info-block"><h4>🎯 Зоны тела</h4><p>13 главных + подзоны. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
+    <div class="info-block"><h4>🎯 Зоны тела</h4><p>Главные + подзоны: плечи (дельты, бицепс, трицепс), спина (широчайшие, трапеция, ромбовидные, поясница), грудь (верх/середина/низ), ягодицы (большая/средняя/малая), бёдра (квадрицепс, бицепс бедра, приводящие, отводящие), голень (икра, камбала, берцовые), пресс (прямая, поперечная, косые), кисти (сгибатели, разгибатели). Плюс: кардио, лицо, шея, стопы, кор, растяжка. XP главной = своя + сумма подзон. Слабая подзона помечается <b>⚠</b>.</p></div>
     <div class="info-block"><h4>⭐ XP и ранги</h4><p>• Формулы: <code>сек×0.01</code> · <code>(вес/масса)×0.01×повт</code> · <code>повт×0.1</code></p><p>• Ранги: Новичок → Любитель → Атлет → Спортсмен → Мастер → Ветеран → Чемпион → Легенда</p><p>• Распад при простое: −0.1%/день (7+ дн) … −1%/день (60+ дн)</p></div>
     <div class="info-block"><h4>🏆 Личные рекорды</h4><p>Автодетект при отметке. Побил — золотой баннер.</p></div>
-    <div class="info-block"><h4>📊 Аналитика</h4><p>Графики вес/объём/повторы/время, персонаж, отдельно снаряды/зоны/навыки.</p></div>
+    <div class="info-block"><h4>📊 Аналитика</h4><p>Графики вес/объём/повторы/время, персонаж, отдельно снаряды/зоны/навыки. Меню — большие иконки сверху.</p></div>
     <div class="info-block"><h4>⚖️ Журнал веса</h4><p>Запись по датам, график, мин/макс. <b>Профиль берёт массу из последней записи.</b></p></div>
     <div class="info-block"><h4>📏 Обхваты тела</h4><p>13 частей тела с табами: шея, грудь, талия, живот, бёдра, бёдра/голени/бицепсы/предплечья слева/справа.</p><p><b>Анализ композиции:</b> индексы Грудь/Талия, Талия/Бёдра, Бёдра/Талия, Шея/Талия, Бицепс/Талия.</p></div>
     <div class="info-block"><h4>💾 Данные</h4><p>localStorage. Экспорт/импорт JSON, Share, буфер. Резервная копия — раз в неделю.</p></div>
@@ -1174,7 +1339,7 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p><b>Создать:</b> «+ Тренировка». Заполни название, период (С/По), дни недели, время.</p>
       <p>Если период пустой — тренировка действует бессрочно.</p>
       <p>Упражнения: «+ Упражнение» или «+ Комплекс».</p>
-      <p>Порядок меняется кнопками ↑ ↓ в редакторе.</p>
+      <p>Порядок меняется перетаскиванием за ручку ⠿ в редакторе.</p>
     </div>
     <div class="info-block">
       <h4>✅ Выполнение</h4>
@@ -1182,39 +1347,52 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
       <p>▶ — запустить с таймером. В конце «Засчитать» ставит ✓ автоматически.</p>
     </div>
     <div class="info-block">
-      <h4>🎯 Плитки-фильтры</h4>
-      <p>В меню «Упр.» кнопки «Зоны / Снаряды / Навыки» открывают плитки. Нажал — фильтр применился, плитка подсветилась.</p>
-      <p>«Сбросить фильтр» очищает все три категории.</p>
+      <h4>⭐ X-параметры</h4>
+      <p><b>Подходы, время, отдых</b> — спросим <b>перед</b> упражнением (один раз).</p>
+      <p><b>Повторы, вес</b> — спросим <b>после каждого подхода</b>. Если предыдущий подход был заполнен, его значение подставляется как дефолт — можно просто нажать Enter.</p>
+      <p>Для двусторонних упражнений повторы спрашиваются «на одну сторону».</p>
+    </div>
+    <div class="info-block">
+      <h4>🎯 Плитки-фильтры и категории</h4>
+      <p>В меню «Упр.» кнопки «Зоны / Снаряды / Навыки» открывают плитки для фильтра списка упражнений.</p>
+      <p>В редакторе упражнения три кнопки-категории открывают подменю с плитками для выбора тегов.</p>
+    </div>
+    <div class="info-block">
+      <h4>🔍 Поиск</h4>
+      <p>В меню «Упр.» — по названию упражнения.</p>
+      <p>В меню «Комплексы» — по названию комплекса.</p>
+      <p>При выборе комплекса в тренировку — отдельное поле «Поиск комплекса».</p>
     </div>
     <div class="info-block">
       <h4>🔁 Круговой режим</h4>
       <p>При создании комплекса переключите «На количество кругов» и задайте время (напр. 20 мин).</p>
-      <p>В тренировке такой комплекс встаёт блоком. Жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз. По нулю блок закрывается автоматически.</p>
+      <p>В тренировке такой комплекс встаёт блоком. Жмите «Круг завершён» — счётчик кругов растёт, таймер идёт вниз.</p>
       <p>XP = XP за 1 круг × число кругов. При отметке ✓ вручную спросит «Сколько кругов?».</p>
+    </div>
+    <div class="info-block">
+      <h4>📊 Нестандартный отдых</h4>
+      <p>В комплексе «по подходам» включите «Нестандартный» — в каждом упражнении появится поле «Отдых после подходов».</p>
+      <p>Пример: <b>60,90,120</b> = отдых 60с после 1-го подхода, 90с после 2-го, 120с после 3-го.</p>
     </div>
     <div class="info-block">
       <h4>📅 Календарь месяца</h4>
       <p>Кнопка «📅 Календарь месяца» открывает всплывающее окно с полным месяцем.</p>
       <p>Выбрал день — модалка закрылась, неделя и тренировки обновились.</p>
+      <p>В календаре — только просмотр. Изменять состав — через «Шаблоны».</p>
     </div>
     <div class="info-block">
       <h4>📏 Обхваты</h4>
       <p>В профиле «Открыть журнал обхватов». Табы по частям тела, ввод значения, график, список.</p>
-      <p>Индексы композиции появляются, когда заполнены нужные пары.</p>
-    </div>
-    <div class="info-block">
-      <h4>⭐ X-параметры</h4>
-      <p>В дозировке упражнения введи <b>X</b> вместо числа. Перед началом спросит значение.</p>
     </div>
     <div class="info-block">
       <h4>💪 Упражнения</h4>
       <p>Мульти-теги: несколько зон/снарядов/навыков. Медиа: несколько фото + видео + ссылка.</p>
       <p>⏱ Время: XP = сек × 0.01 · 🏋️ Вес: (вес/масса) × 0.01 × повторы · 💪 Свой: повторы × 0.1</p>
-      <p><b>Две стороны:</b> включи «Две стороны», XP ×2, в выполнении будет «Сторона 1 / Сторона 2».</p>
+      <p><b>Две стороны:</b> XP ×2, в выполнении «Сторона 1 / Сторона 2».</p>
     </div>
     <div class="info-block">
       <h4>🏆 Личные рекорды (PR)</h4>
-      <p>При отметке ✓ проверяются рекорды. Побил — золотой баннер.</p>
+      <p>При отметке ✓ проверяются рекорды. Побил — золотой баннер. Для X-повторов PR берётся как максимум из массива.</p>
     </div>
     <div class="info-block">
       <h4>🌙 Распад</h4>
@@ -1229,16 +1407,73 @@ body[data-mode="light"] .theme-toggle .moon{opacity:.4}
 </div>
 
 <div class="toast" id="toast"></div>
+ <script>
+const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
+const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
+const P={
+cardio:['f','Кардио','<path d="M20 29l-5-5a3 3 0 0 1 5-3.5 3 3 0 0 1 5 3.5z"/>'],
+neck:['f','Шея','<path d="M17 11h6v4h-6z"/>'],
+shoulders:['f','Плечи',c(8.5,18,3.6)+c(31.5,18,3.6)],
+shoulders_front:['f','Передняя дельта',c(10.5,17.5,2.6)+c(29.5,17.5,2.6)],
+shoulders_side:['f','Средняя дельта',c(6.5,19,2.6)+c(33.5,19,2.6)],
+shoulders_rear:['b','Задняя дельта',c(10.5,17.5,2.6)+c(29.5,17.5,2.6)],
+shoulders_bi:['f','Бицепс','<path d="M5 20l5-2-1 9-4 1zM35 20l-5-2 1 9 4 1z"/>'],
+shoulders_tri:['b','Трицепс','<path d="M5 20l5-2-1 9-4 1zM35 20l-5-2 1 9 4 1z"/>'],
+back:['b','Спина',`<path d="${BL+BR+BW+BO}"/>`],
+back_lat:['b','Широчайшие',`<path d="${BW}"/>`],
+back_trap:['b','Трапеция',`<path d="${BL}"/>`],
+back_rhomb:['b','Ромбовидные',`<path d="${BR}"/>`],
+back_lower:['b','Поясница',`<path d="${BO}"/>`],
+chest:['f','Грудь','<path d="M12 17h16v11H12z"/>'],
+chest_upper:['f','Верх груди','<path d="M12 17h16v3.5H12z"/>'],
+chest_mid:['f','Середина груди','<path d="M12.5 21h15v3.5h-15z"/>'],
+chest_lower:['f','Низ груди','<path d="M13 25h14v3h-14z"/>'],
+glutes:['b','Ягодицы',`<path d="${GM}"/>`],
+glutes_max:['b','Большая ягодичная',`<path d="${GM}"/>`],
+glutes_med:['b','Средняя ягодичная','<path d="M12 41q4-2 8 0v3h-8zM20 41q4-2 8 0v3h-8z"/>'],
+glutes_min:['b','Малая ягодичная','<path d="M14 40q3-1 6 0v2h-6zM20 40q3-1 6 0v2h-6z"/>'],
+hips:['f','Бёдра','<path d="M12.5 45h7l-.8 15h-5.4zM20.5 45h7l-1 15h-5.4z"/>'],
+hips_quad:['f','Квадрицепс','<path d="M12.5 45h6l-.8 15h-5zM21.5 45h6l-.8 15h-5z"/>'],
+hips_ham:['b','Бицепс бедра','<path d="M12.5 50h7l-.8 11h-5.4zM20.5 50h7l-1 11h-5.4z"/>'],
+hips_add:['f','Приводящие','<path d="M17.5 46h2.5l-.5 11h-1.8zM20 46h2.5l.3 11h-1.8z"/>'],
+hips_abd:['f','Отводящие','<path d="M11.5 45h2.5l-.3 12h-2.5zM26 45h2.5l.3 12h-2.5z"/>'],
+calves:['b','Голень','<path d="M13.5 62h5.5l-.6 12h-4zM21 62h5.5l-1 12h-4z"/>'],
+calves_gastr:['b','Икра','<path d="M13.5 62h5.5l-.6 12h-4zM21 62h5.5l-1 12h-4z"/>'],
+calves_soleus:['b','Камбала','<path d="M14 66h4l-.3 8h-3zM22 66h4l-.3 8h-3z"/>'],
+calves_tib:['f','Берцовые','<path d="M14.5 62h3l-.4 12h-2.4zM22.5 62h3l-.4 12h-2.4z"/>'],
+feet:['f','Стопы','<path d="M12.5 75h7v3.5h-8zM20.5 75h7.5v3.5h-8z"/>'],
+hands:['f','Кисти',c(4.5,39,2.6)+c(35.5,39,2.6)],
+hands_flex:['f','Сгибатели',c(4.5,39,2.6)+c(35.5,39,2.6)],
+hands_ext:['b','Разгибатели',c(4.5,39,2.6)+c(35.5,39,2.6)],
+abs:['f','Пресс','<path d="M16 29h8v14h-8z"/>'],
+abs_rectus:['f','Прямая','<path d="M17 29h2.5v14H17zM20.5 29h2.5v14h-2.5z"/>'],
+abs_transv:['f','Поперечная','<path d="M13 32h14v3H13z"/>'],
+abs_oblique:['f','Косые','<path d="M12.5 30h3v12h-2zM27.5 30h-3v12h2z"/>'],
+core:['f','Кор','<path d="M13 28h14v15H13z"/>'],
+face:['f','Лицо','<circle cx="17" cy="6" r="1"/><circle cx="23" cy="6" r="1"/><path d="M17 8.5c1 1.5 5 1.5 6 0" fill="none"/>'],
+stretch:['f','Растяжка',S]};
+
+const ICS={"cal": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"15\" rx=\"3\"/><path d=\"M4 10h16\"/><path class=\"a\" d=\"M8 3v4M16 3v4M9 15l2 2 4-4\"/>", "ex": "<path d=\"M6 8v8M18 8v8M3 10v4M21 10v4\"/><path class=\"a\" d=\"M6 12h12\"/>", "comps": "<path d=\"M12 4l8 4-8 4-8-4zM4 12l8 4 8-4\"/><path class=\"a\" d=\"M4 16l8 4 8-4\"/>", "xp": "<path d=\"M6 20v-6M12 20V8\"/><path class=\"a\" d=\"M18 20V4\"/><path d=\"M3 20h18\"/>", "prof": "<path d=\"M5 9V4l4 3h6l4-3v5c0 5-3 9-7 9s-7-4-7-9z\"/><path class=\"a\" d=\"M9.5 11h.01M14.5 11h.01M11 14l1 1 1-1\"/>", "none": "<circle class=\"a\" cx=\"12\" cy=\"4.5\" r=\"2\"/><path d=\"M5 9l7 2 7-2M12 11v5M12 16l-3 5M12 16l3 5\"/>", "rope": "<path d=\"M8 7v5c0 5 2 8 4 8s4-3 4-8V7\"/><path class=\"a\" d=\"M6.5 3h3v4h-3zM14.5 3h3v4h-3z\"/>", "kb": "<path d=\"M8.5 9V6a3.5 3.5 0 0 1 7 0v3\"/><circle cx=\"12\" cy=\"15\" r=\"6\"/><path class=\"a\" d=\"M10 15h4\"/>", "pullup": "<path d=\"M5 4v18M19 4v18\"/><path class=\"a\" d=\"M3 6h18\"/><path d=\"M12 10v5M9 20l3-5 3 5\"/>", "bars": "<path d=\"M6 10v10M18 10v10M3 20h6M15 20h6\"/><path class=\"a\" d=\"M3 10h18M3 14h18\"/>", "rings": "<path d=\"M7 3v6M17 3v6\"/><circle class=\"a\" cx=\"7\" cy=\"14\" r=\"4.5\"/><circle class=\"a\" cx=\"17\" cy=\"14\" r=\"4.5\"/>", "trx": "<circle cx=\"12\" cy=\"3.5\" r=\"1.5\"/><path d=\"M12 5l-6 13M12 5l6 13\"/><path class=\"a\" d=\"M3 18h6M15 18h6\"/>", "band": "<ellipse cx=\"12\" cy=\"12\" rx=\"9\" ry=\"5.5\"/><path class=\"a\" d=\"M6 10c4-2 8-2 12 0\"/>", "db": "<g transform=\"rotate(-45 12 12)\"><path d=\"M6 8v8M18 8v8M3 10v4M21 10v4\"/><path class=\"a\" d=\"M6 12h12\"/></g>", "bb": "<path d=\"M2 12h20M5 6v12M19 6v12\"/><path class=\"a\" d=\"M8 8.5v7M16 8.5v7\"/>", "ball": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3v18\"/><path class=\"a\" d=\"M6 5c3 3 3 11 0 14M18 5c-3 3-3 11 0 14\"/>", "mat": "<path d=\"M3 15c0-2 1-3 3-3h12v6H6c-2 0-3-1-3-3z\"/><circle class=\"a\" cx=\"18\" cy=\"15\" r=\"3\"/>", "coord": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle class=\"f\" cx=\"12\" cy=\"12\" r=\"1.6\"/>", "strength": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path class=\"a\" d=\"M12 17V8M8 12l4-4 4 4\"/>", "speed": "<path class=\"a\" d=\"M13 3L5 14h6l-1 7 8-11h-6z\"/>", "endurance": "<rect x=\"3\" y=\"7\" width=\"16\" height=\"10\" rx=\"2.5\"/><path d=\"M21 10.5v3\"/><rect class=\"f\" x=\"5.5\" y=\"9.5\" width=\"8\" height=\"5\" rx=\"1\"/>", "flex": "<path class=\"a\" d=\"M3 14c3-7 6-7 9 0s6 7 9 0\"/><circle cx=\"12\" cy=\"5\" r=\"1.5\"/>", "power": "<path d=\"M12 3c4 2 5 7 4 11l-4 2-4-2c-1-4 0-9 4-11zM8 14l-3 3M16 14l3 3\"/><circle class=\"a\" cx=\"12\" cy=\"9\" r=\"1.6\"/><path class=\"a\" d=\"M12 18v3\"/>", "balance": "<path d=\"M12 4v15M7 19h10\"/><path class=\"a\" d=\"M4 8h16M4 8l-2.5 5h5zM20 8l-2.5 5h5z\"/>", "agility": "<path d=\"M8 17c0-3 2-5 4-5s4 2 4 5c0 2-1.5 3-4 3s-4-1-4-3z\"/><circle class=\"a\" cx=\"6\" cy=\"11\" r=\"1.7\"/><circle class=\"a\" cx=\"10\" cy=\"6.5\" r=\"1.7\"/><circle class=\"a\" cx=\"14\" cy=\"6.5\" r=\"1.7\"/><circle class=\"a\" cx=\"18\" cy=\"11\" r=\"1.7\"/>", "cardio": "<path d=\"M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z\"/><path class=\"a\" d=\"M6 12h3l2-3 2 5 1.5-2H18\"/>", "neck": "<path d=\"M9 3v6c0 2-1 3-3 4M15 3v6c0 2 1 3 3 4\"/><path class=\"a\" d=\"M6 13c2 0 3 2 6 2s4-2 6-2M6 13v6h12v-6\"/>", "shoulders": "<path d=\"M4 19v-6a8 8 0 0 1 16 0v6\"/><path class=\"a\" d=\"M8 19v-5a4 4 0 0 1 8 0v5\"/>", "back": "<path d=\"M5 4c0 8 2 13 7 16 5-3 7-8 7-16\"/><path class=\"a\" d=\"M12 6v14M8 9l4 2 4-2\"/>", "chest": "<path d=\"M3 9c4-3 7-3 9 0 2-3 5-3 9 0 0 6-4 9-9 9s-9-3-9-9z\"/><path class=\"a\" d=\"M12 9v9\"/>", "glutes": "<circle cx=\"8\" cy=\"14\" r=\"5\"/><circle cx=\"16\" cy=\"14\" r=\"5\"/><path class=\"a\" d=\"M5 5h14\"/>", "hips": "<path d=\"M8 3h8l-1 9 1 9h-8l1-9z\"/><path class=\"a\" d=\"M9.5 16h5\"/>", "calves": "<path d=\"M9 3c1 5-2 7-2 11s2 5 4 7M15 3c-1 4 1 6 1 9 0 3-2 6-5 9\"/><ellipse class=\"a\" cx=\"12\" cy=\"13\" rx=\"2\" ry=\"3.5\"/>", "feet": "<path d=\"M3 16v-3l5-1 2-4 3 2 6 3c2 1 2 2 2 4z\"/><path class=\"a\" d=\"M3 19.5h18\"/>", "hands": "<path d=\"M7 11h10v6a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4z\"/><path class=\"a\" d=\"M10 11V7M12 11V6M14 11V7\"/>", "abs": "<rect x=\"6\" y=\"3\" width=\"12\" height=\"18\" rx=\"4\"/><path class=\"a\" d=\"M12 3v18M6 9h12M6 15h12\"/>", "core": "<path d=\"M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z\"/><path class=\"a\" d=\"M12 8v7\"/>", "face": "<circle cx=\"12\" cy=\"10\" r=\"7\"/><circle class=\"a\" cx=\"9.5\" cy=\"9\" r=\".9\"/><circle class=\"a\" cx=\"14.5\" cy=\"9\" r=\".9\"/><path class=\"a\" d=\"M9.5 13c1 1.3 4 1.3 5 0\"/>", "stretch": "<circle cx=\"12\" cy=\"4.5\" r=\"2\"/><path d=\"M5 21c3-6 5-8 7-8s4 2 7 8\"/><path class=\"a\" d=\"M6 9l6 4 6-4\"/>"};
+const MA={waist:'core',belly:'abs',thigh_l:'hips_quad',thigh_r:'hips_quad',shin_l:'calves',shin_r:'calves'};
+function E(o){if(!o)return '';const id=MA[o.id]||o.id;
+if(P[id]){const[v,n,m]=P[id];return `<svg class="ic z" viewBox="0 0 40 80"><g class="bd">${S}${v=='b'?'<path d="M20 12v32" stroke-dasharray="1.5 1.5"/>':''}</g><g class="f">${m}</g></svg>`}
+if(ICS[id])return `<svg class="ic" viewBox="0 0 24 24">${ICS[id]}</svg>`;return o.emoji||''}
+const SLOGANS=['Пока ты отдыхаешь, враг тренируется','Ещё подход','Диван подождёт','Завтра ноги скажут всё, что думают','Последний повтор самый честный','Железо не торгуется','У кота девять жизней, у тебя одна. Тренируйся','Маленький шаг тоже шаг','Отдых тоже часть тренировки','Медленно — тоже вперёд'];
+function showSlogan(n){const el=document.getElementById('slogan');if(!el)return;window._sl=(n===undefined?Math.floor(Date.now()/864e5):n)%SLOGANS.length;el.textContent=SLOGANS[window._sl]}
+document.addEventListener('DOMContentLoaded',()=>{showSlogan();const el=document.getElementById('slogan');if(el)el.onclick=()=>showSlogan(window._sl+1)});
+</script>
 <script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v17';
+const APP_VERSION = 'v20.5';
 const DEFAULT_ZONES = [
   {id:'cardio', name:'Кардио', emoji:'🫁', isMain:true},
+  {id:'face', name:'Лицо', emoji:'😊', isMain:true},
   {id:'neck', name:'Шея', emoji:'🦒', isMain:true},
   {id:'shoulders', name:'Плечи', emoji:'💪', isMain:true},
   {id:'shoulders_front', name:'Передняя дельта', emoji:'💪', parent:'shoulders'},
   {id:'shoulders_side', name:'Средняя дельта', emoji:'💪', parent:'shoulders'},
   {id:'shoulders_rear', name:'Задняя дельта', emoji:'💪', parent:'shoulders'},
+  {id:'shoulders_bi', name:'Бицепс', emoji:'💪', parent:'shoulders'},
   {id:'shoulders_tri', name:'Трицепс', emoji:'💪', parent:'shoulders'},
   {id:'back', name:'Спина', emoji:'🔙', isMain:true},
   {id:'back_lat', name:'Широчайшие', emoji:'🔙', parent:'back'},
@@ -1252,18 +1487,23 @@ const DEFAULT_ZONES = [
   {id:'glutes', name:'Ягодицы', emoji:'🍑', isMain:true},
   {id:'glutes_max', name:'Большая ягодичная', emoji:'🍑', parent:'glutes'},
   {id:'glutes_med', name:'Средняя ягодичная', emoji:'🍑', parent:'glutes'},
+  {id:'glutes_min', name:'Малая ягодичная', emoji:'🍑', parent:'glutes'},
   {id:'hips', name:'Бедра', emoji:'🦵', isMain:true},
   {id:'hips_quad', name:'Квадрицепс', emoji:'🦵', parent:'hips'},
   {id:'hips_ham', name:'Бицепс бедра', emoji:'🦵', parent:'hips'},
   {id:'hips_add', name:'Приводящие', emoji:'🦵', parent:'hips'},
-  {id:'calves', name:'Голени', emoji:'🦿', isMain:true},
+  {id:'hips_abd', name:'Отводящие', emoji:'🦵', parent:'hips'},
+  {id:'calves', name:'Голень', emoji:'🦿', isMain:true},
+  {id:'calves_gastr', name:'Икра', emoji:'🦿', parent:'calves'},
+  {id:'calves_soleus', name:'Камбала', emoji:'🦿', parent:'calves'},
+  {id:'calves_tib', name:'Берцовые', emoji:'🦿', parent:'calves'},
   {id:'feet', name:'Стопы', emoji:'🦶', isMain:true},
   {id:'hands', name:'Кисти', emoji:'✋', isMain:true},
   {id:'hands_flex', name:'Сгибатели', emoji:'✋', parent:'hands'},
   {id:'hands_ext', name:'Разгибатели', emoji:'✋', parent:'hands'},
   {id:'abs', name:'Пресс', emoji:'🔥', isMain:true},
-  {id:'abs_upper', name:'Верхний пресс', emoji:'🔥', parent:'abs'},
-  {id:'abs_lower', name:'Нижний пресс', emoji:'🔥', parent:'abs'},
+  {id:'abs_rectus', name:'Прямая', emoji:'🔥', parent:'abs'},
+  {id:'abs_transv', name:'Поперечная', emoji:'🔥', parent:'abs'},
   {id:'abs_oblique', name:'Косые', emoji:'🔥', parent:'abs'},
   {id:'core', name:'Кор', emoji:'🎯', isMain:true},
   {id:'stretch', name:'Растяжка', emoji:'🧘', isMain:true},
@@ -1333,7 +1573,6 @@ let completions = store.get('completions', {});
 let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
 let themeId = store.get('themeId', 'neon');
 let themeMode = store.get('themeMode', 'dark');
-let filter = 'all';
 let currentExMedia = [];
 let totalXp = store.get('totalXp', 0);
 let xpLog = store.get('xpLog', []);
@@ -1346,20 +1585,27 @@ let measActive = 'chest';
 let prs = store.get('prs', {});
 let progressMetric = 'weight';
 let starterInstalled = store.get('starterInstalled', false);
+let statActiveTab = store.get('statActiveTab', 'char');
 
 let filterZones = [];
 let filterGears = [];
 let filterSkills = [];
 
-// ⭐ Синхронизация массы профиля с последней записью журнала
-if(weightLog.length > 0){
-  profile.weight = weightLog[weightLog.length - 1].value;
-  store.set('profile', profile);
-}
+let pickerNav = { stack: [] };
+let currentExZones = [];
+let currentExGears = [];
+let currentExSkills = [];
+let exPickerCurrentType = 'zones';
+let currentCompCustomRest = false;
 
 let editingExId = null, editingTrainId = null, editingCompId = null;
 let tempTrainEx = [], tempCompEx = [];
 let pickTarget = null, exConfigTarget = null;
+
+if(weightLog.length > 0){
+  profile.weight = weightLog[weightLog.length - 1].value;
+  store.set('profile', profile);
+}
 
 const TODAY = new Date();
 let viewMonth = TODAY.getMonth();
@@ -1371,6 +1617,7 @@ function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; 
 function sameDay(a,b){ return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(); }
 function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function escapeHtml(s){ return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 let toastT;
 function toast(msg){
@@ -1684,7 +1931,7 @@ function nav(el){
   document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
   const v = document.getElementById(el.dataset.v); if(v) v.classList.add('on');
   closeFabMenu();
-  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); renderCharacter(); }
+  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); renderCharacter(); applyStatTab(); }
   if(el.dataset.v === 'v-comps'){ renderCompsTab(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1732,15 +1979,8 @@ function selectDate(d){
   renderWeek(); renderMonth(); renderTrainings();
   closeModal('m-month');
 }
-function openMonthModal(){
-  renderMonth();
-  openModal('m-month');
-}
-function monthGoToday(){
-  viewMonth = TODAY.getMonth();
-  viewYear = TODAY.getFullYear();
-  renderMonth();
-}
+function openMonthModal(){ renderMonth(); openModal('m-month'); }
+function monthGoToday(){ viewMonth = TODAY.getMonth(); viewYear = TODAY.getFullYear(); renderMonth(); }
 function renderMonth(){
   const mt = document.getElementById('monthTitle'); if(mt) mt.textContent = MONTHS_RU[viewMonth]+' '+viewYear;
   const ml = document.getElementById('monthLabel'); if(ml) ml.textContent = MONTHS_RU[viewMonth];
@@ -1825,19 +2065,17 @@ function renderTrainings(){
     const exListHtml = exs.map((e, idx) => {
       if(e.type === 'rounds'){
         const xpRound = xpForOneRound(e);
-        const buttons = isFuture ? '' : '<div class="training-actions-row"><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑</button></div>';
         return '<div class="exercise-item round-block">'+
           '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
           '<div class="ex-item-tags"><span class="tag-mini">'+e.blockEx.length+' упражнений</span><span class="tag-mini">≈'+xpRound+' XP/круг</span></div>'+
-          buttons+
         '</div>';
       }
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
-      const zE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji+z.name : ''; }).filter(Boolean).join(' ');
-      const gE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji+g.name : ''; }).filter(Boolean).join(' ');
-      const sE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? s.emoji+s.name : ''; }).filter(Boolean).join(' ');
+      const zE = (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z ? E(z)+z.name : ''; }).filter(Boolean).join(' ');
+      const gE = (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g ? E(g)+g.name : ''; }).filter(Boolean).join(' ');
+      const sE = (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s ? E(s)+s.name : ''; }).filter(Boolean).join(' ');
       const dosage = [];
       if(e.sets) dosage.push(isX(e.sets)?'<span class="x-mark">X</span>×':e.sets+'×');
       if(e.reps) dosage.push(isX(e.reps)?'<span class="x-mark">X</span> повт':e.reps+' повт');
@@ -1848,7 +2086,6 @@ function renderTrainings(){
       return '<div class="exercise-item">'+
         '<div class="ex-item-head"><div class="ex-item-name">'+ex.name+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
         '<div class="ex-item-tags">'+sidesTag+(zE?'<span class="tag-mini">'+zE+'</span>':'')+(gE?'<span class="tag-mini">'+gE+'</span>':'')+(sE?'<span class="tag-mini">'+sE+'</span>':'')+'</div>'+
-        (isFuture ? '' : '<div class="training-actions-row"><button onclick="editDayOverride(\''+tr.id+'\','+idx+')">✏️</button><button onclick="removeExFromDay(\''+tr.id+'\','+idx+')">🗑</button></div>')+
       '</div>';
     }).join('');
     let actionsHtml;
@@ -1868,7 +2105,6 @@ function renderTrainings(){
         '<div class="training-actions">'+actionsHtml+'</div>'+
       '</div>'+
       '<div class="training-body">'+(exListHtml||'<div class="empty" style="padding:6px;font-size:11px">Нет упражнений</div>')+
-        (isFuture ? '' : '<div class="training-actions-row"><button onclick="editTrainFromDay(\''+tr.id+'\')">⚙️</button><button onclick="addExToDay(\''+tr.id+'\')">+ Упр</button><button onclick="addCompToDay(\''+tr.id+'\')">+ Комплекс</button></div>')+
       '</div></div>';
   }).join('');
 }
@@ -1876,160 +2112,131 @@ function toggleTrainBody(head){
   const body = head.nextElementSibling;
   if(body) body.classList.toggle('on');
 }
-function toggleTrain(trainId){
-  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
-  if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку отметить нельзя'); return; }
-  const key = isoDate(selectedDate);
-  const wasDone = isTrainDone(selectedDate, tr);
-  if(wasDone){
-    const c = completions[key] && completions[key][tr.id];
-    const xpA = c ? c.xpAwarded : 0;
-    setTrainDone(selectedDate, tr.id, false);
-    if(xpA > 0) removeXp(xpA, tr.name, tr);
-  } else {
-    const eff = getEffectiveTrain(tr, selectedDate);
-    const exs = eff.exercises || [];
-    let xp = calcTrainXp(tr, eff);
-    const roundsInfo = {};
-    exs.forEach((e, idx) => {
-      if(e.type === 'rounds'){
-        const r = parseInt(prompt('🔁 «'+e.name+'»:\nСколько кругов выполнили?', '0'), 10) || 0;
-        roundsInfo[idx] = r;
-        xp += xpForOneRound(e) * r;
-      }
-    });
-    xp = Math.round(xp * 100) / 100;
-    setTrainDone(selectedDate, tr.id, true, xp, JSON.parse(JSON.stringify(exs)));
-    if(Object.keys(roundsInfo).length){
-      if(completions[key] && completions[key][tr.id]){
-        completions[key][tr.id].rounds = roundsInfo;
-        store.set('completions', completions);
-      }
-    }
-    if(xp > 0) addXp(xp, tr.name, tr);
-    const regularExs = exs.filter(e => e.type !== 'rounds');
-    const newPRs = checkNewPRs(regularExs, key);
-    if(newPRs.length > 0){
-      setTimeout(() => {
-        newPRs.forEach((pr, i) => setTimeout(() => prFly(pr.exName, pr.display), i * 800));
-      }, 500);
-    }
-  }
-  renderTrainings(); renderWeek(); renderMonth(); renderStats();
-}
 
-function editDayOverride(trainId, exIndex){
-  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
-  const key = isoDate(selectedDate);
-  if(!tr.dayOverrides) tr.dayOverrides = {};
-  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
-  const e = tr.dayOverrides[key].exercises[exIndex]; if(!e) return;
-  const ex = exercises.find(x => x.id === e.exId);
-  exConfigTarget = {type:'override', trainId, dayKey:key, index:exIndex};
-  const el = (id) => document.getElementById(id);
-  el('exCfgTitle').textContent = 'Изменить (этот день)';
-  el('exCfgName').textContent = ex ? ex.name : '';
-  el('exCfgSets').value = e.sets||1; el('exCfgReps').value = e.reps||0;
-  el('exCfgTime').value = e.time||0; el('exCfgRest').value = e.rest||0;
-  el('exCfgWeight').value = e.weight||0; el('exCfgNote').value = e.note||'';
-  openModal('m-ex-config');
-}
-function removeExFromDay(trainId, exIndex){
-  if(!confirm('Убрать из этого дня?')) return;
-  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
-  const key = isoDate(selectedDate);
-  if(!tr.dayOverrides) tr.dayOverrides = {};
-  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
-  tr.dayOverrides[key].exercises.splice(exIndex, 1);
-  store.set('trainings', trainings); renderTrainings(); toast('Убрано');
-}
-function addExToDay(trainId){
-  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
-  const key = isoDate(selectedDate);
-  if(!tr.dayOverrides) tr.dayOverrides = {};
-  if(!tr.dayOverrides[key]) tr.dayOverrides[key] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
-  pickTarget = 'day';
-  exConfigTarget = {type:'newInDay', trainId, dayKey:key};
-  openModal('m-pick-ex'); renderPickEx();
-}
-function addCompToDay(trainId){
-  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
-  if(!complexes.length){
-    toast('Нет комплексов — создайте в разделе «Комплексы»');
-    return;
-  }
-  pickTarget = 'daycomp';
-  exConfigTarget = {type:'newInDay', trainId, dayKey: isoDate(selectedDate)};
-  openPickComp('daycomp');
-}
-function editTrainFromDay(trainId){ openTrainModal(trainId); }
-
-/* ============ ПЛИТКИ-ФИЛЬТРЫ + СПИСОК УПРАЖНЕНИЙ ============ */
+/* ============ ФИЛЬТРЫ-ПЛИТКИ С DRILL-DOWN ============ */
 function openPicker(type){
-  const title = document.getElementById('pickerTitle');
-  const body = document.getElementById('pickerBody');
-  if(!title || !body) return;
+  pickerNav = { stack: [{ type, parentId: null }] };
+  renderPickerPage();
+  openModal('m-picker');
+}
+function pickerEnter(type, parentId){
+  pickerNav.stack.push({ type, parentId });
+  renderPickerPage();
+}
+function pickerBack(){
+  if(pickerNav.stack.length > 1) pickerNav.stack.pop();
+  renderPickerPage();
+}
+function renderPickerPage(){
+  const titleEl = document.getElementById('pickerTitle');
+  const bodyEl = document.getElementById('pickerBody');
+  if(!titleEl || !bodyEl) return;
+  const cur = pickerNav.stack[pickerNav.stack.length - 1];
+  const type = cur.type;
+  const parentId = cur.parentId;
+
   if(type === 'zones'){
-    title.textContent = '🎯 Зоны';
+    if(parentId){
+      const mz = zones.find(z => z.id === parentId);
+      const children = getSubZones(parentId);
+      titleEl.textContent = (mz ? mz.name : 'Зоны');
+      let html = '<div class="picker-back" onclick="pickerBack()">← Назад</div>';
+      html += '<div class="picker-grid">';
+      const mainOn = filterZones.includes(parentId);
+      html += '<div class="picker-tile '+(mainOn?'on':'')+'" onclick="togglePickerTile(\''+parentId+'\',\'zones\')">'+
+        '<div class="pt-check">✓</div>'+
+        '<div class="pt-emoji">'+E(mz)+'</div>'+
+        '<div class="pt-name">Вся зона</div>'+
+        '<div class="pt-count">'+exercises.filter(e => (e.zones||[]).includes(parentId)).length+'</div>'+
+        '<div class="pt-sub">все '+children.length+' подзон</div>'+
+      '</div>';
+      children.forEach(c => {
+        const cnt = exercises.filter(e => (e.zones||[]).includes(c.id)).length;
+        const on = filterZones.includes(c.id);
+        html += '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(\''+c.id+'\',\'zones\')">'+
+          '<div class="pt-check">✓</div>'+
+          '<div class="pt-emoji">'+E(c)+'</div>'+
+          '<div class="pt-name">'+c.name+'</div>'+
+          '<div class="pt-count">'+cnt+'</div>'+
+        '</div>';
+      });
+      html += '</div>';
+      bodyEl.innerHTML = html;
+      return;
+    }
+    titleEl.textContent = '🎯 Зоны';
     const mainZones = getMainZones();
-    body.innerHTML = '<div class="picker-grid">' +
+    bodyEl.innerHTML = '<div class="picker-grid">' +
       mainZones.map(mz => {
         const children = getSubZones(mz.id);
         const cnt = exercises.filter(e => (e.zones||[]).includes(mz.id) || children.some(c => (e.zones||[]).includes(c.id))).length;
         const on = filterZones.includes(mz.id);
-        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+mz.id+'\',\'zones\')">'+
+        const hasSubs = children.length > 0;
+        const click = hasSubs
+          ? 'pickerEnter(\'zones\',\''+mz.id+'\')'
+          : 'togglePickerTile(\''+mz.id+'\',\'zones\')';
+        return '<div class="picker-tile '+(on?'on':'')+'" onclick="'+click+'">'+
           '<div class="pt-check">✓</div>'+
-          '<div class="pt-emoji">'+mz.emoji+'</div>'+
+          '<div class="pt-emoji">'+E(mz)+'</div>'+
           '<div class="pt-name">'+mz.name+'</div>'+
           '<div class="pt-count">'+cnt+'</div>'+
+          (hasSubs ? '<div class="pt-sub">▼ '+children.length+' подзон</div>' : '')+
         '</div>';
       }).join('') +
     '</div>';
-  } else if(type === 'gears'){
-    title.textContent = '🎒 Снаряды';
-    body.innerHTML = '<div class="picker-grid">' +
+    return;
+  }
+
+  if(type === 'gears'){
+    titleEl.textContent = '🎒 Снаряды';
+    bodyEl.innerHTML = '<div class="picker-grid">' +
       gears.map(g => {
         const cnt = exercises.filter(e => (e.gears||[]).includes(g.id)).length;
         const on = filterGears.includes(g.id);
-        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+g.id+'\',\'gears\')">'+
+        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(\''+g.id+'\',\'gears\')">'+
           '<div class="pt-check">✓</div>'+
-          '<div class="pt-emoji">'+g.emoji+'</div>'+
+          '<div class="pt-emoji">'+E(g)+'</div>'+
           '<div class="pt-name">'+g.name+'</div>'+
           '<div class="pt-count">'+cnt+'</div>'+
         '</div>';
       }).join('') +
     '</div>' +
     '<button class="btn btn-sm btn-full" style="margin-top:10px" onclick="closeModal(\'m-picker\');addCustomGear()">+ Свой снаряд</button>';
-  } else if(type === 'skills'){
-    title.textContent = '⭐ Навыки';
-    body.innerHTML = '<div class="picker-grid">' +
+    return;
+  }
+
+  if(type === 'skills'){
+    titleEl.textContent = '⭐ Навыки';
+    bodyEl.innerHTML = '<div class="picker-grid">' +
       skills.map(s => {
         const cnt = exercises.filter(e => (e.skills||[]).includes(s.id)).length;
         const on = filterSkills.includes(s.id);
-        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(this,\''+s.id+'\',\'skills\')">'+
+        return '<div class="picker-tile '+(on?'on':'')+'" onclick="togglePickerTile(\''+s.id+'\',\'skills\')">'+
           '<div class="pt-check">✓</div>'+
-          '<div class="pt-emoji">'+s.emoji+'</div>'+
+          '<div class="pt-emoji">'+E(s)+'</div>'+
           '<div class="pt-name">'+s.name+'</div>'+
           '<div class="pt-count">'+cnt+'</div>'+
         '</div>';
       }).join('') +
     '</div>';
+    return;
   }
-  openModal('m-picker');
 }
-function togglePickerTile(el, id, type){
+function togglePickerTile(id, type){
   const arr = type === 'zones' ? filterZones : type === 'gears' ? filterGears : filterSkills;
   const idx = arr.indexOf(id);
-  if(idx >= 0){ arr.splice(idx, 1); el.classList.remove('on'); }
-  else { arr.push(id); el.classList.add('on'); }
+  if(idx >= 0) arr.splice(idx, 1);
+  else arr.push(id);
   updateFilterCounters();
   renderEx();
+  renderPickerPage();
 }
 function pickerClear(){
   filterZones = []; filterGears = []; filterSkills = [];
   updateFilterCounters();
   renderEx();
-  closeModal('m-picker');
+  pickerNav = { stack: [{ type: pickerNav.stack[0]?.type || 'zones', parentId: null }] };
+  renderPickerPage();
   toast('Фильтр сброшен');
 }
 function renderChips(){ updateFilterCounters(); }
@@ -2043,7 +2250,11 @@ function renderEx(){
   const q = (document.getElementById('exSearch')?.value||'').toLowerCase();
   let list = exercises.filter(e => e.name.toLowerCase().includes(q));
   if(filterZones.length){
-    list = list.filter(e => (e.zones||[]).some(z => filterZones.includes(z)));
+    list = list.filter(e => (e.zones||[]).some(z => {
+      if(filterZones.includes(z)) return true;
+      const zDef = zones.find(zz => zz.id === z);
+      return zDef && zDef.parent && filterZones.includes(zDef.parent);
+    }));
   }
   if(filterGears.length){
     list = list.filter(e => (e.gears||[]).some(g => filterGears.includes(g)));
@@ -2067,8 +2278,8 @@ function renderEx(){
           : '<div class="ex-thumb" style="font-size:12px">🎬</div>')
       : '<div class="ex-thumb">'+(e.format === 'time' ? '⏱' : e.format === 'weight' ? '🏋️' : '💪')+'</div>';
 
-    const zB = (e.zones||[]).slice(0,3).map(zid => { const z = zones.find(x=>x.id===zid); return z ? z.emoji : ''; }).filter(Boolean).join('');
-    const gB = (e.gears||[]).slice(0,3).map(gid => { const g = gears.find(x=>x.id===gid); return g ? g.emoji : ''; }).filter(Boolean).join('');
+    const zB = (e.zones||[]).slice(0,3).map(zid => { const z = zones.find(x=>x.id===zid); return z ? E(z) : ''; }).filter(Boolean).join('');
+    const gB = (e.gears||[]).slice(0,3).map(gid => { const g = gears.find(x=>x.id===gid); return g ? E(g) : ''; }).filter(Boolean).join('');
     const sidesTag = e.twoSides ? '×2' : '';
     const metaParts = [zB, gB, sidesTag].filter(Boolean);
     const metaHtml = metaParts.length ? '<div class="ex-tags">'+metaParts.join('<span class="dot-sep">·</span>')+'</div>' : '';
@@ -2100,89 +2311,85 @@ function clearAllEx(){
     toast('Очищено');
   }
 }
-function setFilter(el){
-  document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-  el.classList.add('active'); filter = el.dataset.f; renderEx();
+
+/* ============ ПОДМЕНЮ ВЫБОРА В РЕДАКТОРЕ УПРАЖНЕНИЯ ============ */
+function updateExCatCounts(){
+  const zc = document.getElementById('exCatZonesCount'); if(zc) zc.textContent = currentExZones.length;
+  const gc = document.getElementById('exCatGearsCount'); if(gc) gc.textContent = currentExGears.length;
+  const sc = document.getElementById('exCatSkillsCount'); if(sc) sc.textContent = currentExSkills.length;
+  const zBtn = document.getElementById('exCatZones'); if(zBtn) zBtn.classList.toggle('has-selection', currentExZones.length > 0);
+  const gBtn = document.getElementById('exCatGears'); if(gBtn) gBtn.classList.toggle('has-selection', currentExGears.length > 0);
+  const sBtn = document.getElementById('exCatSkills'); if(sBtn) sBtn.classList.toggle('has-selection', currentExSkills.length > 0);
 }
 
-function renderZoneTree(selectedIds){
-  const el = document.getElementById('exZonesPick'); if(!el) return;
-  const mainZones = getMainZones();
-  el.innerHTML = mainZones.map(mz => {
-    const children = getSubZones(mz.id);
-    const mainOn = selectedIds.includes(mz.id);
-    if(!children.length){
-      return '<div class="chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+mz.emoji+'</span>'+mz.name+'</div>';
-    }
-    const hasActiveChild = children.some(c => selectedIds.includes(c.id));
-    return '<div class="zone-group'+(hasActiveChild||mainOn?' open':'')+'" style="width:100%">' +
-      '<div class="zone-group-head" onclick="this.parentElement.classList.toggle(\'open\')">' +
-        '<div class="zone-group-title"><span>'+mz.emoji+'</span>'+mz.name+'</div>' +
-        '<div class="zone-group-badge"><span class="zone-group-arrow">▼</span></div>' +
-      '</div>' +
-      '<div class="zone-group-body">' +
-        '<div class="sub-chips">' +
-          '<div class="sub-chip '+(mainOn?'on':'')+'" data-id="'+mz.id+'" onclick="this.classList.toggle(\'on\')"><span>'+mz.emoji+'</span>'+mz.name+' (все)</div>' +
-          children.map(c => {
-            const on = selectedIds.includes(c.id);
-            return '<div class="sub-chip '+(on?'on':'')+'" data-id="'+c.id+'" onclick="this.classList.toggle(\'on\')"><span>'+c.emoji+'</span>'+c.name+'</div>';
-          }).join('') +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
-function getZonePick(){
-  const el = document.getElementById('exZonesPick'); if(!el) return [];
-  return [...el.querySelectorAll('.sub-chip.on, .chip.on')].map(c => c.dataset.id);
+function openExPicker(type){
+  exPickerCurrentType = type;
+  renderExPickerPage();
+  openModal('m-ex-picker');
 }
 
-function addCustomZone(parentId){
-  const mainZones = getMainZones();
-  const presetParent = parentId || '';
-  const parentOptions = mainZones.map(mz => 
-    '<option value="'+mz.id+'"'+(mz.id===presetParent?' selected':'')+'>'+mz.emoji+' '+mz.name+' (подзона)</option>'
-  ).join('');
-  const modalBody = document.querySelector('#m-new-gear .modal');
-  if(modalBody){
-    modalBody.innerHTML = 
-      '<h3>Новая зона</h3>' +
-      '<div class="field-group"><label class="field-label">Название</label><input class="field-input" id="ngName" placeholder="Например, Трицепс"></div>' +
-      '<div class="field-group"><label class="field-label">Родительская зона</label>' +
-        '<select class="field-input" id="ngParent">' +
-          '<option value="">— Сделать главной зоной —</option>' +
-          parentOptions +
-        '</select>' +
-      '</div>' +
-      '<div class="field-group">' +
-        '<label class="field-label">Значок</label>' +
-        '<input class="field-input" id="ngEmoji" maxlength="4" placeholder="💪" style="font-size:20px;text-align:center">' +
-        '<div class="emoji-picker" id="emojiPicker"></div>' +
-      '</div>' +
-      '<button class="btn btn-primary btn-full" onclick="saveCustomZone()">Добавить</button>' +
-      '<button class="modal-close" onclick="closeModal(\'m-new-gear\')">Отмена</button>';
+function closeExPicker(){
+  closeModal('m-ex-picker');
+  updateExCatCounts();
+}
+
+function renderExPickerPage(){
+  const titleEl = document.getElementById('exPickerTitle');
+  const bodyEl = document.getElementById('exPickerBody');
+  if(!titleEl || !bodyEl) return;
+
+  if(exPickerCurrentType === 'zones'){
+    titleEl.textContent = '🎯 Зоны';
+    bodyEl.innerHTML = '<div class="ex-tiles">' + zones.map(z => {
+      const on = currentExZones.includes(z.id);
+      return '<div class="ex-tile '+(on?'on':'')+'" data-id="'+z.id+'" onclick="toggleExPickerItem(\''+z.id+'\')">'+
+        '<div class="et-check">✓</div>'+
+        E(z)+
+        '<div class="et-name">'+z.name+'</div>'+
+      '</div>';
+    }).join('') + '</div>';
+    return;
   }
-  const picker = document.getElementById('emojiPicker');
-  if(picker) picker.innerHTML = EMOJI_PRESETS.map(e => '<span onclick="pickEmoji(this,\''+e+'\')">'+e+'</span>').join('');
-  openModal('m-new-gear');
-}
-function saveCustomZone(){
-  const name = document.getElementById('ngName').value.trim();
-  const emoji = document.getElementById('ngEmoji').value.trim() || '💪';
-  const parent = document.getElementById('ngParent').value || '';
-  if(!name){ toast('Введи название'); return; }
-  const id = 'custom_zone_' + uid();
-  const newZone = {id, name, emoji};
-  if(parent) newZone.parent = parent;
-  else newZone.isMain = true;
-  zones.push(newZone);
-  store.set('zones', zones);
-  ensureXpMaps();
-  closeModal('m-new-gear');
-  renderChips(); renderStats(); renderSkillXp(); renderCharacter();
-  toast('Зона «'+name+'» добавлена');
+
+  if(exPickerCurrentType === 'gears'){
+    titleEl.textContent = '🎒 Снаряды';
+    bodyEl.innerHTML = '<div class="ex-tiles">' + gears.map(g => {
+      const on = currentExGears.includes(g.id);
+      return '<div class="ex-tile '+(on?'on':'')+'" data-id="'+g.id+'" onclick="toggleExPickerItem(\''+g.id+'\')">'+
+        '<div class="et-check">✓</div>'+
+        E(g)+
+        '<div class="et-name">'+g.name+'</div>'+
+      '</div>';
+    }).join('') + '</div>' +
+    '<button class="btn btn-sm btn-full" style="margin-top:10px" onclick="closeExPicker();addCustomGear()">+ Свой снаряд</button>';
+    return;
+  }
+
+  if(exPickerCurrentType === 'skills'){
+    titleEl.textContent = '⭐ Навыки';
+    bodyEl.innerHTML = '<div class="ex-tiles">' + skills.map(s => {
+      const on = currentExSkills.includes(s.id);
+      return '<div class="ex-tile '+(on?'on':'')+'" data-id="'+s.id+'" onclick="toggleExPickerItem(\''+s.id+'\')">'+
+        '<div class="et-check">✓</div>'+
+        E(s)+
+        '<div class="et-name">'+s.name+'</div>'+
+      '</div>';
+    }).join('') + '</div>';
+    return;
+  }
 }
 
+function toggleExPickerItem(id){
+  const t = exPickerCurrentType;
+  const arr = t === 'zones' ? currentExZones : t === 'gears' ? currentExGears : currentExSkills;
+  const idx = arr.indexOf(id);
+  if(idx >= 0) arr.splice(idx, 1);
+  else arr.push(id);
+  renderExPickerPage();
+}
+</script>
+<script>
+/* ============ РЕДАКТОР УПРАЖНЕНИЯ ============ */
 function openExModal(exId){
   editingExId = exId || null;
   const el = (id) => document.getElementById(id);
@@ -2194,25 +2401,15 @@ function openExModal(exId){
   el('exLink').value = e ? (e.link||'') : '';
   currentExMedia = e && e.media ? JSON.parse(JSON.stringify(e.media)) : [];
   renderExMediaGrid();
-  renderZoneTree(e ? (e.zones||[]) : []);
-  renderMultiPick('exGearsPick', gears, e ? (e.gears||[]) : []);
-  renderMultiPick('exSkillsPick', skills, e ? (e.skills||[]) : []);
+  currentExZones = e ? (e.zones||[]).slice() : [];
+  currentExGears = e ? (e.gears||[]).slice() : [];
+  currentExSkills = e ? (e.skills||[]).slice() : [];
+  updateExCatCounts();
   pickTwoSides(e && e.twoSides ? 2 : 1);
   openModal('m-ex');
 }
 function pickTwoSides(v){
   document.querySelectorAll('#exTwoSidesPick .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === v));
-}
-function renderMultiPick(cid, items, selectedIds){
-  const el = document.getElementById(cid); if(!el) return;
-  el.innerHTML = items.map(it => {
-    const on = selectedIds.includes(it.id) ? 'on' : '';
-    return '<div class="chip '+on+'" data-id="'+it.id+'" onclick="this.classList.toggle(\'on\')"><span>'+it.emoji+'</span>'+it.name+'</div>';
-  }).join('');
-}
-function getMultiPick(cid){
-  const el = document.getElementById(cid); if(!el) return [];
-  return [...el.querySelectorAll('.chip.on')].map(c => c.dataset.id);
 }
 function saveEx(){
   const name = document.getElementById('exName').value.trim();
@@ -2224,9 +2421,9 @@ function saveEx(){
     name,
     media: currentExMedia.slice(),
     link: document.getElementById('exLink').value.trim(),
-    zones: getZonePick(),
-    gears: getMultiPick('exGearsPick'),
-    skills: getMultiPick('exSkillsPick'),
+    zones: currentExZones.slice(),
+    gears: currentExGears.slice(),
+    skills: currentExSkills.slice(),
     format: document.getElementById('exFormat').value,
     desc: document.getElementById('exDesc').value.trim(),
     twoSides
@@ -2242,14 +2439,60 @@ function saveEx(){
   editingExId = null;
 }
 
-function moveTempEx(t, i, dir){
-  const list = t === 'train' ? tempTrainEx : tempCompEx;
-  const j = i + dir;
-  if(j < 0 || j >= list.length) return;
-  const tmp = list[i]; list[i] = list[j]; list[j] = tmp;
-  if(t === 'train') renderTempTrainEx(); else renderTempCompEx();
+/* ============ DRAG & DROP ============ */
+let dragState = { active:false };
+function startDrag(e, type, idx){
+  e.preventDefault();
+  const listEl = document.getElementById(type === 'train' ? 'tExList' : 'cExList');
+  if(!listEl) return;
+  const items = [...listEl.querySelectorAll('.exercise-item')];
+  if(!items[idx]) return;
+  const r0 = items[0].getBoundingClientRect();
+  const r1 = items[1] ? items[1].getBoundingClientRect() : null;
+  const step = r1 ? (r1.top - r0.top) : (r0.height + 6);
+  dragState = {
+    active:true, type, fromIdx:idx, toIdx:idx, startY:e.clientY,
+    itemEl:items[idx], listEl, items, step
+  };
+  items[idx].classList.add('dragging');
+  document.body.style.userSelect = 'none';
+  document.addEventListener('pointermove', onDragMove, {passive:false});
+  document.addEventListener('pointerup', onDragEnd);
+  document.addEventListener('pointercancel', onDragEnd);
+}
+function onDragMove(e){
+  if(!dragState.active) return;
+  e.preventDefault();
+  const delta = e.clientY - dragState.startY;
+  const target = Math.max(0, Math.min(dragState.items.length-1, dragState.fromIdx + Math.round(delta / dragState.step)));
+  dragState.toIdx = target;
+  dragState.itemEl.style.transform = 'translateY(' + delta + 'px)';
+  dragState.items.forEach((el, i) => {
+    if(i === dragState.fromIdx) return;
+    let shift = 0;
+    if(dragState.fromIdx < target && i > dragState.fromIdx && i <= target) shift = -dragState.step;
+    else if(dragState.fromIdx > target && i >= target && i < dragState.fromIdx) shift = dragState.step;
+    el.style.transform = shift ? 'translateY(' + shift + 'px)' : '';
+  });
+}
+function onDragEnd(){
+  document.removeEventListener('pointermove', onDragMove);
+  document.removeEventListener('pointerup', onDragEnd);
+  document.removeEventListener('pointercancel', onDragEnd);
+  document.body.style.userSelect = '';
+  const s = dragState;
+  dragState = { active:false };
+  if(!s.active) return;
+  s.items.forEach(el => { el.style.transform = ''; el.classList.remove('dragging'); });
+  if(s.fromIdx !== s.toIdx && s.fromIdx >= 0){
+    const list = s.type === 'train' ? tempTrainEx : tempCompEx;
+    const [item] = list.splice(s.fromIdx, 1);
+    list.splice(s.toIdx, 0, item);
+    if(s.type === 'train') renderTempTrainEx(); else renderTempCompEx();
+  }
 }
 
+/* ============ ТРЕНИРОВКА (редактор) ============ */
 function openTrainModal(trainId){
   editingTrainId = trainId || null;
   const el = (id) => document.getElementById(id);
@@ -2277,8 +2520,7 @@ function renderTempTrainEx(){
         '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
         '<div style="font-size:10px;color:var(--mut);margin:3px 0">'+e.blockEx.length+' упражнений в круге</div>'+
         '<div class="training-actions-row">'+
-          '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',-1)">↑</button>'+
-          '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',1)">↓</button>'+
+          '<button class="btn-drag" onpointerdown="startDrag(event,\'train\','+idx+')" aria-label="Перетащить">⠿</button>'+
           '<button onclick="removeTempEx(\'train\','+idx+')">✕</button>'+
         '</div></div>';
     }
@@ -2293,8 +2535,7 @@ function renderTempTrainEx(){
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
       '<div class="training-actions-row">'+
-        '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',-1)">↑</button>'+
-        '<button class="btn-move" onclick="moveTempEx(\'train\','+idx+',1)">↓</button>'+
+        '<button class="btn-drag" onpointerdown="startDrag(event,\'train\','+idx+')" aria-label="Перетащить">⠿</button>'+
         '<button onclick="openExConfig(\'train\','+idx+')">✏️</button>'+
         '<button onclick="removeTempEx(\'train\','+idx+')">✕</button>'+
       '</div></div>';
@@ -2331,10 +2572,21 @@ function saveTrain(){
   editingTrainId = null;
 }
 
+/* ============ КОМПЛЕКС (редактор) ============ */
 function pickRoundMode(v){
   document.querySelectorAll('#cRoundModePick .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === v));
   const g = document.getElementById('cRoundTimeGroup');
   if(g) g.style.display = v === 1 ? 'block' : 'none';
+  const rg = document.getElementById('cRestModeGroup');
+  if(rg) rg.style.display = v === 0 ? 'block' : 'none';
+  if(v === 1){ currentCompCustomRest = false; pickRestMode(0); }
+}
+function pickRestMode(v){
+  currentCompCustomRest = (v === 1);
+  document.querySelectorAll('#cRestModePick .chip').forEach(c =>
+    c.classList.toggle('on', +c.dataset.v === v));
+  const note = document.getElementById('cRestModeNote');
+  if(note) note.style.display = v === 1 ? 'block' : 'none';
 }
 function openCompModal(compId){
   editingCompId = compId || null;
@@ -2344,6 +2596,7 @@ function openCompModal(compId){
   el('cName').value = c ? c.name : '';
   tempCompEx = c ? JSON.parse(JSON.stringify(c.exercises||[])) : [];
   pickRoundMode(c && c.roundMode ? 1 : 0);
+  pickRestMode(c && c.customRestMode ? 1 : 0);
   el('cRoundTime').value = c && c.roundTime ? c.roundTime : 20;
   renderTempCompEx();
   openModal('m-comp');
@@ -2357,8 +2610,7 @@ function renderTempCompEx(){
         '<div class="ex-item-head"><div class="ex-item-name">🔁 '+escapeHtml(e.name)+'</div><div class="ex-item-dosage">⏱ '+Math.round(e.time/60)+' мин</div></div>'+
         '<div style="font-size:10px;color:var(--mut);margin:3px 0">'+e.blockEx.length+' упражнений в круге</div>'+
         '<div class="training-actions-row">'+
-          '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',-1)">↑</button>'+
-          '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',1)">↓</button>'+
+          '<button class="btn-drag" onpointerdown="startDrag(event,\'comp\','+idx+')" aria-label="Перетащить">⠿</button>'+
           '<button onclick="removeTempEx(\'comp\','+idx+')">✕</button>'+
         '</div></div>';
     }
@@ -2368,12 +2620,16 @@ function renderTempCompEx(){
     if(e.sets) dosage.push(isX(e.sets)?'X×':e.sets+'×');
     if(e.reps) dosage.push(isX(e.reps)?'X повт':e.reps+' повт');
     if(e.time) dosage.push(isX(e.time)?'Xс':e.time+'с');
+    if(e.restPerSet && e.restPerSet.length){
+      dosage.push('⏱ '+e.restPerSet.join('/'));
+    } else if(e.rest){
+      dosage.push('⏱ '+e.rest+'с');
+    }
     if(ex && ex.twoSides) dosage.push('<span style="color:var(--acc2)">×2</span>');
     return '<div class="exercise-item">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+(ex?ex.name:'?')+'</div><div class="ex-item-dosage">'+dosage.join(' ')+'</div></div>'+
       '<div class="training-actions-row">'+
-        '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',-1)">↑</button>'+
-        '<button class="btn-move" onclick="moveTempEx(\'comp\','+idx+',1)">↓</button>'+
+        '<button class="btn-drag" onpointerdown="startDrag(event,\'comp\','+idx+')" aria-label="Перетащить">⠿</button>'+
         '<button onclick="openExConfig(\'comp\','+idx+')">✏️</button>'+
         '<button onclick="removeTempEx(\'comp\','+idx+')">✕</button>'+
       '</div></div>';
@@ -2390,7 +2646,8 @@ function saveComp(){
     name,
     exercises: JSON.parse(JSON.stringify(tempCompEx)),
     roundMode,
-    roundTime
+    roundTime,
+    customRestMode: !roundMode && currentCompCustomRest
   };
   if(editingCompId){
     const i = complexes.findIndex(c => c.id === editingCompId);
@@ -2403,10 +2660,11 @@ function saveComp(){
   editingCompId = null;
 }
 
+/* ============ ВЫБОР УПРАЖНЕНИЙ / КОМПЛЕКСОВ ============ */
 function openPickEx(target){
   pickTarget = target;
   const el = document.getElementById('pickTitle');
-  if(el) el.textContent = target==='comp' ? 'В комплекс' : target==='day' ? 'В этот день' : 'В тренировку';
+  if(el) el.textContent = target==='comp' ? 'В комплекс' : 'В тренировку';
   const s = document.getElementById('pickSearch'); if(s) s.value = '';
   renderPickEx();
   openModal('m-pick-ex');
@@ -2417,8 +2675,8 @@ function renderPickEx(){
   const el = document.getElementById('pickExList'); if(!el) return;
   if(!list.length){ el.innerHTML = '<div class="empty">Нет упражнений</div>'; return; }
   el.innerHTML = '<div class="ex-list">' + list.map(e => {
-    const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji:''; }).join('');
-    const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji:''; }).join('');
+    const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?E(z):''; }).join('');
+    const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?E(g):''; }).join('');
     return '<div class="ex-card" onclick="pickExercise(\''+e.id+'\')">'+
       '<div class="ex-thumb">'+(e.format === 'time' ? '⏱' : e.format === 'weight' ? '🏋️' : '💪')+'</div>'+
       '<div class="ex-info"><div class="ex-name">'+escapeHtml(e.name)+'</div><div class="ex-tags">'+zB+' '+gB+'</div></div>'+
@@ -2430,20 +2688,10 @@ function pickExercise(exId){
   const newEntry = {exId, sets:3, reps: ex.format==='time'?0:10, time: ex.format==='time'?60:0, rest:60, weight:0, note:''};
   if(pickTarget === 'comp'){ tempCompEx.push(newEntry); renderTempCompEx(); }
   else if(pickTarget === 'train'){ tempTrainEx.push(newEntry); renderTempTrainEx(); }
-  else if(pickTarget === 'day'){
-    const cfg = exConfigTarget;
-    if(!cfg) return;
-    const tr = trainings.find(t => t.id === cfg.trainId); if(!tr) return;
-    if(!tr.dayOverrides) tr.dayOverrides = {};
-    if(!tr.dayOverrides[cfg.dayKey]) tr.dayOverrides[cfg.dayKey] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
-    tr.dayOverrides[cfg.dayKey].exercises.push(newEntry);
-    store.set('trainings', trainings); renderTrainings(); toast('Добавлено');
-  }
   closeModal('m-pick-ex');
   if(pickTarget === 'comp') openExConfig('comp', tempCompEx.length-1);
   else if(pickTarget === 'train') openExConfig('train', tempTrainEx.length-1);
 }
-
 function openExConfig(target, index){
   const list = target === 'comp' ? tempCompEx : tempTrainEx;
   const e = list[index]; if(!e) return;
@@ -2455,6 +2703,16 @@ function openExConfig(target, index){
   el('exCfgSets').value = e.sets||1; el('exCfgReps').value = e.reps||0;
   el('exCfgTime').value = e.time||0; el('exCfgRest').value = e.rest||0;
   el('exCfgWeight').value = e.weight||0; el('exCfgNote').value = e.note||'';
+
+  const restGroup = el('exCfgRestPerSetGroup');
+  const restInput = el('exCfgRestPerSet');
+  const hasExisting = Array.isArray(e.restPerSet) && e.restPerSet.length > 0;
+  const showRestField = (target === 'comp' && currentCompCustomRest) || hasExisting;
+  if(restGroup) restGroup.style.display = showRestField ? 'block' : 'none';
+  if(restInput){
+    restInput.value = hasExisting ? e.restPerSet.join(',') : '';
+  }
+
   openModal('m-ex-config');
 }
 function parseDosageValue(v){
@@ -2471,40 +2729,42 @@ function saveExConfig(){
     weight: parseDosageValue(document.getElementById('exCfgWeight').value),
     note: document.getElementById('exCfgNote').value.trim()
   };
+
+  const restGroup = document.getElementById('exCfgRestPerSetGroup');
+  const restInput = document.getElementById('exCfgRestPerSet');
+  if(restGroup && restGroup.style.display !== 'none' && restInput){
+    const raw = restInput.value.trim();
+    if(raw){
+      data.restPerSet = raw.split(/[,\s]+/).filter(Boolean).map(x => parseDosageValue(x));
+    } else {
+      data.restPerSet = null;
+    }
+  }
+
   if(cfg.type === 'temp'){
     const list = cfg.target === 'comp' ? tempCompEx : tempTrainEx;
     if(list[cfg.index]) list[cfg.index] = {...list[cfg.index], ...data};
     if(cfg.target === 'comp') renderTempCompEx(); else renderTempTrainEx();
-  } else if(cfg.type === 'override'){
-    const tr = trainings.find(t => t.id === cfg.trainId);
-    if(tr && tr.dayOverrides && tr.dayOverrides[cfg.dayKey]){
-      const list = tr.dayOverrides[cfg.dayKey].exercises;
-      if(list[cfg.index]) list[cfg.index] = {...list[cfg.index], ...data};
-      store.set('trainings', trainings); renderTrainings();
-    }
-  } else if(cfg.type === 'newInDay'){
-    const tr = trainings.find(t => t.id === cfg.trainId);
-    if(tr && tr.dayOverrides && tr.dayOverrides[cfg.dayKey]){
-      const list = tr.dayOverrides[cfg.dayKey].exercises;
-      const last = list[list.length-1];
-      if(last) Object.assign(last, data);
-      store.set('trainings', trainings); renderTrainings();
-    }
   }
   closeModal('m-ex-config'); toast('Сохранено');
 }
 
 function openPickComp(target){
   pickTarget = target;
-  const el = document.getElementById('pickCompList'); if(!el) return;
-  if(!complexes.length){ el.innerHTML = '<div class="empty">Комплексов нет</div>'; }
-  else {
-    el.innerHTML = '<div class="ex-list">' + complexes.map(c => '<div class="ex-card" onclick="pickComplex(\''+c.id+'\')">'+
-      '<div class="ex-thumb">'+(c.roundMode?'🔁':'📋')+'</div>'+
-      '<div class="ex-info"><div class="ex-name">'+escapeHtml(c.name)+'</div><div class="ex-desc">'+(c.roundMode ? '🔁 '+c.roundTime+' мин · '+c.exercises.length+' упр' : c.exercises.length+' упр')+'</div></div>'+
-      '<div style="font-size:14px;color:var(--acc);font-weight:900">+</div></div>').join('') + '</div>';
-  }
+  const s = document.getElementById('pickCompSearch'); if(s) s.value = '';
+  renderPickCompList();
   openModal('m-pick-comp');
+}
+function renderPickCompList(){
+  const el = document.getElementById('pickCompList'); if(!el) return;
+  const q = (document.getElementById('pickCompSearch')?.value || '').toLowerCase().trim();
+  if(!complexes.length){ el.innerHTML = '<div class="empty">Комплексов нет</div>'; return; }
+  const list = complexes.filter(c => !q || c.name.toLowerCase().includes(q));
+  if(!list.length){ el.innerHTML = '<div class="empty">Ничего не найдено</div>'; return; }
+  el.innerHTML = '<div class="ex-list">' + list.map(c => '<div class="ex-card" onclick="pickComplex(\''+c.id+'\')">'+
+    '<div class="ex-thumb">'+(c.roundMode?'🔁':'📋')+'</div>'+
+    '<div class="ex-info"><div class="ex-name">'+escapeHtml(c.name)+'</div><div class="ex-desc">'+(c.roundMode ? '🔁 '+c.roundTime+' мин · '+c.exercises.length+' упр' : c.exercises.length+' упр')+'</div></div>'+
+    '<div style="font-size:14px;color:var(--acc);font-weight:900">+</div></div>').join('') + '</div>';
 }
 function pickComplex(compId){
   const c = complexes.find(x => x.id === compId); if(!c) return;
@@ -2519,24 +2779,10 @@ function pickComplex(compId){
     else c.exercises.forEach(e => tempTrainEx.push(JSON.parse(JSON.stringify(e))));
     renderTempTrainEx();
     closeModal('m-pick-comp'); toast('Добавлено');
-  } else if(pickTarget === 'daycomp'){
-    const cfg = exConfigTarget;
-    if(!cfg){ closeModal('m-pick-comp'); return; }
-    const tr = trainings.find(t => t.id === cfg.trainId);
-    if(!tr){ closeModal('m-pick-comp'); return; }
-    if(!tr.dayOverrides) tr.dayOverrides = {};
-    if(!tr.dayOverrides[cfg.dayKey]){
-      tr.dayOverrides[cfg.dayKey] = {time: tr.time, exercises: JSON.parse(JSON.stringify(tr.exercises||[]))};
-    }
-    if(blockData) tr.dayOverrides[cfg.dayKey].exercises.push(blockData);
-    else c.exercises.forEach(e => tr.dayOverrides[cfg.dayKey].exercises.push(JSON.parse(JSON.stringify(e))));
-    store.set('trainings', trainings);
-    renderTrainings();
-    closeModal('m-pick-comp');
-    toast('Комплекс «'+c.name+'» добавлен'+(c.roundMode ? ' как круговая' : ''));
   }
 }
 
+/* ============ ШАБЛОНЫ ============ */
 function openTrainList(){ renderTrainTemplates(); openModal('m-train-list'); }
 function renderTrainTemplates(){
   const el = document.getElementById('trainTemplates'); if(!el) return;
@@ -2559,9 +2805,12 @@ function delTrain(id){
   toast('Удалено');
 }
 
+/* ============ КОМПЛЕКСЫ (вкладка) ============ */
 function renderCompsTab(){
   const el = document.getElementById('compsList'); if(!el) return;
   const cnt = document.getElementById('compsCount'); if(cnt) cnt.textContent = complexes.length;
+  const q = (document.getElementById('compSearchInput')?.value || '').toLowerCase().trim();
+  const filtered = q ? complexes.filter(c => c.name.toLowerCase().includes(q)) : complexes;
   if(!complexes.length){
     el.innerHTML = '<div class="card"><div class="complex-empty">'+
       '<span class="em">📋</span>'+
@@ -2570,7 +2819,11 @@ function renderCompsTab(){
     '</div></div>';
     return;
   }
-  el.innerHTML = complexes.map(c => {
+  if(q && !filtered.length){
+    el.innerHTML = '<div class="card"><div class="empty" style="padding:20px 8px">Ничего не найдено по «'+escapeHtml(q)+'»</div></div>';
+    return;
+  }
+  el.innerHTML = filtered.map(c => {
     const exListHtml = c.exercises.map(e => {
       const ex = exercises.find(x => x.id === e.exId);
       if(!ex) return '';
@@ -2580,7 +2833,11 @@ function renderCompsTab(){
       if(e.reps) d.push((isX(e.reps)?'<span class="x">X</span>':e.reps) + ' повт.');
       if(e.time) d.push((isX(e.time)?'<span class="x">X</span>':e.time) + ' сек');
       if(e.weight) d.push((isX(e.weight)?'<span class="x">X</span>':e.weight) + ' кг');
-      if(e.rest) d.push('отдых ' + (isX(e.rest)?'<span class="x">X</span>':e.rest) + ' сек');
+      if(e.restPerSet && e.restPerSet.length){
+        d.push('отдых ' + e.restPerSet.join('/') + ' сек');
+      } else if(e.rest){
+        d.push('отдых ' + (isX(e.rest)?'<span class="x">X</span>':e.rest) + ' сек');
+      }
       if(ex.twoSides) d.push('<span class="x">×2</span>');
       return '<div class="complex-ex-item">'+
         '<div class="complex-ex-name">'+escapeHtml(ex.name)+'</div>'+
@@ -2607,9 +2864,6 @@ function delCompFromTab(id){
   renderCompsTab(); renderStats();
   toast('Удалено');
 }
-function escapeHtml(s){
-  return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-}
 
 /* ==================== PR ==================== */
 function formatTimeSec(s){
@@ -2626,10 +2880,12 @@ function checkNewPRs(trainExercises, dateStr){
     if(!realEx) return;
     const pr = prs[item.exId] || {};
     const isX = (v) => String(v).trim().toUpperCase() === 'X';
-    if(isX(item.weight) || isX(item.reps) || isX(item.time)) return;
     if(realEx.format === 'weight'){
-      const w = +item.weight || 0;
-      const r = +item.reps || 0;
+      const wps = item.weightPerSet || [];
+      const rps = item.repsPerSet || [];
+      const w = wps.length ? Math.max(...wps) : (+item.weight || 0);
+      const r = rps.length ? Math.max(...rps) : (+item.reps || 0);
+      if(isX(w) || isX(r)) return;
       if(w <= 0 && r <= 0) return;
       if(w > (pr.weight?.value || 0)){
         pr.weight = { value: w, reps: r, date: dateStr };
@@ -2640,12 +2896,15 @@ function checkNewPRs(trainExercises, dateStr){
       }
     } else if(realEx.format === 'time'){
       const t = +item.time || 0;
+      if(isX(t)) return;
       if(t > (pr.time?.value || 0)){
         pr.time = { value: t, date: dateStr };
         newPRs.push({ exName: realEx.name, display: formatTimeSec(t) });
       }
     } else if(realEx.format === 'reps'){
-      const r = +item.reps || 0;
+      const rps = item.repsPerSet || [];
+      const r = rps.length ? Math.max(...rps) : (+item.reps || 0);
+      if(isX(r)) return;
       if(r > (pr.reps?.value || 0)){
         pr.reps = { value: r, weight: 0, date: dateStr };
         newPRs.push({ exName: realEx.name, display: r + ' повторов' });
@@ -2667,19 +2926,28 @@ function getExerciseHistory(exId){
       const item = comp.exercises.find(e => e.exId === exId);
       if(!item) return;
       const isX = (v) => String(v).trim().toUpperCase() === 'X';
-      if(isX(item.weight) || isX(item.reps) || isX(item.time)) return;
-      const w = +item.weight || 0, r = +item.reps || 0, s = +item.sets || 1, t = +item.time || 0;
+      const rps = Array.isArray(item.repsPerSet) && item.repsPerSet.length ? item.repsPerSet : null;
+      const wps = Array.isArray(item.weightPerSet) && item.weightPerSet.length ? item.weightPerSet : null;
+      if(!rps && isX(item.reps)) return;
+      if(!wps && isX(item.weight)) return;
+      const s = +item.sets || 1;
+      const t = +item.time || 0;
+      const repsArr = rps || new Array(s).fill(+item.reps || 0);
+      const weightArr = wps || new Array(s).fill(+item.weight || 0);
+      const totalReps = repsArr.reduce((sum, x) => sum + x, 0) * sidesMult;
+      const totalVolume = repsArr.reduce((sum, r, i) => sum + r * (weightArr[i] || 0), 0) * sidesMult;
+      const maxR = repsArr.length ? Math.max(...repsArr) : 0;
+      const maxW = weightArr.length ? Math.max(...weightArr) : 0;
       history.push({
-        date: dateStr, weight: w, reps: r, sets: s, time: t,
-        volume: w * r * s * sidesMult,
-        totalReps: r * s * sidesMult,
-        maxReps: r
+        date: dateStr, weight: maxW, reps: maxR, sets: s, time: t,
+        volume: totalVolume,
+        totalReps: totalReps,
+        maxReps: maxR
       });
     });
   });
   return history.sort((a,b) => a.date.localeCompare(b.date));
 }
-
 function setProgressMetric(metric){
   progressMetric = metric;
   document.querySelectorAll('#progress-metric-tabs .metric-tab').forEach(t => {
@@ -2879,16 +3147,10 @@ function renderCharacter(){
     '<path d="M 60 80 Q 100 70 140 80 L 145 140 Q 100 155 55 140 Z" fill="'+chestColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
     '<rect x="'+(100 - torsoW/2)+'" y="140" width="'+torsoW+'" height="50" fill="'+coreColor+'" opacity="'+(lineOpacity * 0.7)+'" stroke="'+strokeColor+'" stroke-width="1.5" rx="8"/>'+
     '<line x1="100" y1="145" x2="100" y2="185" stroke="'+strokeColor+'" stroke-width="1.5" opacity="'+(lineOpacity * 0.5)+'"/>'+
-    '<line x1="'+(100 - torsoW/2 + 8)+'" y1="155" x2="'+(100 + torsoW/2 - 8)+'" y2="155" stroke="'+strokeColor+'" stroke-width="1" opacity="'+(lineOpacity * 0.4)+'"/>'+
-    '<line x1="'+(100 - torsoW/2 + 8)+'" y1="170" x2="'+(100 + torsoW/2 - 8)+'" y2="170" stroke="'+strokeColor+'" stroke-width="1" opacity="'+(lineOpacity * 0.4)+'"/>'+
     '<path d="M 60 85 Q 30 110 '+(30 - (armW-12)/2)+' 160 L '+(30 - (armW-12)/2 + armW)+' 165 Q 35 130 55 110 Z" fill="'+armColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
     '<path d="M 140 85 Q 170 110 '+(170 + (armW-12)/2)+' 160 L '+(170 + (armW-12)/2 - armW)+' 165 Q 165 130 145 110 Z" fill="'+armColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
-    (arms > 40 ? '<ellipse cx="'+(24 + (armW-12)/2)+'" cy="140" rx="'+(armW/2)+'" ry="10" fill="'+armColor+'" opacity="'+(lineOpacity * 0.6)+'"/><ellipse cx="'+(176 - (armW-12)/2)+'" cy="140" rx="'+(armW/2)+'" ry="10" fill="'+armColor+'" opacity="'+(lineOpacity * 0.6)+'"/>' : '')+
     '<path d="M 75 190 L 65 270 L '+(65 + legW - 18)+' 275 L '+(75 + legW - 18)+' 195 Z" fill="'+legColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
     '<path d="M 125 190 L 135 270 L '+(135 - legW + 18)+' 275 L '+(125 - legW + 18)+' 195 Z" fill="'+legColor+'" opacity="'+(lineOpacity * 0.8)+'" stroke="'+strokeColor+'" stroke-width="2"/>'+
-    (legs > 40 ? '<ellipse cx="70" cy="225" rx="'+(legW/2.5)+'" ry="18" fill="'+legColor+'" opacity="'+(lineOpacity * 0.5)+'"/><ellipse cx="130" cy="225" rx="'+(legW/2.5)+'" ry="18" fill="'+legColor+'" opacity="'+(lineOpacity * 0.5)+'"/>' : '')+
-    '<ellipse cx="'+(65 + legW/2 - 9)+'" cy="278" rx="10" ry="4" fill="'+legColor+'" opacity="'+(lineOpacity * 0.6)+'"/>'+
-    '<ellipse cx="'+(135 - legW/2 + 9)+'" cy="278" rx="10" ry="4" fill="'+legColor+'" opacity="'+(lineOpacity * 0.6)+'"/>'+
     (cardio > 30 ? '<circle cx="100" cy="150" r="'+(80 + cardio/5)+'" fill="none" stroke="var(--acc)" stroke-width="1" opacity="'+(cardio/200)+'" stroke-dasharray="4,4"/>' : '')+
   '</svg>';
   container.innerHTML = svg;
@@ -3045,7 +3307,6 @@ const MEAS_PARTS = [
   {id:'forearm_l', name:'Лев. предпл.', emoji:'✋'},
   {id:'forearm_r', name:'Прав. предпл.', emoji:'✋'},
 ];
-
 function openMeasurements(){
   document.getElementById('measDate').value = isoDate(TODAY);
   document.getElementById('measValue').value = '';
@@ -3062,7 +3323,7 @@ function renderMeasTabs(){
   el.innerHTML = MEAS_PARTS.map(p => {
     const arr = measurements[p.id] || [];
     const last = arr.length ? ' · '+arr[arr.length-1].value.toFixed(1) : '';
-    return '<div class="meas-tab '+(measActive===p.id?'active':'')+'" onclick="setMeasTab(\''+p.id+'\')">'+p.emoji+' '+p.name+last+'</div>';
+    return '<div class="meas-tab '+(measActive===p.id?'active':'')+'" onclick="setMeasTab(\''+p.id+'\')">'+E(p)+' '+p.name+last+'</div>';
   }).join('');
 }
 function setMeasTab(id){
@@ -3252,7 +3513,7 @@ function renderSkillXp(){
     const el = document.getElementById(cfg.containerId); if(!el) return;
     const items = Object.entries(cfg.map).map(([id, d]) => {
       const ent = cfg.entities.find(x => x.id === id);
-      return {id, name: ent?ent.emoji+' '+ent.name:id, xp: d.xp||0, lastTrained: d.lastTrained};
+      return {id, name: ent?E(ent)+' '+ent.name:id, xp: d.xp||0, lastTrained: d.lastTrained};
     }).sort((a,b) => b.xp - a.xp);
     if(!items.length || items.every(i => !i.xp)){ el.innerHTML = '<div class="empty">Пока нет опыта</div>'; return; }
     el.innerHTML = items.filter(i => i.xp > 0 || i.lastTrained).map(item => {
@@ -3262,7 +3523,6 @@ function renderSkillXp(){
       return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span>'+info.icon+'</span>'+item.name+'</div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.xp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div></div>';
     }).join('');
   });
-
   const zEl = document.getElementById('skillZones');
   if(!zEl) return;
   const mainZones = getMainZones();
@@ -3280,7 +3540,6 @@ function renderSkillXp(){
     return {mz, children, ownXp, childrenXp, totalXp, lastTrained};
   }).filter(i => i.totalXp > 0 || i.lastTrained)
     .sort((a,b) => b.totalXp - a.totalXp);
-
   if(!items.length){ zEl.innerHTML = '<div class="empty">Пока нет опыта</div>'; return; }
   zEl.innerHTML = items.map(item => {
     const info = skillRankInfo(item.totalXp);
@@ -3289,7 +3548,7 @@ function renderSkillXp(){
     let subHtml = '';
     if(item.children.length){
       const subItems = item.children.map(c => ({
-        id: c.id, name: c.emoji + ' ' + c.name,
+        id: c.id, name: E(c) + ' ' + c.name,
         xp: (xpZones[c.id]?.xp || 0)
       })).filter(s => s.xp > 0);
       if(subItems.length){
@@ -3301,12 +3560,78 @@ function renderSkillXp(){
         }).join('') + '</div>';
       }
     }
-    return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span>'+info.icon+'</span>'+item.mz.emoji+' '+item.mz.name+'</div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.totalXp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div>'+subHtml+'</div>';
+    return '<div class="skill-item"><div class="skill-head"><div class="skill-name"><span>'+info.icon+'</span>'+E(item.mz)+' '+item.mz.name+'</div><div class="skill-lvl">LVL '+info.lvl+'</div></div><div class="skill-bar"><i style="width:'+pct+'%"></i></div><div class="skill-meta"><span class="skill-xp">'+item.totalXp.toFixed(2)+' XP</span><span class="decay-'+dec.cls+'">'+dec.label+'</span></div>'+subHtml+'</div>';
   }).join('');
+}
+</script>
+<script>
+/* ==================== toggleTrain ==================== */
+function toggleTrain(trainId){
+  const tr = trainings.find(t => t.id === trainId); if(!tr) return;
+  if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку отметить нельзя'); return; }
+  const key = isoDate(selectedDate);
+  const wasDone = isTrainDone(selectedDate, tr);
+  if(wasDone){
+    const c = completions[key] && completions[key][tr.id];
+    const xpA = c ? c.xpAwarded : 0;
+    setTrainDone(selectedDate, tr.id, false);
+    if(xpA > 0) removeXp(xpA, tr.name, tr);
+  } else {
+    const eff = getEffectiveTrain(tr, selectedDate);
+    const exs = eff.exercises || [];
+    let xp = calcTrainXp(tr, eff);
+    const roundsInfo = {};
+    const actualExs = exs.map((e, idx) => {
+      if(e.type === 'rounds'){
+        const r = parseInt(prompt('🔁 «'+e.name+'»:\nСколько кругов выполнили?', '0'), 10) || 0;
+        roundsInfo[idx] = r;
+        xp += xpForOneRound(e) * r;
+        return {...e, actualRounds: r};
+      }
+      if(isXValue(e.reps) || isXValue(e.weight)){
+        const vReps = isXValue(e.reps) ? (parseInt(prompt('«'+e.name+'»\nПовторов за подход?', '0'), 10) || 0) : 0;
+        const vWeight = isXValue(e.weight) ? (parseFloat(prompt('«'+e.name+'»\nВес, кг?', '0')) || 0) : 0;
+        const sets = +e.sets || 1;
+        const ex = exercises.find(x => x.id === e.exId);
+        const sidesMult = ex && ex.twoSides ? 2 : 1;
+        let exXp = 0;
+        if(ex && ex.format === 'weight'){
+          exXp += xpFromWeight(vWeight, profile.weight||70, vReps) * sets * sidesMult;
+        } else if(ex){
+          exXp += xpFromReps(vReps) * sets * sidesMult;
+        }
+        xp += exXp;
+        return {...e,
+          repsPerSet: new Array(sets).fill(vReps),
+          weightPerSet: new Array(sets).fill(vWeight),
+          reps: vReps, weight: vWeight
+        };
+      }
+      return e;
+    });
+    xp = Math.round(xp * 100) / 100;
+    setTrainDone(selectedDate, tr.id, true, xp, JSON.parse(JSON.stringify(actualExs)));
+    if(Object.keys(roundsInfo).length){
+      if(completions[key] && completions[key][tr.id]){
+        completions[key][tr.id].rounds = roundsInfo;
+        store.set('completions', completions);
+      }
+    }
+    if(xp > 0) addXp(xp, tr.name, tr);
+    const regularExs = actualExs.filter(e => e.type !== 'rounds');
+    const newPRs = checkNewPRs(regularExs, key);
+    if(newPRs.length > 0){
+      setTimeout(() => {
+        newPRs.forEach((pr, i) => setTimeout(() => prFly(pr.exName, pr.display), i * 800));
+      }, 500);
+    }
+  }
+  renderTrainings(); renderWeek(); renderMonth(); renderStats();
 }
 
 /* ==================== ВЫПОЛНЕНИЕ ==================== */
 let execState = null;
+
 function startTrainExecution(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку запустить нельзя'); return; }
@@ -3335,9 +3660,6 @@ function startTrainExecution(trainId){
       exName: ex ? ex.name : '?',
       exFormat: ex ? ex.format : 'reps',
       twoSides: ex ? !!ex.twoSides : false,
-      exZones: ex ? (ex.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?z.emoji+z.name:''; }).filter(Boolean) : [],
-      exGears: ex ? (ex.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?g.emoji+g.name:''; }).filter(Boolean) : [],
-      exSkills: ex ? (ex.skills||[]).map(sid => { const s = skills.find(x=>x.id===sid); return s?s.emoji+s.name:''; }).filter(Boolean) : [],
     };
   });
   execState = {
@@ -3345,6 +3667,8 @@ function startTrainExecution(trainId){
     exercises: JSON.parse(JSON.stringify(exs)),
     currentIndex: 0, currentSet: 1, currentSide: 1,
     currentRounds: 0, roundTimer: null,
+    currentRepsPerSet: [],
+    currentWeightPerSet: [],
     completed: [],
     phase: 'idle',
     timer: { remaining: 0, total: 0, running: false, int: null }
@@ -3436,20 +3760,18 @@ function renderExecScreen(){
     return;
   }
 
-  const hasX = ['sets','reps','time','weight','rest'].some(f => isXValue(item[f]));
+  const hasX = ['sets','time','rest'].some(f => isXValue(item[f]));
   if(hasX && !item._xResolved){
     body.innerHTML =
       '<div class="exec-global-bar"><i style="width:0%"></i></div>'+
       '<div style="text-align:center;font-size:44px;margin:20px 0">✏️</div>'+
       '<div class="exec-ex-name">'+item.exName+'</div>'+
-      '<div class="note" style="text-align:center;margin-bottom:16px">Задай параметры'+(item.twoSides?' (значения — на одну сторону)':'')+'</div>'+
+      '<div class="note" style="text-align:center;margin-bottom:16px">Задай параметры'+(item.twoSides?' (значения — на одну сторону)':'')+'<br><b>Повторы и вес</b> спросим <b>после каждого подхода</b></div>'+
       '<div id="xFormContainer" style="max-width:400px;margin:0 auto;width:100%"></div>';
     const form = document.getElementById('xFormContainer');
     const fields = [];
     if(isXValue(item.sets)) fields.push({key:'sets', label:'Подходы', placeholder:'3'});
-    if(isXValue(item.reps)) fields.push({key:'reps', label:'Повторы', placeholder:'10'});
     if(isXValue(item.time)) fields.push({key:'time', label:'Время, сек', placeholder:'60'});
-    if(isXValue(item.weight)) fields.push({key:'weight', label:'Вес, кг', placeholder:'16'});
     if(isXValue(item.rest)) fields.push({key:'rest', label:'Отдых, сек', placeholder:'60'});
     form.innerHTML = fields.map(f =>
       '<div class="field-group"><label class="field-label">'+f.label+'</label><input class="field-input" type="number" id="xInput_'+f.key+'" placeholder="'+f.placeholder+'"></div>'
@@ -3514,6 +3836,23 @@ function renderExecScreen(){
   const timerDisplay = execState.phase === 'idle' ? '00:00' : fmt(Math.max(0, execState.timer.remaining));
   const globalPct = Math.round(((curIdx + (execState.currentSet-1)/totalSets) / totalEx) * 100);
 
+  const dosageHtmlParts = [];
+  if(item.reps) dosageHtmlParts.push('<div class="exec-dosage-item"><div class="lbl">Повторы</div><div class="val">'+(isXValue(item.reps)?'X':item.reps)+'</div></div>');
+  if(item.time) dosageHtmlParts.push('<div class="exec-dosage-item"><div class="lbl">Время</div><div class="val">'+item.time+'с</div></div>');
+  if(item.weight) dosageHtmlParts.push('<div class="exec-dosage-item"><div class="lbl">Вес</div><div class="val">'+(isXValue(item.weight)?'X':item.weight)+'кг</div></div>');
+
+  const shownReps = execState.currentRepsPerSet[execState.currentSet - 1];
+  const shownWeight = execState.currentWeightPerSet[execState.currentSet - 1];
+  let enteredHtml = '';
+  if(shownReps != null || shownWeight != null){
+    enteredHtml = '<div class="note" style="margin-top:8px;text-align:center">'+
+      'Подход '+execState.currentSet+': '+
+      (shownReps != null ? '<b>'+shownReps+'</b> повт' : '')+
+      (shownReps != null && shownWeight != null ? ' · ' : '')+
+      (shownWeight != null ? '<b>'+shownWeight+'</b> кг' : '')+
+    '</div>';
+  }
+
   body.innerHTML =
     '<div class="exec-global-bar"><i style="width:'+globalPct+'%"></i></div>'+
     planHtml+
@@ -3525,11 +3864,8 @@ function renderExecScreen(){
       '<div class="exec-phase '+phaseClass+'">'+phaseText+'</div>'+
       '<div class="exec-timer">'+timerDisplay+'</div>'+
       '<div class="exec-dosage">'+
-        '<div class="exec-dosage-row">'+
-          (item.reps ? '<div class="exec-dosage-item"><div class="lbl">Повторы</div><div class="val">'+item.reps+'</div></div>' : '')+
-          (item.time ? '<div class="exec-dosage-item"><div class="lbl">Время</div><div class="val">'+item.time+'с</div></div>' : '')+
-          (item.weight ? '<div class="exec-dosage-item"><div class="lbl">Вес</div><div class="val">'+item.weight+'кг</div></div>' : '')+
-        '</div>'+
+        '<div class="exec-dosage-row">'+dosageHtmlParts.join('')+'</div>'+
+        enteredHtml+
       '</div>'+
     '</div>';
 
@@ -3539,8 +3875,7 @@ function renderExecScreen(){
   } else if(execState.phase === 'work'){
     footer.innerHTML =
       '<div class="exec-controls">'+
-        '<button class="btn" onclick="execFinishSet()">Подход готов</button>'+
-        '<button class="btn btn-primary" onclick="execFinishSet()">Завершить</button>'+
+        '<button class="btn btn-primary" onclick="execFinishSet()">Подход готов</button>'+
       '</div>'+
       '<div class="exec-controls" style="margin-top:6px">'+
         '<button class="btn" onclick="toggleExecTimer()">'+(execState.timer.running?'⏸ Пауза':'▶ Продолжить')+'</button>'+
@@ -3556,7 +3891,7 @@ function renderExecScreen(){
 
 function applyXForm(){
   const item = execState.exercises[execState.currentIndex];
-  ['sets','reps','time','weight','rest'].forEach(f => {
+  ['sets','time','rest'].forEach(f => {
     if(isXValue(item[f])){
       const inp = document.getElementById('xInput_'+f);
       if(inp && inp.value) item[f] = +inp.value || 0;
@@ -3615,7 +3950,6 @@ function endRoundBlock(auto){
   execState.phase = 'idle';
   renderExecScreen();
 }
-
 function execStartWork(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
@@ -3655,19 +3989,51 @@ function execFinishSet(){
   if(execState.timer.int) clearInterval(execState.timer.int);
   const twoSides = !!item.twoSides;
   const totalSets = +item.sets || 1;
+  const askingSet = execState.currentSet;
+
   if(twoSides && execState.currentSide === 1){
     execState.currentSide = 2;
-    if(+item.rest > 0){ startExecPhase('rest', +item.rest); }
+    const restDur = +item.rest || 0;
+    if(restDur > 0){ startExecPhase('rest', restDur); }
     else { startExecPhase('work', +item.time || 0); }
     return;
   }
+
+  const needReps = isXValue(item.reps);
+  const needWeight = isXValue(item.weight);
+
+  if(needReps){
+    const prev = execState.currentRepsPerSet[askingSet - 2];
+    const def = (prev != null) ? String(prev) : '';
+    const msg = 'Подход ' + askingSet + ': сколько повторов' + (twoSides ? ' на одну сторону' : '') + ' сделали?';
+    const v = prompt(msg, def);
+    if(v === null){ return; }
+    execState.currentRepsPerSet[askingSet - 1] = +v || 0;
+  } else {
+    execState.currentRepsPerSet[askingSet - 1] = +item.reps || 0;
+  }
+
+  if(needWeight){
+    const prev = execState.currentWeightPerSet[askingSet - 2];
+    const def = (prev != null) ? String(prev) : '';
+    const v = prompt('Подход ' + askingSet + ': какой вес использовали? (кг)', def);
+    if(v === null){ return; }
+    execState.currentWeightPerSet[askingSet - 1] = +v || 0;
+  } else {
+    execState.currentWeightPerSet[askingSet - 1] = +item.weight || 0;
+  }
+
   if(execState.currentSet >= totalSets){
     execState.completed.push({
       exIdx: execState.currentIndex,
-      sets: totalSets, reps: +item.reps || 0,
-      time: +item.time || 0, weight: +item.weight || 0,
+      sets: totalSets,
+      repsPerSet: execState.currentRepsPerSet.slice(0, totalSets),
+      weightPerSet: execState.currentWeightPerSet.slice(0, totalSets),
+      time: +item.time || 0,
       twoSides: twoSides
     });
+    execState.currentRepsPerSet = [];
+    execState.currentWeightPerSet = [];
     if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
     execState.currentIndex++;
     execState.currentSet = 1;
@@ -3678,9 +4044,14 @@ function execFinishSet(){
     execState.timer.running = false;
     renderExecScreen();
   } else {
+    const finishedSet = execState.currentSet;
     execState.currentSet++;
     execState.currentSide = 1;
-    if(+item.rest > 0){ startExecPhase('rest', +item.rest); }
+    let restDur = +item.rest || 0;
+    if(item.restPerSet && item.restPerSet[finishedSet - 1] !== undefined && item.restPerSet[finishedSet - 1] !== null){
+      restDur = +item.restPerSet[finishedSet - 1] || 0;
+    }
+    if(restDur > 0){ startExecPhase('rest', restDur); }
     else { startExecPhase('work', +item.time || 0); }
   }
 }
@@ -3696,6 +4067,8 @@ function execSkipExercise(){
   if(!confirm('Пропустить упражнение?')) return;
   if(execState.timer.int) clearInterval(execState.timer.int);
   if(execState.currentIndex >= execState.exercises.length - 1){ finishExecution(); return; }
+  execState.currentRepsPerSet = [];
+  execState.currentWeightPerSet = [];
   execState.currentIndex++;
   execState.currentSet = 1;
   execState.currentSide = 1;
@@ -3722,9 +4095,25 @@ function finishExecution(){
     const ex = exercises.find(x => x.id === execState.exercises[c.exIdx].exId);
     if(!ex) return;
     const sidesMult = ex.twoSides ? 2 : 1;
-    if(ex.format === 'time') xp += xpFromTime(c.time) * (c.sets || 1) * sidesMult;
-    else if(ex.format === 'weight') xp += xpFromWeight(c.weight, profile.weight||70, c.reps) * (c.sets || 1) * sidesMult;
-    else xp += xpFromReps(c.reps) * (c.sets || 1) * sidesMult;
+    const sets = c.sets || 1;
+    const repsPerSet = (c.repsPerSet && c.repsPerSet.length)
+      ? c.repsPerSet
+      : new Array(sets).fill(0);
+    const weightPerSet = (c.weightPerSet && c.weightPerSet.length)
+      ? c.weightPerSet
+      : new Array(sets).fill(0);
+    if(ex.format === 'time'){
+      xp += xpFromTime(c.time) * sets * sidesMult;
+    } else if(ex.format === 'weight'){
+      repsPerSet.forEach((r, i) => {
+        const w = weightPerSet[i] || 0;
+        xp += xpFromWeight(w, profile.weight||70, r) * sidesMult;
+      });
+    } else {
+      repsPerSet.forEach(r => {
+        xp += xpFromReps(r) * sidesMult;
+      });
+    }
   });
   xp = Math.round(xp * 100) / 100;
   if(progressTxt) progressTxt.textContent = '✓';
@@ -3746,21 +4135,33 @@ function confirmFinishExecution(xp){
   if(!tr){ closeExecScreen(); return; }
   const dateKey = execState.dateKey;
   const date = new Date(dateKey);
-  const exs = getEffectiveTrain(tr, date).exercises || [];
-  setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(exs)));
-  const roundsInfo = {};
-  execState.completed.forEach(c => {
-    if(c.type === 'rounds') roundsInfo[c.exIdx] = c.rounds;
-  });
-  if(Object.keys(roundsInfo).length){
-    const key = isoDate(date);
-    if(completions[key] && completions[key][tr.id]){
-      completions[key][tr.id].rounds = roundsInfo;
-      store.set('completions', completions);
+  const templateExs = getEffectiveTrain(tr, date).exercises || [];
+
+  const actualExs = templateExs.map((tpl, idx) => {
+    const c = execState.completed.find(x => x.exIdx === idx);
+    if(!c){ return tpl; }
+    if(tpl.type === 'rounds'){
+      return {...tpl, actualRounds: c.rounds || 0};
     }
-  }
+    return {
+      ...tpl,
+      sets: c.sets || +tpl.sets || 1,
+      repsPerSet: c.repsPerSet || null,
+      weightPerSet: c.weightPerSet || null,
+      reps: (c.repsPerSet && c.repsPerSet.length)
+        ? (c.repsPerSet.reduce((s,r)=>s+r,0) / c.repsPerSet.length)
+        : +tpl.reps || 0,
+      weight: (c.weightPerSet && c.weightPerSet.length)
+        ? c.weightPerSet[0]
+        : +tpl.weight || 0,
+      twoSides: !!tpl.twoSides,
+      time: c.time || +tpl.time || 0
+    };
+  });
+
+  setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(actualExs)));
   addXp(xp, tr.name, tr);
-  const regularExs = exs.filter(e => e.type !== 'rounds');
+  const regularExs = actualExs.filter(e => e.type !== 'rounds');
   const newPRs = checkNewPRs(regularExs, dateKey);
   if(newPRs.length > 0){
     setTimeout(() => {
@@ -3786,7 +4187,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'Delat-Uprazhneniya', version:17, exported:new Date().toISOString(),
+  return {app:'Delat-Uprazhneniya', version:205, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog, measurements,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
@@ -3876,7 +4277,6 @@ function resetAll(){ if(confirm('Сбросить всё?')){ localStorage.clear
 
 /* ==================== СВОИ СНАРЯДЫ ==================== */
 const EMOJI_PRESETS = ['🪢','🏋️','🎿','🏗️','⭕','🎗️','⚽','🏀','🏐','🎾','🥊','🥋','🎽','🦯','🪃','🛹','🛼','⛸️','🧘','🤸','🏃','🚴','🏊','⛹️','🤾','🏌️','🪝','🧱','🪜','🛞','🧗','🥌','🏑','🏒','🎯','🥏','🏓','🏸','🎳','🪀','🪁','⚙️','🔗','🧲','🪨','🪵','🧊','🟫','🟩','🟦','🟥','🟨','🟪','⬛','⬜'];
-
 function restoreGearModalForm(){
   const modalBody = document.querySelector('#m-new-gear .modal');
   if(!modalBody) return;
@@ -3923,11 +4323,11 @@ function installStarterPack(){
     {name:'Отжимания от пола', zones:['chest','chest_mid','shoulders_front','shoulders_tri'], gears:['none'], skills:['strength'], format:'reps', desc:'Ладони чуть шире плеч. Тело прямое.'},
     {name:'Ягодичный мост', zones:['glutes','glutes_max','hips'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, стопы у таза. Поднять таз.'},
     {name:'Приседания', zones:['hips','hips_quad','glutes','glutes_max'], gears:['none'], skills:['strength'], format:'reps', desc:'Ноги на ширине плеч. Опускаться до параллели.'},
-    {name:'Подъёмы на носки', zones:['calves'], gears:['none'], skills:['strength'], format:'reps', desc:'Стоя, подняться на носки.', twoSides:true},
+    {name:'Подъёмы на носки', zones:['calves','calves_gastr'], gears:['none'], skills:['strength'], format:'reps', desc:'Стоя, подняться на носки.', twoSides:true},
     {name:'Перекаты стопы', zones:['feet','calves'], gears:['none'], skills:['balance'], format:'time', desc:'Перекатывай стопу с пятки на носок.', twoSides:true},
     {name:'Сжатие эспандера', zones:['hands','hands_flex'], gears:['band'], skills:['strength'], format:'reps', desc:'Сжимай эспандер до полного сжатия.', twoSides:true},
-    {name:'Скручивания', zones:['abs','abs_upper'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, руки за головой. Поднять лопатки.'},
-    {name:'Планка', zones:['core','abs'], gears:['mat'], skills:['strength','balance'], format:'time', desc:'Локти под плечами, тело — прямая линия.'},
+    {name:'Скручивания', zones:['abs','abs_rectus'], gears:['mat'], skills:['strength'], format:'reps', desc:'Лёжа на спине, руки за головой. Поднять лопатки.'},
+    {name:'Планка', zones:['core','abs','abs_transv'], gears:['mat'], skills:['strength','balance'], format:'time', desc:'Локти под плечами, тело — прямая линия.'},
     {name:'Поза голубя', zones:['stretch','hips'], gears:['mat'], skills:['flex'], format:'time', desc:'Одна нога согнута впереди, другая вытянута назад.', twoSides:true},
   ];
   const idsMap = {};
@@ -3984,6 +4384,67 @@ function installStarterPack(){
   store.set('starterInstalled', true);
 }
 
+/* ==================== МИГРАЦИЯ ЗОН v20.2 ==================== */
+function migrateZonesV20(){
+  if(!Array.isArray(zones)) return false;
+  let changed = false;
+
+  const obsolete = ['abs_upper', 'abs_lower'];
+  const beforeLen = zones.length;
+  zones = zones.filter(z => !obsolete.includes(z.id));
+  if(zones.length !== beforeLen){
+    let exChanged = false;
+    exercises.forEach(e => {
+      if(!Array.isArray(e.zones)) return;
+      const mapped = e.zones.map(z => obsolete.includes(z) ? 'abs' : z);
+      const uniq = [...new Set(mapped)];
+      if(uniq.length !== e.zones.length || uniq.some((v,i) => v !== e.zones[i])){
+        e.zones = uniq; exChanged = true;
+      }
+    });
+    if(exChanged) store.set('exercises', exercises);
+    changed = true;
+  }
+
+  const zoneMap = {}; zones.forEach(z => { zoneMap[z.id] = z; });
+  const addZones = [
+    {id:'shoulders_bi', name:'Бицепс', emoji:'💪', parent:'shoulders'},
+    {id:'glutes_min', name:'Малая ягодичная', emoji:'🍑', parent:'glutes'},
+    {id:'hips_abd', name:'Отводящие', emoji:'🦵', parent:'hips'},
+    {id:'abs_rectus', name:'Прямая', emoji:'🔥', parent:'abs'},
+    {id:'abs_transv', name:'Поперечная', emoji:'🔥', parent:'abs'},
+    {id:'calves_gastr', name:'Икра', emoji:'🦿', parent:'calves'},
+    {id:'calves_soleus', name:'Камбала', emoji:'🦿', parent:'calves'},
+    {id:'calves_tib', name:'Берцовые', emoji:'🦿', parent:'calves'},
+    {id:'face', name:'Лицо', emoji:'😊', isMain:true},
+  ];
+  addZones.forEach(nz => {
+    if(!zoneMap[nz.id]){ zones.push(nz); changed = true; }
+  });
+
+  const calvesZone = zones.find(z => z.id === 'calves');
+  if(calvesZone && calvesZone.name !== 'Голень'){ calvesZone.name = 'Голень'; changed = true; }
+
+  if(changed) store.set('zones', zones);
+  return changed;
+}
+
+/* ==================== ИКОННОЕ МЕНЮ XP ==================== */
+function switchStatTab(btn){
+  statActiveTab = btn.dataset.tab;
+  store.set('statActiveTab', statActiveTab);
+  applyStatTab();
+  if(statActiveTab === 'progress') setTimeout(() => renderProgressChart(), 60);
+  if(statActiveTab === 'char') setTimeout(() => renderCharacter(), 60);
+}
+function applyStatTab(){
+  const tab = statActiveTab || 'char';
+  document.querySelectorAll('#statMenu .stat-menu-btn').forEach(b =>
+    b.classList.toggle('on', b.dataset.tab === tab));
+  document.querySelectorAll('#v-stat .stat-panel').forEach(p =>
+    p.classList.toggle('on', p.dataset.panel === tab));
+}
+
 /* ==================== РЕНДЕР ВСЕГО ==================== */
 function renderAll(){
   renderWeek(); renderMonth(); renderTrainings();
@@ -3991,11 +4452,13 @@ function renderAll(){
   renderStats(); updateXpUI(); renderSkillXp(); renderCharacter();
   applyTheme(); applyAvatar(); renderCompsTab();
   populateProgressSelect();
+  applyStatTab();
   if(document.getElementById('m-train-list')?.classList.contains('on')) renderTrainTemplates();
 }
 
 /* ==================== СТАРТ ==================== */
 applyTheme();
+migrateZonesV20();
 ensureXpMaps();
 applyDecayOnLoad();
 installStarterPack();
@@ -4018,4 +4481,3 @@ document.addEventListener('keydown', e => {
 </script>
 </body>
 </html>
-
