@@ -10,7 +10,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0f1a'/%3E%3Cpath fill='%23fff' d='M10 50L26 22h8l16 28h-7L30 30 17 50z'/%3E%3Cpath fill='%231456ff' d='M40 50l14-22h-6L34 50z'/%3E%3C/svg%3E">
 <style>
 /* ============================================================
-   UI POLISH — v20.6.1
+   UI POLISH — v20.6.2
    ============================================================ */
 
 /* ---------- 1. ПЕРЕМЕННЫЕ ---------- */
@@ -211,7 +211,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 body[data-mode="light"] input[type="date"]::-webkit-calendar-picker-indicator{
   filter:none;opacity:.6;
 }
-/* ---------- 9. НИЖНЯЯ НАВИГАЦИЯ ---------- */
+   /* ---------- 9. НИЖНЯЯ НАВИГАЦИЯ ---------- */
 .nav-bottom{
   position:fixed;bottom:0;left:0;right:0;
   background:color-mix(in srgb, var(--bg2) 92%, transparent);
@@ -350,7 +350,7 @@ body[data-mode="light"] input[type="date"]::-webkit-calendar-picker-indicator{
 .training-actions-row button{flex:1;padding:8px;border-radius:var(--radius-sm);font-size:var(--font-sm);font-weight:700;border:1px solid var(--line-soft);background:var(--card);color:var(--txt);transition:transform .12s var(--ease-spring), background .15s var(--ease-out);}
 .training-actions-row button:active{transform:scale(.97);background:var(--card2)}
 
-/* ---------- 14. УПРАЖНЕНИЯ (список) ---------- */
+/* ---------- 14. УПРАЖНЕНИЯ ---------- */
 .ex-list{display:flex;flex-direction:column;gap:3px;overflow:hidden;}
 .ex-list .ex-card{
   display:flex;align-items:center;gap:10px;
@@ -435,6 +435,11 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
 .modal h3{font-size:var(--font-xl);font-weight:800;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:var(--space-3);}
 .modal-close{width:100%;padding:14px;border-radius:var(--radius);background:var(--card);color:var(--mut);font-weight:700;margin-top:var(--space-3);font-size:var(--font-sm);transition:background .15s var(--ease-out), transform .12s var(--ease-spring);}
 .modal-close:active{background:var(--card2);transform:scale(.98)}
+
+/* ---------- 17a. ФИКС: шторка askPrompt ПОВЕРХ экрана выполнения ---------- */
+/* exec-screen имеет z-index:150, поэтому дефолтный 100 у modal-overlay её прячет.
+   Поднимаем #m-prompt до 350, чтобы шторка была видна поверх тренировки. */
+#m-prompt{ z-index: 350; }
 
 /* ---------- 18. МЕДИА ---------- */
 .media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);margin-bottom:var(--space-2);}
@@ -788,7 +793,7 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
   <header class="header">
     <div class="logo-wrap">
       <div class="logo"><svg viewBox="0 0 64 48" style="height:26px;width:34px;color:var(--txt);display:block;fill:none"><path class="f" d="M24 2h4v8h-4zM30 2h4v8h-4zM36 2h4v8h-4z"/><path fill="currentColor" stroke="none" d="M6 40L24 14h8L50 40h-8L28 22 16 40z"/><path class="f" d="M40 40l16-24h-6L34 40z"/></svg></div>
-      <div class="logo-ver" id="logoVersion">v20.6.1</div>
+      <div class="logo-ver" id="logoVersion">v20.6.2</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -859,13 +864,11 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
       <span class="search-icon">🔍</span>
       <input class="search-input" placeholder="Поиск упражнения..." id="exSearch" oninput="renderEx()">
     </div>
-
     <div class="btn-row" style="margin-bottom:6px">
       <button class="btn btn-sm" onclick="openPicker('zones')">🎯 Зоны <span class="filter-badge" id="zonesCount" style="margin-left:4px">0</span></button>
       <button class="btn btn-sm" onclick="openPicker('gears')">🎒 Снаряды <span class="filter-badge" id="gearsCount" style="margin-left:4px">0</span></button>
       <button class="btn btn-sm" onclick="openPicker('skills')">⭐ Навыки <span class="filter-badge" id="skillsCount" style="margin-left:4px">0</span></button>
     </div>
-
     <div class="section-title" style="margin-top:8px">Упражнения</div>
     <div class="ex-count-line"><span>Найдено: <b id="exCount">0</b></span><span id="exFilterHint"></span></div>
     <div class="ex-list" id="exList"></div>
@@ -908,7 +911,6 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
         </div>
       </div>
     </div>
-
     <div class="stat-menu-grid" id="statMenu">
       <button class="stat-menu-btn" data-tab="char" onclick="switchStatTab(this)">
         <span class="sm-ico">🧍</span><span class="sm-lbl">Персонаж</span>
@@ -932,7 +934,6 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
         <span class="sm-ico">📊</span><span class="sm-lbl">Сводка</span>
       </button>
     </div>
-
     <div class="stat-panel on" data-panel="char">
       <div class="character-card">
         <div class="character-title">🧍 Твой персонаж</div>
@@ -940,7 +941,6 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
         <div class="character-legend" id="charLegend"></div>
       </div>
     </div>
-
     <div class="stat-panel" data-panel="progress">
       <div class="progress-section">
         <h3>📈 Прогресс упражнения</h3>
@@ -958,35 +958,18 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
         <div class="progress-hint" id="progress-info">Выбери упражнение из списка</div>
       </div>
     </div>
-
     <div class="stat-panel" data-panel="gears">
-      <div class="card">
-        <div class="card-title"><div class="card-title-left">🎒 Снаряды</div></div>
-        <div class="skill-list" id="skillGears"></div>
-      </div>
+      <div class="card"><div class="card-title"><div class="card-title-left">🎒 Снаряды</div></div><div class="skill-list" id="skillGears"></div></div>
     </div>
-
     <div class="stat-panel" data-panel="zones">
-      <div class="card">
-        <div class="card-title"><div class="card-title-left">💪 Зоны</div></div>
-        <div class="skill-list" id="skillZones"></div>
-      </div>
+      <div class="card"><div class="card-title"><div class="card-title-left">💪 Зоны</div></div><div class="skill-list" id="skillZones"></div></div>
     </div>
-
     <div class="stat-panel" data-panel="skills">
-      <div class="card">
-        <div class="card-title"><div class="card-title-left">🎯 Навыки</div></div>
-        <div class="skill-list" id="skillSkills"></div>
-      </div>
+      <div class="card"><div class="card-title"><div class="card-title-left">🎯 Навыки</div></div><div class="skill-list" id="skillSkills"></div></div>
     </div>
-
     <div class="stat-panel" data-panel="log">
-      <div class="card">
-        <div class="card-title"><div class="card-title-left">XP Лог</div></div>
-        <div class="xp-log" id="xpLog"></div>
-      </div>
+      <div class="card"><div class="card-title"><div class="card-title-left">XP Лог</div></div><div class="xp-log" id="xpLog"></div></div>
     </div>
-
     <div class="stat-panel" data-panel="summary">
       <div class="card">
         <div class="card-title"><div class="card-title-left">Сводка</div></div>
@@ -998,7 +981,6 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
         </div>
       </div>
     </div>
-
     <div class="xp-hero-formula" style="margin-top:12px">
       <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
     </div>
@@ -1020,42 +1002,28 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
         <button class="btn btn-sm btn-danger" onclick="removeAvatar()">Убрать</button>
       </div>
     </div>
-
     <div class="card">
       <div class="card-title"><div class="card-title-left">Профиль</div></div>
-      <div class="field-group">
-        <label class="field-label">Имя</label>
-        <input class="field-input" id="inName">
-      </div>
+      <div class="field-group"><label class="field-label">Имя</label><input class="field-input" id="inName"></div>
       <div class="field-row" style="margin-bottom:8px">
-        <div class="field-group">
-          <label class="field-label">Возраст</label>
-          <input class="field-input" id="inAge" type="number">
-        </div>
-        <div class="field-group">
-          <label class="field-label">Масса, кг</label>
-          <input class="field-input" id="inWeight" type="number">
-        </div>
+        <div class="field-group"><label class="field-label">Возраст</label><input class="field-input" id="inAge" type="number"></div>
+        <div class="field-group"><label class="field-label">Масса, кг</label><input class="field-input" id="inWeight" type="number"></div>
       </div>
       <div class="note" style="margin-bottom:8px">💡 Масса синхронизируется с последней записью в журнале веса</div>
       <button class="btn btn-primary btn-full" onclick="saveProfile()">Сохранить</button>
     </div>
-
     <div class="card">
       <div class="card-title"><div class="card-title-left">⚖️ Журнал веса</div></div>
       <button class="btn btn-primary btn-full" onclick="openWeightLog()">📊 Открыть журнал</button>
     </div>
-
     <div class="card">
       <div class="card-title"><div class="card-title-left">📏 Обхваты тела</div></div>
       <button class="btn btn-primary btn-full" onclick="openMeasurements()">📐 Открыть журнал обхватов</button>
     </div>
-
     <div class="card">
       <div class="card-title"><div class="card-title-left">🎨 Тема</div></div>
       <div class="themes-grid" id="themesGrid"></div>
     </div>
-
     <div class="card">
       <div class="card-title"><div class="card-title-left">Обмен</div></div>
       <button class="btn btn-blue btn-full" style="margin-bottom:6px" onclick="exportDB()">📤 Экспорт</button>
@@ -1064,13 +1032,11 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
       <button class="btn btn-full" onclick="copyDB()">📋 В буфер</button>
       <input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="importDB(this)">
     </div>
-
     <div class="card">
       <div class="card-title"><div class="card-title-left">ℹ️ Справка</div></div>
       <button class="btn btn-primary btn-full" style="margin-bottom:6px" onclick="openModal('m-about')">✨ Возможности приложения</button>
       <button class="btn btn-full" onclick="openModal('m-info')">📖 Как пользоваться</button>
     </div>
-
     <div class="card">
       <div class="card-title"><div class="card-title-left">Опасная зона</div></div>
       <button class="btn btn-danger btn-full" onclick="resetAll()">🗑 Сбросить всё</button>
@@ -1104,8 +1070,8 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
   <div class="exec-footer" id="execFooter"></div>
 </div>
 
-<!-- ============ МОДАЛКА ASKPROMPT ============ -->
-<div class="modal-overlay" id="m-prompt" onclick="if(event.target===this)closePrompt()">
+<!-- ============ ФИКС: #m-prompt с inline z-index:350 ============ -->
+<div class="modal-overlay" id="m-prompt" style="z-index:350" onclick="if(event.target===this)closePrompt()">
   <div class="modal">
     <h3 id="promptTitle">Введите значение</h3>
     <div class="field-group">
@@ -1166,15 +1132,9 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
     <div class="field-group">
       <label class="field-label">Категории</label>
       <div class="chip-row">
-        <button type="button" class="chip ex-cat-chip" id="exCatZones" onclick="openExPicker('zones')">
-          <span>🎯</span> Зоны <span class="chip-count" id="exCatZonesCount">0</span>
-        </button>
-        <button type="button" class="chip ex-cat-chip" id="exCatGears" onclick="openExPicker('gears')">
-          <span>🎒</span> Снаряды <span class="chip-count" id="exCatGearsCount">0</span>
-        </button>
-        <button type="button" class="chip ex-cat-chip" id="exCatSkills" onclick="openExPicker('skills')">
-          <span>⭐</span> Навыки <span class="chip-count" id="exCatSkillsCount">0</span>
-        </button>
+        <button type="button" class="chip ex-cat-chip" id="exCatZones" onclick="openExPicker('zones')"><span>🎯</span> Зоны <span class="chip-count" id="exCatZonesCount">0</span></button>
+        <button type="button" class="chip ex-cat-chip" id="exCatGears" onclick="openExPicker('gears')"><span>🎒</span> Снаряды <span class="chip-count" id="exCatGearsCount">0</span></button>
+        <button type="button" class="chip ex-cat-chip" id="exCatSkills" onclick="openExPicker('skills')"><span>⭐</span> Навыки <span class="chip-count" id="exCatSkillsCount">0</span></button>
       </div>
       <div class="note" style="margin-top:6px">💡 Нажми на категорию — откроется список плиток с иконками</div>
     </div>
@@ -1245,11 +1205,7 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
 </div>
 
 <div class="modal-overlay" id="m-train-list" onclick="if(event.target===this)closeModal('m-train-list')">
-  <div class="modal">
-    <h3>Шаблоны тренировок</h3>
-    <div id="trainTemplates"></div>
-    <button class="modal-close" onclick="closeModal('m-train-list')">Закрыть</button>
-  </div>
+  <div class="modal"><h3>Шаблоны тренировок</h3><div id="trainTemplates"></div><button class="modal-close" onclick="closeModal('m-train-list')">Закрыть</button></div>
 </div>
 
 <div class="modal-overlay" id="m-comp" onclick="if(event.target===this)closeModal('m-comp')">
@@ -1306,7 +1262,7 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
   <div class="modal">
     <h3 id="exCfgTitle">Настройка</h3>
     <div class="field-group"><label class="field-label">Упражнение</label><div id="exCfgName" style="font-size:13px;font-weight:700;padding:10px 12px;background:var(--card);border-radius:var(--radius-sm);border:1px solid var(--line-soft)"></div></div>
-    <div class="note" style="margin-bottom:8px">💡 Введи <b>X</b> → спросим во время тренировки. Для повторов и веса X спросим <b>после каждого подхода</b>.</div>
+    <div class="note" style="margin-bottom:8px">💡 Введи <b>X</b> (латиница или кириллица) → спросим во время тренировки. Для повторов и веса X спросим <b>после каждого подхода</b>.</div>
     <div class="field-row" style="margin-bottom:8px">
       <div class="field-group"><label class="field-label">Подходы</label><input class="field-input" type="text" id="exCfgSets" value="3"></div>
       <div class="field-group"><label class="field-label">Повторы</label><input class="field-input" type="text" id="exCfgReps" value="10"></div>
@@ -1411,7 +1367,7 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
       <p><b>Подходы, время, отдых</b> — спросим <b>перед</b> упражнением (один раз).</p>
       <p><b>Повторы, вес</b> — спросим <b>после каждого подхода</b>. Если предыдущий подход был заполнен, его значение подставляется как дефолт — можно просто нажать Enter.</p>
       <p>Для двусторонних упражнений повторы спрашиваются «на одну сторону».</p>
-      <p><b>Важно:</b> «X» можно вводить и латиницей (X), и кириллицей (Х) — распознаются оба варианта.</p>
+      <p><b>Важно:</b> «X» распознаётся и латиницей (X), и кириллицей (Х).</p>
     </div>
     <div class="info-block">
       <h4>🎯 Плитки-фильтры и категории</h4>
@@ -1462,7 +1418,7 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
 
 <script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v20.6.1';
+const APP_VERSION = 'v20.6.2';
 const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',
       c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
 const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
@@ -1741,7 +1697,7 @@ function xpFromTime(s){ return Math.round(s*0.01*100)/100; }
 function xpFromWeight(w,bw,r){ if(!bw||bw<=0) bw=70; return Math.round((w/bw)*0.01*r*100)/100; }
 function xpFromReps(r){ return Math.round(r*0.1*100)/100; }
 
-/* ==================== X-ХЕЛПЕРЫ (латинская и кириллическая) ==================== */
+/* ==================== X-ХЕЛПЕРЫ ==================== */
 function normalizeX(v){
   /* Латинская X/x и кириллическая Х/х → всегда 'X' */
   return String(v).trim().toUpperCase().replace(/Х/g, 'X');
@@ -2211,7 +2167,7 @@ function toggleTrainBody(head){
   const body = head.nextElementSibling;
   if(body) body.classList.toggle('on');
 }
-/* ============ ФИЛЬТРЫ-ПЛИТКИ С DRILL-DOWN ============ */
+   /* ============ ФИЛЬТРЫ-ПЛИТКИ С DRILL-DOWN ============ */
 function openPicker(type){
   pickerNav = { stack: [{ type, parentId: null }] };
   renderPickerPage();
@@ -3649,7 +3605,7 @@ function renderSkillXp(){
 }
 </script>
 <script>
-/* ==================== toggleTrain (async, askPrompt) ==================== */
+/* ==================== toggleTrain (async + askPrompt) ==================== */
 async function toggleTrain(trainId){
   const tr = trainings.find(t => t.id === trainId); if(!tr) return;
   if(isoDate(selectedDate) > isoDate(TODAY)){ toast('🔒 Будущую тренировку отметить нельзя'); return; }
@@ -4078,7 +4034,7 @@ function toggleExecTimer(){
   renderExecScreen();
 }
 
-/* ⚡ Ключевая функция: спрашивает повторы/вес после каждого подхода через askPrompt */
+/* ⚡ Спрашивает повторы/вес после каждого подхода через askPrompt */
 async function execFinishSet(){
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
@@ -4283,7 +4239,7 @@ function beep(freq, dur){
 
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'Delat-Uprazhneniya', version:206, exported:new Date().toISOString(),
+  return {app:'Delat-Uprazhneniya', version:2062, exported:new Date().toISOString(),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog, measurements,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, profile:{...profile}};
@@ -4577,9 +4533,3 @@ document.addEventListener('keydown', e => {
 </script>
 </body>
 </html>
-
-
-
-
-
-
