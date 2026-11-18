@@ -924,6 +924,30 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
 .exec-timer-sub{display:block;margin-top:6px}
 .timer-start-preview{text-align:center;margin:0 0 7px}
 </style>
+
+<style>
+.plan-kicker{margin:6px 0 12px;min-height:44px}
+.plan-kicker h2{margin:0}
+.plan-kicker .btn{flex:none}
+.calendar-month-link{margin-top:8px}
+.daily-card{scroll-margin-top:74px;margin-top:12px}
+.du-segments{display:flex;gap:4px;border:1px solid var(--line);padding:4px;border-radius:13px;background:var(--card);margin:0 0 12px}
+.du-segments[hidden],#dailyDoseHint[hidden],.daily-timer [hidden],.exec-elapsed[hidden]{display:none}
+.du-segment{flex:1;min-width:0;min-height:40px;border:0;border-radius:9px;background:transparent;color:var(--mut);font:inherit;font-weight:700;font-size:clamp(11px,3.25vw,14px);cursor:pointer;overflow-wrap:anywhere;padding:4px}
+.du-segment.on{background:var(--card2);color:var(--txt);box-shadow:inset 0 0 0 1px var(--line)}
+.compact-tools{margin-top:12px}
+.compact-tools summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--mut)}
+.compact-tools[open] summary{margin-bottom:10px}
+.daily-phase-clock{display:flex;flex-direction:column;gap:2px}
+.daily-phase-clock>b{font-size:22px;font-variant-numeric:tabular-nums}
+.daily-phase-clock>small{color:var(--mut)}
+.daily-timer-actions{display:flex;justify-content:flex-end;gap:4px}
+.exec-elapsed{flex:0 0 100%;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums;line-height:1.1}
+#execEndEarly[hidden]{display:none}
+.exec-elapsed b{color:var(--txt);font-size:13px}
+.exec-header{flex-wrap:wrap;row-gap:4px}
+.exec-title{min-width:0}
+</style>
 </head>
 <body data-mode="dark">
 <div id="fujiSplash" role="dialog" aria-label="Загрузка приложения">
@@ -1003,7 +1027,7 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
       <button class="fs-skip" onclick="fujiCue('start')">🔊 Проверить звук</button>
       <button class="fs-skip" onclick="fujiDismissSplash()">Начать →</button>
     </div>
-    <div class="fs-ver">FUJI EDITION / v20.13.10</div>
+    <div class="fs-ver">FUJI EDITION / v20.13.11</div>
   </div>
 </div>
 <div class="app">
@@ -1033,13 +1057,39 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
 
   <!-- ========== КАЛЕНДАРЬ ========== -->
   <section class="view on" id="v-main">
+    <div class="page-kicker plan-kicker"><div><h2>План</h2></div>
+      <button class="btn btn-sm" onclick="document.getElementById('dailyTasksCard').scrollIntoView({block:'start',behavior:'smooth'})">Задания <b id="dailyJumpCount">0/0</b></button>
+    </div>
     <div class="card" id="exerciseLibraryNotice">
       <div class="card-title-left">База упражнений</div>
       <p class="note" id="exerciseLibraryHint">Загружаю базу упражнений…</p>
       <button class="btn btn-primary btn-full" onclick="document.getElementById('exerciseLibraryInput').click()">Выбрать файл базы</button>
     </div>
 
-    <div class="card daily-card">
+    <div class="card">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" aria-label="Предыдущая неделя" onclick="shiftWeek(-1)">‹</button>
+        <div class="cal-nav-title">Неделя <b id="weekRange">—</b></div>
+        <button class="cal-nav-btn" aria-label="Сегодня" onclick="goToday()">●</button>
+        <button class="cal-nav-btn" aria-label="Следующая неделя" onclick="shiftWeek(1)">›</button>
+      </div>
+      <div class="week-grid" id="weekRow"></div>
+      <button class="btn btn-sm btn-full calendar-month-link" onclick="openMonthModal()" id="monthBtnLabel">📅 Месяц</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-left">Тренировки · <span id="selectedDateLabel" style="color:var(--acc2);margin-left:2px"></span></div>
+        <span class="badge-count" id="trainsCount">0</span>
+      </div>
+      <div id="trainList"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="openTrainModal()">+ Тренировка</button>
+      <button class="btn" onclick="openTrainList()">📋 Расписание</button>
+    </div>
+    <div class="card daily-card" id="dailyTasksCard">
       <div class="card-title"><div class="card-title-left">Задания на сегодня</div><span class="badge-count" id="dailyTaskCount">0/0</span></div>
       <div id="dailyTaskList"></div>
       <button class="btn btn-sm btn-full" onclick="openDailyTaskManager()">Настроить задания</button>
@@ -1063,36 +1113,15 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
       </div>
     </div>
 
-    <div class="card">
-      <div class="cal-nav">
-        <button class="cal-nav-btn" onclick="shiftWeek(-1)">‹</button>
-        <div class="cal-nav-title">Неделя <b id="weekRange">—</b></div>
-        <button class="cal-nav-btn" onclick="goToday()">●</button>
-        <button class="cal-nav-btn" onclick="shiftWeek(1)">›</button>
-      </div>
-      <div class="week-grid" id="weekRow"></div>
-    </div>
-
-    <div class="btn-row" style="margin-bottom:8px">
-      <button class="btn btn-sm" onclick="openMonthModal()" id="monthBtnLabel">📅 Календарь месяца</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <div class="card-title-left">Тренировки · <span id="selectedDateLabel" style="color:var(--acc2);margin-left:2px"></span></div>
-        <span class="badge-count" id="trainsCount">0</span>
-      </div>
-      <div id="trainList"></div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="openTrainModal()">+ Тренировка</button>
-      <button class="btn" onclick="openTrainList()">📋 Шаблоны</button>
-    </div>
   </section>
 
   <!-- ========== УПРАЖНЕНИЯ ========== -->
-  <section class="view" id="v-ex"><div class="page-kicker"><div><h2>Упражнения</h2><small>Библиотека движений</small></div><img src="data:image/webp;base64,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" alt="Фудзи"></div>
+  <section class="view" id="v-ex">
+    <div class="page-kicker plan-kicker"><div><h2>Библиотека</h2></div><button class="btn btn-sm" onclick="openExModal()">+ Упражнение</button></div>
+    <div class="du-segments" aria-label="Библиотека">
+      <button class="du-segment on" aria-pressed="true" onclick="navTo('v-ex')">Упражнения</button>
+      <button class="du-segment" aria-pressed="false" onclick="navTo('v-comps')">Комплексы</button>
+    </div>
     <div class="search">
       <span class="search-icon">🔍</span>
       <input class="search-input" placeholder="Поиск упражнения..." id="exSearch" oninput="renderEx()">
@@ -1102,30 +1131,25 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
       <button class="btn btn-sm" onclick="openPicker('gears')">🎒 Снаряды <span class="filter-badge" id="gearsCount" style="margin-left:4px">0</span></button>
       <button class="btn btn-sm" onclick="openPicker('skills')">⭐ Навыки <span class="filter-badge" id="skillsCount" style="margin-left:4px">0</span></button>
     </div>
-    <div class="section-title" style="margin-top:8px">Упражнения</div>
     <div class="ex-count-line"><span>Найдено: <b id="exCount">0</b></span><span id="exFilterHint"></span></div>
     <div class="ex-list" id="exList"></div>
-    <div class="btn-row" style="margin-top:8px">
-      <button class="btn btn-primary btn-full" onclick="openExModal()">+ Упражнение</button>
-    </div>
-    <div class="btn-row" style="margin-top:6px">
-      <button class="btn btn-danger btn-full" onclick="clearAllEx()">🗑 Очистить все</button>
-    </div>
+    <details class="card compact-tools"><summary>Управление упражнениями</summary>
+      <button class="btn btn-danger btn-full" onclick="clearAllEx()">🗑 Удалить все упражнения</button>
+    </details>
   </section>
 
   <!-- ========== КОМПЛЕКСЫ ========== -->
-  <section class="view" id="v-comps"><div class="page-kicker"><div><h2>Комплексы</h2><small>Твой маршрут к вершине</small></div><img src="data:image/webp;base64,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" alt="Фудзи"></div>
+  <section class="view" id="v-comps">
+    <div class="page-kicker plan-kicker"><div><h2>Библиотека</h2></div><button class="btn btn-sm" onclick="openCompModal()">+ Комплекс</button></div>
+    <div class="du-segments" aria-label="Библиотека">
+      <button class="du-segment" aria-pressed="false" onclick="navTo('v-ex')">Упражнения</button>
+      <button class="du-segment on" aria-pressed="true" onclick="navTo('v-comps')">Комплексы</button>
+    </div>
     <div class="search">
       <span class="search-icon">🔍</span>
       <input class="search-input" placeholder="Поиск по названию..." id="compSearchInput" oninput="renderCompsTab()">
     </div>
-    <div class="card">
-      <div class="card-title">
-        <div class="card-title-left">Мои комплексы</div>
-        <span class="badge-count" id="compsCount">0</span>
-      </div>
-      <button class="btn btn-primary btn-full" onclick="openCompModal()">+ Новый комплекс</button>
-    </div>
+    <div class="ex-count-line">Найдено: <b id="compsCount">0</b></div>
     <div id="compsList"></div>
   </section>
 
@@ -1144,28 +1168,24 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
         </div>
       </div>
     </div>
-    <div class="stat-menu-grid" id="statMenu">
-      <button class="stat-menu-btn" data-tab="char" onclick="switchStatTab(this)">
-        <span class="sm-ico">🧍</span><span class="sm-lbl">Персонаж</span>
-      </button>
-      <button class="stat-menu-btn" data-tab="progress" onclick="switchStatTab(this)">
-        <span class="sm-ico">📈</span><span class="sm-lbl">Прогресс</span>
-      </button>
-      <button class="stat-menu-btn" data-tab="gears" onclick="switchStatTab(this)">
-        <span class="sm-ico">🎒</span><span class="sm-lbl">Снаряды</span>
-      </button>
-      <button class="stat-menu-btn" data-tab="zones" onclick="switchStatTab(this)">
-        <span class="sm-ico">💪</span><span class="sm-lbl">Зоны</span>
-      </button>
-      <button class="stat-menu-btn" data-tab="skills" onclick="switchStatTab(this)">
-        <span class="sm-ico">🎯</span><span class="sm-lbl">Навыки</span>
-      </button>
-      <button class="stat-menu-btn" data-tab="log" onclick="switchStatTab(this)">
-        <span class="sm-ico">📝</span><span class="sm-lbl">XP Лог</span>
-      </button>
-      <button class="stat-menu-btn" data-tab="summary" onclick="switchStatTab(this)">
-        <span class="sm-ico">📊</span><span class="sm-lbl">Сводка</span>
-      </button>
+    <div class="du-segments" id="statMenu" aria-label="Разделы прогресса">
+      <button class="du-segment" data-stat-group="char" onclick="switchStatTab(this)" data-tab="char">Фудзи</button>
+      <button class="du-segment" data-stat-group="results" onclick="switchStatTab(this)" data-tab="progress">Результаты</button>
+      <button class="du-segment" data-stat-group="development" onclick="switchStatTab(this)" data-tab="zones">Развитие</button>
+      <button class="du-segment" data-stat-group="history" onclick="switchStatTab(this)" data-tab="history">История</button>
+    </div>
+    <div class="du-segments" id="statResultsTabs" aria-label="Результаты" hidden>
+      <button class="du-segment" onclick="switchStatTab(this)" data-tab="progress">По упражнениям</button>
+      <button class="du-segment" onclick="switchStatTab(this)" data-tab="summary">Сводка</button>
+    </div>
+    <div class="du-segments" id="statDevelopmentTabs" aria-label="Развитие" hidden>
+      <button class="du-segment" onclick="switchStatTab(this)" data-tab="zones">Зоны</button>
+      <button class="du-segment" onclick="switchStatTab(this)" data-tab="gears">Снаряды</button>
+      <button class="du-segment" onclick="switchStatTab(this)" data-tab="skills">Навыки</button>
+    </div>
+    <div class="du-segments" id="statHistoryTabs" aria-label="История" hidden>
+      <button class="du-segment" onclick="switchStatTab(this)" data-tab="history">Тренировки</button>
+      <button class="du-segment" onclick="switchStatTab(this)" data-tab="log">Опыт</button>
     </div>
     <div class="stat-panel on" data-panel="char">
       <div class="character-card">
@@ -1208,30 +1228,23 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
         <div class="card-title"><div class="card-title-left">Сводка</div></div>
         <div class="stats-summary">
           <div class="stat-mini"><div class="stat-mini-val" id="stTotal">0</div><div class="stat-mini-lbl">Упражнений</div></div>
-          <div class="stat-mini"><div class="stat-mini-val" id="stTrains">0</div><div class="stat-mini-lbl">Тренировок</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stTrains">0</div><div class="stat-mini-lbl">Записей расписания</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="stCompleted">0</div><div class="stat-mini-lbl">Отметок о выполнении</div></div>
           <div class="stat-mini"><div class="stat-mini-val" id="stComps">0</div><div class="stat-mini-lbl">Комплексов</div></div>
           <div class="stat-mini"><div class="stat-mini-val" id="stGears">0</div><div class="stat-mini-lbl">Снарядов</div></div>
         </div>
       </div>
     </div>
-    <div class="card"><div class="card-title-left">История нормативов и тренировок</div><div id="fujiHistory"></div></div>
-    <div class="xp-hero-formula" style="margin-top:12px">
-      <b>📐 XP:</b> ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code>
+    <div class="stat-panel" data-panel="history">
+      <div class="card"><div class="card-title-left">История нормативов и тренировок</div><div id="fujiHistory"></div></div>
     </div>
+    <details class="card compact-tools"><summary>Как начисляется опыт</summary>
+      <div class="xp-hero-formula"><b>XP</b> · ⏱ <code>сек×0.01</code> · 🏋️ <code>(вес/масса)×0.01×повт</code> · 💪 <code>повт×0.1</code></div>
+    </details>
   </section>
 
   <!-- ========== ПРОФИЛЬ ========== -->
   <section class="view" id="v-prof"><div class="page-kicker"><div><h2>Профиль</h2><small>Твой путь Фудзи</small></div><img src="data:image/webp;base64,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" alt="Фудзи"></div>
-    <div class="card">
-      <div class="card-title-left">База упражнений и иллюстраций</div>
-      <p class="note" id="exerciseLibraryStatus"></p>
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="document.getElementById('exerciseLibraryInput').click()">Загрузить / обновить базу</button>
-        <button class="btn" onclick="exportExerciseLibrary()">Скачать базу</button>
-      </div>
-      <p class="note">Обновляй базу отдельным JSON-файлом. Загруженная база сохраняется в этом браузере, если доступно сохранение.</p>
-    </div>
-
     <div class="card">
       <div class="profile-head">
         <div class="avatar" id="avatar" onclick="document.getElementById('avatarInput').click()">А</div>
@@ -1269,7 +1282,17 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
       <div class="themes-grid" id="themesGrid"></div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="card-title-left">Обмен</div></div>
+      <div class="card-title-left">База упражнений и иллюстраций</div>
+      <p class="note" id="exerciseLibraryStatus"></p>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="document.getElementById('exerciseLibraryInput').click()">Загрузить / обновить базу</button>
+        <button class="btn" onclick="exportExerciseLibrary()">Скачать базу</button>
+      </div>
+      <p class="note">Обновляй базу отдельным JSON-файлом. Загруженная база сохраняется в этом браузере, если доступно сохранение.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="card-title-left">Резервная копия</div></div>
       <button class="btn btn-blue btn-full" style="margin-bottom:6px" onclick="exportDB()">📤 Экспорт</button>
       <button class="btn btn-green btn-full" style="margin-bottom:6px" onclick="document.getElementById('importInput').click()">📥 Импорт</button>
       <button class="btn btn-full" style="margin-bottom:6px" onclick="shareDB()">🔗 Поделиться</button>
@@ -1281,10 +1304,9 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
       <button class="btn btn-primary btn-full" style="margin-bottom:6px" onclick="openModal('m-about')">✨ Возможности приложения</button>
       <button class="btn btn-full" onclick="openModal('m-info')">📖 Как пользоваться</button>
     </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-left">Опасная зона</div></div>
+    <details class="card compact-tools"><summary>Сброс данных</summary>
       <button class="btn btn-danger btn-full" onclick="resetAll()">🗑 Сбросить всё</button>
-    </div>
+    </details>
   </section>
 </div>
 
@@ -1293,12 +1315,11 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
   <button onclick="openExModal();closeFabMenu()"><span class="em">💪</span>Упражнение</button>
   <button onclick="openCompModal();closeFabMenu()"><span class="em">🔁</span>Комплекс</button>
 </div>
-<button class="fab" id="fabBtn" onclick="toggleFabMenu()">+</button>
+<button class="fab" id="fabBtn" aria-label="Быстро добавить" onclick="toggleFabMenu()">+</button>
 
 <nav class="nav-bottom">
-  <button class="nav-btn on" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16"/><path class="a" d="M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>Календарь</span></button>
-  <button class="nav-btn" data-v="v-ex" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M6 8v8M18 8v8M3 10v4M21 10v4"/><path class="a" d="M6 12h12"/></svg><span>Упражнения</span></button>
-  <button class="nav-btn" data-v="v-comps" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4zM4 12l8 4 8-4"/><path class="a" d="M4 16l8 4 8-4"/></svg><span>Комплексы</span></button>
+  <button class="nav-btn on" aria-current="page" data-v="v-main" onclick="nav(this)"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16"/><path class="a" d="M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>План</span></button>
+  <button class="nav-btn" data-v="library" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4zM4 12l8 4 8-4"/><path class="a" d="M4 16l8 4 8-4"/></svg><span>Библиотека</span></button>
   <button class="nav-btn" data-v="v-stat" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M6 20v-6M12 20V8"/><path class="a" d="M18 20V4"/><path d="M3 20h18"/></svg><span>Прогресс</span></button>
   <button class="nav-btn" data-v="v-prof" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M3 19h15a3 3 0 0 0 0-6h-2V9l2-3m-2 3-2-3M3 19v-3a7 7 0 1 1 14 0"/><path class="a" d="M10 16a3 3 0 1 1 3-3c0 1-1 2-2 2"/></svg><span>Профиль</span></button>
 </nav>
@@ -1309,6 +1330,7 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
     <button class="exec-close" onclick="closeExecScreen()">✕</button>
     <div class="exec-title" id="execTitle">Тренировка</div>
     <div class="exec-progress" id="execProgressTxt">0/0</div>
+    <div id="execElapsed" class="exec-elapsed" hidden><span>Общее время <b id="execElapsedValue">00:00</b></span><button id="execEndEarly" class="btn btn-sm" type="button" onclick="finishActiveWorkout()">Завершить</button></div>
   </div>
   <div class="exec-body" id="execBody"></div>
   <div class="exec-footer" id="execFooter"></div>
@@ -1353,6 +1375,15 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
 
 <input type="file" id="exerciseLibraryInput" accept=".json,application/json" hidden onchange="chooseExerciseLibrary(this)">
 <!-- МОДАЛКИ -->
+<div class="modal-overlay" id="m-import-choice" onclick="if(event.target === this)applyBackupChoice(null)">
+  <div class="modal">
+    <h3>Импорт резервной копии</h3>
+    <p class="note">Добавить — объединить списки и историю, сохранив текущий профиль и опыт. Восстановить — заменить текущую копию данными из файла.</p>
+    <button class="btn btn-primary btn-full" onclick="applyBackupChoice('merge')">Добавить данные</button>
+    <button class="btn btn-full" onclick="applyBackupChoice('restore')">Восстановить из файла</button>
+    <button class="modal-close" onclick="applyBackupChoice(null)">Отмена</button>
+  </div>
+</div>
 <div class="modal-overlay" id="m-daily-tasks" onclick="if(event.target===this)closeModal('m-daily-tasks')">
  <div class="modal">
   <h3>Ежедневные задания</h3>
@@ -1363,13 +1394,14 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
   <p class="note">Количество и изменения списка применяются к следующему дню. Новые задания могут заполнить свободные места сегодня. Выданные задания сохраняются до конца дня.</p>
   <div id="dailyPoolList"></div>
   <h4>Добавить задание</h4>
-  <div class="field-group"><label class="field-label" for="dailyExercise">Упражнение</label><select class="field-input" id="dailyExercise"></select></div>
+  <div class="field-group"><label class="field-label" for="dailyExercise">Упражнение</label><select class="field-input" id="dailyExercise" onchange="updateDailyDoseLabel()"></select></div>
   <button class="btn btn-sm" onclick="closeModal('m-daily-tasks');openExModal()">+ Создать упражнение</button>
   <div class="field-group"><label class="field-label" for="dailyName">Название задания, по желанию</label><input class="field-input" id="dailyName" placeholder="Например, стойка у стены"></div>
   <div class="field-row">
    <div class="field-group"><label class="field-label" for="dailyTarget">Цель</label><input class="field-input" type="number" min="1" max="3600" value="30" id="dailyTarget"></div>
    <div class="field-group"><label class="field-label" for="dailyUnit">Единицы</label><select class="field-input" id="dailyUnit"><option value="seconds">Секунды</option><option value="reps">Повторы</option></select></div>
   </div>
+  <p id="dailyDoseHint" class="note" hidden>Цель на каждую сторону. Между сторонами таймер даёт 5 секунд на смену.</p>
   <button class="btn btn-primary btn-full" onclick="addDailyPool()">Добавить в список</button>
   <button class="modal-close" onclick="closeModal('m-daily-tasks')">Готово</button>
  </div>
@@ -1490,7 +1522,6 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
     </div>
     <div class="field-row" style="margin-bottom:8px">
       <div class="field-group"><label class="field-label">Время</label><input class="field-input" type="time" id="tTime" value="16:00"></div>
-      <div class="field-group"><label class="field-label">Длит., мин</label><input class="field-input" type="number" id="tDuration" value="30"></div>
     </div>
     <div class="note" id="tSchedulePreview" aria-live="polite"></div>
     <div class="section-title" style="margin-top:12px">Упражнения</div>
@@ -1505,7 +1536,7 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
 </div>
 
 <div class="modal-overlay" id="m-train-list" onclick="if(event.target===this)closeModal('m-train-list')">
-  <div class="modal"><h3>Шаблоны тренировок</h3><div id="trainTemplates"></div><button class="modal-close" onclick="closeModal('m-train-list')">Закрыть</button></div>
+  <div class="modal"><h3>Расписание тренировок</h3><div id="trainTemplates"></div><button class="modal-close" onclick="closeModal('m-train-list')">Закрыть</button></div>
 </div>
 
 <div class="modal-overlay" id="m-comp" onclick="if(event.target===this)closeModal('m-comp')">
@@ -1718,7 +1749,7 @@ html:has(#execScreen.on),body:has(#execScreen.on){overflow:hidden;overscroll-beh
 
 <div class="modal-overlay" id="m-fuji-detail"><div class="modal"><h3 id="fujiDetailTitle"></h3><div id="fujiDetailList"></div><button class="btn btn-primary btn-full" onclick="fujiLaunch('normal')">▶ Обычная тренировка</button><label class="field-label" style="margin-top:12px">Цель: повторы или круги</label><input class="field-input" id="fujiTarget" type="number" min="1" value="100"><div class="btn-row"><button class="btn" onclick="fujiLaunch('reps')">На количество</button><button class="btn" onclick="fujiLaunch('rounds')">На круги</button></div><div class="btn-row"><button class="btn" onclick="closeModal('m-fuji-detail');openCompModal(fujiSelected)">Изменить</button><button class="btn" onclick="delCompFromTab(fujiSelected);closeModal('m-fuji-detail')">Удалить</button></div><button class="modal-close" onclick="closeModal('m-fuji-detail')">Закрыть</button></div></div><script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v20.13.10';
+const APP_VERSION = 'v20.13.11';
 const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',
       c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
 const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
@@ -1916,7 +1947,7 @@ if(weightLog.length > 0){
   store.set('profile', profile);
 }
 
-const TODAY = new Date();
+let TODAY = new Date();
 let viewMonth = TODAY.getMonth();
 let viewYear = TODAY.getFullYear();
 let selectedDate = new Date(TODAY);
@@ -2289,18 +2320,30 @@ function openMediaViewer(idx){
   openModal('m-media');
 }
 
-function nav(el){
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
-  const v = document.getElementById(el.dataset.v); if(v) v.classList.add('on');
-  closeFabMenu();
-  if(el.dataset.v === 'v-stat'){ renderStats(); updateXpUI(); renderCharacter(); applyStatTab(); }
-  if(el.dataset.v === 'v-comps'){ renderCompsTab(); }
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function navTo(id){ const b = document.querySelector('.nav-btn[data-v="'+id+'"]'); if(b) nav(b); }
+let libraryView = 'v-ex';
 
+function nav(el, requestedView){
+  const viewId = requestedView || (el.dataset.v === 'library' ? libraryView : el.dataset.v);
+  if(el.dataset.v === 'library') libraryView = viewId;
+  document.querySelectorAll('.nav-btn').forEach(button => {
+    const current = button === el;
+    button.classList.toggle('on', current);
+    if(current) button.setAttribute('aria-current','page');
+    else button.removeAttribute('aria-current');
+  });
+  document.querySelectorAll('.view').forEach(view => view.classList.toggle('on', view.id === viewId));
+  closeFabMenu();
+  if(viewId === 'v-stat'){
+    renderStats(); updateXpUI(); renderCharacter(); applyStatTab();
+  }
+  if(viewId === 'v-comps') renderCompsTab();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function navTo(id){
+  const navId = ['v-ex','v-comps'].includes(id) ? 'library' : id;
+  const button = document.querySelector('.nav-btn[data-v="'+navId+'"]');
+  if(button) nav(button,id);
+}
 function openModal(id){ const el = document.getElementById(id); if(el) el.classList.add('on'); }
 function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('on'); }
 
@@ -2400,14 +2443,15 @@ function isTrainDone(date, tr){
   const key = isoDate(date);
   return !!(completions[key] && completions[key][tr.id] && completions[key][tr.id].done);
 }
-function setTrainDone(date, trId, done, xpAwarded, exercisesSnapshot){
+function setTrainDone(date, trId, done, xpAwarded, exercisesSnapshot, elapsedSeconds){
   const key = isoDate(date);
   if(!completions[key]) completions[key] = {};
   if(done){
     completions[key][trId] = {
       done: true,
       xpAwarded: xpAwarded || 0,
-      exercises: exercisesSnapshot || null
+      exercises: exercisesSnapshot || null,
+      ...(Number.isFinite(elapsedSeconds) ? {elapsedSeconds} : {})
     };
   } else {
     delete completions[key][trId];
@@ -2426,7 +2470,10 @@ function renderTrainings(){
   if(!list.length){ box.innerHTML = '<div class="empty">На <b>'+dLabel+'</b> тренировок нет</div>'; return; }
   box.innerHTML = list.map(tr => {
     const eff = getEffectiveTrain(tr, selectedDate);
-    const done = isTrainDone(selectedDate, tr);
+    const completion = completions[isoDate(selectedDate)]?.[tr.id];
+    const done = !!completion?.done;
+    const recordedTime = done && Number.isFinite(completion.elapsedSeconds)
+      ? ' · '+formatWorkoutTime(completion.elapsedSeconds) : '';
     const xp = calcTrainXp(tr, eff);
     const exs = eff.exercises || [];
     const exListHtml = exs.map((e, idx) => {
@@ -2458,8 +2505,9 @@ function renderTrainings(){
     if(isFuture){
       actionsHtml = '<div class="tbtn tbtn-lock" onclick="event.stopPropagation();toast(\'🔒 Будущую тренировку отметить нельзя\')">🔒</div>';
     } else {
-      actionsHtml = '<div class="tbtn tbtn-run" onclick="event.stopPropagation();startTrainExecution(\''+tr.id+'\')">▶</div>'+
-                    '<div class="tbtn tbtn-check '+(done?'on':'')+'" onclick="event.stopPropagation();toggleTrain(\''+tr.id+'\')"></div>';
+      const label = done ? 'Отменить отметку о выполнении' : 'Отметить выполненной вручную';
+      actionsHtml = (done ? '' : '<button class="tbtn tbtn-run" type="button" aria-label="Запустить тренировку" onclick="event.stopPropagation();startTrainExecution(\''+tr.id+'\')">▶</button>')+
+        '<button class="tbtn tbtn-check '+(done?'on':'')+'" type="button" aria-label="'+label+'" onclick="event.stopPropagation();toggleTrain(\''+tr.id+'\')"></button>';
     }
     const periodInfo = (tr.startDate || tr.endDate)
       ? '<span>📅 '+(tr.startDate||'…')+'→'+(tr.endDate||'…')+'</span>'
@@ -2467,7 +2515,7 @@ function renderTrainings(){
     return '<div class="training-card">'+
       '<div class="training-head" onclick="toggleTrainBody(this)">'+
         '<div class="training-time">'+eff.time+'</div>'+
-        '<div class="training-info"><div class="training-name">'+tr.name+'</div><div class="training-meta"><span>'+exs.length+' упр · '+Math.round(xp*100)/100+' XP</span>'+periodInfo+'</div></div>'+
+        '<div class="training-info"><div class="training-name">'+escapeHtml(tr.name)+'</div><div class="training-meta"><span>'+exs.length+' упр · '+Math.round((done ? Number(completion.xpAwarded)||0 : xp)*100)/100+' XP'+recordedTime+'</span>'+periodInfo+'</div></div>'+
         '<div class="training-actions">'+actionsHtml+'</div>'+
       '</div>'+
       '<div class="training-body">'+(exListHtml||'<div class="empty" style="padding:6px;font-size:11px">Нет упражнений</div>')+
@@ -2862,7 +2910,6 @@ function openTrainModal(trainId){
   el('trainModalTitle').textContent = tr ? 'Изменить тренировку' : 'Новая тренировка';
   el('tName').value = tr ? tr.name : '';
   el('tTime').value = tr ? tr.time : '16:00';
-  el('tDuration').value = tr ? (tr.duration||30) : 30;
   el('tScheduleMode').value = tr && !tr.endDate ? 'open' : 'period';
   el('tStartDate').value = tr ? (tr.startDate || '') : isoDate(selectedDate);
   el('tEndDate').value = tr ? (tr.endDate || '') : isoDate(selectedDate);
@@ -2958,10 +3005,9 @@ function saveTrain(){
   const {days, startDate, endDate, error} = getTrainScheduleDraft();
   if(error){ toast(error); return; }
   const time = document.getElementById('tTime').value || '16:00';
-  const duration = +document.getElementById('tDuration').value || 30;
   const trData = {
     id: editingTrainId || uid(),
-    name, days, time, duration, startDate, endDate,
+    name, days, time, startDate, endDate,
     exercises: JSON.parse(JSON.stringify(tempTrainEx)),
     dayOverrides: editingTrainId ? (trainings.find(t=>t.id===editingTrainId)?.dayOverrides || {}) : {}
   };
@@ -3185,9 +3231,9 @@ function pickComplex(compId){
 function openTrainList(){ renderTrainTemplates(); openModal('m-train-list'); }
 function renderTrainTemplates(){
   const el = document.getElementById('trainTemplates'); if(!el) return;
-  if(!trainings.length){ el.innerHTML = '<div class="empty">Шаблонов нет</div>'; return; }
+  if(!trainings.length){ el.innerHTML = '<div class="empty">Расписание пока пустое</div>'; return; }
   el.innerHTML = trainings.map(tr => {
-    const days = (tr.days||[]).map(d => WD_SHORT[WD_ISO.indexOf(d)]).join(' ');
+    const days = (tr.days||[]).map(d => WD_SHORT[WD_ISO.indexOf(Number(d))]).join(' ');
     const period = (tr.startDate||tr.endDate) ? ' · 📅 '+(tr.startDate||'…')+'→'+(tr.endDate||'…') : '';
     return '<div class="exercise-item" style="margin-bottom:6px">'+
       '<div class="ex-item-head"><div class="ex-item-name">'+tr.name+'</div><div class="ex-item-dosage">'+tr.exercises.length+' упр</div></div>'+
@@ -3197,7 +3243,7 @@ function renderTrainTemplates(){
   }).join('');
 }
 function delTrain(id){
-  if(!confirm('Удалить шаблон?')) return;
+  if(!confirm('Удалить эту запись из расписания?')) return;
   trainings = trainings.filter(t => t.id !== id);
   store.set('trainings', trainings);
   renderTrainTemplates(); renderTrainings(); renderWeek(); renderMonth(); renderStats();
@@ -3894,6 +3940,8 @@ function renderStats(){
   const setT = (id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
   setT('stTotal', exercises.length);
   setT('stTrains', trainings.length);
+  setT('stCompleted', Object.values(completions).reduce((sum, day) =>
+    sum + Object.values(day).filter(record => record?.done).length, 0));
   setT('stComps', complexes.length);
   setT('stGears', new Set(exercises.flatMap(e => e.gears||[])).size);
   renderSkillXp();
@@ -4058,6 +4106,62 @@ async function toggleTrain(trainId){
 /* ==================== ВЫПОЛНЕНИЕ ==================== */
 let execState = null;
 
+let workoutClock = null;
+
+function formatWorkoutTime(seconds){
+  const whole = Math.max(0, Math.floor(seconds || 0));
+  return whole < 3600 ? fmt(whole) : Math.floor(whole / 3600)+':'+fmt(whole % 3600);
+}
+function workoutElapsed(at = Date.now()){
+  if(!workoutClock) return 0;
+  const end = workoutClock.endedAt ?? at;
+  return Math.floor(Math.max(0, end - workoutClock.startedAt) / 1000);
+}
+function renderWorkoutClock(){
+  const host = document.getElementById('execElapsed');
+  host.hidden = !workoutClock;
+  if(workoutClock){
+    document.getElementById('execElapsedValue').textContent = formatWorkoutTime(workoutElapsed());
+    document.getElementById('execEndEarly').hidden = workoutClock.endedAt !== null;
+  }
+}
+function startWorkoutClock(){
+  if(workoutClock) return;
+  workoutClock = {startedAt:Date.now(), endedAt:null, timer:setInterval(renderWorkoutClock, 250)};
+  renderWorkoutClock();
+}
+document.addEventListener('visibilitychange', () => { if(!document.hidden) renderWorkoutClock(); });
+function finishWorkoutClock(at = Date.now()){
+  if(workoutClock && workoutClock.endedAt === null){
+    workoutClock.endedAt = at;
+    clearInterval(workoutClock.timer);
+    renderWorkoutClock();
+  }
+  return workoutElapsed();
+}
+function finishActiveWorkout(){
+  if(!workoutClock || workoutClock.endedAt !== null) return;
+  if(amrapRun){ confirmAmrapFinish(); return; }
+  if(fujiRun){
+    if(confirm('Завершить и сохранить текущий результат?')) fujiFinish();
+    return;
+  }
+  const state = execState;
+  if(!state || state.finishingSet || !confirm('Завершить тренировку? В результат войдут отмеченные подходы и круги.')) return;
+  if(state.roundTimer){
+    recordRoundBlock(state, state.exercises[state.currentIndex]);
+  } else {
+    recordPartialExercise(state);
+  }
+  finishExecution();
+}
+function resetWorkoutClock(){
+  if(workoutClock) clearInterval(workoutClock.timer);
+  workoutClock = null;
+  renderWorkoutClock();
+}
+
+
 function startTrainExecution(trainId, sessionPlan = null){
   if(execState) return;
   const tr = sessionPlan || trainings.find(t => t.id === trainId);
@@ -4091,7 +4195,7 @@ function startTrainExecution(trainId, sessionPlan = null){
     };
   });
   execState = {
-    startedAt: Date.now(), laps: [], setLog: [],
+    laps: [], setLog: [],
     trainId, sessionPlan, dateKey: isoDate(selectedDate), trainName: tr.name,
     timerOptions:{prep:10, automatic:true, advance:false, sound:true, vibration:true, ...store.get('execTimerOptions', {})},
     setWorkMs:0, durationBySet:[], finishingSet:false,
@@ -4118,6 +4222,7 @@ function closeExecScreen(){
     releaseExecWakeLock(execState);
   }
   document.getElementById('execScreen').classList.remove('on');
+  resetWorkoutClock();
   closeModal('m-exec-timer');
   execState = null;
 }
@@ -4346,29 +4451,24 @@ function applyXForm(){
 function startRoundBlock(){
   const item = execState.exercises[execState.currentIndex];
   if(!item || item.type !== 'rounds') return;
+  startWorkoutClock();
   if(execState.roundTimer && execState.roundTimer.int) clearInterval(execState.roundTimer.int);
   execState.currentRounds = 0;
   execState.lapStart = Date.now(); beep(950,.18);
-  execState.roundTimer = { remaining: item.time, total: item.time, running: true, int: null };
-  execState.roundTimer.int = setInterval(() => {
-    if(!execState.roundTimer) return;
-    if(execState.roundTimer.remaining > 0){
-      execState.roundTimer.remaining--;
-      const disp = document.querySelector('.exec-timer');
-      if(disp) disp.textContent = fmt(execState.roundTimer.remaining);
-      if(execState.roundTimer.remaining <= 0){
-        clearInterval(execState.roundTimer.int);
-        execState.roundTimer.running = false;
-        beep(880, .6);
-        if(navigator.vibrate) navigator.vibrate([300, 150, 300]);
-        setTimeout(() => endRoundBlock(true), 500);
-      }
-    }
-  }, 1000);
+  const state = execState;
+  const timer = {remaining:item.time, total:item.time, running:true, deadline:Date.now()+item.time*1000, int:null};
+  state.roundTimer = timer;
+  timer.int = setInterval(() => {
+    if(execState !== state || state.roundTimer !== timer) return;
+    timer.remaining = Math.max(0, Math.ceil((timer.deadline - Date.now()) / 1000));
+    const display = document.querySelector('#execBody .exec-timer');
+    if(display) display.textContent = fmt(timer.remaining);
+    if(!timer.remaining) endRoundBlock(true);
+  }, 200);
   renderExecScreen();
 }
 function roundComplete(){
-  if(!execState || execState.currentIndex == null) return;
+  if(!execState?.roundTimer?.running) return;
   execState.currentRounds = (execState.currentRounds || 0) + 1;
   execState.laps.push(Math.round((Date.now()-execState.lapStart)/1000)); execState.lapStart=Date.now();
   beep(660, .15);
@@ -4377,18 +4477,28 @@ function roundComplete(){
 }
 function endRoundBlock(auto){
   if(!execState) return;
-  if(execState.roundTimer && execState.roundTimer.int){ clearInterval(execState.roundTimer.int); }
+  const timer = execState.roundTimer;
+  if(!timer) return;
   const item = execState.exercises[execState.currentIndex];
   if(!item) return;
   const rounds = execState.currentRounds || 0;
   if(!auto){
     if(!confirm('Завершить круговую?\nКругов выполнено: ' + rounds)) return;
   }
-  execState.roundTimer = null;
-  execState.currentRounds = 0;
-  for(const a of (item.blockExMapped||[])){const e=exercises.find(x=>x.id===a.exId);execState.setLog.push({exId:a.exId,name:e?.name||a.name||'Упражнение',reps:(Number(a.reps)||0)*rounds,seconds:0});}
-  execState.completed.push({ exIdx: execState.currentIndex, type: 'rounds', rounds: rounds });
-  stepExecExercise();
+  recordRoundBlock(execState, item);
+  stepExecExercise(auto ? timer.deadline : Date.now());
+}
+function recordRoundBlock(state, item){
+  clearInterval(state.roundTimer.int);
+  state.roundTimer = null;
+  const rounds = state.currentRounds;
+  state.currentRounds = 0;
+  if(!rounds) return;
+  for(const spec of item.blockExMapped || []){
+    state.setLog.push({exId:spec.exId,name:spec.exName,reps:(Number(spec.reps)||0)*rounds,
+      seconds:(Number(spec.time)||0)*rounds});
+  }
+  state.completed.push({exIdx:state.currentIndex,type:'rounds',rounds});
 }
 function execIsTimed(item){
   return item?.type !== 'rounds' && Number(item?.time) > 0 &&
@@ -4483,6 +4593,7 @@ function saveExecTimerSettings(event){
 function execStartWork(){
   const state = execState;
   if(!state) return;
+  startWorkoutClock();
   if(state.timerOptions.sound) fujiUnlock();
   if(state.phase === 'idle' && state.timerOptions.prep > 0){
     startExecPhase('prep', state.timerOptions.prep);
@@ -4640,7 +4751,7 @@ async function execFinishSet(at = Date.now()){
   const next = state.exercises[state.currentIndex + 1];
   const autoNext = state.timerOptions.automatic && state.timerOptions.advance &&
     execIsTimed(item) && execIsTimed(next);
-  stepExecExercise();
+  stepExecExercise(at);
   if(autoNext) continueExecAfterRest(Number(item.restPerSet?.[set - 1] ?? item.rest) || 0, at);
 }
 
@@ -4653,10 +4764,10 @@ function execSkipRest(){
   if(execState && ['rest','prep'].includes(execState.phase)) beginExecWork();
 }
 
-function stepExecExercise(){
+function stepExecExercise(at = Date.now()){
   const state = execState;
   state.currentIndex++;
-  if(state.currentIndex >= state.exercises.length){ finishExecution(); return; }
+  if(state.currentIndex >= state.exercises.length){ finishExecution(at); return; }
   state.currentRepsPerSet = [];
   state.currentWeightPerSet = [];
   state.durationBySet = [];
@@ -4673,13 +4784,15 @@ function execSkipExercise(){
   const state = execState;
   if(!state || state.finishingSet || !confirm('Пропустить упражнение?')) return;
   stopExecClock(state);
-  if(state.currentRepsPerSet.length){
-    const seconds = state.durationBySet.reduce((sum, value) => sum+value, 0);
-    const sets = state.currentRepsPerSet.length;
-    state.completed.push({exIdx:state.currentIndex, sets, repsPerSet:state.currentRepsPerSet,
-      weightPerSet:state.currentWeightPerSet, time:Math.round(seconds/sets/(state.exercises[state.currentIndex].twoSides ? 2 : 1)), seconds});
-  }
+  recordPartialExercise(state);
   stepExecExercise();
+}
+function recordPartialExercise(state){
+  const sets = state.currentRepsPerSet.length;
+  if(!sets) return;
+  const seconds = state.durationBySet.reduce((sum, value) => sum+value, 0);
+  state.completed.push({exIdx:state.currentIndex,sets,repsPerSet:state.currentRepsPerSet,
+    weightPerSet:state.currentWeightPerSet,time:Math.round(seconds/sets/(state.exercises[state.currentIndex].twoSides ? 2 : 1)),seconds});
 }
 function executionExerciseXp(result, item){
   if(result.type === 'rounds') return xpForOneRound(item) * (result.rounds || 0);
@@ -4697,9 +4810,10 @@ function executionExerciseXp(result, item){
   return xpFromReps(reps.reduce((sum, count) => sum + count, 0) * sides);
 }
 
-function finishExecution(){
+function finishExecution(at = Date.now()){
   if(execState.summary) return;
   execState.summary = true;
+  execState.elapsedSeconds = finishWorkoutClock(at);
   execTimerCue('workEnd');
   stopExecClock(execState);
   releaseExecWakeLock(execState);
@@ -4720,7 +4834,9 @@ function finishExecution(){
       '<div style="font-size:36px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">+'+xp+' XP</div>'+
     '</div>';
   footer.innerHTML =
-    '<button class="btn btn-primary exec-finish" onclick="confirmFinishExecution('+xp+')">✓ Засчитать тренировку</button>'+
+    (execState.completed.length
+      ? '<button class="btn btn-primary exec-finish" onclick="confirmFinishExecution('+xp+')">✓ Засчитать тренировку</button>'
+      : '<p class="note">Нет завершённых подходов или кругов для записи.</p>')+
     '<button class="btn btn-full" style="margin-top:8px;padding:12px" onclick="closeExecScreen()">Отмена</button>';
 }
 
@@ -4759,7 +4875,7 @@ function confirmFinishExecution(xp){
     store.set('trainings', trainings);
   }
   fujiSaveResult(fujiNormalResult());
-  setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(actualExs)));
+  setTrainDone(date, tr.id, true, xp, JSON.parse(JSON.stringify(actualExs)), execState.elapsedSeconds);
   addXp(xp, tr.name, {exercises:actualExs});
   const regularExs = actualExs.filter(e => e.type !== 'rounds');
   const newPRs = checkNewPRs(regularExs, dateKey);
@@ -4785,7 +4901,8 @@ function fujiCue(key){try{fujiUnlock();if(!audioCtx)return;const token=++fujiSou
 function beep(freq,dur){fujiCue(freq===950?'start':freq===660?'lap':freq===1100?'restEnd':'workEnd');}
 /* ==================== ЭКСПОРТ / ИМПОРТ ==================== */
 function buildDB(){
-  return {app:'Delat-Uprazhneniya', version:2062, exported:new Date().toISOString(),
+  return {app:'Delat-Uprazhneniya', version:2062, appVersion:APP_VERSION, exported:new Date().toISOString(),
+    execTimerOptions:store.get('execTimerOptions',null),
     zones, gears, skills, exercises, complexes, trainings, completions, weightLog, measurements,
     themeId, themeMode, totalXp, xpLog, xpGears, xpZones, xpSkills, prs,
     starterInstalled, dailyTasks:dailyState, fujiHistory:store.get('fujiHistory',[]), profile:{...profile}};
@@ -4800,13 +4917,35 @@ function exportDB(){
   setTimeout(()=>URL.revokeObjectURL(url), 1000);
   toast('Файл скачан');
 }
+let pendingBackup = null;
+
 function importDB(input){
-  const file = input.files[0]; if(!file) return;
+  pendingBackup = null;
+  const file = input.files[0];
+  if(!file) return;
   const reader = new FileReader();
-  reader.onload = e => {
+  reader.onload = event => {
     try {
-      const data = JSON.parse(e.target.result);
-      const merge = confirm('OK — добавить\nОтмена — заменить');
+      const data = JSON.parse(event.target.result);
+      if(!data || typeof data !== 'object' || !['exercises','complexes','trainings'].some(key => Array.isArray(data[key])) ||
+          data.schema === 'du-exercise-library') throw Error('Выбери резервную копию приложения. База упражнений загружается отдельно.');
+      pendingBackup = {data};
+      openModal('m-import-choice');
+    }catch(error){ toast('Ошибка: '+error.message); }
+  };
+  reader.onerror = () => toast('Не удалось открыть файл');
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function applyBackupChoice(mode){
+  const data = pendingBackup?.data;
+  pendingBackup = null;
+  closeModal('m-import-choice');
+  if(!data || !mode) return;
+  if(mode === 'restore' && !confirm('Заменить текущие данные резервной копией?')) return;
+  const merge = mode === 'merge';
+  try {
       if(merge){
         if(Array.isArray(data.exercises)) exercises = exercises.concat(data.exercises.filter(x=>!exercises.some(y=>y.id===x.id)));
         if(Array.isArray(data.complexes)) complexes = complexes.concat(data.complexes.filter(x=>!complexes.some(y=>y.id===x.id)));
@@ -4836,8 +4975,10 @@ function importDB(input){
         xpLog = data.xpLog||[]; xpGears = data.xpGears||{}; xpZones = data.xpZones||{}; xpSkills = data.xpSkills||{};
         prs = data.prs || {};
         starterInstalled = data.starterInstalled || false;
+        if(data.profile && typeof data.profile === 'object') profile = {...profile,...data.profile};
+        if(data.execTimerOptions && typeof data.execTimerOptions === 'object') store.set('execTimerOptions',data.execTimerOptions);
       }
-      if(data.dailyTasks){
+      if(data.dailyTasks || !merge){
         const incoming=readDailyState(data.dailyTasks);
         const state=merge?structuredClone(dailyState):incoming;
         if(merge){
@@ -4847,7 +4988,16 @@ function importDB(input){
         persistDailyState(state);
       }
       store.set('zones', zones); store.set('gears', gears); store.set('skills', skills);
-      if(Array.isArray(data.fujiHistory)) store.set('fujiHistory',data.fujiHistory);
+      const incomingHistory = Array.isArray(data.fujiHistory) ? data.fujiHistory : [];
+      if(!merge){
+        store.set('fujiHistory',incomingHistory);
+      }else if(incomingHistory.length){
+        const combined = new Map();
+        for(const result of [...store.get('fujiHistory',[]),...incomingHistory]){
+          if(result && typeof result.name === 'string') combined.set(JSON.stringify(result),result);
+        }
+        store.set('fujiHistory',[...combined.values()].sort((a,b)=>String(b.date).localeCompare(String(a.date))));
+      }
       store.set('exercises', exercises); store.set('complexes', complexes);
       store.set('trainings', trainings); store.set('completions', completions);
       store.set('weightLog', weightLog);
@@ -4856,15 +5006,13 @@ function importDB(input){
       store.set('totalXp', totalXp); store.set('xpLog', xpLog);
       store.set('xpGears', xpGears); store.set('xpZones', xpZones); store.set('xpSkills', xpSkills);
       store.set('prs', prs); store.set('starterInstalled', starterInstalled);
-      if(weightLog.length > 0){
-        profile.weight = weightLog[weightLog.length - 1].value;
-        store.set('profile', profile);
-      }
+      weightLog.sort((a,b) => a.date.localeCompare(b.date));
+      if(weightLog.length > 0) profile.weight = weightLog[weightLog.length - 1].value;
+      store.set('weightLog',weightLog);
+      store.set('profile',profile);
       installBonePack();
 installFujiPack(); installCindy(); installKettlebellAmrap(); installBronson(); ensureXpMaps(); applyTheme(); renderAll(); toast('Импорт готов');
-    } catch(err){ toast('Ошибка: '+err.message); }
-  };
-  reader.readAsText(file); input.value = '';
+  } catch(err){ toast('Ошибка: '+err.message); }
 }
 async function shareDB(){
   const data = JSON.stringify(buildDB(), null, 2);
@@ -4979,13 +5127,20 @@ function switchStatTab(btn){
   if(statActiveTab === 'char') setTimeout(() => renderCharacter(), 60);
 }
 function applyStatTab(){
-  const tab = statActiveTab || 'char';
-  document.querySelectorAll('#statMenu .stat-menu-btn').forEach(b =>
-    b.classList.toggle('on', b.dataset.tab === tab));
-  document.querySelectorAll('#v-stat .stat-panel').forEach(p =>
-    p.classList.toggle('on', p.dataset.panel === tab));
+  const groups = {char:'char',progress:'results',summary:'results',gears:'development',zones:'development',
+    skills:'development',log:'history',history:'history'};
+  const tab = Object.hasOwn(groups,statActiveTab) ? statActiveTab : 'char';
+  const group = groups[tab];
+  document.getElementById('statResultsTabs').hidden = group !== 'results';
+  document.getElementById('statDevelopmentTabs').hidden = group !== 'development';
+  document.getElementById('statHistoryTabs').hidden = group !== 'history';
+  document.querySelectorAll('#v-stat button[data-tab]').forEach(button => {
+    const active = button.dataset.statGroup ? button.dataset.statGroup === group : button.dataset.tab === tab;
+    button.classList.toggle('on',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+  document.querySelectorAll('#v-stat .stat-panel').forEach(panel => panel.classList.toggle('on',panel.dataset.panel === tab));
 }
-
 /* ==================== РЕНДЕР ВСЕГО ==================== */
 function renderAll(){
   renderWeek(); renderMonth(); renderTrainings();
@@ -5015,21 +5170,21 @@ function fujiPic(e){
   const m=e?.media?.find(x=>x.type==='image' && !isLegacyFujiImage(x,e.id));return m?'<img class="fuji-pic" src="'+escapeHtml(m.data)+'" alt="'+escapeHtml(e.name)+'">':'<div class="fuji-placeholder" aria-label="Кадры пока не добавлены">'+uiIcon('video')+'</div>';}
 function boneExecImage(item){const e=exercises.find(x=>x.id===item.exId);return e ? (fujiGuideHtml(e,true) || fujiPic(e)+'<p class="fuji-note">'+escapeHtml(e.desc||item.note||'')+'</p>') : '';}
 function fujiDose(e){return [e.sets?e.sets+' подх.':'',e.reps?e.reps+' повт.':'',e.time?e.time+' сек':'',e.rest?'отдых '+e.rest+' сек':'',e.weight?e.weight+' кг':''].filter(Boolean).join(' · ');}
-function renderCompsTab(){const el=document.getElementById('compsList');if(!el)return;document.getElementById('compsCount').textContent=complexes.length;const q=(document.getElementById('compSearchInput').value||'').toLowerCase();el.innerHTML=complexes.filter(c=>c.name.toLowerCase().includes(q)).map(c=>'<button class="fuji-compact" onclick="fujiDetail('+JSON.stringify(c.id).replace(/"/g,'&quot;')+')">'+fujiPic(exercises.find(e=>e.id===c.exercises[0]?.exId))+'<span><b>'+escapeHtml(c.name)+'</b><small>'+c.exercises.length+' упражнений · '+(c.roundMode?'круговая':'комплекс')+'</small></span><strong>›</strong></button>').join('')||'<p class="note">Нет комплексов</p>';}
+function renderCompsTab(){const el=document.getElementById('compsList');if(!el)return;const q=(document.getElementById('compSearchInput').value||'').trim().toLowerCase();const results=complexes.filter(c=>c.name.toLowerCase().includes(q));document.getElementById('compsCount').textContent=results.length;el.innerHTML=results.map(c=>'<button class="fuji-compact" onclick="fujiDetail('+JSON.stringify(c.id).replace(/"/g,'&quot;')+')">'+fujiPic(exercises.find(e=>e.id===c.exercises[0]?.exId))+'<span><b>'+escapeHtml(c.name)+'</b><small>'+c.exercises.length+' упражнений · '+(c.roundMode?'круговая':'комплекс')+'</small></span><strong>›</strong></button>').join('')||'<p class="note">'+(q?'Ничего не найдено':'Комплексов пока нет')+'</p>';}
 function fujiDetail(id){const c=complexes.find(x=>x.id===id);if(!c)return;fujiSelected=id;document.getElementById('fujiDetailTitle').textContent=c.name;document.getElementById('fujiDetailList').innerHTML=c.exercises.map((a,i)=>{const e=exercises.find(x=>x.id===a.exId);return '<div class="fuji-detail-row">'+fujiPic(e)+'<div><b>'+(i+1)+'. '+escapeHtml(e?.name||a.name||'Упражнение')+'</b><p>'+escapeHtml(fujiDose(a))+'</p>'+(fujiGuideHtml(e,true) || '<small>'+escapeHtml(e?.desc||a.note||'')+'</small>')+'</div></div>';}).join('');openModal('m-fuji-detail');}
 let fujiSelected=null;
-function fujiLaunch(mode){const c=complexes.find(x=>x.id===fujiSelected);if(!c||!c.exercises.length)return;let target=0;if(mode!=='normal'){target=Number(document.getElementById('fujiTarget').value);if(!Number.isInteger(target)||target<1||target>10000){toast('Укажи количество от 1 до 10000');return;}}closeModal('m-fuji-detail');if(mode==='normal'){const id='fuji_session_'+uid();const session={id,name:c.name,time:'18:00',days:[TODAY.getDay()],startDate:isoDate(TODAY),endDate:isoDate(TODAY),exercises:c.roundMode?[{type:'rounds',name:c.name,time:(c.roundTime||20)*60,blockEx:c.exercises}]:c.exercises};selectedDate=new Date(TODAY);startCalendarTraining(id,session);return;}fujiRun={id:c.id,name:c.name,mode,target,count:0,index:0,started:Date.now(),lapStart:Date.now(),laps:[],exerciseStats:{},roundMarked:[],exercises:c.exercises};beep(950,.2);document.getElementById('execScreen').classList.add('on');document.getElementById('execTitle').textContent=c.name;fujiDrawRun();fujiTick=setInterval(()=>{const e=document.getElementById('fujiClock');if(e&&fujiRun)e.textContent=fmt(Math.floor((Date.now()-fujiRun.started)/1000));},250);}
+function fujiLaunch(mode){const c=complexes.find(x=>x.id===fujiSelected);if(!c||!c.exercises.length)return;let target=0;if(mode!=='normal'){target=Number(document.getElementById('fujiTarget').value);if(!Number.isInteger(target)||target<1||target>10000){toast('Укажи количество от 1 до 10000');return;}}closeModal('m-fuji-detail');if(mode==='normal'){const id='fuji_session_'+uid();const session={id,name:c.name,time:'18:00',days:[TODAY.getDay()],startDate:isoDate(TODAY),endDate:isoDate(TODAY),exercises:c.roundMode?[{type:'rounds',name:c.name,time:(c.roundTime||20)*60,blockEx:c.exercises}]:c.exercises};selectedDate=new Date(TODAY);startCalendarTraining(id,session);return;}fujiRun={id:c.id,name:c.name,mode,target,count:0,index:0,started:Date.now(),lapStart:Date.now(),laps:[],exerciseStats:{},roundMarked:[],exercises:c.exercises};startWorkoutClock();beep(950,.2);document.getElementById('execScreen').classList.add('on');document.getElementById('execTitle').textContent=c.name;fujiDrawRun();fujiTick=setInterval(()=>{const e=document.getElementById('fujiClock');if(e&&fujiRun)e.textContent=fmt(Math.floor((Date.now()-fujiRun.started)/1000));},250);}
 function fujiDrawRun(){const r=fujiRun,a=r.exercises[r.index],e=exercises.find(x=>x.id===a.exId);document.getElementById('execProgressTxt').textContent=r.count+'/'+r.target;document.getElementById('execBody').innerHTML='<div class="exec-focus"><div class="exec-ex-name">'+escapeHtml(e?.name||a.name||'Комплекс')+'</div>'+boneExecImage(a)+'<p>'+escapeHtml(fujiDose(a))+'</p><div class="exec-timer" id="fujiClock">'+fmt(Math.floor((Date.now()-r.started)/1000))+'</div><div class="exec-round-count">'+r.count+' / '+r.target+'</div><p>'+(r.mode==='reps'?'Повторения':'Круги')+'</p></div>';document.getElementById('execFooter').innerHTML=r.mode==='reps'?'<div class="exec-controls"><button class="btn btn-primary" onclick="fujiAdd(1)">+1 повтор</button><button class="btn" onclick="fujiAdd(10)">+10</button></div><button class="btn btn-full" onclick="fujiNext()">Следующее упражнение</button><button class="btn btn-full" onclick="fujiFinish()">Завершить</button>':'<button class="btn btn-primary btn-full" onclick="fujiNext()">Упражнение готово / следующий</button><button class="btn btn-full" onclick="fujiAdd(1)">Круг завершён</button><button class="btn btn-full" onclick="fujiFinish()">Завершить</button>';}
 function fujiRecord(r,a,n){const k=a.exId||a.name;const e=exercises.find(x=>x.id===a.exId);const x=r.exerciseStats[k]||(r.exerciseStats[k]={name:e?.name||a.name||'Упражнение',reps:0,sets:0});if(n!=null)x.reps+=n;else x.unknown=true;x.sets++;}
 function fujiNext(){if(fujiRun.mode==='rounds'){const r=fujiRun;if(!r.roundMarked.includes(r.index)){const a=r.exercises[r.index];fujiRecord(r,a,a.reps? a.reps*(a.sets||1):null);r.roundMarked.push(r.index);}}fujiRun.index=(fujiRun.index+1)%fujiRun.exercises.length;fujiDrawRun();}
 function fujiAdd(n){const r=fujiRun;if(!r)return;if(r.mode==='reps')fujiRecord(r,r.exercises[r.index],Math.min(n,r.target-r.count));else {r.exercises.forEach((a,i)=>{if(!r.roundMarked.includes(i))fujiRecord(r,a,a.reps?a.reps*(a.sets||1):null);});r.roundMarked=[];}r.count=Math.min(r.target,r.count+n);if(r.mode==='rounds'){r.laps.push(Math.round((Date.now()-r.lapStart)/1000));r.lapStart=Date.now();r.index=0;beep(660,.15);}if(r.count>=r.target)fujiFinish();else fujiDrawRun();}
-function fujiFinish(){const r=fujiRun;if(!r)return;clearInterval(fujiTick);const result={id:r.id,name:r.name,mode:r.mode,exerciseStats:Object.values(r.exerciseStats),target:r.target,count:r.count,reps:r.mode==='reps'?r.count:null,rounds:r.mode==='rounds'?r.count:0,seconds:Math.round((Date.now()-r.started)/1000),laps:r.laps,date:new Date().toISOString()};fujiRun=null;fujiSaveResult(result);fujiCue('finish');document.getElementById('execBody').innerHTML='<div class="card"><h2>Тренировка завершена</h2>'+fujiSummary(result)+'</div>';document.getElementById('execFooter').innerHTML='<button class="btn btn-primary btn-full" onclick="closeExecScreen()">Готово</button>';}
+function fujiFinish(){const r=fujiRun;if(!r)return;clearInterval(fujiTick);const result={id:r.id,name:r.name,mode:r.mode,exerciseStats:Object.values(r.exerciseStats),target:r.target,count:r.count,reps:r.mode==='reps'?r.count:null,rounds:r.mode==='rounds'?r.count:0,seconds:finishWorkoutClock(),laps:r.laps,date:new Date().toISOString()};fujiRun=null;fujiSaveResult(result);fujiCue('finish');document.getElementById('execBody').innerHTML='<div class="card"><h2>Тренировка завершена</h2>'+fujiSummary(result)+'</div>';document.getElementById('execFooter').innerHTML='<button class="btn btn-primary btn-full" onclick="closeExecScreen()">Готово</button>';}
 const fujiOldClose=closeExecScreen;closeExecScreen=function(){if(fujiRun){if(!confirm('Прервать без сохранения?'))return;clearInterval(fujiTick);fujiRun=null;}fujiOldClose();};
-function fujiNormalResult(){const r=execState;return {id:r.trainName,name:r.trainName,mode:'normal',date:new Date().toISOString(),seconds:Math.round((Date.now()-r.startedAt)/1000),reps:r.setLog.reduce((n,x)=>n+x.reps,0),rounds:r.completed.reduce((n,x)=>n+(x.rounds||0),0),laps:r.laps,sets:r.setLog};}
-function fujiSummary(r){const groups=new Map();for(const x of r.sets||[]){const k=x.exId||x.name;const g=groups.get(k)||{name:x.name,reps:0,sets:0,seconds:0};g.reps+=Number(x.reps)||0;g.sets++;g.seconds+=Number(x.seconds)||0;groups.set(k,g);}let rows=r.exerciseStats||Array.from(groups.values());return '<div class="fuji-summary" style="text-align:left"><b>Время тренировки: '+fmt(r.seconds)+'</b><p>Круги: '+(r.rounds||0)+'</p><h3>По упражнениям</h3>'+ (rows.length?rows.map(x=>'<div class="exercise-item"><b>'+escapeHtml(x.name)+'</b><p>'+ (x.unknown?(r.mode==='intervals'?'Работа по таймеру':'Повторы не подсчитаны'):x.reps+' повт.')+(x.sets!=null?' · '+x.sets+' отметок':'')+(x.seconds!=null?' · '+fmt(x.seconds):'')+'</p></div>').join(''):'<p>Нет отдельных записей по упражнениям</p>')+(r.laps||[]).map((x,i)=>'<p>Круг '+(i+1)+' — '+fmt(x)+'</p>').join('')+'</div>';}
+function fujiNormalResult(){const r=execState;return {id:r.trainName,name:r.trainName,mode:'normal',date:new Date().toISOString(),seconds:r.elapsedSeconds ?? workoutElapsed(),elapsedSeconds:r.elapsedSeconds ?? workoutElapsed(),reps:r.setLog.reduce((n,x)=>n+x.reps,0),rounds:r.completed.reduce((n,x)=>n+(x.rounds||0),0),laps:r.laps,sets:r.setLog};}
+function fujiSummary(r){const groups=new Map();for(const x of r.sets||[]){const k=x.exId||x.name;const g=groups.get(k)||{name:x.name,reps:0,sets:0,seconds:0};g.reps+=Number(x.reps)||0;g.sets++;g.seconds+=Number(x.seconds)||0;groups.set(k,g);}let rows=r.exerciseStats||Array.from(groups.values());return '<div class="fuji-summary" style="text-align:left"><b>Общее время: '+formatWorkoutTime(r.elapsedSeconds ?? r.seconds)+'</b>'+ (r.mode==='amrap' ? '<p>Время AMRAP: '+fmt(r.seconds)+'</p>' : '') +(r.rounds ? '<p>Круги: '+r.rounds+'</p>' : '')+'<h3>По упражнениям</h3>'+ (rows.length?rows.map(x=>'<div class="exercise-item"><b>'+escapeHtml(x.name)+'</b><p>'+ (x.unknown?(r.mode==='intervals'?'Работа по таймеру':'Повторы не подсчитаны'):x.reps+' повт.')+(x.sets!=null?' · '+x.sets+' отметок':'')+(x.seconds!=null?' · '+fmt(x.seconds):'')+'</p></div>').join(''):'<p>Нет отдельных записей по упражнениям</p>')+(r.laps||[]).map((x,i)=>'<p>Круг '+(i+1)+' — '+fmt(x)+'</p>').join('')+'</div>';}
 
 function fujiSaveResult(r){const h=store.get('fujiHistory',[]);h.unshift(r);store.set('fujiHistory',h);fujiHistoryRender();}
-function fujiHistoryRender(){const el=document.getElementById('fujiHistory');if(!el)return;const h=store.get('fujiHistory',[]);el.innerHTML=h.slice(0,50).map((r,i)=>{const prev=h.slice(i+1).find(x=>x.id===r.id&&x.mode===r.mode&&x.target===r.target&&x.count===r.count);return '<details class="exercise-item"><summary><b>'+escapeHtml(r.name)+'</b> · '+fmt(r.seconds)+' · '+new Date(r.date).toLocaleDateString('ru')+'</summary>'+fujiSummary(r)+(prev?'<p>Прошлый результат: '+fmt(prev.seconds)+'</p>':'')+'</details>';}).join('')||'<p class="note">Здесь появятся результаты тренировок.</p>';}
+function fujiHistoryRender(){const el=document.getElementById('fujiHistory');if(!el)return;const h=store.get('fujiHistory',[]);el.innerHTML=h.slice(0,50).map((r,i)=>{const prev=h.slice(i+1).find(x=>x.id===r.id&&x.mode===r.mode&&x.target===r.target&&x.count===r.count);return '<details class="exercise-item"><summary><b>'+escapeHtml(r.name)+'</b> · '+formatWorkoutTime(r.elapsedSeconds ?? r.seconds)+' · '+new Date(r.date).toLocaleDateString('ru')+'</summary>'+fujiSummary(r)+(prev && r.mode!=='normal'?'<p>Прошлый результат: '+formatWorkoutTime(prev.seconds)+'</p>':'')+'</details>';}).join('')||'<p class="note">Здесь появятся результаты тренировок.</p>';}
 
 
 const cindyPack=[[],{"id":"fuji_cindy","name":"Синди · AMRAP 20 минут","roundMode":true,"roundTime":20,"customRestMode":false,"exercises":[{"exId":"cindy_0","sets":1,"reps":5,"time":0,"rest":0,"weight":0,"note":"Исходное положение: вис на турнике прямым хватом чуть шире плеч, локти полностью выпрямлены. Напряги корпус. Подтянись без маха ногами, пока подбородок не окажется выше перекладины. Подконтрольно вернись в полный вис. Повтор засчитывается при полной амплитуде. Выдох при подъёме. Не вытягивай шею и не раскачивайся."},{"exId":"cindy_1","sets":1,"reps":10,"time":0,"rest":0,"weight":0,"note":"Исходное положение: упор лёжа, ладони чуть шире плеч, ноги и корпус образуют прямую линию. Согни локти, направляя их назад и в стороны примерно на 30–45°, опусти грудь до касания пола. Выжми себя до полного разгибания локтей, сохраняя прямой корпус. Взгляд в пол, шея нейтральна. Не провисай в пояснице. Выдох при подъёме."},{"exId":"cindy_2","sets":1,"reps":15,"time":0,"rest":0,"weight":0,"note":"Исходное положение: стопы примерно на ширине плеч, носки слегка наружу. Согни тазобедренные и коленные суставы, сохраняя опору на всю стопу. Опусти таз до положения, когда складка бедра ниже верхней точки колена, если подвижность позволяет без боли. Встань до полного разгибания таза и коленей. Колени следуют за носками, пятки не отрываются. Выдох при подъёме."}],"desc":"AMRAP 20 минут: 5 строгих подтягиваний, 10 отжиманий, 15 приседаний. Отдых по необходимости, таймер не останавливается. Результат — полные круги и дополнительные повторения."}];
@@ -5094,6 +5249,7 @@ function startAmrap(plan, limit, calendarEntry = null){
   if(amrapRun || execState) return;
   const options = {...{prep:10,sound:true}, ...store.get('execTimerOptions', {})};
   if(options.sound) fujiUnlock();
+  startWorkoutClock();
   const start = Date.now() + options.prep * 1000;
   amrapRun = {
     id:plan.id, name:plan.name, exercises:plan.exercises,
@@ -5123,7 +5279,7 @@ function updateAmrap(){
   const left = Math.max(0, Math.ceil((deadline - now) / 1000));
   document.getElementById('amrapClock').textContent = fmt(left);
   document.getElementById('amrapBar').style.width = (r.ready ? left / r.limit * 100 : 0) + '%';
-  if(r.ready && left === 0) finishAmrap();
+  if(r.ready && left === 0) finishAmrap(deadline);
 }
 
 function toggleAmrapPause(){
@@ -5168,7 +5324,7 @@ function addAmrapReps(reps){
   const r = amrapRun;
   const now = Date.now();
   if(now >= r.start + r.limit * 1000){
-    finishAmrap();
+    finishAmrap(r.start + r.limit * 1000);
     return;
   }
   const remaining = r.exercises[r.index].reps - r.partial;
@@ -5194,14 +5350,15 @@ function confirmAmrapFinish(){
   if(amrapRun && confirm('Завершить тренировку и сохранить результат?')) finishAmrap();
 }
 
-function finishAmrap(){
+function finishAmrap(at = Date.now()){
   if(!amrapRun) return;
   const r = amrapRun;
   clearInterval(amrapTimer);
   amrapRun = null;
+  const elapsedSeconds = finishWorkoutClock(at);
   const result = {
     id:r.id, name:r.name, mode:'amrap', target:r.limit, count:r.reps, reps:r.reps,
-    rounds:r.rounds, seconds:Math.max(0, Math.min(r.limit, Math.round(((r.pausedAt ?? Date.now()) - r.start) / 1000))),
+    rounds:r.rounds, elapsedSeconds, seconds:Math.max(0, Math.min(r.limit, Math.round(((r.pausedAt ?? at) - r.start) / 1000))),
     laps:r.laps, date:new Date().toISOString(),
     exerciseStats:r.names.map((name,i) => ({name,reps:r.byExercise[i]}))
   };
@@ -5214,7 +5371,7 @@ function finishAmrap(){
     const xp = xpFromReps(r.reps);
     if(r.calendarEntry){
       const {id, date} = r.calendarEntry;
-      setTrainDone(localScheduleDate(date), id, true, xp, completed);
+      setTrainDone(localScheduleDate(date), id, true, xp, completed, elapsedSeconds);
     }
     addXp(xp, r.name, {exercises:completed});
     renderWeek(); renderMonth(); renderTrainings(); renderStats();
@@ -5421,8 +5578,11 @@ function initDailyTasks(){
   }
   dailyState = readDailyState(store.get('dailyTasks',null));
   refreshDailyTasks();
-  document.addEventListener('visibilitychange',() => {if(!document.hidden) refreshDailyTasks();});
-  dailyTimerHandle = setInterval(refreshDailyTasks,1000);
+  document.addEventListener('visibilitychange',() => {if(!document.hidden){ refreshDailyClock(); refreshDailyTasks(); }});
+  dailyTimerHandle = setInterval(refreshDailyClock,250);
+  window.addEventListener('storage', event => {
+    if(event.key === 'as2_dailyTasks') refreshDailyTasks();
+  });
 }
 
 function dailyDate(){
@@ -5463,6 +5623,7 @@ function refreshDailyTasks(fillToday=false){
       ...shuffle(active.filter(task=>previous.has(task.id)))].slice(0,state.count);
     state.days[today] = {settled:false,tasks:choices.map(task=>({
       id:uid(),poolId:task.id,exId:task.exId,name:task.name,target:task.target,unit:task.unit,
+      twoSides:exercises.some(e=>e.id===task.exId) || typeof task.twoSides === 'boolean' ? dailyTaskTwoSides(task) : undefined,
       reward:DAILY_REWARD,penalty:DAILY_PENALTY,done:false
     }))};
     changed = true;
@@ -5473,7 +5634,8 @@ function refreshDailyTasks(fillToday=false){
     const extra=active.filter(task=>!used.has(task.id)).sort(()=>Math.random()-.5);
     for(const task of extra.slice(0,Math.max(0,state.count-day.tasks.length))){
       day.tasks.push({id:uid(),poolId:task.id,exId:task.exId,name:task.name,target:task.target,unit:task.unit,
-        reward:DAILY_REWARD,penalty:DAILY_PENALTY,done:false});
+        twoSides:exercises.some(e=>e.id===task.exId) || typeof task.twoSides === 'boolean' ? dailyTaskTwoSides(task) : undefined,
+      reward:DAILY_REWARD,penalty:DAILY_PENALTY,done:false});
       changed=true;
     }
   }
@@ -5487,35 +5649,112 @@ function refreshDailyTasks(fillToday=false){
   renderDailyTasks();
 }
 
+const DAILY_SIDE_CHANGE_SECONDS = 5;
+const dailyRenderedPhase = new Map();
+let dailyClockDate = '';
+
+function dailyTaskTwoSides(task){
+  return typeof task.twoSides === 'boolean' ? task.twoSides :
+    !!exercises.find(exercise => exercise.id === task.exId)?.twoSides;
+}
+
+function dailyTaskDose(task){
+  return task.target + (task.unit === 'seconds' ? ' сек' : ' повт.') +
+    (dailyTaskTwoSides(task) ? ' на сторону · 2 стороны' : '');
+}
+
+function dailyTaskClock(task, now = Date.now()){
+  const sides = dailyTaskTwoSides(task);
+  const timer = task.timer;
+  const start = timer?.startedAt ?? (task.endsAt ? task.endsAt - task.target*1000 : null);
+  if(!Number.isFinite(start)) return {phase:'ready', left:task.target, label:sides ? 'Сторона 1 из 2' : 'Готов к старту'};
+  const elapsed = Math.max(0, ((timer?.pausedAt ?? now) - start) / 1000);
+  const secondStart = task.target + DAILY_SIDE_CHANGE_SECONDS;
+  const total = sides ? secondStart + task.target : task.target;
+  if(elapsed >= total) return {phase:'finished', left:0, label:sides ? 'Обе стороны пройдены' : 'Таймер завершён'};
+  const paused = Number.isFinite(timer?.pausedAt);
+  if(elapsed < task.target){
+    return {phase:'first', left:Math.ceil(task.target - elapsed), paused, label:sides ? 'Сторона 1 из 2' : 'Выполнение'};
+  }
+  if(elapsed < secondStart){
+    return {phase:'switch', left:Math.ceil(secondStart - elapsed), paused, label:'Смена стороны'};
+  }
+  return {phase:'second', left:Math.ceil(total - elapsed), paused, label:'Сторона 2 из 2'};
+}
+
+function refreshDailyClock(){
+  const today = dailyDate();
+  if(today !== isoDate(TODAY)){
+    const followedToday = sameDay(selectedDate,TODAY);
+    TODAY = new Date();
+    if(followedToday) goToday();
+    else { renderWeek(); renderMonth(); renderTrainings(); }
+  }
+  if(today !== dailyClockDate){
+    refreshDailyTasks();
+    return;
+  }
+  renderDailyTaskClocks();
+}
+
+function renderDailyTaskClocks(){
+  const host = document.getElementById('dailyTaskList');
+  const timed = (dailyState.days[dailyDate()]?.tasks || []).filter(task => !task.done && task.unit === 'seconds');
+  const visible = [...host.querySelectorAll('.daily-timer')];
+  const now = Date.now();
+  for(const [index, task] of timed.entries()){
+    const entry = visible[index];
+    if(!entry) continue;
+    const clock = dailyTaskClock(task, now);
+    const previous = dailyRenderedPhase.get(task.id);
+    dailyRenderedPhase.set(task.id, clock.phase);
+    if(previous && previous !== 'ready' && previous !== 'finished' && previous !== clock.phase){
+      const options = store.get('execTimerOptions', {});
+      if(options.sound !== false) fujiCue(clock.phase === 'switch' ? 'rest' : clock.phase === 'second' ? 'start' : 'workEnd');
+      if(options.vibration !== false && navigator.vibrate) navigator.vibrate(clock.phase === 'finished' ? [70,55,70] : 70);
+    }
+    entry.querySelector('[data-daily-left]').textContent = fmt(clock.left);
+    const label = entry.querySelector('[data-daily-phase]');
+    const phaseLabel = clock.label + (clock.paused ? ' · Пауза' : '');
+    if(label.textContent !== phaseLabel) label.textContent = phaseLabel;
+    const active = clock.phase !== 'ready' && clock.phase !== 'finished';
+    const button = entry.querySelector('[data-daily-toggle]');
+    const action = active ? (clock.paused ? 'Продолжить' : 'Пауза') : (clock.phase === 'finished' ? 'Повторить' : 'Таймер');
+    if(button.textContent !== action) button.textContent = action;
+    entry.querySelector('[data-daily-reset]').hidden = clock.phase === 'ready';
+  }
+}
+
 function renderDailyTasks(){
   const host = document.getElementById('dailyTaskList');
   if(!host) return;
-  const day = dailyState.days[dailyDate()];
-  const tasks = day?.tasks || [];
-  document.getElementById('dailyTaskCount').textContent = tasks.filter(task=>task.done).length+'/'+tasks.length;
-  if(!tasks.length){
-    host.innerHTML = '<p class="note">Добавь упражнения в список заданий. Каждый день приложение выберет до '+
-      dailyState.count+' заданий.</p>';
-    return;
+  const today = dailyDate();
+  if(dailyClockDate !== today) dailyRenderedPhase.clear();
+  dailyClockDate = today;
+  const tasks = dailyState.days[today]?.tasks || [];
+  const done = tasks.filter(task => task.done).length;
+  document.getElementById('dailyTaskCount').textContent = done+'/'+tasks.length;
+  document.getElementById('dailyJumpCount').textContent = done+'/'+tasks.length;
+  const signature = JSON.stringify([today, dailyState.count, tasks.map(task =>
+    [task.id,task.name,task.target,task.unit,task.reward,task.done,dailyTaskTwoSides(task)])]);
+  if(host.dataset.renderKey !== signature){
+    host.dataset.renderKey = signature;
+    host.innerHTML = tasks.length ? tasks.map(task => {
+      const id = escapeHtml(JSON.stringify(task.id));
+      return '<div class="daily-task'+(task.done?' is-done':'')+'"><div class="daily-task-top"><div><b>'+
+        escapeHtml(task.name)+'</b><small>'+dailyTaskDose(task)+' · +'+task.reward+' XP</small></div>'+
+        '<button class="btn btn-sm" '+(task.done?'disabled':'')+' onclick="completeDailyTask('+id+')">'+
+        (task.done?'✓ Готово':'Засчитать')+'</button></div>'+
+        (!task.done && task.unit === 'seconds' ?
+          '<div class="daily-timer"><div class="daily-phase-clock"><small data-daily-phase aria-live="polite"></small>'+
+          '<b data-daily-left></b></div><div class="daily-timer-actions">'+
+          '<button class="btn btn-sm" data-daily-toggle onclick="toggleDailyTimer('+id+')"></button>'+
+          '<button class="btn btn-sm" data-daily-reset onclick="toggleDailyTimer('+id+',true)">Сброс</button></div></div>' : '')+
+        '</div>';
+    }).join('') : '<p class="note">Добавь упражнения в список. Приложение выберет до '+dailyState.count+' заданий на день.</p>';
   }
-  const key=JSON.stringify(tasks.map(task=>[task.id,task.done,task.endsAt,
-    task.endsAt?Math.max(0,Math.ceil((task.endsAt-Date.now())/1000)):null]));
-  if(host.dataset.renderKey===key) return;
-  host.dataset.renderKey=key;
-  host.innerHTML = tasks.map(task=>{
-    const left = task.endsAt ? Math.max(0,Math.ceil((task.endsAt-Date.now())/1000)) : null;
-    const running = left!==null && left>0;
-    return '<div class="daily-task'+(task.done?' is-done':'')+'"><div class="daily-task-top"><div><b>'+
-      escapeHtml(task.name)+'</b><small>'+task.target+(task.unit==='seconds'?' сек':' повт.')+
-      ' · +'+task.reward+' XP</small></div><button class="btn btn-sm" '+(task.done?'disabled':'')+
-      ' onclick="completeDailyTask(\''+task.id+'\')">'+(task.done?'✓ Готово':'Выполнено')+'</button></div>'+
-      (!task.done && task.unit==='seconds'?'<div class="daily-timer"><span>'+
-      (left!==null?fmt(left):fmt(task.target))+'</span><button class="btn btn-sm" onclick="toggleDailyTimer(\''+
-      task.id+'\')">'+(running?'Сбросить таймер':left===0?'Повторить':'▶ Таймер')+'</button></div>':'')+
-      '</div>';
-  }).join('');
+  renderDailyTaskClocks();
 }
-
 function completeDailyTask(id){
   refreshDailyTasks();
   const state = structuredClone(dailyState);
@@ -5524,6 +5763,8 @@ function completeDailyTask(id){
   task.done = true;
   task.completedAt = new Date().toISOString();
   delete task.endsAt;
+  delete task.timer;
+  dailyRenderedPhase.delete(task.id);
   try{
     persistDailyState(state,task.reward,'Задание: '+task.name);
     xpFly(task.reward);
@@ -5532,16 +5773,30 @@ function completeDailyTask(id){
   }catch(e){toast('Не удалось сохранить задание');console.error(e);}
 }
 
-function toggleDailyTimer(id){
+function toggleDailyTimer(id, reset = false){
   refreshDailyTasks();
   const state = structuredClone(dailyState);
-  const task = state.days[dailyDate()]?.tasks.find(item=>item.id===id);
-  if(!task || task.done || task.unit!=='seconds') return;
-  if(task.endsAt && task.endsAt>Date.now()) delete task.endsAt;
-  else task.endsAt = Date.now()+task.target*1000;
+  const task = state.days[dailyDate()]?.tasks.find(item => item.id === id);
+  if(!task || task.done || task.unit !== 'seconds') return;
+  const now = Date.now();
+  const clock = dailyTaskClock(task, now);
+  if(reset){
+    delete task.timer;
+    dailyRenderedPhase.delete(id);
+  } else if(clock.phase === 'ready' || clock.phase === 'finished'){
+    task.timer = {startedAt:now,pausedAt:null};
+    if(store.get('execTimerOptions', {}).sound !== false) fujiCue('start');
+  } else {
+    const start = task.timer?.startedAt ?? (task.endsAt - task.target*1000);
+    task.timer = clock.paused
+      ? {startedAt:start + now - task.timer.pausedAt,pausedAt:null}
+      : {startedAt:start,pausedAt:now};
+    if(clock.paused && store.get('execTimerOptions', {}).sound !== false) fujiUnlock();
+  }
+  delete task.endsAt;
+  if(exercises.some(exercise => exercise.id === task.exId)) task.twoSides = dailyTaskTwoSides(task);
   try{persistDailyState(state);renderDailyTasks();}catch(e){toast('Не удалось сохранить таймер');}
 }
-
 function openDailyTaskManager(){
   refreshDailyTasks();
   const select=document.getElementById('dailyExercise');
@@ -5549,15 +5804,21 @@ function openDailyTaskManager(){
   select.innerHTML='<option value="">Выбери упражнение</option>'+exercises.map(ex=>
     '<option value="'+escapeHtml(ex.id)+'">'+escapeHtml(ex.name)+'</option>').join('');
   select.value=existing;
+  updateDailyDoseLabel();
   document.getElementById('dailyLimit').value=dailyState.count;
   renderDailyPool();
   openModal('m-daily-tasks');
 }
 
+function updateDailyDoseLabel(){
+  const id = document.getElementById('dailyExercise').value;
+  document.getElementById('dailyDoseHint').hidden = !exercises.find(ex => ex.id === id)?.twoSides;
+}
+
 function renderDailyPool(){
   document.getElementById('dailyPoolList').innerHTML=dailyState.pool.map(task=>
-    '<div class="daily-pool-row"><div><b>'+escapeHtml(task.name)+'</b><small>'+task.target+
-    (task.unit==='seconds'?' сек':' повт.')+' · '+(task.active?'В выборе':'На паузе')+'</small></div>'+
+    '<div class="daily-pool-row"><div><b>'+escapeHtml(task.name)+'</b><small>'+dailyTaskDose(task)+
+    ' · '+(task.active?'В выборе':'На паузе')+'</small></div>'+
     '<button class="btn btn-sm" onclick="toggleDailyPool(\''+task.id+'\')">'+(task.active?'Пауза':'Включить')+
     '</button><button class="btn btn-sm" aria-label="Удалить задание" onclick="deleteDailyPool(\''+task.id+'\')">✕</button></div>'
   ).join('') || '<p class="note">Список пока пуст.</p>';
@@ -5572,7 +5833,7 @@ function addDailyPool(){
   if(!exercise || !name){toast('Выбери упражнение');return;}
   if(!Number.isInteger(target)||target<1||target>3600){toast('Укажи цель от 1 до 3600');return;}
   const state=structuredClone(dailyState);
-  state.pool.push({id:uid(),exId,name,target,unit,active:true});
+  state.pool.push({id:uid(),exId,name,target,unit,twoSides:!!exercise.twoSides,active:true});
   try{
     persistDailyState(state);
     document.getElementById('dailyName').value='';
@@ -6017,6 +6278,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape'){
+    pendingBackup = null;
     document.querySelectorAll('.modal-overlay.on').forEach(m => m.classList.remove('on'));
   }
 });
