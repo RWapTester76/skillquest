@@ -979,6 +979,20 @@ button:focus-visible,[role=button]:focus-visible,input:focus-visible,select:focu
 </style>
 </head>
 <body data-mode="dark">
+<script>
+window.duBootReady=false;
+window.fujiDismissSplash=function(){var el=document.getElementById('fujiSplash');if(el)el.classList.add('hide');};
+window.duBootFailure=function(){
+  if(window.duBootReady)return;
+  var el=document.getElementById('duBootNotice');if(el)return;
+  el=document.createElement('div');el.id='duBootNotice';el.setAttribute('role','alert');
+  el.style.cssText='position:fixed;top:env(safe-area-inset-top,0px);left:8px;right:8px;z-index:10000;padding:14px;border-radius:12px;background:#302047;color:white;font:14px system-ui';
+  el.textContent='Не удалось завершить запуск ДУ. Данные не очищены. Обнови страницу или верни предыдущую версию.';
+  var btn=document.createElement('button');btn.textContent='Обновить';btn.style.cssText='display:block;margin-top:8px;padding:8px';btn.onclick=function(){location.reload();};el.appendChild(btn);document.body.appendChild(el);window.fujiDismissSplash();
+};
+window.addEventListener('error',function(e){if(!window.duBootReady&&e instanceof ErrorEvent)window.duBootFailure();});
+setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else window.duBootFailure();},5000);
+</script>
 <div id="fujiSplash" role="dialog" aria-label="Загрузка приложения">
   <div class="fs-poster">
     <div class="fs-brand">ДУ / DAVINCI CLUB</div>
@@ -993,7 +1007,7 @@ button:focus-visible,[role=button]:focus-visible,input:focus-visible,select:focu
       <button class="fs-skip" onclick="fujiCue('start')">🔊 Проверить звук</button>
       <button class="fs-skip" onclick="fujiDismissSplash()">Начать →</button>
     </div>
-    <div class="fs-ver">DAVINCI EDITION / v20.13.13</div>
+    <div class="fs-ver">DAVINCI EDITION / v23.6.1</div>
   </div>
 </div>
 <div class="app">
@@ -1714,7 +1728,7 @@ button:focus-visible,[role=button]:focus-visible,input:focus-visible,select:focu
 
 <div class="modal-overlay" id="m-fuji-detail"><div class="modal"><h3 id="fujiDetailTitle"></h3><div id="fujiDetailList"></div><button class="btn btn-primary btn-full" onclick="fujiLaunch('normal')">▶ Обычная тренировка</button><label class="field-label" style="margin-top:12px">Цель: повторы или круги</label><input class="field-input" id="fujiTarget" type="number" min="1" value="100"><div class="btn-row"><button class="btn" onclick="fujiLaunch('reps')">На количество</button><button class="btn" onclick="fujiLaunch('rounds')">На круги</button></div><div class="btn-row"><button class="btn" onclick="closeModal('m-fuji-detail');openCompModal(fujiSelected)">Изменить</button><button class="btn" onclick="delCompFromTab(fujiSelected);closeModal('m-fuji-detail')">Удалить</button></div><button class="modal-close" onclick="closeModal('m-fuji-detail')">Закрыть</button></div></div><script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v23.6';
+const APP_VERSION = 'v23.6.1';
 const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',
       c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
 const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
@@ -1765,7 +1779,7 @@ const ICS={"cal": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"15\" rx=\"3\"/><p
 const MA={waist:'core',belly:'abs',thigh_l:'hips_quad',thigh_r:'hips_quad',shin_l:'calves',shin_r:'calves'};
 function E(o){if(!o)return '';const id=MA[o.id]||o.id;
 if(P[id]){const[v,n,m]=P[id];return `<svg class="ic z" viewBox="0 0 40 80"><g class="bd">${S}${v=='b'?'<path d="M20 12v32" stroke-dasharray="1.5 1.5"/>':''}</g><g class="f">${m}</g></svg>`}
-if(ICS[id])return `<svg class="ic" viewBox="0 0 24 24">${ICS[id]}</svg>`;return uiIcon(Object.hasOwn(UI_ICON_PATHS,o.emoji)?o.emoji:uiIconKey(o.emoji||'🎒'))}
+if(ICS[id])return `<svg class="ic" viewBox="0 0 24 24">${ICS[id]}</svg>`;return uiIcon(Object.prototype.hasOwnProperty.call(UI_ICON_PATHS,o.emoji)?o.emoji:uiIconKey(o.emoji||'🎒'))}
 </script>
 <script>
 /* ==================== КОНСТАНТЫ ПРИЛОЖЕНИЯ ==================== */
@@ -1849,14 +1863,18 @@ const RANKS = [
   {min:35,name:'Мастер'},{min:50,name:'Ветеран'},{min:75,name:'Чемпион'},{min:100,name:'Легенда'},
 ];
 
-function totalXpForLevel(n){ return Math.round(n*(n-1)/2); }
+// Progressive XP curve. Existing XP is never rewritten.
+function totalXpForLevel(n){
+  const k=Math.max(0,Math.floor(n)-1);
+  return Math.ceil(5*k+k*(k+1)+k*(k+1)*(2*k+1)/12);
+}
 function computeLevel(xp){
-  xp = Math.max(0, xp);
-  let lvl = Math.floor((1 + Math.sqrt(1 + 8*xp)) / 2);
-  if(lvl < 1) lvl = 1;
-  while(totalXpForLevel(lvl+1) <= xp) lvl++;
-  while(lvl > 1 && totalXpForLevel(lvl) > xp) lvl--;
-  return {level:lvl, current: xp-totalXpForLevel(lvl), need: lvl};
+  xp=Number(xp); if(!Number.isFinite(xp)||xp<0) xp=0;
+  let lo=1,hi=2;
+  while(totalXpForLevel(hi)<=xp) hi*=2;
+  while(hi-lo>1){const mid=Math.floor((lo+hi)/2);if(totalXpForLevel(mid)<=xp)lo=mid;else hi=mid;}
+  const base=totalXpForLevel(lo);
+  return {level:lo,current:xp-base,need:totalXpForLevel(lo+1)-base};
 }
 function rankForLevel(l){ let r = RANKS[0]; for(const x of RANKS) if(l >= x.min) r = x; return r; }
 
@@ -5929,7 +5947,7 @@ const UI_ICON_LABELS = {
   dumbbell:'Гантели',stretch:'Растяжка',ball:'Мяч',bag:'Снаряд',gear:'Настройки',hand:'Кисть'
 };
 function uiIcon(name){
-  const safe=Object.hasOwn(UI_ICON_PATHS,name)?name:'bag';
+  const safe=Object.prototype.hasOwnProperty.call(UI_ICON_PATHS,name)?name:'bag';
   return '<svg class="ui-icon" data-icon="'+safe+'" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+UI_ICON_PATHS[safe]+'</svg>';
 }
 function uiEmojiPattern(){
@@ -6443,4 +6461,56 @@ const du233HomeOld=renderHome;renderHome=function(){du233HomeOld();du233Render()
 /* v23.4 — actual set values, optional effort, previous results */
 function du234Edit(){const st=execState;if(!st||st.summary||st.finishingSet)return;const it=st.exercises[st.currentIndex];if(!it||it.type==='rounds')return;const old=st.du234Override||{};const box=document.getElementById('du234Fields');if(!box)return;box.hidden=!box.hidden;}
 function du234Set(field,value){const st=execState;if(!st||st.summary||st.finishingSet)return;st.du234Override=st.du234Override||{};if(value===''){delete st.du234Override[field];return;}const n=Number(value);if(!Number.isFinite(n)||n<0)return;st.du234Override[field]=field==='reps'?Math.min(100000,Math.floor(n)):field==='rpe'?Math.max(1,Math.min(10,Math.round(n))):Math.min(1000,n);}
-const du234Old=renderExecScreen;renderExecScreen=function(){const result=du234Old.apply(this,arguments);const st=execState,focus=document.querySelector('#execBody .exec-focus');if(!st||st.summary||!focus)return result;const it=st.exercises[st.currentIndex];if(!it||it.type==='rounds')return result;const prev=du229Rows(it.exId)[0],o=st.du234Override||{};const div=document.createElement('div');div.className='exercise-item';div.style.margin='8px 0';const last=prev?('Прошлый раз: '+(prev.reps==null?'—':prev.reps+' повт.')+' · '+(prev.seconds==null?'—':fmt(prev.seconds))):'Первое занятие с этим упражнением';div.innerHTML='<small>'+escapeHtml(last)+'</small><button class="btn btn-full" onclick="du234Edit()">Фактические повторы / вес / усилие</button><div id="du234Fields" hidden><label>Повторы '+(it.twoSides?'на сторону':'за подход')+'<input class="field-input" type="number" min="0" step="1" value="'+(o.reps??'')+'" placeholder="'+(Number(it.reps)||0)+'" onchange="du234Set(\'reps\',this.value)"></label><label>В
+const du234Old=renderExecScreen;renderExecScreen=function(){const result=du234Old.apply(this,arguments);const st=execState,focus=document.querySelector('#execBody .exec-focus');if(!st||st.summary||!focus)return result;const it=st.exercises[st.currentIndex];if(!it||it.type==='rounds')return result;const prev=du229Rows(it.exId)[0],o=st.du234Override||{};const div=document.createElement('div');div.className='exercise-item';div.style.margin='8px 0';const last=prev?('Прошлый раз: '+(prev.reps==null?'—':prev.reps+' повт.')+' · '+(prev.seconds==null?'—':fmt(prev.seconds))):'Первое занятие с этим упражнением';div.innerHTML='<small>'+escapeHtml(last)+'</small><button class="btn btn-full" onclick="du234Edit()">Фактические повторы / вес / усилие</button><div id="du234Fields" hidden><label>Повторы '+(it.twoSides?'на сторону':'за подход')+'<input class="field-input" type="number" min="0" step="1" value="'+(o.reps??'')+'" placeholder="'+(Number(it.reps)||0)+'" onchange="du234Set(\'reps\',this.value)"></label><label>Вес, кг<input class="field-input" type="number" min="0" step="0.1" value="'+(o.weight??'')+'" placeholder="'+(Number(it.weight)||0)+'" onchange="du234Set(\'weight\',this.value)"></label><label>Усилие (1–10, необязательно)<input class="field-input" type="number" min="1" max="10" step="1" value="'+(o.rpe??'')+'" onchange="du234Set(\'rpe\',this.value)"></label><small>Пустое поле — значение по плану. Изменения только для текущего подхода.</small></div>';focus.append(div);return result;};
+const du234Step=stepExecExercise;stepExecExercise=function(){if(execState)execState.du234Override=null;return du234Step.apply(this,arguments);};
+const du234Summary=fujiSummary;fujiSummary=function(r){const html=du234Summary(r);const rows=(r.sets||[]).filter(x=>x.rpe!=null||x.weight>0);return html+(rows.length?'<details class="exercise-item"><summary>Вес и усилие по подходам</summary>'+rows.map(x=>'<p>'+escapeHtml(x.name)+' · '+(x.weight??0)+' кг'+(x.rpe!=null?' · усилие '+x.rpe+'/10':'')+'</p>').join('')+'</details>':'');};
+
+/* v23.5 — offline coach, curated exercise IDs, editable calendar draft */
+let duCoachDraft=null;
+const duCoachCatalog=[['mwmljs66slmwz','legs','none',8],['mwmljs66bu619','push','none',5],['mwmljs66xyawv','hinge','none',10],['mwmljs6629zha','core','none',20],['mwmljs66y44iu','legs','none',10],['bone_ex_13','balance','none',20],['mwmljs66ruiu4','mobility','none',10],['mwmljs65lr6gd','cardio','rope',30],['bone_ex_1','legs','kb',8],['bone_ex_2','hinge','kb',8],['mwmljs66n44eq','push','kb',5],['bone_ex_17','pull','rings',6],['mwmljs66efro3','pull','pullup',3]];
+function duCoachPlan(goal,minutes,level,gear,kg,recovery){
+ const easy=level==='beginner'||recovery, order=goal==='cardio'?['cardio','legs','push','hinge','core','balance','mobility','pull']:goal==='light'?['mobility','balance','hinge','core','legs']:['legs','pull','push','hinge','core','balance','mobility'];
+ const pool=duCoachCatalog.filter(r=>gear.includes(r[2])&&exercises.some(e=>e.id===r[0])&&(r[2]!=='kb'||kg>0));
+ const rows=[];let used=0;const budget=(minutes-5)*60;
+ for(const group of order){const candidates=pool.filter(r=>r[1]===group);const r=candidates.find(r=>r[2]!=='none')||candidates[0];if(!r)continue;const ex=exercises.find(e=>e.id===r[0]);const timed=ex.format==='time';const sets=goal==='light'||recovery?1:easy?2:3;const reps=timed?0:r[3];const time=timed?r[3]:0;const rest=goal==='cardio'?45:60;const cost=sets*((timed?time:reps*4)*(ex.twoSides?2:1)+rest+15);if(used+cost>budget)continue;used+=cost;rows.push({exId:ex.id,sets,reps,time,rest,weight:r[2]==='kb'?kg:0,note:'DaVinci Coach · комфортная техника, без отказа'});}
+ return {rows,minutes:Math.ceil(used/60)+5};
+}
+function duCoachGenerate(){const el=id=>document.getElementById(id),goal=el('duCoachGoal').value,minutes=Number(el('duCoachMinutes').value),level=el('duCoachLevel').value,gear=['none',...Array.from(document.querySelectorAll('#duCoachGear input:checked'),x=>x.value)],kg=Number(el('duCoachKg').value),recovery=el('duCoachRecovery').checked;const out=el('duCoachResult');duCoachDraft=null;if(gear.includes('kb')&&(!Number.isFinite(kg)||kg<=0||kg>100)){out.textContent='Укажи знакомый комфортный вес гири (1–100 кг).';return;}const plan=duCoachPlan(goal,minutes,level,gear,kg,recovery);if(!plan.rows.length){out.textContent='Нет подходящих упражнений. Проверь библиотеку или увеличь время.';return;}duCoachDraft={...plan,goal};out.innerHTML='<div class="exercise-item"><b>План · около '+plan.minutes+' мин</b><p class="note">Включая 3 мин лёгкой разминки и 2 мин заминки самостоятельно. Время приблизительное.</p>'+plan.rows.map(r=>{const e=exercises.find(x=>x.id===r.exId);return '<p style="margin:8px 0">'+escapeHtml(e.name)+' · '+r.sets+' × '+(r.time?r.time+' сек':r.reps+' повт.')+(e.twoSides?' на сторону':'')+(r.weight?' · '+r.weight+' кг':'')+' · отдых '+r.rest+' сек</p>';}).join('')+'<button class="btn btn-primary btn-full" onclick="duCoachCalendar()">Открыть черновик в календаре</button></div>';}
+function duCoachCalendar(){if(!duCoachDraft)return;if(!duCoachDraft.rows.every(r=>exercises.some(e=>e.id===r.exId))){toast('Библиотека изменилась. Создай план заново.');return;}const draft=duCoachDraft;selectDate(new Date());navTo('v-main');openTrainModal();document.getElementById('tName').value='DaVinci Coach · '+({strength:'Сила',cardio:'Выносливость',light:'Лёгкая активность'}[draft.goal]);tempTrainEx=JSON.parse(JSON.stringify(draft.rows));renderTempTrainEx();updateTrainSchedule();}
+function duCoachInit(){const el=document.getElementById('duCoachCard');if(!el||el.dataset.ready)return;el.dataset.ready='1';el.innerHTML='<summary><b>DaVinci Coach</b> · персональный план</summary><p class="note">Автономный конструктор по правилам, не нейросеть. Для взрослых без противопоказаний. При боли или плохом самочувствии отложи занятие.</p><div class="field-group"><label class="field-label" for="duCoachGoal">Цель</label><select class="field-input" id="duCoachGoal"><option value="strength">Сила · всё тело</option><option value="cardio">Выносливость</option><option value="light">Лёгкая активность</option></select></div><div class="field-group"><label class="field-label" for="duCoachMinutes">Доступное время</label><select class="field-input" id="duCoachMinutes"><option value="15">15 минут</option><option value="25" selected>25 минут</option><option value="40">40 минут</option></select></div><div class="field-group"><label class="field-label" for="duCoachLevel">Опыт</label><select class="field-input" id="duCoachLevel"><option value="beginner">Начинающий</option><option value="regular">Регулярно тренируюсь</option></select></div><div id="duCoachGear" class="field-group"><b>Оборудование</b><p class="note">Собственный вес и свободное место доступны по умолчанию.</p>'+[['kb','Гиря'],['rope','Скакалка'],['rings','Кольца'],['pullup','Турник']].map(([v,n])=>'<label style="display:block;padding:6px"><input type="checkbox" value="'+v+'"> '+n+'</label>').join('')+'</div><label>Знакомый рабочий вес гири, кг<input class="field-input" id="duCoachKg" type="number" min="1" max="100" step="0.5" placeholder="Не выбран"></label><label style="display:block;margin:10px 0"><input id="duCoachRecovery" type="checkbox"> Сегодня нужна облегчённая нагрузка</label><button class="btn btn-primary btn-full" onclick="duCoachGenerate()">Составить тренировку</button><div id="duCoachResult" aria-live="polite"></div>';el.addEventListener('change',()=>{duCoachDraft=null;document.getElementById('duCoachResult').textContent='';});}
+const duCoachHomeOld=renderHome;renderHome=function(){duCoachHomeOld();duCoachInit();};
+
+/* ==================== СТАРТ ==================== */
+clearScheduleV221();
+applyTheme();
+migrateZonesV20();
+ensureXpMaps();
+// Calendar history is preserved when upgrading to this version.
+installStarterPack();
+installBonePack();
+installFujiPack(); installCindy(); installKettlebellAmrap(); installBronson();
+if(weightLog.length > 0){
+  profile.weight = weightLog[weightLog.length - 1].value;
+  store.set('profile', profile);
+}
+document.querySelector(".fs-ver").textContent = "DAVINCI EDITION / " + APP_VERSION;
+const logoVerEl = document.getElementById('logoVersion');
+if(logoVerEl) logoVerEl.textContent = APP_VERSION;
+initDailyTasks();
+renderAll();
+initUiIcons();
+window.duBootReady=true;
+bootExerciseLibrary();
+
+document.addEventListener('click', e => {
+  if(!e.target.closest('#fabBtn') && !e.target.closest('#fabMenu')) closeFabMenu();
+});
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    pendingBackup = null;
+    document.querySelectorAll('.modal-overlay.on').forEach(m => m.classList.remove('on'));
+  }
+});
+</script>
+<script>setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else window.duBootFailure();},2000);</script></body>
+</html>
