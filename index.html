@@ -977,7 +977,7 @@ body[data-mode="dark"]{background:radial-gradient(ellipse at 80% 0,#302044 0,tra
 button:focus-visible,[role=button]:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 @media(max-width:370px){.nav-bottom{padding-inline:3px;gap:2px}.nav-btn svg{width:21px;height:21px}.card{padding:11px}}
 </style>
-</head>
+<style>.du-recovery-fold>summary,.du-comp-folder>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:36px}.du-recovery-fold>summary::-webkit-details-marker,.du-comp-folder>summary::-webkit-details-marker{display:none}.du-recovery-fold>summary:after,.du-comp-folder>summary:after{content:'›';margin-left:auto;font-size:22px;color:var(--mut)}.du-recovery-fold[open]>summary:after,.du-comp-folder[open]>summary:after{transform:rotate(90deg)}.du-comp-folder{margin-bottom:8px}.du-comp-folder summary svg{width:25px;height:25px;flex:none;color:var(--acc)}.du-comp-folder summary small{display:block;color:var(--mut);font-size:11px;margin-top:3px}.du-comp-folder .du-folder-items{padding-top:8px}.du-comp-folder .fuji-compact{margin-bottom:5px}.du-recovery-fold[open]>summary{margin-bottom:8px}</style></head>
 <body data-mode="dark">
 <script>
 window.duBootReady=false;
@@ -1030,13 +1030,7 @@ setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else wind
     </button>
   </header>
 
-<section class="view on" id="v-home"><div class="page-kicker"><div><h2>Главная</h2><small id="homeDate"></small></div><span id="homeThemeName"></span></div><div class="card home-hero live-hero"><div><small id="liveLevel">УРОВЕНЬ</small><h2 id="liveMotivation">Лучше, чем вчера</h2><p id="liveXp"></p><div class="live-track"><i id="liveXpBar"></i></div><button class="btn btn-sm" onclick="navTo('v-stat')">Мой прогресс →</button></div><img id="homeHero" alt="ДаВинчи"></div><div class="card live-activity"><div class="card-title"><div class="card-title-left">Активность сегодня</div><button class="btn btn-sm" onclick="liveGoal()">Цели</button></div><div id="liveRings" class="live-rings"></div><small id="liveSource" class="note"></small><div id="liveDayProgress"></div></div><div class="card"><div class="card-title"><div class="card-title-left">Тренировки сегодня</div><span class="badge-count" id="homeTrainCount">0</span></div><div id="homeWorkoutTime" class="du-day-total"></div><div id="homeTrainSummary" class="note"></div><div id="liveNext"></div><button class="btn btn-full" onclick="selectDate(new Date());navTo('v-main')">Открыть календарь</button></div><details class="card" id="duCoachCard"></details><div class="card" id="du232Recovery"></div><details class="card"><summary><b>Часы и Apple Health</b></summary><div id="du233Bridge"></div></details><div class="card" id="liveQuick"></div><div class="card" id="liveRecord"></div><button class="btn btn-full" id="dv228Home" onclick="navTo('v-stat');document.getElementById('dv228Awards').scrollIntoView({block:'start'})">Достижения</button><span id="dailyJumpCount" hidden>0/0</span>    <div class="card du-health" id="duHealthCard"><div class="card-title-left">Активность и восстановление</div><div id="duHealthSummary"></div><button class="btn btn-primary btn-full" onclick="duOpen()">Шаги и сон · открыть</button></div><div class="card daily-card" id="dailyTasksCard">
-      <div class="card-title"><div class="card-title-left">Задания на сегодня</div><span class="badge-count" id="dailyTaskCount">0/0</span></div>
-      <div id="dailyTaskList"></div>
-      <button class="btn btn-sm btn-full" onclick="openDailyTaskManager()">Настроить задания</button>
-    </div>
-
-    <div class="progress-row">
+<section class="view on" id="v-home"><div class="page-kicker"><div><h2>Главная</h2><small id="homeDate"></small></div><span id="homeThemeName"></span></div>    <div class="progress-row">
       <div class="progress-cell">
         <div class="lbl">Неделя</div>
         <div class="val" id="weekNum">1<small>/52</small></div>
@@ -1053,6 +1047,13 @@ setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else wind
         <div class="bar"><i style="width:0%" id="xpTopBar"></i></div>
       </div>
     </div>
+<div class="card home-hero live-hero"><div><small id="liveLevel">УРОВЕНЬ</small><h2 id="liveMotivation">Лучше, чем вчера</h2><p id="liveXp"></p><div class="live-track"><i id="liveXpBar"></i></div><button class="btn btn-sm" onclick="navTo('v-stat')">Мой прогресс →</button></div><img id="homeHero" alt="ДаВинчи"></div><div class="card live-activity"><div class="card-title"><div class="card-title-left">Активность сегодня</div><button class="btn btn-sm" onclick="liveGoal()">Цели</button></div><div id="liveRings" class="live-rings"></div><small id="liveSource" class="note"></small><div id="liveDayProgress"></div></div><div class="card"><div class="card-title"><div class="card-title-left">Тренировки сегодня</div><span class="badge-count" id="homeTrainCount">0</span></div><div id="homeWorkoutTime" class="du-day-total"></div><div id="homeTrainSummary" class="note"></div><div id="liveNext"></div><button class="btn btn-full" onclick="selectDate(new Date());navTo('v-main')">Открыть календарь</button></div><details class="card" id="duCoachCard"></details><details class="card du-recovery-fold"><summary><b>Самочувствие и восстановление</b></summary><div id="du232Recovery"></div></details><details class="card"><summary><b>Часы и Apple Health</b></summary><div id="du233Bridge"></div></details><div class="card" id="liveQuick"></div><div class="card" id="liveRecord"></div><button class="btn btn-full" id="dv228Home" onclick="navTo('v-stat');document.getElementById('dv228Awards').scrollIntoView({block:'start'})">Достижения</button><span id="dailyJumpCount" hidden>0/0</span>    <div class="card du-health" id="duHealthCard"><div class="card-title-left">Активность и восстановление</div><div id="duHealthSummary"></div><button class="btn btn-primary btn-full" onclick="duOpen()">Шаги и сон · открыть</button></div><div class="card daily-card" id="dailyTasksCard">
+      <div class="card-title"><div class="card-title-left">Задания на сегодня</div><span class="badge-count" id="dailyTaskCount">0/0</span></div>
+      <div id="dailyTaskList"></div>
+      <button class="btn btn-sm btn-full" onclick="openDailyTaskManager()">Настроить задания</button>
+    </div>
+
+
 
 </section>
   <!-- ========== КАЛЕНДАРЬ ========== -->
@@ -1728,7 +1729,7 @@ setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else wind
 
 <div class="modal-overlay" id="m-fuji-detail"><div class="modal"><h3 id="fujiDetailTitle"></h3><div id="fujiDetailList"></div><button class="btn btn-primary btn-full" onclick="fujiLaunch('normal')">▶ Обычная тренировка</button><label class="field-label" style="margin-top:12px">Цель: повторы или круги</label><input class="field-input" id="fujiTarget" type="number" min="1" value="100"><div class="btn-row"><button class="btn" onclick="fujiLaunch('reps')">На количество</button><button class="btn" onclick="fujiLaunch('rounds')">На круги</button></div><div class="btn-row"><button class="btn" onclick="closeModal('m-fuji-detail');openCompModal(fujiSelected)">Изменить</button><button class="btn" onclick="delCompFromTab(fujiSelected);closeModal('m-fuji-detail')">Удалить</button></div><button class="modal-close" onclick="closeModal('m-fuji-detail')">Закрыть</button></div></div><script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v23.6.1';
+const APP_VERSION = 'v23.6.2';
 const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',
       c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
 const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
@@ -6443,7 +6444,7 @@ const du231StatsOld=renderStats;renderStats=function(){du231StatsOld();du231Rend
 
 /* v23.2: optional subjective recovery journal; no XP */
 function du232Data(){return store.get('duRecovery',{})||{};}
-function du232Render(){const el=document.getElementById('du232Recovery');if(!el)return;const d=du232Data()[duDay()]||{};const labels=['Очень низко','Низко','Средне','Хорошо','Отлично'];const options=(v,fatigue=false)=>'<option value="">Не указано</option>'+(fatigue?['Нет','Лёгкая','Умеренная','Сильная','Очень сильная']:labels).map((l,i)=>'<option value="'+(i+1)+'" '+(v===i+1?'selected':'')+'>'+l+'</option>').join('');el.innerHTML='<b>Самочувствие и восстановление</b><p class="note">Необязательная личная отметка. Без XP и медицинских оценок.</p><div class="field-group"><label class="field-label">Энергия</label><select class="field-input" id="du232Energy">'+options(d.energy)+'</select></div><div class="field-group"><label class="field-label">Качество сна</label><select class="field-input" id="du232Sleep">'+options(d.sleep)+'</select></div><div class="field-group"><label class="field-label">Мышечная усталость</label><select class="field-input" id="du232Fatigue">'+options(d.fatigue,true)+'</select></div><button class="btn btn-full" onclick="du232Save()">Сохранить отметку</button><details><summary>Последние отметки</summary>'+Object.entries(du232Data()).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7).map(([k,v])=>'<p class="note">'+escapeHtml(k)+' · энергия '+(v.energy||'—')+'/5 · сон '+(v.sleep||'—')+'/5 · усталость '+(v.fatigue||'—')+'/5</p>').join('')+'</details>';}
+function du232Render(){const el=document.getElementById('du232Recovery');if(!el)return;const d=du232Data()[duDay()]||{};const labels=['Очень низко','Низко','Средне','Хорошо','Отлично'];const options=(v,fatigue=false)=>'<option value="">Не указано</option>'+(fatigue?['Нет','Лёгкая','Умеренная','Сильная','Очень сильная']:labels).map((l,i)=>'<option value="'+(i+1)+'" '+(v===i+1?'selected':'')+'>'+l+'</option>').join('');el.innerHTML='<p class="note">Необязательная личная отметка. Без XP и медицинских оценок.</p><div class="field-group"><label class="field-label">Энергия</label><select class="field-input" id="du232Energy">'+options(d.energy)+'</select></div><div class="field-group"><label class="field-label">Качество сна</label><select class="field-input" id="du232Sleep">'+options(d.sleep)+'</select></div><div class="field-group"><label class="field-label">Мышечная усталость</label><select class="field-input" id="du232Fatigue">'+options(d.fatigue,true)+'</select></div><button class="btn btn-full" onclick="du232Save()">Сохранить отметку</button><details><summary>Последние отметки</summary>'+Object.entries(du232Data()).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7).map(([k,v])=>'<p class="note">'+escapeHtml(k)+' · энергия '+(v.energy||'—')+'/5 · сон '+(v.sleep||'—')+'/5 · усталость '+(v.fatigue||'—')+'/5</p>').join('')+'</details>';}
 function du232Save(){const h=du232Data(),read=id=>Number(document.getElementById(id).value)||null;h[duDay()]={energy:read('du232Energy'),sleep:read('du232Sleep'),fatigue:read('du232Fatigue')};store.set('duRecovery',h);du232Render();toast('Отметка сохранена');}
 const du232HomeOld=renderHome;renderHome=function(){du232HomeOld();du232Render();};
 const du232BuildOld=buildDB;buildDB=function(){return {...du232BuildOld(),duRecovery:du232Data()};};
@@ -6493,6 +6494,21 @@ if(weightLog.length > 0){
   profile.weight = weightLog[weightLog.length - 1].value;
   store.set('profile', profile);
 }
+
+/* v23.6.2: presentation-only grouping, original IDs remain intact */
+const duFolderOpen={library:new Set(),picker:new Set()};
+function duFolderName(c){const name=String(c.name||'');const parts=name.split(/\s+·\s+/);return parts.length>1?parts[0].trim():'';}
+function duFolderRender(el,q,mode){
+ const groups=new Map();for(const c of complexes){const key=duFolderName(c);if(key){if(!groups.has(key))groups.set(key,[]);groups.get(key).push(c);}}
+ const matches=complexes.filter(c=>String(c.name||'').toLowerCase().includes(q));
+ if(mode==='library')document.getElementById('compsCount').textContent=matches.length;
+ el.replaceChildren();const emitted=new Set();
+ const row=(c,short)=>{const b=document.createElement('button');b.type='button';b.className='fuji-compact';const name=short?String(c.name).split(/\s+·\s+/).slice(1).join(' · '):c.name;b.innerHTML=fujiPic(exercises.find(e=>e.id===c.exercises[0]?.exId))+'<span><b>'+escapeHtml(name)+'</b><small>'+c.exercises.length+' упражнений · '+(c.roundMode?'круговая':'комплекс')+'</small></span><strong>'+(mode==='picker'?'+':'›')+'</strong>';b.onclick=()=>mode==='picker'?pickComplex(c.id):fujiDetail(c.id);return b;};
+ for(const c of matches){const key=duFolderName(c),all=groups.get(key);if(!key||!all||all.length<2){el.append(row(c,false));continue;}if(emitted.has(key))continue;emitted.add(key);const visible=matches.filter(x=>duFolderName(x)===key);const d=document.createElement('details');d.className='card du-comp-folder';d.open=!!q||duFolderOpen[mode].has(key);const summary=document.createElement('summary');summary.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 6h7l2 3h9v11H3z"/></svg><span><b>'+escapeHtml(key)+'</b><small>'+all.length+' тренировок'+(q?' · найдено '+visible.length:'')+'</small></span>';d.append(summary);const body=document.createElement('div');body.className='du-folder-items';visible.forEach(x=>body.append(row(x,true)));d.append(body);d.addEventListener('toggle',()=>{if(!q){if(d.open)duFolderOpen[mode].add(key);else duFolderOpen[mode].delete(key);}});el.append(d);}
+ if(!matches.length){const p=document.createElement('p');p.className='note';p.textContent=q?'Ничего не найдено':'Комплексов пока нет';el.append(p);}
+}
+renderCompsTab=function(){const el=document.getElementById('compsList');if(el)duFolderRender(el,(document.getElementById('compSearchInput')?.value||'').trim().toLowerCase(),'library');};
+renderPickCompList=function(){const el=document.getElementById('pickCompList');if(el)duFolderRender(el,(document.getElementById('pickCompSearch')?.value||'').trim().toLowerCase(),'picker');};
 document.querySelector(".fs-ver").textContent = "DAVINCI EDITION / " + APP_VERSION;
 const logoVerEl = document.getElementById('logoVersion');
 if(logoVerEl) logoVerEl.textContent = APP_VERSION;
