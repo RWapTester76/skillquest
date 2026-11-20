@@ -7051,32 +7051,74 @@ function renderDU2384Atlas(e){
 })();
 </script>
 
-<style>
-/* DaVinci Line: transparent phase art respects the active light/dark theme */
-.du-line-frames{display:flex;align-items:center;gap:4px;justify-content:flex-end;min-width:0}
-.du-line-frames img{width:min(21vw,94px);height:88px;object-fit:contain;background:transparent!important;border:0!important;border-radius:0!important}
-.du-line-frames .dv-arrow{color:var(--accent,#a78bfa);font-size:22px}
-.du-line-muscle{margin-top:8px;color:var(--mut,#aaa);font-size:12px}
+<style id="du-compact-anatomy-css">
+/* Compact responsive reference panel; no changes to training state */
+#exTeachingGuide .fuji-guide{margin:8px 0 12px;padding:0;border:0;background:transparent}
+#exTeachingGuide .fuji-guide>h4{display:none}
+#exTeachingGuide .du-ref{border:1px solid var(--border,#39324c);border-radius:16px;padding:12px;background:var(--card,#1b1a28);color:var(--text,inherit)}
+.du-ref-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.du-ref-top strong{font-size:14px}.du-ref-top small{font-size:10px;opacity:.65}
+.du-ref-poses{display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;gap:3px;min-height:126px}
+.du-ref-poses button{padding:0;border:0;background:none;min-width:0;cursor:zoom-in}
+.du-ref-poses img{width:100%;height:132px;object-fit:contain;display:block;background:transparent;border:0}
+.du-ref-arrow{text-align:center;color:#a78bfa;font-size:22px}
+.du-ref-tabs{display:flex;gap:5px;margin:10px 0 8px}
+.du-ref-tabs button{flex:1;min-width:0;border:1px solid var(--border,#39324c);border-radius:10px;padding:9px 3px;background:transparent;color:inherit;font-size:12px;cursor:pointer}
+.du-ref-tabs button[aria-selected="true"]{background:rgba(146,100,245,.18);border-color:#a78bfa;color:inherit;font-weight:700}
+.du-ref-pane{font-size:12px;line-height:1.5;max-height:220px;overflow:auto}
+.du-ref-pane[hidden]{display:none!important}
+.du-ref-pane ul{margin:4px 0;padding-left:17px}
+.du-ref-muscles{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:center}
+.du-ref-muscles img{width:92px;height:130px;object-fit:contain}
+.du-ref-muscles p{margin:4px 0}
+.du-ref-note{opacity:.65;font-size:10px;margin:8px 0 0}
+#du2384AtlasPanel{display:none!important}
+/* Exercise detail should not repeat the same phase pictures in a second large media grid */
+#exMediaGrid{max-height:140px;overflow:auto}
+#fujiDetailList .du-line-ex summary{min-height:86px}
+#fujiDetailList .du-line-ex .du-line-detail{padding:0 12px 12px}
+#fujiDetailList .du-line-ex .du-line-detail .fuji-guide{margin:0}
+#fujiDetailList .du-line-ex .du-ref-poses img{height:102px}
+.execTechnique .du-ref-poses img{height:96px}
+@media(max-width:380px){.du-ref-poses img{height:110px}.du-ref-muscles{grid-template-columns:75px 1fr}.du-ref-muscles img{width:75px}}
 </style>
-<script>
-/* Read the imported database's guide frames, not the old bundled Cindy artwork. */
+<script id="du-compact-anatomy-js">
+/* Replaces oversized guide galleries with one concise, accessible, theme-aware view. */
 (function(){
- const original=fujiDetail;
- fujiDetail=function(id){
-  original(id);
-  const c=complexes.find(x=>x.id===id);
-  const target=document.getElementById('fujiDetailList');
-  if(!c||!target)return;
-  const entries=c.exercises.map((a,i)=>{
-   const ex=exercises.find(e=>e.id===a.exId);
-   if(!ex)return '';
-   const guide=fujiGuide(ex);
-   const frames=(guide?.[2]||[]).slice(0,2);
-   const art=frames.length===2?'<div class="du-line-frames">'+frames.map((f,j)=>(j?'<span class="dv-arrow">›</span>':'')+'<img loading="lazy" alt="'+escapeHtml(f[0])+'" src="'+escapeHtml(f[1])+'">').join('')+'</div>':fujiPic(ex);
-   return '<details class="du-line-ex"><summary><span class="du-line-index">'+(i+1)+'</span><span class="du-line-text"><b>'+escapeHtml(ex.name)+'</b><small>'+escapeHtml(fujiDose(a)||'По настройкам комплекса')+'</small></span>'+art+'</summary><div class="du-line-detail">'+fujiGuideHtml(ex,true)+'</div></details>';
-  }).join('');
-  target.innerHTML='<div class="du-line-complex">'+entries+'</div>';
+ const oldGuide=fujiGuideHtml;
+ const safe=(x)=>escapeHtml(String(x??''));
+ const specs={
+  fuji_rope_95:{main:'Икроножная, камбаловидная',other:'Квадрицепс, ягодичные, предплечья',stabil:'Мышцы корпуса и стопы',tips:['Небольшой прыжок','Локти рядом с телом','Вращение кистями'],errors:['Высокие прыжки','Жёсткое приземление','Сильное движение плечами']},
+  cindy_0:{main:'Широчайшая спины, большая круглая, сгибатели локтя',other:'Трапециевидная, ромбовидные',stabil:'Мышцы хвата и корпуса',tips:['Без рывков и раскачки','Контролируй опускание','Сохраняй комфортный хват'],errors:['Рывки','Неконтролируемое опускание']},
+  cindy_1:{main:'Грудная, трицепс, передняя дельтовидная',other:'Передняя зубчатая',stabil:'Корпус и ягодичные',tips:['Тело держи прямым','Локти под контролем','Двигайся плавно'],errors:['Провисание поясницы','Резкое падение вниз']},
+  cindy_2:{main:'Квадрицепс, большая ягодичная',other:'Большая приводящая, камбаловидная',stabil:'Корпус, разгибатели позвоночника',tips:['Опора на всю стопу','Колени направлены по линии стоп','Контролируй глубину'],errors:['Отрыв пяток','Потеря контроля положения спины']}
  };
+ let count=0;
+ window.duRefTab=function(btn,index){
+   const root=btn.closest('.du-ref');if(!root)return;
+   root.querySelectorAll('.du-ref-tabs button').forEach((b,i)=>b.setAttribute('aria-selected',String(i===index)));
+   root.querySelectorAll('.du-ref-pane').forEach((p,i)=>p.hidden=i!==index);
+ };
+ fujiGuideHtml=function(exercise,compact=false){
+   if(!exercise)return '';
+   const guide=fujiGuide(exercise);
+   const info=exercise.davinciLine?.muscles;
+   const spec=specs[exercise.id];
+   if(!guide||!spec)return oldGuide(exercise,compact);
+   const frames=(guide[2]||[]).filter(x=>Array.isArray(x)&&x[1]);
+   if(frames.length<2)return oldGuide(exercise,compact);
+   const id='du-ref-'+(++count);
+   const renderList=(arr)=>'<ul>'+arr.map(x=>'<li>'+safe(x)+'</li>').join('')+'</ul>';
+   const muscles=info||{primary:spec.main,secondary:spec.other,stabilizers:spec.stabil};
+   const map=frames[2]?.[1]||exercise.davinciLine?.muscleMap;
+   const poses='<div class="du-ref-poses">'+frames.slice(0,2).map((f,i)=>(i?'<span class="du-ref-arrow" aria-hidden="true">›</span>':'')+'<button type="button" onclick="openFujiFrame(this)" aria-label="Увеличить фазу '+(i+1)+'"><img loading="lazy" src="'+safe(f[1])+'" alt="Фаза '+(i+1)+'"></button>').join('')+'</div>';
+   const mus='<div class="du-ref-muscles">'+(map?'<img loading="lazy" src="'+safe(map)+'" alt="Схема мышц">':'')+'<div><p><b>Основные:</b> '+safe(muscles.primary)+'</p><p><b>Вспомогательные:</b> '+safe(muscles.secondary)+'</p><p><b>Стабилизаторы:</b> '+safe(muscles.stabilizers)+'</p></div></div>';
+   const inner='<div class="du-ref"><div class="du-ref-top"><strong>ДаВинчи · движение и мышцы</strong><small>2 фазы</small></div>'+poses+'<div class="du-ref-tabs" role="tablist"><button type="button" aria-selected="true" onclick="duRefTab(this,0)">Мышцы</button><button type="button" aria-selected="false" onclick="duRefTab(this,1)">Техника</button><button type="button" aria-selected="false" onclick="duRefTab(this,2)">Ошибки</button></div><div class="du-ref-pane">'+mus+'</div><div class="du-ref-pane" hidden>'+renderList(spec.tips)+'</div><div class="du-ref-pane" hidden>'+renderList(spec.errors)+'</div><p class="du-ref-note">Схематичная иллюстрация; анатомическая точность ещё проверяется.</p></div>';
+   return compact?'<details class="fuji-guide"><summary>Техника и мышцы</summary>'+inner+'</details>':'<section class="fuji-guide">'+inner+'</section>';
+ };
+ // Avoid duplicate media previews: system sequence is already in the guide above.
+ const previousRender=renderExMediaGrid;
+ renderExMediaGrid=function(){previousRender();const e=exercises.find(x=>x.id===editingExId);const g=document.getElementById('exMediaGrid');if(g&&e&&specs[e.id])g.style.maxHeight='90px';else if(g)g.style.maxHeight='';};
 })();
 </script>
 </body>
