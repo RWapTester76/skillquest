@@ -7050,5 +7050,34 @@ function renderDU2384Atlas(e){
  };
 })();
 </script>
+
+<style>
+/* DaVinci Line: transparent phase art respects the active light/dark theme */
+.du-line-frames{display:flex;align-items:center;gap:4px;justify-content:flex-end;min-width:0}
+.du-line-frames img{width:min(21vw,94px);height:88px;object-fit:contain;background:transparent!important;border:0!important;border-radius:0!important}
+.du-line-frames .dv-arrow{color:var(--accent,#a78bfa);font-size:22px}
+.du-line-muscle{margin-top:8px;color:var(--mut,#aaa);font-size:12px}
+</style>
+<script>
+/* Read the imported database's guide frames, not the old bundled Cindy artwork. */
+(function(){
+ const original=fujiDetail;
+ fujiDetail=function(id){
+  original(id);
+  const c=complexes.find(x=>x.id===id);
+  const target=document.getElementById('fujiDetailList');
+  if(!c||!target)return;
+  const entries=c.exercises.map((a,i)=>{
+   const ex=exercises.find(e=>e.id===a.exId);
+   if(!ex)return '';
+   const guide=fujiGuide(ex);
+   const frames=(guide?.[2]||[]).slice(0,2);
+   const art=frames.length===2?'<div class="du-line-frames">'+frames.map((f,j)=>(j?'<span class="dv-arrow">›</span>':'')+'<img loading="lazy" alt="'+escapeHtml(f[0])+'" src="'+escapeHtml(f[1])+'">').join('')+'</div>':fujiPic(ex);
+   return '<details class="du-line-ex"><summary><span class="du-line-index">'+(i+1)+'</span><span class="du-line-text"><b>'+escapeHtml(ex.name)+'</b><small>'+escapeHtml(fujiDose(a)||'По настройкам комплекса')+'</small></span>'+art+'</summary><div class="du-line-detail">'+fujiGuideHtml(ex,true)+'</div></details>';
+  }).join('');
+  target.innerHTML='<div class="du-line-complex">'+entries+'</div>';
+ };
+})();
+</script>
 </body>
 </html>
