@@ -2007,6 +2007,35 @@ let gears = store.get('gears', DEFAULT_GEARS);
 let skills = store.get('skills', DEFAULT_SKILLS);
 let exercises = store.get('exercises', []);
 let complexes = store.get('complexes', []);
+
+// DU CLEAN LIBRARY: explicit opt-in migration, no changes to history/calendar/XP.
+const DU_CLEAN_EX_IDS = new Set(['fuji_rope_95','cindy_0','cindy_1','cindy_2']);
+const DU_CLEAN_COMP_IDS = new Set(['fuji_rope_complex','fuji_cindy']);
+function duCleanLibrary(){
+  const backup={exportedAt:new Date().toISOString(),exercises,complexes};
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=url;a.download='DU_library_backup_before_cleanup.json';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  const keepEx=exercises.filter(e=>DU_CLEAN_EX_IDS.has(e.id));
+  const keepComp=complexes.filter(c=>DU_CLEAN_COMP_IDS.has(c.id));
+  if(keepEx.length!==4 || keepComp.length!==2){alert('Не удалось найти все 4 упражнения и 2 комплекса. Очистка отменена. Сначала импортируй базу ДУ Clean.');return;}
+  if(!confirm('Резервная копия библиотеки отправлена на скачивание. Оставить только 4 упражнения и 2 комплекса? История и календарь останутся без изменений.'))return;
+  exercises=keepEx;complexes=keepComp;
+  store.set('exercises',exercises);store.set('complexes',complexes);
+  store.set('duCleanLibraryV1',true);
+  document.getElementById('du-clean-offer')?.remove();
+  location.reload();
+}
+function duOfferCleanLibrary(){
+  if(store.get('duCleanLibraryV1',false))return;
+  const box=document.createElement('div');box.id='du-clean-offer';
+  box.style.cssText='position:fixed;inset:auto 12px max(95px,env(safe-area-inset-bottom)) 12px;z-index:2147483640;background:#211d30;color:white;padding:16px;border:1px solid #9d83f9;border-radius:18px;box-shadow:0 8px 40px #0009;font:15px system-ui';
+  box.innerHTML='<b>Чистая библиотека ДУ</b><p style="margin:8px 0">Оставить только скакалку и Синди: 4 упражнения, 2 комплекса. Перед очисткой скачается резервная копия библиотеки. История и календарь сохранятся.</p><button type="button" onclick="duCleanLibrary()" style="padding:12px;border:0;border-radius:12px;background:#a78bfa;color:#16121e;font-weight:700;width:100%">Сохранить копию и очистить</button><button type="button" onclick="this.parentNode.remove()" style="margin-top:8px;padding:9px;border:1px solid #555;border-radius:12px;background:transparent;color:white;width:100%">Позже</button>';
+  document.body.appendChild(box);
+}
+window.addEventListener('load',()=>setTimeout(duOfferCleanLibrary,600));
+
 let trainings = store.get('trainings', []);
 let completions = store.get('completions', {});
 let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
