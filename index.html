@@ -6953,5 +6953,54 @@ function renderDU2384Atlas(e){
   fujiDetail=renderUnifiedComplex;
 })();
 </script>
+<style id="du-line-universal-style">
+/* Unified DaVinci Line preview across every ready-made complex. */
+#fujiDetailList .du-line-complex{display:grid;gap:12px;padding-bottom:12px}
+#fujiDetailList .du-line-header{display:flex;align-items:center;gap:14px;padding:8px 2px 12px;border-bottom:1px solid var(--border,#383348)}
+#fujiDetailList .du-line-header img{width:86px;height:86px;object-fit:contain;border-radius:14px;background:transparent}
+#fujiDetailList .du-line-header small{display:block;color:var(--text-muted,#9f9aaa);letter-spacing:.09em;font-size:10px}
+#fujiDetailList .du-line-header h4{font-size:20px;line-height:1.18;margin:5px 0}
+#fujiDetailList .du-line-header p{font-size:12px;opacity:.72;margin:0}
+#fujiDetailList .du-line-ex{border:1px solid var(--border,#39364b);border-radius:17px;overflow:hidden;background:var(--card,#1c1b29)}
+#fujiDetailList .du-line-ex summary{list-style:none;cursor:pointer;padding:12px;display:flex;gap:10px;align-items:center;min-height:100px}
+#fujiDetailList .du-line-ex summary::-webkit-details-marker{display:none}
+#fujiDetailList .du-line-index{background:#7467ee;color:#fff;font-weight:800;border-radius:10px;min-width:34px;height:34px;display:grid;place-items:center}
+#fujiDetailList .du-line-text{flex:1;min-width:0;display:grid;gap:5px}
+#fujiDetailList .du-line-text b{font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+#fujiDetailList .du-line-text small{font-size:12px;opacity:.72}
+#fujiDetailList .du-line-art{width:39%;min-width:92px;max-width:180px;display:flex;align-items:center;justify-content:center;gap:3px;overflow:hidden}
+#fujiDetailList .du-line-art img{max-width:46%;width:46%;height:80px;object-fit:contain;border:0;border-radius:0;background:transparent;mix-blend-mode:normal}
+#fujiDetailList .du-line-art i{color:#a78bfa;font-style:normal;font-size:19px}
+#fujiDetailList .du-line-art .du-line-missing{font-size:11px;text-align:center;opacity:.6}
+#fujiDetailList .du-line-detail{padding:0 14px 14px;font-size:13px;line-height:1.55;opacity:.85}
+@media(max-width:370px){#fujiDetailList .du-line-art{width:34%;min-width:78px}#fujiDetailList .du-line-art img{height:64px}#fujiDetailList .du-line-ex summary{padding:9px}}
+</style>
+<script id="du-line-universal-script">
+/* Presentation only: fujiLaunch and all workout/session logic remain unchanged. */
+(function(){
+ const previous=fujiDetail;
+ fujiDetail=function(id){
+   previous(id);
+   const c=complexes.find(x=>x.id===id), target=document.getElementById('fujiDetailList');
+   if(!c||!target)return;
+   const art=(ex)=>{
+     if(!ex)return '<span class="du-line-missing">Схема готовится</span>';
+     let frames=[];
+     try{
+       const key=ex.id?.startsWith('cindy_')?ex.id:/подтягивания/i.test(ex.name)?'cindy_0':/отжимания от пола/i.test(ex.name)?'cindy_1':/^приседания$/i.test(ex.name)?'cindy_2':'';
+       if(key&&typeof dvReferenceArt!=='undefined'&&dvReferenceArt[key])frames=dvReferenceArt[key];
+       else if(typeof fujiGuide==='function')frames=(fujiGuide(ex)?.[2]||[]).slice(0,2).map(x=>x[1]);
+     }catch(err){}
+     return frames.length?frames.slice(0,2).map((src,i)=>(i?'<i aria-hidden="true">›</i>':'')+'<img loading="lazy" alt="Фаза '+(i+1)+'" src="'+escapeHtml(src)+'">').join(''):'<span class="du-line-missing">Схема готовится</span>';
+   };
+   const name=escapeHtml(c.name||'Комплекс');
+   const meta=(c.roundMode?'Круговая · ':'')+c.exercises.length+' упражнений'+(c.roundTime?' · '+c.roundTime+' мин':'');
+   target.innerHTML='<div class="du-line-complex"><div class="du-line-header"><img alt="ДаВинчи" src="'+dvHeroImage+'"><div><small>ДУ / DAVINCI EDITION</small><h4>'+name+'</h4><p>'+escapeHtml(meta)+'</p></div></div>'+c.exercises.map((a,i)=>{
+     const ex=exercises.find(e=>e.id===a.exId);
+     return '<details class="du-line-ex"><summary><span class="du-line-index">'+(i+1)+'</span><span class="du-line-text"><b>'+escapeHtml(ex?.name||a.name||'Упражнение')+'</b><small>'+escapeHtml(fujiDose(a)||'По настройкам комплекса')+'</small></span><span class="du-line-art">'+art(ex)+'</span></summary><div class="du-line-detail">'+escapeHtml(ex?.desc||a.note||'Техника уточняется')+'</div></details>';
+   }).join('')+'</div>';
+ };
+})();
+</script>
 </body>
 </html>
