@@ -6304,8 +6304,25 @@ function installLibrarySeed(){
   let exChanged=false,compChanged=false;
   for(const seed of exerciseLibrary.exercises){
     const existing=exercises.find(ex=>ex.id===seed.id) || (seed.id.startsWith('base_') ? exercises.find(ex=>ex.name===seed.name) : null);
-    if(existing){aliases.set(seed.id,existing.id);continue;}
-    exercises.push({...structuredClone(seed),media:exerciseLibrary.mascot==='davinci'?structuredClone(seed.media):[]});
+    if(existing){
+      aliases.set(seed.id,existing.id);
+      // Update atlas media for existing exercises while retaining user-added photos/videos.
+      if(exerciseLibrary.mascot==='davinci' && Array.isArray(seed.media) && seed.media.length){
+        const oldAtlas=(existing.media||[]).filter(m=>m && m.duAtlas===true);
+        const personal=(existing.media||[]).filter(m=>m && m.duAtlas!==true && !isLegacyFujiImage(m,existing.id));
+        const incoming=seed.media.filter(m=>m && m.type==='image' && typeof m.data==='string')
+          .map(m=>({...structuredClone(m),duAtlas:true}));
+        // Do not replace unrelated user media or erase the original technique.
+        const next=[...personal,...incoming];
+        if(incoming.length && (oldAtlas.length!==incoming.length ||
+          oldAtlas.some((m,i)=>m.data!==incoming[i].data) ||
+          (existing.media||[]).length!==next.length)){
+          existing.media=next;exChanged=true;
+        }
+      }
+      continue;
+    }
+    exercises.push({...structuredClone(seed),media:exerciseLibrary.mascot==='davinci'?structuredClone(seed.media).map(m=>({...m,duAtlas:true})):[]});
     aliases.set(seed.id,seed.id);
     exChanged=true;
   }
