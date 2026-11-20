@@ -788,7 +788,7 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
 .fuji-compact{display:flex;align-items:center;text-align:left;width:100%;gap:12px;padding:8px;margin-bottom:5px;background:var(--card);border:1px solid var(--line);border-radius:14px}.fuji-compact span{flex:1;min-width:0}.fuji-compact small,.fuji-summary small{display:block;color:var(--mut)}.fuji-compact .fuji-pic,.fuji-compact .fuji-placeholder{width:48px;height:48px;object-fit:cover;border-radius:10px}.fuji-detail-row{display:flex;gap:12px;margin-bottom:10px;padding:8px;background:var(--card);border-radius:12px}.fuji-detail-row .fuji-pic,.fuji-detail-row .fuji-placeholder{width:92px;height:92px;object-fit:contain;border-radius:10px}.fuji-detail-row div{flex:1}.fuji-detail-row p,.fuji-note{color:var(--mut);font-size:12px}.exec-focus .fuji-pic{width:min(100%,240px);max-height:220px;object-fit:contain;border-radius:16px}.fuji-summary{padding:12px;background:var(--card2);border-radius:12px;margin:10px 0}.fuji-placeholder{display:grid;place-items:center;background:var(--card2);font-size:24px}.exec-plan-list{max-height:130px;overflow:auto}.cindy-progress{width:100%;max-width:320px;height:6px;background:var(--card2);border-radius:8px;overflow:hidden;margin-bottom:12px}.cindy-progress i{display:block;height:100%;background:var(--grad);width:100%} #m-fuji-detail .fuji-detail-row small{display:block;line-height:1.5}.exec-focus .fuji-note{text-align:left;line-height:1.5;max-width:440px} 
 .du-day-total{display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px;padding:10px 12px;margin-bottom:10px;border:1px solid var(--line);border-radius:14px;background:var(--card2)}.du-day-total b{font-size:24px;color:var(--acc2);font-variant-numeric:tabular-nums}.du-day-total small{grid-column:1/-1;color:var(--mut)}.du-health-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.du-metric{min-width:0;padding:12px;background:var(--card2);border:1px solid var(--line);border-radius:12px}.du-metric b{display:block;font-size:23px}.du-metric small,.du-health small,.du-sheet small{color:var(--mut)}.du-meter{height:6px;border-radius:8px;background:var(--line);overflow:hidden;margin:8px 0}.du-meter i{display:block;height:100%;background:var(--grad)}.du-health>.btn{margin-top:12px}.du-sheet{position:fixed;inset:0;z-index:220;background:var(--bg);overflow:auto;padding:calc(14px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom));}.du-sheet[hidden]{display:none}.du-sheet h2,.du-sheet h3,.du-sheet p{margin:10px 0}.du-sheet label{display:block;color:var(--mut);margin-top:8px}.du-sheet input,.du-sheet select{width:100%;padding:12px;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;margin:5px 0 12px;font-size:16px}.du-sheet .btn{margin-bottom:8px}.du-hrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
 
-/* DU v23.8.5 — iPhone Safari reachable controls, safe-area and scroll repair */
+/* DU v23.8.7 — iPhone Safari reachable controls, safe-area and scroll repair */
 html{scroll-padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));-webkit-text-size-adjust:100%}
 body{min-width:0;overflow-x:hidden}
 button,[role="button"],input,select,textarea{touch-action:manipulation}
@@ -809,6 +809,8 @@ button,[role="button"],input,select,textarea{touch-action:manipulation}
 #duBuilderPanel .du-build-shell{margin-bottom:28px}
 @media(max-height:700px){.exec-screen .exec-focus .fuji-pic{max-height:145px}.exec-screen .exec-focus .exec-timer{font-size:clamp(42px,12vw,64px)}}
 
+
+.du-cal-edit-actions{display:flex;gap:8px;padding:10px 12px 12px;flex-wrap:wrap}.du-cal-edit-actions .btn{min-height:44px;flex:1;min-width:110px}
 </style>
 <style>.fuji-head{width:30px;height:34px;object-fit:cover;object-position:50% 5%;border-radius:10px;border:1px solid var(--acc)}.logo-wrap{align-items:center}.card,.complex-card{border-color:var(--line);}.nav-bottom{border-top:2px solid var(--acc)}.complex-ex-item{border-left-color:var(--acc2)}.exec-dots .exec-dot.done{background:var(--grad)}.fab{border:2px solid var(--acc2)}.xp-mini-lvl{border:1px solid var(--acc2)}</style><style id="fuji-redesign">
 :root{--radius:16px;--radius-lg:24px;--radius-sm:12px;--font-md:14px;--font-sm:12px;--font-lg:17px;--txt-dim:var(--mut)}
@@ -1031,7 +1033,7 @@ body{font-variant-numeric:tabular-nums} .view{min-width:0} .page-kicker{margin-b
 #duBuilderFab:focus-visible{outline:3px solid #fff;outline-offset:3px}
 @media(max-width:360px){#duBuilderFab{bottom:calc(80px + env(safe-area-inset-bottom));width:46px;height:46px}}
 </style><style>
-/* DaVinci Atlas UI v23.8.5: non-destructive icon layer */
+/* DaVinci Atlas UI v23.8.7: non-destructive icon layer */
 .du-atlas-symbol{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px solid rgba(222,105,241,.35);border-radius:13px;background:radial-gradient(circle at 50% 25%,rgba(217,70,182,.19),rgba(19,13,31,.95));box-shadow:inset 0 0 12px rgba(185,73,234,.1)}
 .du-atlas-symbol svg{width:38px;height:38px;overflow:visible}
 .picker-tile .pt-emoji:has(.du-atlas-symbol){font-size:initial;line-height:1;min-height:51px;display:flex;align-items:center;justify-content:center}
@@ -1046,6 +1048,24 @@ body{font-variant-numeric:tabular-nums} .view{min-width:0} .page-kicker{margin-b
 .du2384-atlas-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:86px;padding:7px 4px;border:1px solid rgba(218,167,255,.19);border-radius:10px;background:rgba(10,7,20,.55);text-align:center;font-size:10px;line-height:1.25}
 .du2384-atlas-tile .du-atlas-symbol{width:45px;height:45px;display:flex;align-items:center;justify-content:center}.du2384-atlas-tile svg{width:45px;height:45px}
 .du2384-atlas-note,.du2384-atlas-empty{font-size:11px;line-height:1.5;color:#c9b4d8;margin:9px 0 0}
+</style>
+<style>
+/* v23.8.7 — persistent library switcher on iPhone */
+#v-ex > .du-segments, #v-comps > .du-segments {
+  position: -webkit-sticky; position: sticky;
+  top: var(--du-library-sticky-top, 64px);
+  z-index: 35;
+  margin: 0 -4px 12px;
+  padding: 7px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  -webkit-transform: translateZ(0);
+}
+#v-ex > .du-segments .du-segment, #v-comps > .du-segments .du-segment {
+  min-height: 44px; touch-action: manipulation;
+}
 </style>
 </head>
 <body data-mode="dark">
@@ -1077,14 +1097,14 @@ setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else wind
       <button class="fs-skip" onclick="fujiCue('start')">🔊 Проверить звук</button>
       <button class="fs-skip" onclick="fujiDismissSplash()">Начать →</button>
     </div>
-    <div class="fs-ver">DAVINCI EDITION / v23.8.5</div>
+    <div class="fs-ver">DAVINCI EDITION / v23.8.7</div>
   </div>
 </div>
 <div class="app">
   <header class="header">
     <div class="logo-wrap"><img class="fuji-head" src="data:image/webp;base64,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" alt="ДаВинчи">
       <div class="logo"><svg class="du-mark" viewBox="0 0 80 46" role="img" aria-label="ДУ"><path d="M5 34L20 8H43L48 34H5M5 34v6m43-6v6M17 28h21M49 9l12 15L75 8M61 24L49 39"/><path class="du-spiral" d="M53 40l23-24"/></svg></div>
-      <div class="logo-ver" id="logoVersion">v23.8.5</div>
+      <div class="logo-ver" id="logoVersion">v23.8.7</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -1796,7 +1816,7 @@ setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else wind
 
 <div class="modal-overlay" id="m-fuji-detail"><div class="modal"><h3 id="fujiDetailTitle"></h3><div id="fujiDetailList"></div><button class="btn btn-primary btn-full" onclick="fujiLaunch('normal')">▶ Обычная тренировка</button><label class="field-label" style="margin-top:12px">Цель: повторы или круги</label><input class="field-input" id="fujiTarget" type="number" min="1" value="100"><div class="btn-row"><button class="btn" onclick="fujiLaunch('reps')">На количество</button><button class="btn" onclick="fujiLaunch('rounds')">На круги</button></div><div class="btn-row"><button class="btn" onclick="closeModal('m-fuji-detail');openCompModal(fujiSelected)">Изменить</button><button class="btn" onclick="delCompFromTab(fujiSelected);closeModal('m-fuji-detail')">Удалить</button></div><button class="modal-close" onclick="closeModal('m-fuji-detail')">Закрыть</button></div></div><script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v23.8.5';
+const APP_VERSION = 'v23.8.7';
 const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',
       c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
 const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
@@ -2477,7 +2497,7 @@ function localScheduleDate(key){
 }
 function isTrainScheduled(tr, date){
   const key = isoDate(date);
-  return Array.isArray(tr.days) && tr.days.some(day => Number(day) === date.getDay()) &&
+  return !(Array.isArray(tr.excludedDates) && tr.excludedDates.includes(key)) && Array.isArray(tr.days) && tr.days.some(day => Number(day) === date.getDay()) &&
     (!tr.startDate || key >= tr.startDate) && (!tr.endDate || key <= tr.endDate);
 }
 function getTrainsForDate(date){
@@ -2571,8 +2591,30 @@ function renderTrainings(){
         '<div class="training-actions">'+actionsHtml+'</div>'+
       '</div>'+
       '<div class="training-body">'+(exListHtml||'<div class="empty" style="padding:6px;font-size:11px">Нет упражнений</div>')+
+      '<div class="du-cal-edit-actions"><button type="button" class="btn btn-sm" onclick="duCalendarEdit(\''+tr.id+'\')">✏️ Изменить</button><button type="button" class="btn btn-sm" onclick="duCalendarDelete(\''+tr.id+'\')">🗑 Удалить</button></div>'+
       '</div></div>';
   }).join('');
+}
+function duCalendarEdit(id){
+  const tr=trainings.find(t=>t.id===id);if(!tr)return;
+  if(!confirm('Изменить расписание этой тренировки? Изменения затронут все её запланированные даты.'))return;
+  openTrainModal(id);
+}
+function duCalendarDelete(id){
+  const tr=trainings.find(t=>t.id===id);if(!tr)return;
+  const date=isoDate(selectedDate);
+  const whole=confirm('Удалить «'+tr.name+'» из всего расписания?\n\nОК — удалить всю серию.\nОтмена — выбрать удаление только '+date+'.');
+  if(whole){
+    if(!confirm('Подтвердить удаление всей серии? История уже выполненных тренировок останется.'))return;
+    trainings=trainings.filter(t=>t.id!==id);
+  }else{
+    if(!confirm('Удалить тренировку только на '+date+'? Другие даты останутся.'))return;
+    if(!Array.isArray(tr.excludedDates))tr.excludedDates=[];
+    if(!tr.excludedDates.includes(date))tr.excludedDates.push(date);
+  }
+  store.set('trainings',trainings);
+  renderTrainings();renderWeek();renderMonth();renderStats();
+  toast('Расписание обновлено');
 }
 function toggleTrainBody(head){
   const body = head.nextElementSibling;
@@ -2593,7 +2635,7 @@ function pickerBack(){
   renderPickerPage();
 }
 
-/* v23.8.5: presentation-only anatomy/equipment/skill icon system. Does not mutate stored records. */
+/* v23.8.7: presentation-only anatomy/equipment/skill icon system. Does not mutate stored records. */
 function duAtlasIcon(item,kind){
  const n=String(item?.name||'').toLowerCase();
  const shape=(path,fill='none')=>'<path d="'+path+'" fill="'+fill+'" stroke="#d7c8e8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>';
@@ -3108,7 +3150,8 @@ function saveTrain(){
     id: editingTrainId || uid(),
     name, days, time, startDate, endDate,
     exercises: JSON.parse(JSON.stringify(tempTrainEx)),
-    dayOverrides: editingTrainId ? (trainings.find(t=>t.id===editingTrainId)?.dayOverrides || {}) : {}
+    dayOverrides: editingTrainId ? (trainings.find(t=>t.id===editingTrainId)?.dayOverrides || {}) : {},
+    excludedDates: editingTrainId ? (trainings.find(t=>t.id===editingTrainId)?.excludedDates || []) : []
   };
   if(editingTrainId){
     const i = trainings.findIndex(t => t.id === editingTrainId);
@@ -6727,13 +6770,13 @@ root.DUWorkoutEngine=api;
 
 </script>
 <style>
-/* v23.8.5 — independent builder and richer category tiles */
+/* v23.8.7 — independent builder and richer category tiles */
 .picker-tile{position:relative;overflow:hidden}.picker-tile .pt-emoji{display:inline-grid;place-items:center;width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,rgba(167,139,250,.25),rgba(59,130,246,.13));box-shadow:inset 0 0 0 1px rgba(167,139,250,.2);font-size:27px}.picker-tile:nth-child(5n+2) .pt-emoji{background:linear-gradient(135deg,rgba(251,146,60,.25),rgba(250,204,21,.1))}.picker-tile:nth-child(5n+3) .pt-emoji{background:linear-gradient(135deg,rgba(52,211,153,.23),rgba(45,212,191,.1))}.picker-tile:nth-child(5n+4) .pt-emoji{background:linear-gradient(135deg,rgba(244,114,182,.23),rgba(167,139,250,.12))}.picker-tile:nth-child(5n+5) .pt-emoji{background:linear-gradient(135deg,rgba(96,165,250,.23),rgba(34,211,238,.12))}
 #duBuilderFab{position:fixed;right:16px;bottom:88px;z-index:1100;border:0;border-radius:30px;padding:12px 16px;background:linear-gradient(135deg,#8257db,#5844b4);color:white;font-weight:750;box-shadow:0 8px 26px #0006;max-width:calc(100vw - 32px)}
 #duBuilderPanel{position:fixed;inset:0;z-index:3200;background:rgba(5,7,16,.82);display:none;overflow:auto;padding:12px;overscroll-behavior:contain}#duBuilderPanel.du-open{display:block}#duBuilderPanel .du-build-shell{max-width:620px;margin:8px auto 28px;background:var(--card,#191b27);color:var(--txt,#fff);border:1px solid var(--line,#39384c);border-radius:20px;padding:16px}#duBuilderPanel input,#duBuilderPanel select{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line,#555);background:var(--card2,#252638);color:var(--txt,#fff);font:inherit}#duBuilderPanel label{display:block;margin:10px 0 5px;font-size:13px}#duBuilderPanel .du-block{padding:12px;border-radius:14px;border:1px solid var(--line,#555);margin:10px 0;background:var(--card2,#252638)}#duBuilderPanel .du-line{display:flex;gap:8px;align-items:center}#duBuilderPanel .du-line>*{min-width:0;flex:1}#duBuilderPanel button{padding:10px;border:1px solid var(--line,#555);border-radius:10px;background:var(--card2,#252638);color:var(--txt,#fff);font:inherit;cursor:pointer}#duBuilderPanel .du-primary{background:#7754d2;color:white;border:0}#duBuilderPanel .du-muted{font-size:12px;opacity:.75;line-height:1.5}#duBuilderPanel .du-block-head{display:flex;align-items:center;justify-content:space-between;gap:8px}#duBuilderPanel .du-mini{flex:none;padding:7px 9px}#duBuilderPanel .du-action{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}#duBuilderPanel .du-action button{flex:1 1 110px}
 </style>
 <script>
-/* v23.8.5: independent local draft builder; deliberately does not modify old workout, XP or calendar. */
+/* v23.8.7: independent local draft builder; deliberately does not modify old workout, XP or calendar. */
 (function(){'use strict';
 const KEY='du_builder_drafts_v1';let blocks=[],currentId=null;
 const $=id=>document.getElementById(id);
@@ -6755,7 +6798,7 @@ function makePlan(){collect();return {schema:'du.workout.v1',id:currentId||'draf
 function message(t){$('duBuilderMessage').textContent=t}
 function add(type){collect();const ex=options();if(type==='exercise'&&!ex.length){message('Библиотека упражнений ещё не загрузилась. Открой приложение и дождись загрузки.');return}blocks.push(type==='exercise'?{type,exerciseId:ex[0].id,sets:3,reps:10,sides:'none',restSeconds:60}:type==='rest'?{type,seconds:60}:type==='amrap'||type==='emom'?{type,durationSeconds:1200,exerciseIds:[]}: {type,workSeconds:type==='tabata'?20:40,restSeconds:type==='tabata'?10:20,rounds:8});render();message('')}
 function init(){if($('duBuilderPanel'))return;const fab=document.createElement('button');fab.id='duBuilderFab';fab.textContent='✦ Конструктор';fab.title='Открыть конструктор тренировок';fab.setAttribute('aria-label','Открыть конструктор тренировок');fab.addEventListener('click',()=>{ $('duBuilderPanel').classList.add('du-open');document.body.style.overflow='hidden';render();});document.body.appendChild(fab);
- const p=document.createElement('div');p.id='duBuilderPanel';p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');p.setAttribute('aria-label','Конструктор тренировок');p.innerHTML='<div class="du-build-shell"><div class="du-block-head"><h2 style="margin:0">Конструктор ДУ</h2><button id="duBuilderClose" aria-label="Закрыть">✕</button></div><p class="du-muted">v23.8.5 · Создание и сохранение черновиков. Запуск в старом таймере пока не подключён.</p><label>Название тренировки</label><input id="duBuilderName" maxlength="100" value="Моя тренировка"><div class="du-action"><button data-add="exercise">+ Упражнение</button><button data-add="interval">+ Интервалы</button><button data-add="tabata">+ Табата</button><button data-add="amrap">+ AMRAP</button><button data-add="emom">+ EMOM</button><button data-add="rest">+ Отдых</button></div><div id="duBuilderBlocks"></div><div class="du-action"><button class="du-primary" id="duBuilderSave">Сохранить черновик</button><button id="duBuilderExport">Экспорт JSON</button><button id="duBuilderNew">Новый</button></div><label>Сохранённые черновики</label><select id="duBuilderSaved"><option value="">Выбери тренировку</option></select><div class="du-action"><button id="duBuilderLoad">Открыть</button><button id="duBuilderRemove">Удалить черновик</button></div><p id="duBuilderMessage" class="du-muted" aria-live="polite"></p></div>';document.body.appendChild(p);
+ const p=document.createElement('div');p.id='duBuilderPanel';p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');p.setAttribute('aria-label','Конструктор тренировок');p.innerHTML='<div class="du-build-shell"><div class="du-block-head"><h2 style="margin:0">Конструктор ДУ</h2><button id="duBuilderClose" aria-label="Закрыть">✕</button></div><p class="du-muted">v23.8.7 · Создание и сохранение черновиков. Запуск в старом таймере пока не подключён.</p><label>Название тренировки</label><input id="duBuilderName" maxlength="100" value="Моя тренировка"><div class="du-action"><button data-add="exercise">+ Упражнение</button><button data-add="interval">+ Интервалы</button><button data-add="tabata">+ Табата</button><button data-add="amrap">+ AMRAP</button><button data-add="emom">+ EMOM</button><button data-add="rest">+ Отдых</button></div><div id="duBuilderBlocks"></div><div class="du-action"><button class="du-primary" id="duBuilderSave">Сохранить черновик</button><button id="duBuilderExport">Экспорт JSON</button><button id="duBuilderNew">Новый</button></div><label>Сохранённые черновики</label><select id="duBuilderSaved"><option value="">Выбери тренировку</option></select><div class="du-action"><button id="duBuilderLoad">Открыть</button><button id="duBuilderRemove">Удалить черновик</button></div><p id="duBuilderMessage" class="du-muted" aria-live="polite"></p></div>';document.body.appendChild(p);
  function refresh(){const a=load();$('duBuilderSaved').innerHTML='<option value="">Выбери тренировку</option>'+a.map((x,i)=>'<option value="'+i+'">'+esc(x.name)+'</option>').join('')}
  p.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a){add(a.dataset.add);return}const btn=e.target.closest('[data-action]');if(btn){collect();const i=Number(btn.closest('[data-index]').dataset.index),action=btn.dataset.action;if(action==='delete')blocks.splice(i,1);if(action==='up'&&i>0)[blocks[i-1],blocks[i]]=[blocks[i],blocks[i-1]];if(action==='down'&&i<blocks.length-1)[blocks[i+1],blocks[i]]=[blocks[i],blocks[i+1]];render();}});
  $('duBuilderClose').onclick=()=>{p.classList.remove('du-open');document.body.style.overflow=''};
@@ -6768,7 +6811,7 @@ function init(){if($('duBuilderPanel'))return;const fab=document.createElement('
 })();
 </script>
 <script>
-/* DU v23.8.5: read-only atlas preview; does not mutate exercise data. */
+/* DU v23.8.7: read-only atlas preview; does not mutate exercise data. */
 function renderDU2384Atlas(e){
  const root=document.getElementById('du2384AtlasPanel'); if(!root)return;
  if(!e){root.innerHTML='';return;}
@@ -6778,10 +6821,28 @@ function renderDU2384Atlas(e){
    if(!found.length)return '';
    return '<section class="du2384-atlas-group"><h4>'+label+'</h4><div class="du2384-atlas-tiles">'+found.map(item=>'<div class="du2384-atlas-tile">'+duAtlasIcon(item,kind)+'<span>'+escapeHtml(item.name)+'</span></div>').join('')+'</div></section>';
  }).join('');
- root.innerHTML='<div class="du2384-atlas-head"><strong>Анатомический атлас</strong><span>Предпросмотр · v23.8.5</span></div>'+
+ root.innerHTML='<div class="du2384-atlas-head"><strong>Анатомический атлас</strong><span>Предпросмотр · v23.8.7</span></div>'+
  (cards||'<p class="du2384-atlas-empty">Категории ещё не назначены. Добавь зоны, снаряды и навыки ниже.</p>')+
  '<p class="du2384-atlas-note">Подсветка условная: анатомическая и биомеханическая проверка ещё не проведена. Иллюстрации ДаВинчи отображаются выше, если они есть в базе.</p>';
 }
+</script>
+
+<script>
+/* Keep library tabs immediately beneath the existing sticky header. */
+(function(){
+  function updateLibraryTabsOffset(){
+    var header=document.querySelector('.app > .header') || document.querySelector('.header');
+    var h=header ? Math.ceil(header.getBoundingClientRect().height) : 64;
+    document.documentElement.style.setProperty('--du-library-sticky-top', h+'px');
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', updateLibraryTabsOffset);
+  else updateLibraryTabsOffset();
+  window.addEventListener('resize',updateLibraryTabsOffset,{passive:true});
+  if(window.ResizeObserver){
+    var header=document.querySelector('.header');
+    if(header) new ResizeObserver(updateLibraryTabsOffset).observe(header);
+  }
+})();
 </script>
 </body>
 </html>
