@@ -6556,5 +6556,75 @@ document.addEventListener('keydown', e => {
  for(const id of ['exSearch','compSearchInput']){const el=document.getElementById(id);if(el)el.setAttribute('aria-label',el.placeholder);}
 })();
 </script>
-<script>setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else window.duBootFailure();},2000);</script></body>
+<script>setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else window.duBootFailure();},2000);</script><script>
+/* DU v23.8 architecture preview — pure, isolated, no changes to current sessions/storage. */
+(function(root){
+'use strict';
+const TYPES=['exercise','interval','amrap','emom','tabata','rest','sequence','repeat'];
+const clone=x=>JSON.parse(JSON.stringify(x));
+const number=(v,min,max,label)=>{if(!Number.isFinite(v)||v<min||v>max)throw Error('Недопустимое значение '+label);return v;};
+function validate(plan){
+ if(!plan||plan.schema!=='du.workout.v1'||!Array.isArray(plan.blocks)||!plan.blocks.length)throw Error('Неверный формат плана');
+ let nodes=0;
+ function walk(block,depth){
+  if(++nodes>1000||depth>8)throw Error('План слишком сложный');
+  if(!block||!TYPES.includes(block.type))throw Error('Неизвестный блок');
+  if(block.type==='sequence'||block.type==='repeat'){
+   if(!Array.isArray(block.blocks)||!block.blocks.length)throw Error('Пустая последовательность');
+   if(block.type==='repeat')number(block.count,1,100,'count');
+   block.blocks.forEach(x=>walk(x,depth+1));return;
+  }
+  if(block.type==='rest')number(block.seconds,0,86400,'seconds');
+  if(block.type==='exercise'){
+   if(typeof block.exerciseId!=='string'||!block.exerciseId)throw Error('Отсутствует ID упражнения');
+   if(block.sets!==undefined)number(block.sets,1,100,'sets');
+   if(block.reps!==undefined)number(block.reps,1,10000,'reps');
+   if(block.sides!==undefined&&!['both','left','right','alternating','none'].includes(block.sides))throw Error('Неверная сторона');
+  }
+  if(['interval','tabata'].includes(block.type)){
+   number(block.workSeconds,1,86400,'workSeconds');number(block.restSeconds,0,86400,'restSeconds');number(block.rounds,1,1000,'rounds');
+  }
+  if(['amrap','emom'].includes(block.type))number(block.durationSeconds,1,86400,'durationSeconds');
+  if(block.type==='emom'&&block.minuteSeconds!==undefined)number(block.minuteSeconds,1,86400,'minuteSeconds');
+ }
+ plan.blocks.forEach(b=>walk(b,0));return true;
+}
+function expand(plan){validate(plan);let events=[];
+ function walk(b){
+  if(b.type==='sequence'){b.blocks.forEach(walk);return;}
+  if(b.type==='repeat'){for(let i=0;i<b.count;i++)b.blocks.forEach(walk);return;}
+  if(b.type==='interval'||b.type==='tabata'){
+   for(let i=0;i<b.rounds;i++){
+    events.push({kind:'work',seconds:b.workSeconds,exerciseId:b.exerciseId||null,round:i+1});
+    if(b.restSeconds && (i<b.rounds-1||b.restAfterLast))events.push({kind:'rest',seconds:b.restSeconds,round:i+1});
+   }return;
+  }
+  if(b.type==='exercise'){
+   for(let i=0;i<(b.sets||1);i++){
+    const sides=b.sides==='both'?['left','right']:[b.sides||'none'];
+    sides.forEach(side=>events.push({kind:'exercise',exerciseId:b.exerciseId,reps:b.reps||null,side,set:i+1,seconds:b.seconds||null}));
+    if(b.restSeconds&&i<(b.sets||1)-1)events.push({kind:'rest',seconds:b.restSeconds});
+   }return;
+  }
+  if(b.type==='rest')events.push({kind:'rest',seconds:b.seconds});
+  if(b.type==='amrap'||b.type==='emom')events.push({kind:b.type,seconds:b.durationSeconds,minuteSeconds:b.minuteSeconds||60,exerciseIds:b.exerciseIds||[]});
+ }
+ plan.blocks.forEach(walk);if(events.length>20000)throw Error('Слишком много этапов');return events;
+}
+function fromLegacy(training){
+ if(!training||!Array.isArray(training.exercises))throw Error('Нет упражнений');
+ const blocks=training.exercises.map(e=>{
+  if(e.type==='rounds')return {type:'amrap',durationSeconds:Number(e.time)||1200,exerciseIds:(e.blockEx||[]).map(x=>x.exId).filter(Boolean),legacy:clone(e)};
+  return {type:'exercise',exerciseId:String(e.exId||''),sets:Math.max(1,Number(e.sets)||1),reps:Number(e.reps)||undefined,legacy:clone(e)};
+ });
+ return {schema:'du.workout.v1',id:'legacy:'+String(training.id||'unsaved'),name:String(training.name||'Тренировка'),source:'legacy-readonly',blocks};
+}
+function createSession(plan,now){const events=expand(plan);return {schema:'du.session.v1',planId:plan.id||null,startedAt:now||Date.now(),cursor:0,events,log:[],status:'ready'};}
+function record(session,result){if(!session||session.status==='finished')throw Error('Сессия завершена');if(session.cursor>=session.events.length)throw Error('Нет этапов');session.log.push({eventIndex:session.cursor,actual:clone(result||{}),recordedAt:Date.now()});session.cursor++;if(session.cursor>=session.events.length)session.status='finished';else session.status='active';return session;}
+const api=Object.freeze({version:'23.8-architecture',validate,expand,fromLegacy,createSession,record,clone});
+root.DUWorkoutEngine=api;
+})(typeof window!=='undefined'?window:globalThis);
+
+</script>
+</body>
 </html>
