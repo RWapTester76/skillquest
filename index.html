@@ -2011,6 +2011,13 @@ let complexes = store.get('complexes', []);
 // DU CLEAN LIBRARY: explicit opt-in migration, no changes to history/calendar/XP.
 const DU_CLEAN_EX_IDS = new Set(['fuji_rope_95','cindy_0','cindy_1','cindy_2']);
 const DU_CLEAN_COMP_IDS = new Set(['fuji_rope_complex','fuji_cindy']);
+if(store.get('duCleanLibraryV1',false)){
+  const oldEx=new Set(store.get('duCleanOriginalExerciseIds',[]));
+  const oldComp=new Set(store.get('duCleanOriginalComplexIds',[]));
+  exercises=exercises.filter(e=>DU_CLEAN_EX_IDS.has(e.id)||!oldEx.has(e.id));
+  complexes=complexes.filter(c=>DU_CLEAN_COMP_IDS.has(c.id)||!oldComp.has(c.id));
+  store.set('exercises',exercises);store.set('complexes',complexes);
+}
 function duCleanLibrary(){
   const backup={exportedAt:new Date().toISOString(),exercises,complexes};
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
@@ -2023,7 +2030,11 @@ function duCleanLibrary(){
   if(!confirm('Резервная копия библиотеки отправлена на скачивание. Оставить только 4 упражнения и 2 комплекса? История и календарь останутся без изменений.'))return;
   exercises=keepEx;complexes=keepComp;
   store.set('exercises',exercises);store.set('complexes',complexes);
+  store.set('duCleanOriginalExerciseIds',backup.exercises.map(e=>e.id));
+  store.set('duCleanOriginalComplexIds',backup.complexes.map(c=>c.id));
   store.set('duCleanLibraryV1',true);
+  // Cached IndexedDB and hosted JSON may still contain 150 entries; do not reseed them.
+  if(exerciseLibrary){exerciseLibrary=duFilteredSeed(exerciseLibrary);}
   document.getElementById('du-clean-offer')?.remove();
   location.reload();
 }
@@ -6358,8 +6369,15 @@ function withExerciseDatabase(action){
   });
 }
 
+function duFilteredSeed(value){
+  if(!store.get('duCleanLibraryV1',false))return value;
+  return {...value,
+    exercises:(value.exercises||[]).filter(e=>DU_CLEAN_EX_IDS.has(e.id)),
+    complexes:(value.complexes||[]).filter(c=>DU_CLEAN_COMP_IDS.has(c.id))};
+}
 function installLibrarySeed(){
   if(!exerciseLibrary) return;
+  exerciseLibrary=duFilteredSeed(exerciseLibrary);
   const aliases=new Map();
   let exChanged=false,compChanged=false;
   for(const seed of exerciseLibrary.exercises){
@@ -6403,6 +6421,7 @@ function installLibrarySeed(){
 }
 
 function applyExerciseLibrary(value){
+  value=duFilteredSeed(value);
   exerciseLibrary=value;
   fujiGuides=Object.fromEntries(Object.entries(value.guides).map(([key,guide])=>[key,[guide[0],guide[1],value.mascot==='davinci'?guide[2]:[]]]));
   fujiGuideIds=value.guideIds;
