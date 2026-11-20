@@ -811,6 +811,37 @@ button,[role="button"],input,select,textarea{touch-action:manipulation}
 
 
 .du-cal-edit-actions{display:flex;gap:8px;padding:10px 12px 12px;flex-wrap:wrap}.du-cal-edit-actions .btn{min-height:44px;flex:1;min-width:110px}
+
+/* DU Atlas unified library thumbnails — visual-only; source media is untouched. */
+.ex-list .ex-thumb.du-atlas-thumb{
+ position:relative;isolation:isolate;overflow:hidden;flex:0 0 56px!important;
+ width:56px!important;height:56px!important;border-radius:13px!important;
+ border:1px solid rgba(174,130,255,.38)!important;
+ background:radial-gradient(circle at 48% 40%,#302149 0%,#161322 65%,#0d0c15 100%)!important;
+ box-shadow:inset 0 0 0 1px #ffffff0b,0 1px 8px #0004;
+}
+.ex-list .ex-thumb.du-atlas-thumb img{
+ position:absolute;width:100%;height:100%;inset:0;object-fit:cover;
+ object-position:center center;background:#171321;
+}
+.ex-list .ex-thumb.du-atlas-thumb.du-atlas-legacy img{
+ filter:grayscale(1) contrast(1.16) brightness(.88) sepia(.14) hue-rotate(215deg);
+ mix-blend-mode:luminosity;
+}
+.ex-list .ex-thumb.du-atlas-thumb::after{
+ content:'';position:absolute;inset:0;pointer-events:none;
+ box-shadow:inset 0 0 0 1px #b49aff25,inset 0 -10px 15px #100c1e75;
+ border-radius:inherit;
+}
+/* Number plate overlay: hides the top-left index on atlas collage panels in list view. */
+.ex-list .ex-thumb.du-atlas-thumb.du-atlas-numbered::before{
+ content:'';position:absolute;z-index:2;top:0;left:0;width:25%;height:21%;
+ background:linear-gradient(130deg,#181020,#21132d);
+ border-bottom-right-radius:7px;
+ box-shadow:2px 2px 5px #100a19b8;
+}
+@media(max-width:390px){.ex-list .ex-thumb.du-atlas-thumb{width:49px!important;height:49px!important;flex-basis:49px!important}}
+
 </style>
 <style>.fuji-head{width:30px;height:34px;object-fit:cover;object-position:50% 5%;border-radius:10px;border:1px solid var(--acc)}.logo-wrap{align-items:center}.card,.complex-card{border-color:var(--line);}.nav-bottom{border-top:2px solid var(--acc)}.complex-ex-item{border-left-color:var(--acc2)}.exec-dots .exec-dot.done{background:var(--grad)}.fab{border:2px solid var(--acc2)}.xp-mini-lvl{border:1px solid var(--acc2)}</style><style id="fuji-redesign">
 :root{--radius:16px;--radius-lg:24px;--radius-sm:12px;--font-md:14px;--font-sm:12px;--font-lg:17px;--txt-dim:var(--mut)}
@@ -2828,9 +2859,9 @@ function renderEx(){
     const media = firstFrame ? {type:'image',data:firstFrame[1]} : e.media?.find(item => !isLegacyFujiImage(item,e.id));
     const thumb = media
       ? (media.type === 'image'
-          ? '<div class="ex-thumb"><img src="'+media.data+'" loading="lazy"></div>'
+          ? '<div class="ex-thumb du-atlas-thumb '+(String(media.data).startsWith('data:image/svg')?'du-atlas-legacy':'')+' '+(/atlas|concept|davinci/i.test(String(media.source||'')+' '+String(media.caption||''))?'du-atlas-numbered':'')+'"><img src="'+media.data+'" loading="lazy" alt=""></div>'
           : '<div class="ex-thumb" style="font-size:13px">🎬</div>')
-      : '<div class="ex-thumb" aria-label="Кадры пока не добавлены">'+uiIcon('video')+'</div>';
+      : '<div class="ex-thumb du-atlas-thumb" aria-label="Кадры пока не добавлены">'+uiIcon('video')+'</div>';
 
     const zB = (e.zones||[]).slice(0,3).map(zid => { const z = zones.find(x=>x.id===zid); return z ? E(z) : ''; }).filter(Boolean).join('');
     const gB = (e.gears||[]).slice(0,3).map(gid => { const g = gears.find(x=>x.id===gid); return g ? E(g) : ''; }).filter(Boolean).join('');
@@ -3269,7 +3300,7 @@ function renderPickEx(){
     const zB = (e.zones||[]).map(zid => { const z = zones.find(x=>x.id===zid); return z?E(z):''; }).join('');
     const gB = (e.gears||[]).map(gid => { const g = gears.find(x=>x.id===gid); return g?E(g):''; }).join('');
     return '<div class="ex-card" onclick="pickExercise(\''+e.id+'\')">'+
-      '<div class="ex-thumb" aria-label="Кадры пока не добавлены">'+uiIcon('video')+'</div>'+
+      '<div class="ex-thumb du-atlas-thumb" aria-label="Кадры пока не добавлены">'+uiIcon('video')+'</div>'+
       '<div class="ex-info"><div class="ex-name">'+escapeHtml(e.name)+'</div><div class="ex-tags">'+zB+' '+gB+'</div></div>'+
       '<div style="font-size:16px;color:var(--acc);font-weight:900">+</div></div>';
   }).join('') + '</div>';
@@ -6859,6 +6890,67 @@ function renderDU2384Atlas(e){
     var header=document.querySelector('.header');
     if(header) new ResizeObserver(updateLibraryTabsOffset).observe(header);
   }
+})();
+</script>
+
+<style id="du-unified-complex-style">
+/* Unified detail layout, respects existing theme variables */
+#m-fuji-detail .modal{max-width:720px;padding-bottom:max(22px,env(safe-area-inset-bottom,0px));}
+#m-fuji-detail #fujiDetailTitle{font-size:clamp(20px,5vw,28px);line-height:1.22;margin:4px 0 16px;}
+.du-comp-detail{display:grid;gap:13px;margin-bottom:15px;}
+.du-comp-hero{display:flex;align-items:center;gap:14px;min-width:0;padding:12px;border-radius:19px;background:var(--card,rgba(130,110,170,.1));border:1px solid var(--border,rgba(150,135,180,.18));}
+.du-comp-hero img{width:86px;height:90px;object-fit:contain;flex:none;background:transparent;}
+.du-comp-hero div{min-width:0;}
+.du-comp-eyebrow{font-size:10px;letter-spacing:1.6px;color:var(--mut,#999);font-weight:800;}
+.du-comp-hero h3{margin:6px 0;font-size:19px;line-height:1.2;overflow-wrap:anywhere;}
+.du-comp-meta{font-size:12px;color:var(--mut,#999);line-height:1.4;}
+.du-comp-summary{border-left:3px solid var(--acc,#9c79f5);border-radius:10px;padding:12px 14px;background:rgba(135,110,195,.1);font-size:13px;line-height:1.5;color:var(--text,inherit);}
+.du-comp-rows{display:grid;gap:9px;}
+.du-comp-row{display:flex;align-items:center;gap:11px;padding:12px 10px;border-radius:17px;background:var(--card,rgba(130,110,170,.08));border:1px solid var(--border,rgba(150,135,180,.2));min-width:0;}
+.du-comp-index{display:grid;place-items:center;flex:0 0 34px;height:36px;background:var(--acc,#9c79f5);color:#171124;font-weight:900;border-radius:11px;font-size:14px;}
+.du-comp-text{min-width:0;flex:1;display:grid;gap:5px;}
+.du-comp-text b{font-size:14px;line-height:1.3;overflow-wrap:anywhere;}
+.du-comp-text small{color:var(--mut,#999);font-size:12px;line-height:1.35;}
+.du-comp-media{width:94px;height:80px;display:grid;place-items:center;flex:none;overflow:hidden;background:transparent;}
+.du-comp-media .fuji-pic,.du-comp-media img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border:0;background:transparent;border-radius:0;}
+.du-comp-media .fuji-placeholder{width:65px;height:65px;display:grid;place-items:center;opacity:.5;}
+.du-comp-tip{font-size:11px;color:var(--mut,#999);line-height:1.45;padding:0 5px;}
+#m-fuji-detail .btn-primary{min-height:52px;}
+@media(max-width:390px){.du-comp-media{width:74px;height:70px}.du-comp-hero img{width:70px;height:80px}.du-comp-row{gap:8px;padding:9px 8px}}
+</style>
+
+<script id="du-unified-complex-script">
+/* Presentation-only override: do not modify workout, storage or timer engines. */
+(function(){
+  function renderUnifiedComplex(id){
+    const c=complexes.find(x=>x.id===id);
+    if(!c)return;
+    fujiSelected=id;
+    const amrap=!!c.roundMode;
+    const duration=Number(c.roundTime)||20;
+    const name=escapeHtml(c.name||'Комплекс');
+    const rows=(c.exercises||[]).map((a,i)=>{
+      const e=exercises.find(x=>x.id===a.exId);
+      const label=escapeHtml((e?.name||a.name||'Упражнение').replace(/ · Синди$/,''));
+      const dose=escapeHtml(fujiDose(a)||'По настройкам упражнения');
+      const image=fujiPic(e);
+      return '<div class="du-comp-row"><span class="du-comp-index">'+(i+1)+'</span>'+
+        '<span class="du-comp-text"><b>'+label+'</b><small>'+dose+'</small></span>'+
+        '<span class="du-comp-media">'+image+'</span></div>';
+    }).join('');
+    document.getElementById('fujiDetailTitle').textContent=c.name;
+    const meta=(amrap?'AMRAP · '+duration+' мин':'Комплекс · '+c.exercises.length+' упражнений');
+    document.getElementById('fujiDetailList').innerHTML='<section class="du-comp-detail">'+
+      '<div class="du-comp-hero"><img src="'+dvHeroImage+'" alt="ДаВинчи">'+
+      '<div><div class="du-comp-eyebrow">ДУ / DAVINCI EDITION</div><h3>'+name+'</h3><div class="du-comp-meta">'+meta+'</div></div></div>'+
+      (c.desc?'<div class="du-comp-summary">'+escapeHtml(c.desc)+'</div>':'')+
+      '<div class="du-comp-rows">'+rows+'</div>'+
+      '<div class="du-comp-tip">Во время тренировки показываются схемы движений. Пользовательские фотографии сохраняются отдельно. Иллюстрации атласа пока не прошли экспертную проверку техники.</div></section>';
+    const primary=document.querySelector('#m-fuji-detail .btn-primary');
+    if(primary)primary.textContent=amrap?'▶ Старт · '+duration+' мин':'▶ Начать тренировку';
+    openModal('m-fuji-detail');
+  }
+  fujiDetail=renderUnifiedComplex;
 })();
 </script>
 </body>
