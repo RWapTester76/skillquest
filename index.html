@@ -788,7 +788,7 @@ body[data-mode="light"] .modal-overlay{background:rgba(20,15,10,.35);}
 .fuji-compact{display:flex;align-items:center;text-align:left;width:100%;gap:12px;padding:8px;margin-bottom:5px;background:var(--card);border:1px solid var(--line);border-radius:14px}.fuji-compact span{flex:1;min-width:0}.fuji-compact small,.fuji-summary small{display:block;color:var(--mut)}.fuji-compact .fuji-pic,.fuji-compact .fuji-placeholder{width:48px;height:48px;object-fit:cover;border-radius:10px}.fuji-detail-row{display:flex;gap:12px;margin-bottom:10px;padding:8px;background:var(--card);border-radius:12px}.fuji-detail-row .fuji-pic,.fuji-detail-row .fuji-placeholder{width:92px;height:92px;object-fit:contain;border-radius:10px}.fuji-detail-row div{flex:1}.fuji-detail-row p,.fuji-note{color:var(--mut);font-size:12px}.exec-focus .fuji-pic{width:min(100%,240px);max-height:220px;object-fit:contain;border-radius:16px}.fuji-summary{padding:12px;background:var(--card2);border-radius:12px;margin:10px 0}.fuji-placeholder{display:grid;place-items:center;background:var(--card2);font-size:24px}.exec-plan-list{max-height:130px;overflow:auto}.cindy-progress{width:100%;max-width:320px;height:6px;background:var(--card2);border-radius:8px;overflow:hidden;margin-bottom:12px}.cindy-progress i{display:block;height:100%;background:var(--grad);width:100%} #m-fuji-detail .fuji-detail-row small{display:block;line-height:1.5}.exec-focus .fuji-note{text-align:left;line-height:1.5;max-width:440px} 
 .du-day-total{display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px;padding:10px 12px;margin-bottom:10px;border:1px solid var(--line);border-radius:14px;background:var(--card2)}.du-day-total b{font-size:24px;color:var(--acc2);font-variant-numeric:tabular-nums}.du-day-total small{grid-column:1/-1;color:var(--mut)}.du-health-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.du-metric{min-width:0;padding:12px;background:var(--card2);border:1px solid var(--line);border-radius:12px}.du-metric b{display:block;font-size:23px}.du-metric small,.du-health small,.du-sheet small{color:var(--mut)}.du-meter{height:6px;border-radius:8px;background:var(--line);overflow:hidden;margin:8px 0}.du-meter i{display:block;height:100%;background:var(--grad)}.du-health>.btn{margin-top:12px}.du-sheet{position:fixed;inset:0;z-index:220;background:var(--bg);overflow:auto;padding:calc(14px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom));}.du-sheet[hidden]{display:none}.du-sheet h2,.du-sheet h3,.du-sheet p{margin:10px 0}.du-sheet label{display:block;color:var(--mut);margin-top:8px}.du-sheet input,.du-sheet select{width:100%;padding:12px;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;margin:5px 0 12px;font-size:16px}.du-sheet .btn{margin-bottom:8px}.du-hrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
 
-/* DU v23.8.7 — iPhone Safari reachable controls, safe-area and scroll repair */
+/* DU v23.8.8 — iPhone Safari reachable controls, safe-area and scroll repair */
 html{scroll-padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));-webkit-text-size-adjust:100%}
 body{min-width:0;overflow-x:hidden}
 button,[role="button"],input,select,textarea{touch-action:manipulation}
@@ -1064,7 +1064,7 @@ body{font-variant-numeric:tabular-nums} .view{min-width:0} .page-kicker{margin-b
 #duBuilderFab:focus-visible{outline:3px solid #fff;outline-offset:3px}
 @media(max-width:360px){#duBuilderFab{bottom:calc(80px + env(safe-area-inset-bottom));width:46px;height:46px}}
 </style><style>
-/* DaVinci Atlas UI v23.8.7: non-destructive icon layer */
+/* DaVinci Atlas UI v23.8.8: non-destructive icon layer */
 .du-atlas-symbol{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px solid rgba(222,105,241,.35);border-radius:13px;background:radial-gradient(circle at 50% 25%,rgba(217,70,182,.19),rgba(19,13,31,.95));box-shadow:inset 0 0 12px rgba(185,73,234,.1)}
 .du-atlas-symbol svg{width:38px;height:38px;overflow:visible}
 .picker-tile .pt-emoji:has(.du-atlas-symbol){font-size:initial;line-height:1;min-height:51px;display:flex;align-items:center;justify-content:center}
@@ -1081,7 +1081,7 @@ body{font-variant-numeric:tabular-nums} .view{min-width:0} .page-kicker{margin-b
 .du2384-atlas-note,.du2384-atlas-empty{font-size:11px;line-height:1.5;color:#c9b4d8;margin:9px 0 0}
 </style>
 <style>
-/* v23.8.7 — persistent library switcher on iPhone */
+/* v23.8.8 — persistent library switcher on iPhone */
 #v-ex > .du-segments, #v-comps > .du-segments {
   position: -webkit-sticky; position: sticky;
   top: var(--du-library-sticky-top, 64px);
@@ -1174,6 +1174,22 @@ body[data-mode="dark"]{background:radial-gradient(ellipse 80% 32% at 50% 0%,rgba
 </style><style>#m-ex .du10-hero{display:flex;align-items:center;gap:12px;background:linear-gradient(110deg,#21113e,#111126);border:1px solid #7651a8;border-radius:14px;overflow:hidden;margin:0 0 14px;color:#fff}#m-ex .du10-hero img{width:43%;height:105px;object-fit:cover}#m-ex .du10-hero small{display:block;color:#d4b8fa;margin-top:5px;line-height:1.4}#m-ex .du10-formats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}#m-ex .du10-formats button{border:1px solid #7651a8;border-radius:12px;background:transparent;color:inherit;padding:10px 3px;min-height:58px;font:inherit;font-size:12px}#m-ex .du10-formats button.on{background:#7138bd;color:white;border-color:#c79aff}#m-ex #exFormat{display:none}#m-ex .du10-details{border:1px solid #7651a8;border-radius:12px;padding:10px;margin:12px 0}#m-ex .du10-details summary{cursor:pointer;font-weight:600;min-height:36px;display:flex;align-items:center;justify-content:space-between;gap:6px}#m-ex .du10-details[open] summary{margin-bottom:12px}#m-ex #exTwoSidesPick .chip{flex:1;text-align:center;min-height:42px;display:flex;align-items:center;justify-content:center}#m-ex #du10Duplicate:empty{display:none}</style><style>
 .training-result-summary{display:inline-flex;align-items:center;gap:6px;color:#c4b5fd;font-weight:800;font-size:11px;line-height:1.25;padding:3px 8px;margin-top:3px;border-radius:999px;background:rgba(124,92,255,.14);border:1px solid rgba(164,139,255,.25)}
 .training-result-summary-large{display:flex;justify-content:center;width:max-content;max-width:100%;margin:0 auto 14px;padding:9px 14px;font-size:15px;white-space:normal}
+</style>
+
+<style>
+.du-atlas-symbol{display:inline-flex;align-items:center;justify-content:center;width:70px;height:70px;flex:none;overflow:hidden;border:1px solid #a58a65;border-radius:13px;background:#e8d7b6;box-shadow:inset 0 0 0 3px rgba(255,248,226,.36),0 2px 8px rgba(0,0,0,.18)}
+.du-atlas-symbol svg{width:66%;height:66%;overflow:visible}
+.du-atlas-symbol.du-atlas-ink{background:radial-gradient(ellipse at 48% 40%,#f4e7ca,#d9c29c 86%)}
+.du-atlas-art{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.picker-tile{min-height:118px;padding:8px 5px;gap:4px}
+.picker-tile .pt-emoji:has(.du-atlas-symbol){min-height:70px;display:flex;align-items:center;justify-content:center}
+.ex-tile .du-atlas-symbol{width:42px;height:42px;border-radius:8px}
+.ex-tile .du-atlas-symbol svg{width:70%;height:70%}
+.ex-tile .du-atlas-art{width:100%;height:100%;object-fit:cover}
+.du-atlas-mini .du-atlas-symbol{width:29px;height:29px;border-radius:7px}
+.du-atlas-mini .du-atlas-symbol svg{width:70%;height:70%}
+.du2384-atlas-tile .du-atlas-symbol{width:64px;height:64px}
+@media(max-width:400px){.du-atlas-symbol{width:58px;height:58px}.picker-tile{min-height:106px;padding:6px 4px}.picker-tile .pt-emoji:has(.du-atlas-symbol){min-height:58px}.ex-tile .du-atlas-symbol{width:36px;height:36px}}
 </style>
 </head>
 <body data-mode="dark">
@@ -1932,7 +1948,7 @@ setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else wind
 
 <div class="modal-overlay" id="m-fuji-detail"><div class="modal"><h3 id="fujiDetailTitle"></h3><div id="fujiDetailList"></div><button class="btn btn-primary btn-full" onclick="fujiLaunch('normal')">▶ Обычная тренировка</button><label class="field-label" style="margin-top:12px">Цель: повторы или круги</label><input class="field-input" id="fujiTarget" type="number" min="1" value="100"><div class="btn-row"><button class="btn" onclick="fujiLaunch('reps')">На количество</button><button class="btn" onclick="fujiLaunch('rounds')">На круги</button></div><div class="btn-row"><button class="btn" onclick="closeModal('m-fuji-detail');openCompModal(fujiSelected)">Изменить</button><button class="btn" onclick="delCompFromTab(fujiSelected);closeModal('m-fuji-detail')">Удалить</button></div><button class="modal-close" onclick="closeModal('m-fuji-detail')">Закрыть</button></div></div><script>
 /* ==================== КОНСТАНТЫ ==================== */
-const APP_VERSION = 'v23.8.7';
+const APP_VERSION = 'v23.8.8';
 const S='<path d="M12 15h16l-2 21 2 8H12l2-8zM10 15L5 17 3 36l4 1 4-13zM30 15l5 2 2 19-4 1-4-13zM12 44h8l-1 32h-5zM20 44h8l-2 32h-5z"/><circle cx="20" cy="7" r="5"/>',
       c=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
 const BL='M20 12l7 5-7 7-7-7z',BR='M17 19h6v8h-6z',BW='M12.5 20l6 6-2 8-4-1zM27.5 20l-6 6 2 8 4-1z',BO='M16 33h8v8h-8z',GM='M12 43q4-2 8 0v6q-4 2-8 0zM20 43q4-2 8 0v6q-4 2-8 0z';
@@ -2821,38 +2837,58 @@ function pickerBack(){
   renderPickerPage();
 }
 
-/* v23.8.7: presentation-only anatomy/equipment/skill icon system. Does not mutate stored records. */
+/* v23.8.8: parchment atlas art for body areas, equipment, and skills. */
 function duAtlasIcon(item,kind){
  const n=String(item?.name||'').toLowerCase();
- const shape=(path,fill='none')=>'<path d="'+path+'" fill="'+fill+'" stroke="#d7c8e8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>';
- const svg=(inside)=>'<span class="du-atlas-symbol"><svg viewBox="0 0 64 64" role="img" aria-label="'+escapeHtml(item?.name||kind)+'" xmlns="http://www.w3.org/2000/svg">'+inside+'</svg></span>';
+ const art={
+  cardio:'img-e505d0b7c06b5713.webp', face:'img-1e0e5e126ddde51a.webp', neck:'img-eaef10ff705ee0d4.webp',
+  shoulderFront:'img-3a39724b4a11fca2.webp', shoulderSide:'img-6fb0739234cdd4e0.webp', shoulderBack:'img-e51281868df12950.webp',
+  arm:'img-a4395e9f7c4ac4f9.webp', back:'img-ad7d0be14fd9502b.webp', chest:'img-6fb0739234cdd4e0.webp',
+  glutes:'img-e5e3ffa992ee4262.webp', thighs:'img-f12e2a7f29441869.webp', calves:'img-2d31a277e821f343.webp',
+  feet:'img-8c2746f8bec64a38.webp', hands:'img-ca2aba1c09033b00.webp', abs:'img-c41f70b4a630f733.webp',
+  core:'img-477eface872339bc.webp', stretch:'img-8fd7920f7cb74534.webp', full:'img-912ca31848057c6e.webp'
+ };
+ const selectZoneArt=()=>{
+  if(/кардио|cardio|сердц/.test(n))return art.cardio;
+  if(/лиц|face/.test(n))return art.face;
+  if(/ше|neck/.test(n))return art.neck;
+  if(/задн.*дельт|posterior/.test(n))return art.shoulderBack;
+  if(/средн.*дельт|средн.*плеч|lateral/.test(n))return art.shoulderSide;
+  if(/передн.*дельт|передн.*плеч|anterior/.test(n))return art.shoulderFront;
+  if(/бицеп|трицеп|предплеч|рук/.test(n))return art.arm;
+  if(/плеч|дельт|shoulder/.test(n))return art.shoulderFront;
+  if(/спин|широч|трапец|back/.test(n))return art.back;
+  if(/груд|pector|chest/.test(n))return art.chest;
+  if(/ягод|glute/.test(n))return art.glutes;
+  if(/бедр|таз|thigh|hip/.test(n))return art.thighs;
+  if(/голен|икр|calf|shin/.test(n))return art.calves;
+  if(/стоп|foot|ankle/.test(n))return art.feet;
+  if(/кист|ладон|hand|wrist/.test(n))return art.hands;
+  if(/пресс|abs/.test(n))return art.abs;
+  if(/кор|живот|core/.test(n))return art.core;
+  if(/растяж|stretch/.test(n))return art.stretch;
+  if(/все тело|всё тело|вся зона|общ|full/.test(n))return art.full;
+  return art.full;
+ };
  if(kind==='zones'){
-  const body='<g stroke="#b8a9c5" stroke-width="1.6" fill="#24202e" stroke-linejoin="round"><circle cx="32" cy="9" r="5"/><path d="M25 16Q32 13 39 16L44 32 38 37 37 47 41 60 34 61 31 45 29 61 22 60 27 46 26 37 20 32Z"/><path d="M25 17L17 21 13 38 18 40 24 27M39 17L47 21 51 38 46 40 40 27"/></g>';
-  let marks='';
-  const hot=(d)=>'<path d="'+d+'" fill="#f54aab" stroke="#ff94ce" stroke-width=".6"/>';
-  if(/груд|pector/.test(n)) marks=hot('M25 19Q29 17 31 21L31 29 23 28Z')+hot('M33 21Q36 17 40 19L41 28 33 29Z');
-  else if(/спин|широч|трапец/.test(n))marks=hot('M25 20L31 26 27 36 21 31Z')+hot('M39 20L33 26 37 36 43 31Z');
-  else if(/плеч|дельт/.test(n))marks=hot('M22 17L17 21 15 28 23 27Z')+hot('M42 17L47 21 49 28 41 27Z');
-  else if(/рук|бицеп|трицеп|предплеч/.test(n))marks=hot('M18 23L14 35 19 37 23 25Z')+hot('M46 23L50 35 45 37 41 25Z');
-  else if(/пресс|кор|живот/.test(n))marks=hot('M27 28L37 28 37 37 27 37Z');
-  else if(/ягод/.test(n))marks=hot('M26 36L31 38 30 45 25 44Z')+hot('M33 38L38 36 39 44 34 45Z');
-  else if(/ног|бедр|икр|голен|стоп/.test(n))marks=hot('M27 44L31 45 29 59 23 59Z')+hot('M33 45L37 44 41 59 35 59Z');
-  else if(/всё|все тело|полное|общ/.test(n))marks=hot('M25 19L39 19 39 35 25 35Z')+hot('M26 40L30 41 28 58 23 58Z')+hot('M34 41L38 40 41 58 36 58Z');
-  else if(/сустав|мобил/.test(n))marks='<g fill="#f54aab"><circle cx="20" cy="22" r="3"/><circle cx="44" cy="22" r="3"/><circle cx="26" cy="38" r="3"/><circle cx="38" cy="38" r="3"/><circle cx="28" cy="49" r="3"/><circle cx="36" cy="49" r="3"/></g>';
-  else marks=hot('M25 19L39 19 39 35 25 35Z');
-  return svg(body+marks);
+  const src='./assets/'+selectZoneArt();
+  return '<span class="du-atlas-symbol du-atlas-photo"><img class="du-atlas-art" src="'+src+'" alt="'+escapeHtml(item?.name||'Анатомический рисунок')+'" loading="lazy" decoding="async"></span>';
  }
+ const stroke='#594633';
+ const shape=(path,fill='none')=>'<path d="'+path+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>';
+ const svg=(inside)=>'<span class="du-atlas-symbol du-atlas-ink"><svg viewBox="0 0 64 64" role="img" aria-label="'+escapeHtml(item?.name||kind)+'" xmlns="http://www.w3.org/2000/svg">'+inside+'</svg></span>';
  let icon='';
  if(kind==='gears'){
-  if(/гир/.test(n))icon='<path d="M23 24v-5a9 9 0 0 1 18 0v5"/>'+shape('M19 28Q32 23 45 28L48 49Q47 56 32 56Q17 56 16 49Z','#ab4cbe');
+  if(/гир/.test(n))icon='<path d="M23 24v-5a9 9 0 0 1 18 0v5" fill="none" stroke="'+stroke+'" stroke-width="2.2"/>'+shape('M19 28Q32 23 45 28L48 49Q47 56 32 56Q17 56 16 49Z','#ba8a59');
   else if(/турник/.test(n))icon=shape('M9 53V12H55V53 M9 17H55');
   else if(/брус/.test(n))icon=shape('M13 51V20H28V51 M36 51V20H51V51 M13 20H28 M36 20H51');
-  else if(/кольц/.test(n))icon=shape('M21 8V30 M43 8V30')+'<circle cx="21" cy="40" r="10"/><circle cx="43" cy="40" r="10"/>';
+  else if(/кольц/.test(n))icon=shape('M21 8V30 M43 8V30')+'<circle cx="21" cy="40" r="10" fill="none" stroke="'+stroke+'" stroke-width="2.1"/><circle cx="43" cy="40" r="10" fill="none" stroke="'+stroke+'" stroke-width="2.1"/>';
   else if(/скакал/.test(n))icon=shape('M16 24Q32 62 48 24 M15 13V28 M49 13V28');
   else if(/гантел/.test(n))icon=shape('M13 22V42 M20 18V46 M44 18V46 M51 22V42 M20 32H44');
   else if(/резин|эспанд/.test(n))icon=shape('M14 33Q14 14 32 14Q50 14 50 33Q50 52 32 52Q14 52 14 33Z');
-  else if(/садху/.test(n))icon=shape('M9 44L52 34 56 43 14 54Z','#734b36')+shape('M16 42V34 M23 40V32 M30 39V31 M37 37V29 M44 36V28');
-  else if(/гантел|мяч|медбол/.test(n))icon='<circle cx="32" cy="33" r="20"/>';
+  else if(/садху/.test(n))icon=shape('M9 44L52 34 56 43 14 54Z','#a77c54')+shape('M16 42V34 M23 40V32 M30 39V31 M37 37V29 M44 36V28');
+  else if(/мяч|медбол/.test(n))icon='<circle cx="32" cy="33" r="20" fill="#c99b68" stroke="'+stroke+'" stroke-width="2"/><path d="M18 20Q32 33 46 20M14 33H50M18 46Q32 33 46 46" fill="none" stroke="'+stroke+'" stroke-width="1.6"/>';
+  else if(/коврик/.test(n))icon='<rect x="14" y="12" width="36" height="42" rx="4" fill="#c7a77b" stroke="'+stroke+'" stroke-width="2"/><path d="M19 18H45M19 24H45" stroke="'+stroke+'" stroke-width="1.2"/>';
   else icon=shape('M13 44L19 23 32 15 45 23 51 44 32 54Z');
  }else{
   if(/сил/.test(n))icon=shape('M12 38L22 38 28 27 36 31 42 20 52 20 M16 44L49 44');
@@ -2860,12 +2896,13 @@ function duAtlasIcon(item,kind){
   else if(/гибк|мобил/.test(n))icon=shape('M14 46Q32 12 50 46 M19 49H45');
   else if(/баланс/.test(n))icon=shape('M32 12V49 M17 49H47 M15 25H49 M15 25L10 35H20Z M49 25L44 35H54Z');
   else if(/коорд/.test(n))icon=shape('M32 8V56 M8 32H56 M26 14L32 8 38 14 M26 50L32 56 38 50');
-  else if(/восстан|дых/.test(n))icon=shape('M32 52Q7 37 12 23Q17 12 32 24Q47 12 52 23Q57 37 32 52Z');
+  else if(/скорост/.test(n))icon=shape('M11 23H29 M7 32H25 M12 41H28 M31 45L40 20 48 33 57 17');
+  else if(/мощност/.test(n))icon=shape('M32 8L38 25 55 32 38 39 32 56 25 39 9 32 25 25Z');
+  else if(/ловк/.test(n))icon=shape('M15 45Q22 20 32 33T49 18 M15 45H50');
   else icon=shape('M32 11L39 27 55 32 39 38 32 54 25 38 9 32 25 27Z');
  }
- return svg('<g stroke="#d9b7ed" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">'+icon+'</g>');
+ return svg('<g fill="none" stroke-linecap="round" stroke-linejoin="round">'+icon+'</g>');
 }
-
 function renderPickerPage(){
   const titleEl = document.getElementById('pickerTitle');
   const bodyEl = document.getElementById('pickerBody');
@@ -3081,7 +3118,7 @@ function renderExPickerPage(){
       const on = currentExZones.includes(z.id);
       return '<div class="ex-tile '+(on?'on':'')+'" data-id="'+z.id+'" onclick="toggleExPickerItem(\''+z.id+'\')">'+
         '<div class="et-check">✓</div>'+
-        E(z)+
+        duAtlasIcon(z,'zones')+
         '<div class="et-name">'+z.name+'</div>'+
       '</div>';
     }).join('') + '</div>';
@@ -3094,7 +3131,7 @@ function renderExPickerPage(){
       const on = currentExGears.includes(g.id);
       return '<div class="ex-tile '+(on?'on':'')+'" data-id="'+g.id+'" onclick="toggleExPickerItem(\''+g.id+'\')">'+
         '<div class="et-check">✓</div>'+
-        E(g)+
+        duAtlasIcon(g,'gears')+
         '<div class="et-name">'+g.name+'</div>'+
       '</div>';
     }).join('') + '</div>' +
@@ -3108,7 +3145,7 @@ function renderExPickerPage(){
       const on = currentExSkills.includes(s.id);
       return '<div class="ex-tile '+(on?'on':'')+'" data-id="'+s.id+'" onclick="toggleExPickerItem(\''+s.id+'\')">'+
         '<div class="et-check">✓</div>'+
-        E(s)+
+        duAtlasIcon(s,'skills')+
         '<div class="et-name">'+s.name+'</div>'+
       '</div>';
     }).join('') + '</div>';
@@ -6803,7 +6840,7 @@ const du229OpenOld=openExModal;openExModal=function(id){du229OpenOld(id);if(id)d
 /* v23.0: existing anatomical taxonomy, interactive schematic */
 function du230Map(){const el=document.getElementById('du230MapBody');if(!el)return;
  const main=zones.filter(z=>z.isMain||!z.parent);const selected=filterZones;
- el.innerHTML='<p class="note">Схематические зоны из базы. Выбери область тела или снаряд.</p><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">'+main.map((z,i)=>'<button type="button" class="btn btn-sm '+(selected.includes(z.id)?'btn-primary':'')+'" data-zone="'+i+'" style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:76px">'+E(z)+'<span>'+escapeHtml(z.name)+'</span></button>').join('')+'</div><div class="field-group"><label class="field-label">Снаряд</label><select class="field-input" id="du230Gear"><option value="">Все</option>'+gears.map((g,i)=>'<option value="'+i+'" '+(filterGears.length===1&&filterGears[0]===g.id?'selected':'')+'>'+escapeHtml(g.name)+'</option>').join('')+'</select></div><button class="btn btn-sm btn-full" id="du230Reset">Сбросить фильтры</button>';
+ el.innerHTML='<p class="note">Схематические зоны из базы. Выбери область тела или снаряд.</p><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">'+main.map((z,i)=>'<button type="button" class="btn btn-sm '+(selected.includes(z.id)?'btn-primary':'')+'" data-zone="'+i+'" style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:76px">'+duAtlasIcon(z,'zones')+'<span>'+escapeHtml(z.name)+'</span></button>').join('')+'</div><div class="field-group"><label class="field-label">Снаряд</label><select class="field-input" id="du230Gear"><option value="">Все</option>'+gears.map((g,i)=>'<option value="'+i+'" '+(filterGears.length===1&&filterGears[0]===g.id?'selected':'')+'>'+escapeHtml(g.name)+'</option>').join('')+'</select></div><button class="btn btn-sm btn-full" id="du230Reset">Сбросить фильтры</button>';
  el.querySelectorAll('[data-zone]').forEach(b=>b.onclick=()=>{const id=main[Number(b.dataset.zone)].id;filterZones=filterZones.includes(id)?filterZones.filter(x=>x!==id):[...filterZones,id];renderChips();renderEx();});
  el.querySelector('#du230Gear').onchange=e=>{filterGears=e.target.value===''?[]:[gears[Number(e.target.value)].id];renderChips();renderEx();};
  el.querySelector('#du230Reset').onclick=()=>{filterZones=[];filterGears=[];filterSkills=[];renderChips();renderEx();};
@@ -7001,13 +7038,13 @@ root.DUWorkoutEngine=api;
 
 </script>
 <style>
-/* v23.8.7 — independent builder and richer category tiles */
+/* v23.8.8 — independent builder and richer category tiles */
 .picker-tile{position:relative;overflow:hidden}.picker-tile .pt-emoji{display:inline-grid;place-items:center;width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,rgba(167,139,250,.25),rgba(59,130,246,.13));box-shadow:inset 0 0 0 1px rgba(167,139,250,.2);font-size:27px}.picker-tile:nth-child(5n+2) .pt-emoji{background:linear-gradient(135deg,rgba(251,146,60,.25),rgba(250,204,21,.1))}.picker-tile:nth-child(5n+3) .pt-emoji{background:linear-gradient(135deg,rgba(52,211,153,.23),rgba(45,212,191,.1))}.picker-tile:nth-child(5n+4) .pt-emoji{background:linear-gradient(135deg,rgba(244,114,182,.23),rgba(167,139,250,.12))}.picker-tile:nth-child(5n+5) .pt-emoji{background:linear-gradient(135deg,rgba(96,165,250,.23),rgba(34,211,238,.12))}
 #duBuilderFab{position:fixed;right:16px;bottom:88px;z-index:1100;border:0;border-radius:30px;padding:12px 16px;background:linear-gradient(135deg,#8257db,#5844b4);color:white;font-weight:750;box-shadow:0 8px 26px #0006;max-width:calc(100vw - 32px)}
 #duBuilderPanel{position:fixed;inset:0;z-index:3200;background:rgba(5,7,16,.82);display:none;overflow:auto;padding:12px;overscroll-behavior:contain}#duBuilderPanel.du-open{display:block}#duBuilderPanel .du-build-shell{max-width:620px;margin:8px auto 28px;background:var(--card,#191b27);color:var(--txt,#fff);border:1px solid var(--line,#39384c);border-radius:20px;padding:16px}#duBuilderPanel input,#duBuilderPanel select{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line,#555);background:var(--card2,#252638);color:var(--txt,#fff);font:inherit}#duBuilderPanel label{display:block;margin:10px 0 5px;font-size:13px}#duBuilderPanel .du-block{padding:12px;border-radius:14px;border:1px solid var(--line,#555);margin:10px 0;background:var(--card2,#252638)}#duBuilderPanel .du-line{display:flex;gap:8px;align-items:center}#duBuilderPanel .du-line>*{min-width:0;flex:1}#duBuilderPanel button{padding:10px;border:1px solid var(--line,#555);border-radius:10px;background:var(--card2,#252638);color:var(--txt,#fff);font:inherit;cursor:pointer}#duBuilderPanel .du-primary{background:#7754d2;color:white;border:0}#duBuilderPanel .du-muted{font-size:12px;opacity:.75;line-height:1.5}#duBuilderPanel .du-block-head{display:flex;align-items:center;justify-content:space-between;gap:8px}#duBuilderPanel .du-mini{flex:none;padding:7px 9px}#duBuilderPanel .du-action{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}#duBuilderPanel .du-action button{flex:1 1 110px}
 </style>
 <script>
-/* v23.8.7: independent local draft builder; deliberately does not modify old workout, XP or calendar. */
+/* v23.8.8: independent local draft builder; deliberately does not modify old workout, XP or calendar. */
 (function(){'use strict';
 const KEY='du_builder_drafts_v1';let blocks=[],currentId=null;
 const $=id=>document.getElementById(id);
@@ -7029,7 +7066,7 @@ function makePlan(){collect();return {schema:'du.workout.v1',id:currentId||'draf
 function message(t){$('duBuilderMessage').textContent=t}
 function add(type){collect();const ex=options();if(type==='exercise'&&!ex.length){message('Библиотека упражнений ещё не загрузилась. Открой приложение и дождись загрузки.');return}blocks.push(type==='exercise'?{type,exerciseId:ex[0].id,sets:3,reps:10,sides:'none',restSeconds:60}:type==='rest'?{type,seconds:60}:type==='amrap'||type==='emom'?{type,durationSeconds:1200,exerciseIds:[]}: {type,workSeconds:type==='tabata'?20:40,restSeconds:type==='tabata'?10:20,rounds:8});render();message('')}
 function init(){if($('duBuilderPanel'))return;const fab=document.createElement('button');fab.id='duBuilderFab';fab.textContent='✦ Конструктор';fab.title='Открыть конструктор тренировок';fab.setAttribute('aria-label','Открыть конструктор тренировок');fab.addEventListener('click',()=>{ $('duBuilderPanel').classList.add('du-open');document.body.style.overflow='hidden';render();});document.body.appendChild(fab);
- const p=document.createElement('div');p.id='duBuilderPanel';p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');p.setAttribute('aria-label','Конструктор тренировок');p.innerHTML='<div class="du-build-shell"><div class="du-block-head"><h2 style="margin:0">Конструктор ДУ</h2><button id="duBuilderClose" aria-label="Закрыть">✕</button></div><p class="du-muted">v23.8.7 · Создание и сохранение черновиков. Запуск в старом таймере пока не подключён.</p><label>Название тренировки</label><input id="duBuilderName" maxlength="100" value="Моя тренировка"><div class="du-action"><button data-add="exercise">+ Упражнение</button><button data-add="interval">+ Интервалы</button><button data-add="tabata">+ Табата</button><button data-add="amrap">+ AMRAP</button><button data-add="emom">+ EMOM</button><button data-add="rest">+ Отдых</button></div><div id="duBuilderBlocks"></div><div class="du-action"><button class="du-primary" id="duBuilderSave">Сохранить черновик</button><button id="duBuilderExport">Экспорт JSON</button><button id="duBuilderNew">Новый</button></div><label>Сохранённые черновики</label><select id="duBuilderSaved"><option value="">Выбери тренировку</option></select><div class="du-action"><button id="duBuilderLoad">Открыть</button><button id="duBuilderRemove">Удалить черновик</button></div><p id="duBuilderMessage" class="du-muted" aria-live="polite"></p></div>';document.body.appendChild(p);
+ const p=document.createElement('div');p.id='duBuilderPanel';p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');p.setAttribute('aria-label','Конструктор тренировок');p.innerHTML='<div class="du-build-shell"><div class="du-block-head"><h2 style="margin:0">Конструктор ДУ</h2><button id="duBuilderClose" aria-label="Закрыть">✕</button></div><p class="du-muted">v23.8.8 · Создание и сохранение черновиков. Запуск в старом таймере пока не подключён.</p><label>Название тренировки</label><input id="duBuilderName" maxlength="100" value="Моя тренировка"><div class="du-action"><button data-add="exercise">+ Упражнение</button><button data-add="interval">+ Интервалы</button><button data-add="tabata">+ Табата</button><button data-add="amrap">+ AMRAP</button><button data-add="emom">+ EMOM</button><button data-add="rest">+ Отдых</button></div><div id="duBuilderBlocks"></div><div class="du-action"><button class="du-primary" id="duBuilderSave">Сохранить черновик</button><button id="duBuilderExport">Экспорт JSON</button><button id="duBuilderNew">Новый</button></div><label>Сохранённые черновики</label><select id="duBuilderSaved"><option value="">Выбери тренировку</option></select><div class="du-action"><button id="duBuilderLoad">Открыть</button><button id="duBuilderRemove">Удалить черновик</button></div><p id="duBuilderMessage" class="du-muted" aria-live="polite"></p></div>';document.body.appendChild(p);
  function refresh(){const a=load();$('duBuilderSaved').innerHTML='<option value="">Выбери тренировку</option>'+a.map((x,i)=>'<option value="'+i+'">'+esc(x.name)+'</option>').join('')}
  p.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a){add(a.dataset.add);return}const btn=e.target.closest('[data-action]');if(btn){collect();const i=Number(btn.closest('[data-index]').dataset.index),action=btn.dataset.action;if(action==='delete')blocks.splice(i,1);if(action==='up'&&i>0)[blocks[i-1],blocks[i]]=[blocks[i],blocks[i-1]];if(action==='down'&&i<blocks.length-1)[blocks[i+1],blocks[i]]=[blocks[i],blocks[i+1]];render();}});
  $('duBuilderClose').onclick=()=>{p.classList.remove('du-open');document.body.style.overflow=''};
@@ -7042,7 +7079,7 @@ function init(){if($('duBuilderPanel'))return;const fab=document.createElement('
 })();
 </script>
 <script>
-/* DU v23.8.7: read-only atlas preview; does not mutate exercise data. */
+/* DU v23.8.8: read-only atlas preview; does not mutate exercise data. */
 function renderDU2384Atlas(e){
  const root=document.getElementById('du2384AtlasPanel'); if(!root)return;
  if(!e){root.innerHTML='';return;}
@@ -7052,7 +7089,7 @@ function renderDU2384Atlas(e){
    if(!found.length)return '';
    return '<section class="du2384-atlas-group"><h4>'+label+'</h4><div class="du2384-atlas-tiles">'+found.map(item=>'<div class="du2384-atlas-tile">'+duAtlasIcon(item,kind)+'<span>'+escapeHtml(item.name)+'</span></div>').join('')+'</div></section>';
  }).join('');
- root.innerHTML='<div class="du2384-atlas-head"><strong>Анатомический атлас</strong><span>Предпросмотр · v23.8.7</span></div>'+
+ root.innerHTML='<div class="du2384-atlas-head"><strong>Анатомический атлас</strong><span>Предпросмотр · v23.8.8</span></div>'+
  (cards||'<p class="du2384-atlas-empty">Категории ещё не назначены. Добавь зоны, снаряды и навыки ниже.</p>')+
  '<p class="du2384-atlas-note">Подсветка условная: анатомическая и биомеханическая проверка ещё не проведена. Иллюстрации ДаВинчи отображаются выше, если они есть в базе.</p>';
 }
@@ -7439,3 +7476,12 @@ const du10OldOpen=openExModal;openExModal=function(id){du10OldOpen(id);document.
 document.getElementById('exName').addEventListener('input',du10Sync);
 </script></body>
 </html>
+
+<style>
+/* v23.8.8 illustrated category tiles */
+.picker-tile .pt-emoji:has(.du-atlas-symbol){display:inline-flex;width:70px;height:70px;min-height:70px;align-items:center;justify-content:center;background:transparent!important;box-shadow:none!important;border-radius:13px;font-size:initial}
+.picker-tile .du-atlas-symbol{width:70px;height:70px}
+.picker-tile .du-atlas-photo .du-atlas-art{width:100%;height:100%;object-fit:cover}
+.picker-tile .du-atlas-ink svg{width:66%;height:66%}
+@media(max-width:400px){.picker-tile .pt-emoji:has(.du-atlas-symbol),.picker-tile .du-atlas-symbol{width:56px;height:56px;min-height:56px}}
+</style>
