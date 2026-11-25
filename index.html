@@ -1201,14 +1201,14 @@ setTimeout(function(){if(window.duBootReady)window.fujiDismissSplash();else wind
       <button class="fs-skip" onclick="fujiCue('start')">🔊 Проверить звук</button>
       <button class="fs-skip" onclick="fujiDismissSplash()">Начать →</button>
     </div>
-    <div class="fs-ver">DAVINCI EDITION / v23.9.0</div>
+    <div class="fs-ver">DAVINCI EDITION / v24.0.0</div>
   </div>
 </div>
 <div class="app">
   <header class="header">
     <div class="logo-wrap"><img class="fuji-head" src="assets/ce01ed643530935c181c8b1b.webp" alt="ДаВинчи">
       <div class="logo"><svg class="du-mark" viewBox="0 0 80 46" role="img" aria-label="ДУ"><path d="M5 34L20 8H43L48 34H5M5 34v6m43-6v6M17 28h21M49 9l12 15L75 8M61 24L49 39"/><path class="du-spiral" d="M53 40l23-24"/></svg></div>
-      <div class="logo-ver" id="logoVersion">v23.9.0</div>
+      <div class="logo-ver" id="logoVersion">v24.0.0</div>
     </div>
     <div class="xp-mini" onclick="navTo('v-stat')">
       <div class="xp-mini-lvl" id="headLvl">1</div>
@@ -1988,7 +1988,7 @@ const DEFAULT_SKILLS = [
 ];
 
 const THEMES = [
-{id:'davinci',name:'ДаВинчи',night:{bg:'#0b0c12',bg2:'#12131d',card:'#191b27',card2:'#232638',line:'#36394e',lineSoft:'#292c3c',txt:'#f5f5ff',mut:'#a6abc3',acc:'#a78bfa',acc2:'#6366f1'},day:{bg:'#f2f3fa',bg2:'#e7e9f4',card:'#ffffff',card2:'#eef0f8',line:'#cdd1e5',lineSoft:'#dfe2ef',txt:'#17192b',mut:'#626780',acc:'#6842ce',acc2:'#4149bd'}},
+{id:'davinci',name:'ДаВинчи',night:{bg:'#141414',bg2:'#1b1b1b',card:'#202020',card2:'#292929',line:'#424242',lineSoft:'#343434',txt:'#fafafa',mut:'#b4b4b4',acc:'#ff5900',acc2:'#ff5900'},day:{bg:'#f7f7f7',bg2:'#f1f1f1',card:'#ffffff',card2:'#eeeeee',line:'#c9c9c9',lineSoft:'#dedede',txt:'#171717',mut:'#626262',acc:'#d84600',acc2:'#d84600'}},
 {id:'fuji',name:'Фудзи',night:{bg:'#0e1116',bg2:'#151a22',card:'#1a2029',card2:'#222a36',line:'#232a35',lineSoft:'#1c222c',txt:'#e8edf4',mut:'#8a97a8',acc:'#ff5b2e',acc2:'#ffb02e'},day:{bg:'#fff7ed',bg2:'#ffedd5',card:'#ffffff',card2:'#fffaf0',line:'#f0d0b3',lineSoft:'#ffe8d5',txt:'#1c1410',mut:'#8a7568',acc:'#c2410c',acc2:'#ea580c'}},
 {id:'rasti',name:'Расти',night:{bg:'#0a1f14',bg2:'#0f2a1c',card:'#143525',card2:'#1a4130',line:'#204833',lineSoft:'#173a27',txt:'#e0f5dc',mut:'#7fb389',acc:'#4ade80',acc2:'#c5f9a8'},day:{bg:'#f2faf2',bg2:'#e2f3e5',card:'#ffffff',card2:'#f5fdf5',line:'#b8d9bc',lineSoft:'#dcf0dc',txt:'#0f2416',mut:'#5a7a5e',acc:'#15803d',acc2:'#65a30d'}},
 {id:'avi',name:'Ави',night:{bg:'#0d0818',bg2:'#16102a',card:'#1d1538',card2:'#261d47',line:'#2e2455',lineSoft:'#221a40',txt:'#ebe4ff',mut:'#9d8ec7',acc:'#a855f7',acc2:'#ec4899'},day:{bg:'#faf5ff',bg2:'#f3e8ff',card:'#fff',card2:'#fcf9ff',line:'#dcc5f0',lineSoft:'#f3e8ff',txt:'#2e1065',mut:'#7c6a9e',acc:'#9333ea',acc2:'#db2777'}},
@@ -2079,7 +2079,7 @@ let completions = store.get('completions', {});
 let profile = store.get('profile', {name:'Александр', age:34, weight:78, avatar:null});
 let themeId = store.get('themeId', 'davinci');
 if(!store.get('davinciEditionMigrated',false)){themeId='davinci';store.set('davinciEditionMigrated',true);}
-let themeMode = store.get('themeMode', 'dark');
+let themeMode = store.get('themeMode', 'light');
 let currentExMedia = [];
 let totalXp = store.get('totalXp', 0);
 let xpLog = store.get('xpLog', []);
@@ -4381,7 +4381,7 @@ function makePlan(){collect();return {schema:'du.workout.v1',id:currentId||'draf
 function message(t){$('duBuilderMessage').textContent=t}
 function add(type){collect();const ex=options();if(type==='exercise'&&!ex.length){message('Библиотека упражнений ещё не загрузилась. Открой приложение и дождись загрузки.');return}blocks.push(type==='exercise'?{type,exerciseId:ex[0].id,sets:3,reps:10,sides:'none',restSeconds:60}:type==='rest'?{type,seconds:60}:type==='amrap'||type==='emom'?{type,durationSeconds:1200,exerciseIds:[]}: {type,workSeconds:type==='tabata'?20:40,restSeconds:type==='tabata'?10:20,rounds:8});render();message('')}
 function init(){if($('duBuilderPanel'))return;const fab=document.createElement('button');fab.id='duBuilderFab';fab.textContent='✦ Конструктор';fab.title='Открыть конструктор тренировок';fab.setAttribute('aria-label','Открыть конструктор тренировок');fab.addEventListener('click',()=>{ $('duBuilderPanel').classList.add('du-open');document.body.style.overflow='hidden';render();});document.body.appendChild(fab);
- const p=document.createElement('div');p.id='duBuilderPanel';p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');p.setAttribute('aria-label','Конструктор тренировок');p.innerHTML='<div class="du-build-shell"><div class="du-block-head"><h2 style="margin:0">Конструктор ДУ</h2><button id="duBuilderClose" aria-label="Закрыть">✕</button></div><p class="du-muted">v23.9.0 · Создание и сохранение черновиков. Запуск в старом таймере пока не подключён.</p><label>Название тренировки</label><input id="duBuilderName" maxlength="100" value="Моя тренировка"><div class="du-action"><button data-add="exercise">+ Упражнение</button><button data-add="interval">+ Интервалы</button><button data-add="tabata">+ Табата</button><button data-add="amrap">+ AMRAP</button><button data-add="emom">+ EMOM</button><button data-add="rest">+ Отдых</button></div><div id="duBuilderBlocks"></div><div class="du-action"><button class="du-primary" id="duBuilderSave">Сохранить черновик</button><button id="duBuilderExport">Экспорт JSON</button><button id="duBuilderNew">Новый</button></div><label>Сохранённые черновики</label><select id="duBuilderSaved"><option value="">Выбери тренировку</option></select><div class="du-action"><button id="duBuilderLoad">Открыть</button><button id="duBuilderRemove">Удалить черновик</button></div><p id="duBuilderMessage" class="du-muted" aria-live="polite"></p></div>';document.body.appendChild(p);
+ const p=document.createElement('div');p.id='duBuilderPanel';p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');p.setAttribute('aria-label','Конструктор тренировок');p.innerHTML='<div class="du-build-shell"><div class="du-block-head"><h2 style="margin:0">Конструктор ДУ</h2><button id="duBuilderClose" aria-label="Закрыть">✕</button></div><p class="du-muted">v24.0.0 · Создание и сохранение черновиков. Запуск в старом таймере пока не подключён.</p><label>Название тренировки</label><input id="duBuilderName" maxlength="100" value="Моя тренировка"><div class="du-action"><button data-add="exercise">+ Упражнение</button><button data-add="interval">+ Интервалы</button><button data-add="tabata">+ Табата</button><button data-add="amrap">+ AMRAP</button><button data-add="emom">+ EMOM</button><button data-add="rest">+ Отдых</button></div><div id="duBuilderBlocks"></div><div class="du-action"><button class="du-primary" id="duBuilderSave">Сохранить черновик</button><button id="duBuilderExport">Экспорт JSON</button><button id="duBuilderNew">Новый</button></div><label>Сохранённые черновики</label><select id="duBuilderSaved"><option value="">Выбери тренировку</option></select><div class="du-action"><button id="duBuilderLoad">Открыть</button><button id="duBuilderRemove">Удалить черновик</button></div><p id="duBuilderMessage" class="du-muted" aria-live="polite"></p></div>';document.body.appendChild(p);
  function refresh(){const a=load();$('duBuilderSaved').innerHTML='<option value="">Выбери тренировку</option>'+a.map((x,i)=>'<option value="'+i+'">'+esc(x.name)+'</option>').join('')}
  p.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a){add(a.dataset.add);return}const btn=e.target.closest('[data-action]');if(btn){collect();const i=Number(btn.closest('[data-index]').dataset.index),action=btn.dataset.action;if(action==='delete')blocks.splice(i,1);if(action==='up'&&i>0)[blocks[i-1],blocks[i]]=[blocks[i],blocks[i-1]];if(action==='down'&&i<blocks.length-1)[blocks[i+1],blocks[i]]=[blocks[i],blocks[i+1]];render();}});
  $('duBuilderClose').onclick=()=>{p.classList.remove('du-open');document.body.style.overflow=''};
@@ -4404,7 +4404,7 @@ function renderDU2384Atlas(e){
    if(!found.length)return '';
    return '<section class="du2384-atlas-group"><h4>'+label+'</h4><div class="du2384-atlas-tiles">'+found.map(item=>'<div class="du2384-atlas-tile">'+duAtlasIcon(item,kind)+'<span>'+escapeHtml(item.name)+'</span></div>').join('')+'</div></section>';
  }).join('');
- root.innerHTML='<div class="du2384-atlas-head"><strong>Анатомический атлас</strong><span>Предпросмотр · v23.9.0</span></div>'+
+ root.innerHTML='<div class="du2384-atlas-head"><strong>Анатомический атлас</strong><span>Предпросмотр · v24.0.0</span></div>'+
  (cards||'<p class="du2384-atlas-empty">Категории ещё не назначены. Добавь зоны, снаряды и навыки ниже.</p>')+
  '<p class="du2384-atlas-note">Подсветка условная: анатомическая и биомеханическая проверка ещё не проведена. Иллюстрации ДаВинчи отображаются выше, если они есть в базе.</p>';
 }
@@ -4755,5 +4755,23 @@ function duRestoreExerciseListPosition(){
   };
   restore();requestAnimationFrame(()=>{restore();requestAnimationFrame(restore);});
 }
-</script></body>
+</script>
+<style id="du-sport-v240">
+:root{--radius-sm:6px;--radius:9px;--radius-lg:12px;--shadow-sm:none;--shadow-md:0 4px 16px #0002;--font-md:14px;--font-lg:17px;--font-xl:22px}
+body,body[data-mode="dark"],body[data-mode="light"]{background:var(--bg)!important;color:var(--txt);font-feature-settings:"tnum";line-height:1.4}
+.header,.nav-bottom,.exec-header,.exec-footer{background:var(--card)!important;backdrop-filter:none!important;box-shadow:none!important;border-color:var(--line-soft)!important}
+.header{padding-top:12px;padding-bottom:12px}.logo{font-weight:950;letter-spacing:-.045em}.logo-ver{border-radius:4px!important}
+.card,.complex-card,.training-card,.character-card,.progress-section,.progress-cell,.xp-hero{background:var(--card)!important;border:1px solid var(--line-soft)!important;border-radius:10px!important;box-shadow:none!important}
+.card{padding:12px;margin-bottom:9px}.card-title{margin-bottom:10px}.card-title-left{font-weight:850;letter-spacing:.6px;color:var(--txt)}.card-title-left:before{width:4px;height:15px;transform:skew(-12deg);border-radius:0}
+.btn,.chip,.fab,.exec-finish,.nav-btn,.stat-menu-btn,.day-cell,.mday{box-shadow:none!important;border-radius:7px!important}.btn-primary,.exec-finish,.fab,.chip.on,.mday.is-selected,.day-cell.is-selected,.xp-mini-lvl,.stat-menu-btn.on,.metric-tab.active,.meas-tab.active{background:var(--acc)!important;color:#111!important;font-weight:850}.day-cell.is-selected .wd,.day-cell.is-selected .num{color:#111!important}
+.nav-btn{min-height:48px}.nav-btn.on{background:transparent!important;border-top:3px solid var(--acc);border-radius:0!important}.nav-btn svg{filter:none!important}.nav-btn span{font-weight:750}
+.home-hero.live-hero{position:relative;isolation:isolate;background:var(--card)!important;min-height:148px;border-left:4px solid var(--acc)!important}.home-hero.live-hero:before{content:"";position:absolute;z-index:-1;right:8%;top:0;height:100%;width:20%;background:var(--acc);opacity:.14;transform:skew(-20deg);pointer-events:none}.home-hero h2{font-size:25px;line-height:1.05;letter-spacing:-.045em;font-weight:950}.home-hero img{object-fit:contain!important}
+.ex-list{gap:0!important}.ex-list .ex-card{min-height:58px;padding:6px 9px;border-radius:0!important;border-bottom:1px solid var(--line-soft)!important}.ex-list .ex-thumb{width:46px;height:46px;border-radius:5px!important}.ex-list .ex-thumb img{object-fit:contain!important}.ex-list .ex-name{font-weight:800}.ex-list .ex-tags{color:var(--mut);opacity:1}
+.training-head{padding:10px}.training-name,.complex-name{font-weight:850}.complex-ex-item{border-radius:5px!important}.modal{border-radius:14px 14px 0 0!important;background:var(--card)!important}.modal h3{color:var(--txt);background:none;font-weight:900}.field-input,.search-input{border-radius:7px!important}
+.exec-timer,.exec-round-count{font-size:clamp(54px,16vw,76px);color:var(--txt);background:none;letter-spacing:-.065em}.exec-focus{padding:8px 0}.exec-plan-list{max-height:22dvh;overflow-y:auto;margin-bottom:8px}.exec-footer{flex-shrink:0}.exec-dots{margin-bottom:8px}.exec-dot{width:22px;height:7px;border-radius:3px;box-shadow:none!important}.exec-dot.active{animation:none}.exec-ex-name{font-size:24px}.exec-header{padding-top:calc(10px + env(safe-area-inset-top))}
+.du-parchment-tile{background:var(--card)!important;border-color:var(--line-soft)!important;box-shadow:none!important}.du-parchment-tile span{color:var(--txt)!important}
+#fujiSplash,#fujiSplash .fs-scene{background:#171717!important}#fujiSplash .fs-ver{display:block!important;position:absolute;bottom:9%;z-index:4;color:white!important;background:#171717;padding:6px 10px}#fujiSplash .fs-track i{background:#ff5900!important;box-shadow:none!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</body>
 </html>
