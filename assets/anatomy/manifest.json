@@ -1,0 +1,166 @@
+{
+  "cardio": {
+    "detail": "assets/anatomy/cardio_detail.webp",
+    "mini": "assets/anatomy/cardio_mini.webp"
+  },
+  "face": {
+    "detail": "assets/anatomy/face_detail.webp",
+    "mini": "assets/anatomy/face_mini.webp"
+  },
+  "neck": {
+    "detail": "assets/anatomy/neck_detail.webp",
+    "mini": "assets/anatomy/neck_mini.webp"
+  },
+  "shoulders": {
+    "detail": "assets/anatomy/shoulders_detail.webp",
+    "mini": "assets/anatomy/shoulders_mini.webp"
+  },
+  "shoulders_front": {
+    "detail": "assets/anatomy/shoulders_front_detail.webp",
+    "mini": "assets/anatomy/shoulders_front_mini.webp"
+  },
+  "shoulders_side": {
+    "detail": "assets/anatomy/shoulders_side_detail.webp",
+    "mini": "assets/anatomy/shoulders_side_mini.webp"
+  },
+  "shoulders_rear": {
+    "detail": "assets/anatomy/shoulders_rear_detail.webp",
+    "mini": "assets/anatomy/shoulders_rear_mini.webp"
+  },
+  "shoulders_bi": {
+    "detail": "assets/anatomy/shoulders_bi_detail.webp",
+    "mini": "assets/anatomy/shoulders_bi_mini.webp"
+  },
+  "shoulders_tri": {
+    "detail": "assets/anatomy/shoulders_tri_detail.webp",
+    "mini": "assets/anatomy/shoulders_tri_mini.webp"
+  },
+  "back": {
+    "detail": "assets/anatomy/back_detail.webp",
+    "mini": "assets/anatomy/back_mini.webp"
+  },
+  "back_lat": {
+    "detail": "assets/anatomy/back_lat_detail.webp",
+    "mini": "assets/anatomy/back_lat_mini.webp"
+  },
+  "back_trap": {
+    "detail": "assets/anatomy/back_trap_detail.webp",
+    "mini": "assets/anatomy/back_trap_mini.webp"
+  },
+  "back_rhomb": {
+    "detail": "assets/anatomy/back_rhomb_detail.webp",
+    "mini": "assets/anatomy/back_rhomb_mini.webp"
+  },
+  "back_lower": {
+    "detail": "assets/anatomy/back_lower_detail.webp",
+    "mini": "assets/anatomy/back_lower_mini.webp"
+  },
+  "chest": {
+    "detail": "assets/anatomy/chest_detail.webp",
+    "mini": "assets/anatomy/chest_mini.webp"
+  },
+  "chest_upper": {
+    "detail": "assets/anatomy/chest_upper_detail.webp",
+    "mini": "assets/anatomy/chest_upper_mini.webp"
+  },
+  "chest_mid": {
+    "detail": "assets/anatomy/chest_mid_detail.webp",
+    "mini": "assets/anatomy/chest_mid_mini.webp"
+  },
+  "chest_lower": {
+    "detail": "assets/anatomy/chest_lower_detail.webp",
+    "mini": "assets/anatomy/chest_lower_mini.webp"
+  },
+  "glutes": {
+    "detail": "assets/anatomy/glutes_detail.webp",
+    "mini": "assets/anatomy/glutes_mini.webp"
+  },
+  "glutes_max": {
+    "detail": "assets/anatomy/glutes_max_detail.webp",
+    "mini": "assets/anatomy/glutes_max_mini.webp"
+  },
+  "glutes_med": {
+    "detail": "assets/anatomy/glutes_med_detail.webp",
+    "mini": "assets/anatomy/glutes_med_mini.webp"
+  },
+  "glutes_min": {
+    "detail": "assets/anatomy/glutes_min_detail.webp",
+    "mini": "assets/anatomy/glutes_min_mini.webp"
+  },
+  "hips": {
+    "detail": "assets/anatomy/hips_detail.webp",
+    "mini": "assets/anatomy/hips_mini.webp"
+  },
+  "hips_quad": {
+    "detail": "assets/anatomy/hips_quad_detail.webp",
+    "mini": "assets/anatomy/hips_quad_mini.webp"
+  },
+  "hips_ham": {
+    "detail": "assets/anatomy/hips_ham_detail.webp",
+    "mini": "assets/anatomy/hips_ham_mini.webp"
+  },
+  "hips_add": {
+    "detail": "assets/anatomy/hips_add_detail.webp",
+    "mini": "assets/anatomy/hips_add_mini.webp"
+  },
+  "hips_abd": {
+    "detail": "assets/anatomy/hips_abd_detail.webp",
+    "mini": "assets/anatomy/hips_abd_mini.webp"
+  },
+  "calves": {
+    "detail": "assets/anatomy/calves_detail.webp",
+    "mini": "assets/anatomy/calves_mini.webp"
+  },
+  "calves_gastr": {
+    "detail": "assets/anatomy/calves_gastr_detail.webp",
+    "mini": "assets/anatomy/calves_gastr_mini.webp"
+  },
+  "calves_soleus": {
+    "detail": "assets/anatomy/calves_soleus_detail.webp",
+    "mini": "assets/anatomy/calves_soleus_mini.webp"
+  },
+  "calves_tib": {
+    "detail": "assets/anatomy/calves_tib_detail.webp",
+    "mini": "assets/anatomy/calves_tib_mini.webp"
+  },
+  "feet": {
+    "detail": "assets/anatomy/feet_detail.webp",
+    "mini": "assets/anatomy/feet_mini.webp"
+  },
+  "hands": {
+    "detail": "assets/anatomy/hands_detail.webp",
+    "mini": "assets/anatomy/hands_mini.webp"
+  },
+  "hands_flex": {
+    "detail": "assets/anatomy/hands_flex_detail.webp",
+    "mini": "assets/anatomy/hands_flex_mini.webp"
+  },
+  "hands_ext": {
+    "detail": "assets/anatomy/hands_ext_detail.webp",
+    "mini": "assets/anatomy/hands_ext_mini.webp"
+  },
+  "abs": {
+    "detail": "assets/anatomy/abs_detail.webp",
+    "mini": "assets/anatomy/abs_mini.webp"
+  },
+  "abs_rectus": {
+    "detail": "assets/anatomy/abs_rectus_detail.webp",
+    "mini": "assets/anatomy/abs_rectus_mini.webp"
+  },
+  "abs_transv": {
+    "detail": "assets/anatomy/abs_transv_detail.webp",
+    "mini": "assets/anatomy/abs_transv_mini.webp"
+  },
+  "abs_oblique": {
+    "detail": "assets/anatomy/abs_oblique_detail.webp",
+    "mini": "assets/anatomy/abs_oblique_mini.webp"
+  },
+  "core": {
+    "detail": "assets/anatomy/core_detail.webp",
+    "mini": "assets/anatomy/core_mini.webp"
+  },
+  "stretch": {
+    "detail": "assets/anatomy/stretch_detail.webp",
+    "mini": "assets/anatomy/stretch_mini.webp"
+  }
+}
